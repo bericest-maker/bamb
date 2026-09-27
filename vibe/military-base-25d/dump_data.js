@@ -21,6 +21,7 @@ const out={
   PATCH_NOTES:G('PATCH_NOTES'), SEA_LANES:G('SEA_LANES').length, SEA_BUOYS:G('SEA_BUOYS').length,
   LANE_RING:G('LANE_RING'), LANE_OUT:G('LANE_OUT'), LANE_OUTER:G('LANE_OUTER'), LANE_SPOKES:G('LANE_SPOKES'),
   SEA_CELLS:Array.from(G('SEA')).reduce((a,b)=>a+b,0),
+  POTATO:G('POTATO'), AGGRO:G('AGGRO'),                      // v8: potato blob size + aggro ranges
   SPRITES:Object.fromEntries(Object.entries(G('SPR')).map(([k,v])=>[k,{w:v.w,h:v.h}])),
   TUT:G('TUT'), defaultState:noFn(G('defaultState')()),
 };

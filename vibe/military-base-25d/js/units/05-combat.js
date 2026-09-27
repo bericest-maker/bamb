@@ -43,9 +43,14 @@ function killUnit(u,from){
   }
   if(u.side==='p' && selUnits.includes(u)) selUnits=selUnits.filter(x=>x.id!==u.id);
 }
+// v8: buildings are PERMANENT by default. Nothing — raids, the MECHA WORM, artillery — can knock one down,
+// and you can't sell/demolish your own by right-clicking either (see the right-click handler in ui/09-input.js).
+// Switch it off in ⚙ SETTINGS → INDESTRUCTIBLE BUILDINGS to get destructible bases (and the sell refund) back.
+const indestructible = () => !!(S && S.settings && S.settings.indestruct);
 function damageBuilding(b,from,dmg){
   if(S.admin&&S.admin.god&&isMine(b)) return; // admin god mode protects YOUR base (fixed: used to make bots immortal too)
   if(b.dead) return;
+  if(indestructible()) return;                // v8: permanent buildings — no damage, no destruction, no reward
   b.hp-=dmg; b.flash=.15;
   if(S.settings.dmg && from.side==='p') addFloat(b.x+rnd(-10,10),b.y-40,String(Math.round(dmg)),'#ffb0a8');
   if(b.hp<=0){

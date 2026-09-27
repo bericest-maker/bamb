@@ -2,7 +2,8 @@
 'use strict';
 function islandPoly(rf,cx,cy,extra=0){
   ctx.beginPath();
-  const N=72;
+  // v8 perf: on EFFECTS = Low the coastline is drawn with 28 segments instead of 72 (invisible at normal zoom)
+  const N=((S&&S.settings&&S.settings.gfx)==='Low')?28:72;
   for(let a=0;a<=N;a++){
     const th=a/N*pi2, r=rf(th)+extra;
     const px=cx+Math.cos(th)*r, py=cy+Math.sin(th)*r;
@@ -42,12 +43,14 @@ function drawBridges(list,w){
   ctx.setLineDash([]);
 }
 // the naval water lanes: a dashed route + floating buoys (maps/02-sea.js)
-function drawSeaLanes(t,vb){
+function drawSeaLanes(t,vb,hiFX){
   ctx.save();
-  ctx.strokeStyle='rgba(160,225,255,.20)'; ctx.lineWidth=26; ctx.lineCap='round';
-  ctx.beginPath();
-  for(const l of SEA_LANES){ if(!inView((l.ax+l.bx)/2,(l.ay+l.by)/2,320,vb)) continue; ctx.moveTo(l.ax,l.ay); ctx.lineTo(l.bx,l.by); }
-  ctx.stroke();
+  if(hiFX!==false){   // v8: the wide glow is skipped on EFFECTS = Low
+    ctx.strokeStyle='rgba(160,225,255,.20)'; ctx.lineWidth=26; ctx.lineCap='round';
+    ctx.beginPath();
+    for(const l of SEA_LANES){ if(!inView((l.ax+l.bx)/2,(l.ay+l.by)/2,320,vb)) continue; ctx.moveTo(l.ax,l.ay); ctx.lineTo(l.bx,l.by); }
+    ctx.stroke();
+  }
   ctx.strokeStyle='rgba(190,240,255,.42)'; ctx.lineWidth=2; ctx.setLineDash([12,14]);
   ctx.beginPath();
   for(const l of SEA_LANES){ if(!inView((l.ax+l.bx)/2,(l.ay+l.by)/2,320,vb)) continue; ctx.moveTo(l.ax,l.ay); ctx.lineTo(l.bx,l.by); }
@@ -75,16 +78,21 @@ function drawCrystal(c,t){
 const inView=(x,y,r,vb)=> !(x<vb.x0-r||x>vb.x1+r||y<vb.y0-r||y>vb.y1+r);
 function drawGround(vb){
   const t=performance.now()/1000;
+  const set=(S&&S.settings)||{};               // v8: the graphics settings are read fresh every frame
+  const deco=set.trees!==false;                // TREES & DECOR (grass patches, rocks, trees, crystals)
+  const hiFX=set.gfx!=='Low';                  // EFFECTS High → wave glints + the wide lane glow
   // ocean + soft wave glints
   ctx.fillStyle='#2a7fd0';
   ctx.fillRect(vb.x0,vb.y0,vb.x1-vb.x0,vb.y1-vb.y0);
-  ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=2;
-  ctx.beginPath();
-  for(let y=Math.floor(vb.y0/160)*160;y<vb.y1;y+=160) for(let x=Math.floor(vb.x0/220)*220;x<vb.x1;x+=220){
-    const ox=((x*7+y*3)%90)+Math.sin(t+x*.01)*8; ctx.moveTo(x+ox,y+((x/220)%2)*80); ctx.lineTo(x+ox+26,y+((x/220)%2)*80); }
-  ctx.stroke();
+  if(hiFX){
+    ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=2;
+    ctx.beginPath();
+    for(let y=Math.floor(vb.y0/160)*160;y<vb.y1;y+=160) for(let x=Math.floor(vb.x0/220)*220;x<vb.x1;x+=220){
+      const ox=((x*7+y*3)%90)+Math.sin(t+x*.01)*8; ctx.moveTo(x+ox,y+((x/220)%2)*80); ctx.lineTo(x+ox+26,y+((x/220)%2)*80); }
+    ctx.stroke();
+  }
   // shipping lanes (water lanes for the naval line)
-  drawSeaLanes(t,vb);
+  drawSeaLanes(t,vb,hiFX);
   // bridges under the land (spokes + outpost links)
   drawBridges(BRIDGES,BRIDGE_W*2-6);
   // outpost islets
@@ -98,8 +106,8 @@ function drawGround(vb){
     if(!inView(cx,cy,800,vb)) continue;
     ctx.fillStyle='#d9c68a'; islandPoly(th=>plotRadius(i,th),cx,cy,13); ctx.fill(); islandPoly(th=>lobeRadius(i,th),L.x,L.y,13); ctx.fill();
     ctx.fillStyle='#69a54e'; islandPoly(th=>plotRadius(i,th),cx,cy); ctx.fill(); islandPoly(th=>lobeRadius(i,th),L.x,L.y); ctx.fill();
-    // build grid pad (slightly lighter so the plot square reads like the original) — rotated with the plot
-    ctx.fillStyle='rgba(255,255,255,.05)'; plotRectPath(i===0?'p':i-1,0,0,PLOT_W*SLOT,PLOT_H*SLOT); ctx.fill();
+    // build grid pad — v8: YOUR plot only. The other bases are just buildings + troops now.
+    if(i===0){ ctx.fillStyle='rgba(255,255,255,.05)'; plotRectPath('p',0,0,PLOT_W*SLOT,PLOT_H*SLOT); ctx.fill(); }
   }
   // central city island (octagon)
   if(inView(CITY_ISL.x,CITY_ISL.y,420,vb)){
@@ -110,20 +118,19 @@ function drawGround(vb){
     ctx.stroke();
     ctx.fillStyle='#9aa0a6'; ctx.beginPath(); ctx.arc(CITY_ISL.x,CITY_ISL.y,155,0,pi2); ctx.fill();
   }
-  // floating crystals
-  for(const c of CRYSTALS) if(inView(c.x,c.y,80,vb)) drawCrystal(c,t);
-  // terrain patches
-  for(const p of PATCHES){
-    if(!inView(p.x,p.y,p.r,vb)) continue;
-    ctx.fillStyle=p.c; ctx.beginPath(); ctx.ellipse(p.x,p.y,p.r,p.r*.6,0,0,pi2); ctx.fill();
-  }
-  // rocks
-  ctx.fillStyle='#8a8f96';
-  for(const r of ROCKS){ if(!inView(r.x,r.y,30,vb)) continue; ctx.beginPath(); ctx.ellipse(r.x,r.y,14*r.s,8*r.s,0,0,pi2); ctx.fill(); }
-  // trees
-  for(const tr of TREES){
-    if(!inView(tr.x,tr.y,40,vb)) continue;
-    drawTree(tr);
+  // floating crystals · terrain patches · rocks · trees (v8: ⚙ SETTINGS → TREES & DECOR hides them all)
+  if(deco){
+    for(const c of CRYSTALS) if(inView(c.x,c.y,80,vb)) drawCrystal(c,t);
+    for(const p of PATCHES){
+      if(!inView(p.x,p.y,p.r,vb)) continue;
+      ctx.fillStyle=p.c; ctx.beginPath(); ctx.ellipse(p.x,p.y,p.r,p.r*.6,0,0,pi2); ctx.fill();
+    }
+    ctx.fillStyle='#8a8f96';
+    for(const r of ROCKS){ if(!inView(r.x,r.y,30,vb)) continue; ctx.beginPath(); ctx.ellipse(r.x,r.y,14*r.s,8*r.s,0,0,pi2); ctx.fill(); }
+    for(const tr of TREES){
+      if(!inView(tr.x,tr.y,40,vb)) continue;
+      drawTree(tr);
+    }
   }
   // player plot grid + label
   { const p=MAP_PLOTS[0], w=PLOT.w*SLOT, h=PLOT.h*SLOT;
@@ -138,8 +145,9 @@ function drawGround(vb){
     ctx.fillStyle='#ffe08a'; ctx.font='900 15px "Segoe UI"'; ctx.textAlign='center';
     ctx.fillText('⬆ YOUR BASE',p.x+w/2,p.y-26);
   }
-  // bot plot outlines + labels
-  for(let i=0;i<MAP_PLOTS.length;i++){
+  // bot plot outlines + labels — v8: OFF by default (⚙ SETTINGS → ENEMY BASE GRIDS to bring them back).
+  // You see what matters: their buildings and their troops.
+  if(set.botGrid) for(let i=0;i<MAP_PLOTS.length;i++){
     if(i===0) continue;
     const p=MAP_PLOTS[i], w=PLOT_W*SLOT, h=PLOT_H*SLOT, bd=BOT_DEFS[i-1], bb=S.bots[i-1];   // fixed: was 12×7 (old plot size)
     ctx.strokeStyle=bb.down?'rgba(239,83,80,.9)':hexA(facC(i),.55); ctx.lineWidth=2.5; ctx.setLineDash([10,7]);

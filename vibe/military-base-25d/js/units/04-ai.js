@@ -1,6 +1,17 @@
 /* Military Base 2.5D — 04-ai.js · unit AI: targets, stealth detection, target acquisition, combat, separation */
 'use strict';
 const bFaction = b => (b.owner??"p")==="p"?0:b.owner+1;
+// ---- v8: how close is "close"? ----
+// Units used to lock onto everything inside their firing range (artillery shelled your base from 430px
+// away). Now: while a unit is MARCHING (an order, the push to the middle, a raid) it only looks at enemies
+// that are basically on top of it. Units that HOLD a spot — garrisons, base defenders, a hold order,
+// idle troops — keep the full reach, so a defended position still shoots first.
+const AGGRO = {march:210, hold:220, push:60};
+// how far a unit will look for a fight (see AGGRO above)
+function aggroReach(d,tg){
+  const holding = !!(tg&&(tg.defend||tg.hold));
+  return holding ? d.range+AGGRO.hold : Math.min(d.range+AGGRO.push, AGGRO.march);
+}
 function targetFor(u){
   if(u.boss){
     // boss: nearest enemy base building (any other faction)
@@ -55,7 +66,7 @@ function targetFor(u){
       if(best) return best;
       u.raid=false;
     }
-    return {x:u.x,y:u.y};
+    return {x:u.x,y:u.y,hold:true};   // v8: idle raider holds its ground (full reach) instead of freezing
   }
   // player (faction 0)
   if(u.order){
@@ -77,17 +88,23 @@ function targetFor(u){
   }
   if(S.attackCity){
     const city=S.points[CITY_IDX];
-    if(pointFaction(city)!==0) return {x:city.x,y:city.y,point:city};
+    if(pointFaction(city)!==0) return {x:city.x,y:city.y,point:city,mid:true};
     S.attackCity=false;
   }
+  // v8: NO ORDER = march on the MIDDLE (the CITY). idle:true/mid targets only fight what comes CLOSE
+  // (aggroReach), so your army streams to the centre instead of shooting up somebody's spawn.
   if(!isSea(u)){                                     // ships can't walk onto an island → they shell buildings
-    let best=null,bd=1e9;
+    const city=S.points[CITY_IDX];
+    if(pointFaction(city)!==0) return {x:city.x,y:city.y,point:city,mid:true};
+    let best=null,bd=1e9,nbest=null,nbd=1e9;         // city held → nearest point you don't own (enemy first)
     for(const p of S.points){
-      if(pointFaction(p)===0||pointFaction(p)<0) continue;
+      if(pointFaction(p)===0) continue;
       const dd=Math.hypot(p.x-u.x,p.y-u.y);
+      if(pointFaction(p)<0){ if(dd<nbd){nbd=dd;nbest=p;} continue; }
       if(dd<bd){bd=dd;best=p;}
     }
-    if(best) return {x:best.x,y:best.y,point:best};
+    if(best)  return {x:best.x, y:best.y, point:best, mid:true};
+    if(nbest) return {x:nbest.x,y:nbest.y,point:nbest,mid:true};
   }
   // no enemy points → nearest enemy building
   let bb=null,bbd=1e9;
@@ -176,7 +193,9 @@ function updateUnit(u,dt){
   // v5 perf: the strategic target is re-evaluated ~3×/s (instantly when the order changes or the target building dies)
   u._tgT=(u._tgT||0)-dt;
   let tg=u._tg;
-  if(!tg||u._tgT<=0||u._tgO!==u.order||(tg.b&&tg.b.dead)){ tg=u._tg=targetFor(u); u._tgT=.25+Math.random()*.15; u._tgO=u.order; }
+  if(!tg||u._tgT<=0||u._tgO!==u.order||(tg.b&&tg.b.dead)){ tg=u._tg=targetFor(u); u._tgT=.25+Math.random()*.15; u._tgO=u.order;
+    // v8: marching on the CITY uses the cheap city flow field (units/02-movement.js) instead of A*
+    if(tg.mid) u.cityGoal=!!(tg.point&&tg.point.city)&&!isSea(u); }
   if(!d.dmg){ // non-combat unit (Medic): just follow orders / stay with the army
     const dd=dist(u,{x:tg.x,y:tg.y});
     if(dd>(tg.b?d.range:10)) stepUnit(u,tg.x,tg.y,d.speed,dt);
@@ -184,7 +203,7 @@ function updateUnit(u,dt){
   }
   // acquire enemy (different faction + visible)
   // v5 perf: enemy scan ~5×/s; the current foe is kept while it is alive and still in reach
-  const reach=d.range+(tg.defend?220:60);
+  const reach=aggroReach(d,tg);                      // v8: marching units only fight what gets CLOSE
   u._fT=(u._fT||0)-dt;
   let foe=u._foe;
   if(u._fT<=0||!foe||foe.dead||Math.hypot(foe.x-u.x,foe.y-u.y)>reach){ foe=u._foe=findEnemyOf(u,reach); u._fT=foe?.15+Math.random()*.1:.3+Math.random()*.15; }   // idle units scan less often

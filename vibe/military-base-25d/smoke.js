@@ -227,13 +227,13 @@ heli.order={point:B.CITY_IDX}; heli.cityGoal=false; // air flies straight
 const land=B.mkUnit('rifle','e',hx+5,hy+5,{bot:5,faction:6});
 land.order={point:B.CITY_IDX}; land.cityGoal=true;   // land follows the bridge
 S().units.push(heli,land);
-for(let ss=0;ss<14;ss++){   // v5 compact map: heli needs ~12.6s, the rifleman walking the bridge needs ~20s
+for(let ss=0;ss<26;ss++){   // v8 big map: heli (140 px/s) needs ~21s for the 2900px run; the rifleman ~31s
   pump(1000);
   if(process.env.DBGAIR) console.log('  [air t'+(ss+1)+'] units='+S().units.length+' heli=('+Math.round(heli.x)+','+Math.round(heli.y)+') d='+Math.round(Math.hypot(heli.x-MC.x,heli.y-MC.y))+' other='+S().units.filter(u=>u!==heli&&u!==land).map(u=>u.type+':f'+u.faction+'@'+Math.round(u.x)+','+Math.round(u.y)).join(' | '));
 }
 const heliD=Math.hypot(heli.x-MC.x,heli.y-MC.y);
 const landD=Math.hypot(land.x-MC.x,land.y-MC.y);
-assert(heliD<200,`air unit flew straight over water to the city (dist ${Math.round(heliD)})`);
+assert(heliD<300,`air unit flew straight over water to the city (dist ${Math.round(heliD)})`);
 assert(landD>250,`land unit still en route via bridge (dist ${Math.round(landD)})`);
 // ---- the war for the MIDDLE: bots converge on the CITY ----
 S().units=S().units.filter(u=>u.faction!==6);
@@ -248,15 +248,21 @@ const cf=B.pointFaction(S().points[B.CITY_IDX]);
 assert(cf>=0,`the middle is contested — CITY now held by ${cf<0?'?':(cf===0?'YOU':B.facN(cf))}`);
 
 // destroy bot 1 base entirely -> down -> rebuilds
+// v8: buildings are PERMANENT by default, so this section switches the setting off first
 B.setBotPreset(0,'fortified');
+{ const hp0=B.botBuildings(0)[0].hp;
+  B.damageBuilding(B.botBuildings(0)[0],{side:'p'},999999);
+  assert(B.botBuildings(0)[0].hp===hp0,'v8: INDESTRUCTIBLE BUILDINGS — a hit changes nothing'); }
+S().settings.indestruct=false;
 for(const b of [...B.botBuildings(0)]) B.damageBuilding(b,{side:'p'},999999);
-assert(B.botBuildings(0).length===0,'bot 1 base fully destroyed');
+assert(B.botBuildings(0).length===0,'bot 1 base fully destroyed (destructible restored)');
 pump(1500);
 assert(S().bots[0].down===true,'bot 1 marked down');
 assert(S().units.filter(u=>u.bot===0).length===0,'bot 1 units disbanded on down');
 pump(27*1000);
 assert(B.botBuildings(0).length>0,'bot 1 rebuilt its base after down-timer');
 assert(S().bots[0].down===false,'bot 1 down flag cleared');
+S().settings.indestruct=true;
 // empty preset = no buildings, no down flag
 B.setBotPreset(2,'empty');
 assert(B.botBuildings(2).length===0,'empty preset removes all buildings');
@@ -472,6 +478,75 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   ok=true; try{ for(const k of Object.keys(BLD)) G('tipHTML')(k); }catch(e){ ok=false; console.error('  tip',e.message); }
   assert(ok,'every tooltip still renders (incl. capacity + bounty rows)');
   S().units=[]; }
+// ---- v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" ----
+{
+  const sprN=()=>G('__sprN'), treeN=()=>G('__treeN');
+  G('__origSpr = drawSpr; __sprN = 0; drawSpr = function(){ __sprN++; return __origSpr.apply(null, arguments); };');
+  G('__origTree = drawTree; __treeN = 0; drawTree = function(t){ __treeN++; return __origTree.apply(null, arguments); };');
+  G('selUnits = []');
+  const cam=G('cam');
+  // a base worth looking at: buildings + troops of every shape, camera parked on your plot
+  S().units=[]; S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  for(const [t,gx,gy] of [['solar',1,1],['barracks',8,1],['tankfac',16,3],['oil',26,5]]) B.placeBuilding(t,gx,gy);
+  for(const t of ['rifle','tank','heli','frigate','spectre']) S().units.push(B.mkUnit(t,'p',PC.x+(S().units.length%3-1)*40,PC.y+(S().units.length%2?30:-30)));
+  cam.x=cam.tx=PC.x; cam.y=cam.ty=PC.y; cam.z=1;
+  S().settings.units='Normal'; S().settings.blds='Normal'; S().settings.trees=true;
+  G('__sprN = 0'); pump(400);
+  const normalSpr=sprN();
+  G('__treeN = 0'); pump(200);
+  const treesOn=treeN();
+  S().settings.units='Potato'; S().settings.blds='Potato'; S().settings.trees=false;
+  G('__sprN = 0'); G('__treeN = 0'); pump(400);
+  const potatoSpr=sprN(), treesOff=treeN();
+  assert(normalSpr>20 && potatoSpr===0,`POTATO MODE blits no sprites at all (${normalSpr} draws → ${potatoSpr})`);
+  assert(treesOn>0 && treesOff===0,`TREES & DECOR off draws no trees (${treesOn} → ${treesOff} per 12 frames)`);
+  G('drawSpr = __origSpr; drawTree = __origTree;');
+  // every unit + building has a potato shape
+  let ok=true;
+  for(const k of Object.keys(G('UNITS'))){ const u=B.mkUnit(k,'e',PC.x,PC.y); try{ G('drawPotatoUnit')(u,1); }catch(e){ ok=false; console.error('  potato unit',k,e.message); } }
+  assert(ok,'potato mode draws all 55 unit types as a blob (no sprite)');
+  ok=true;
+  for(const [k,d] of Object.entries(G('BUILD'))){ const sp=G('SPR')[k]; try{ G('drawPotatoBuilding')(sp.w,sp.h,1,3,PC.x,PC.y); }catch(e){ ok=false; console.error('  potato bld',k,e.message); } }
+  assert(ok,'potato mode draws all 100 building types as a blob (no sprite)');
+  S().units=[];
+  // right-click must NOT demolish any more (and does again once destructible is restored)
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  B.placeBuilding('solar',1,1);
+  const mine=S().buildings[S().buildings.length-1], mp=B.bPos(mine);
+  cam.x=cam.tx=mp.x; cam.y=cam.ty=mp.y;
+  const cvEl=document.querySelector('#cv');
+  cvEl._ls.mousemove({clientX:(mp.x-cam.x)*cam.z+640, clientY:(mp.y-cam.y)*(cam.z*.72)+400});
+  const cash0=S().cash;
+  S().settings.indestruct=true;
+  cvEl._ls.mousedown({button:2});
+  assert(S().buildings.includes(mine)&&S().cash===cash0,'right-click no longer demolishes (buildings are permanent)');
+  S().settings.indestruct=false;
+  cvEl._ls.mousedown({button:2});
+  assert(!S().buildings.includes(mine)&&S().cash>cash0,'INDESTRUCTIBLE off → right-click sells again (+50% refund)');
+  S().settings.indestruct=true;
+  // ---- "march on the middle": no more drive-by shooting ----
+  S().units=[]; S().nextWave=9999; S().nextBoss=9999;
+  { const city=S().points[B.CITY_IDX]; city.owner='neutral'; city.faction=-1; city.cool=0; city.respawnT=9999; }
+  const me=B.mkUnit('rifle','p',PC.x,PC.y); me.hp=me.maxHp=500;
+  const foe=B.mkUnit('rifle','e',PC.x+520,PC.y,{faction:1}); foe.hp=foe.maxHp=500;
+  S().units.push(me,foe);
+  const d0=Math.hypot(me.x-MC.x,me.y-MC.y);
+  pump(5000);
+  assert(me.hp===500&&foe.hp===500,'v8: an enemy 520px away is IGNORED (AGGRO.march 210 — no drive-by shooting)');
+  const d1=Math.hypot(me.x-MC.x,me.y-MC.y);
+  assert(d1<d0-200,`v8: idle troops march on the MIDDLE (${Math.round(d0)} → ${Math.round(d1)} px from the CITY)`);
+  foe.x=me.x+90; foe.y=me.y;
+  pump(4000);
+  assert(me.hp<500||foe.hp<500,'v8: once the enemy is CLOSE the march stops and they fight');
+  S().units=[];
+  // ---- the world is twice as big ----
+  assert(G('WORLD').w===9600 && G('RING')===2600,`world is ${G('WORLD').w}px wide, bases sit on a ${G('RING')}px ring`);
+  const nb=Math.hypot(BC(0).x-BC(1).x, BC(0).y-BC(1).y);
+  assert(nb>1900,`neighbouring bases are far apart (${Math.round(nb)}px between BOT 1 and BOT 2)`);
+  assert(G('SEA_BUOYS').length>0 && G('SEA_LANES').every(l=>!B.walkableAt((l.ax+l.bx)/2,(l.ay+l.by)/2)),'every shipping lane still runs through water on the bigger map');
+  // leave the settings as they started
+  S().settings.units='Normal'; S().settings.blds='Normal'; S().settings.trees=true; S().settings.botGrid=false;
+}
 S().admin.noRespawn=false;
 
 console.log(`\n${T.frames} frames simulated. ${process.exitCode?'SMOKE TEST FAILED':'ALL SMOKE TESTS PASSED'}`);

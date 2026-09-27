@@ -43,7 +43,12 @@ cv.addEventListener('mousedown',e=>{
         sfx('click');
       } else {
         const b=buildingAt(mouse.wx,mouse.wy,'p');
-        if(b) removeBuildingRefund(b);
+        if(b){
+          // v8: buildings are permanent — no more accidental demolish on right-click.
+          // ⚙ SETTINGS → INDESTRUCTIBLE BUILDINGS off restores selling (50% refund).
+          if(indestructible()){ toast('🚫 Buildings are permanent — turn off INDESTRUCTIBLE in ⚙ SETTINGS to sell','#8f9aa8'); sfx('error'); }
+          else removeBuildingRefund(b);
+        }
         else selUnits=[];
       }
     }

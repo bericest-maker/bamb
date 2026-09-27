@@ -7,6 +7,7 @@ function init(){
   S.admin=Object.assign({speed:1,god:false,freeze:false,noRespawn:false}, loaded?loaded.admin:undefined);
   // fill fields added in later versions
   S.stats=Object.assign(defaultStats(), S.stats||{});
+  S.settings=Object.assign(defaultSettings(), S.settings||{});   // v8: graphics/perf rows added in later builds
   S.achievements=S.achievements||{};
   S.rewards=S.rewards||{}; S.codes=S.codes||{}; S.inventory=S.inventory||[];
   S.shopSub=S.shopSub||'light'; S.bankT=S.bankT??60;

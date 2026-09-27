@@ -2,6 +2,7 @@
 'use strict';
 function drawUnit(u,s){
   let sp;
+  if(potatoUnits()){ drawPotatoUnit(u,s); return; }   // v8: POTATO MODE — one blob per troop
   if(u.boss){ drawBoss(u); return; }
   sp=SPR[u.type];
   s*=unitScale(u);                       // v5: bigger units look bigger

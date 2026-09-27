@@ -2,6 +2,17 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8 \u2014 PERFORMANCE & PEACE UPDATE', date:'2026-09-27', items:[
+    '\u26a1 POTATO MODE: \u2699 SETTINGS has two new rows \u2014 UNIT GRAPHICS and BUILDING GRAPHICS, each Normal or Potato. Potato replaces every troop/building with one coloured blob (drawn 1.45\u00d7 bigger in x and y so crowds stay readable). It is the single biggest frame-time win in the game.',
+    '\u2699 TREES & DECOR toggle \u2014 hide the trees, rocks, grass patches and floating crystals.',
+    '\u2699 EFFECTS High/Low (was GRAPHICS MODE) \u2014 Low also drops the ocean glints, the lane glow and halves the coastline detail.',
+    '\uD83D\uDEAB BUILDINGS ARE PERMANENT: nothing can destroy a building any more (raids, the worm, artillery) and right-click no longer sells your own. \u2699 SETTINGS \u2192 INDESTRUCTIBLE BUILDINGS turns destructible bases (and the 50% refund) back on.',
+    '\uD83D\uDCCF THE WORLD IS TWICE AS BIG: 4800\u2192 9600 px, base ring 1700\u2192 2600. Islands sit far apart with wide ocean between them \u2014 the march to the middle is a real journey and ships have room to sail. Shipping lanes, outposts, crystals and the city all scaled with it.',
+    '\u2694\uFE0F NO MORE ATTACKING PEOPLE AT THEIR SPAWN: units only pick a fight when the enemy is CLOSE (AGGRO.march 210px). Snipers and artillery used to shell your base from 320-430px away while marching past \u2014 now they walk on. Units that HOLD a position (garrisons, base defenders, idle troops) keep their full reach.',
+    '\uD83C\uDFAF IDLE TROOPS MARCH ON THE MIDDLE: with no order your army heads for the CITY (then the nearest point you don\u2019t own) and fights what it meets on the way, instead of beelining for somebody\u2019s base.',
+    '\uD83D\uDDD1\uFE0F ENEMY BASES: their build grids, dashed outlines and name labels are hidden now \u2014 you see their buildings and their troops, nothing else. \u2699 SETTINGS \u2192 ENEMY BASE GRIDS brings the labels back.',
+    'Map load got cheaper: the land test rejects most of the (now 57 600) walk cells with a bounding box before any trigonometry.',
+  ]},
   { v:'v7 \u2014 NAVAL UPDATE', date:'2026-09-27', items:[
     'Codebase split into folders \u2014 core, data, textures, maps, units, buildings, systems, rewards, achievements, render, ui, admin (same load order, nothing lost).',
     '\u2693 NAVAL LINE: Speedboat, Gunboat, Frigate, Submarine, Zumwalt, Battleship, Carrier \u2014 7 ships with their own dock buildings and a \u2693 NAVAL shop tab.',

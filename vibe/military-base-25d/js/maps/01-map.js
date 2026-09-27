@@ -3,7 +3,7 @@
 // ================= island map (radial, like ref-map-original.png) =================
 // 8 plot islands on a ring · a lobe island on each plot facing the middle · octagon CITY ·
 // 4 outpost islets between the spokes · straight bridges (spokes + outpost links) · water everywhere else
-const CITY_ISL = {x:MAP_C.x, y:MAP_C.y, r:330};
+const CITY_ISL = {x:MAP_C.x, y:MAP_C.y, r:460};   // v8: 330 → 460 (the city grew with the map)
 const PLOT_HW=SLOT*PLOT_W/2, PLOT_HH=SLOT*PLOT_H/2;
 const plotCenter = p => ({x:p.x+PLOT_HW, y:p.y+PLOT_HH});
 const MAP_PLOTS = [{x:PLOT.x,y:PLOT.y,ang:PLOT.ang,rot:0}, ...BOT_DEFS.map(b=>({x:b.plot.x,y:b.plot.y,ang:b.ang,rot:b.rot}))]; // [0]=player · rot = plot rotation (faces the city)
@@ -48,27 +48,41 @@ for(const pt of POINTS_DEFS){
     BRIDGES.push({ax:pt.x,ay:pt.y,bx:f.x,by:f.y,spoke:false});
   }
 }
+// v8 perf: bounding box per bridge (segment ± BRIDGE_W) so the land test can skip most of the ocean at a glance
+const BRIDGE_BB = BRIDGES.map(b=>({x0:Math.min(b.ax,b.bx)-BRIDGE_W, x1:Math.max(b.ax,b.bx)+BRIDGE_W,
+                                   y0:Math.min(b.ay,b.by)-BRIDGE_W, y1:Math.max(b.ay,b.by)+BRIDGE_W}));
 
+// v8 perf: the map is 2× bigger → 57 600 walk cells. Each shape test below costs several trig calls,
+// so every shape gets a cheap bounding-box reject first (the bounds are generous: max radius + margin).
+const PLOT_BB = 780;    // a plot island (max r ≈677) and its lobe (max ≈744 from the plot centre) both fit
+const CITY_BB = 520;    // octagon city (max r ≈470)
+const ILET_BB = 200;    // outpost islet (max r ≈167)
 function walkableAt(x,y){
   // plot islands (square core + organic coast) and their lobes
   for(let i=0;i<MAP_PLOTS.length;i++){
     const c=plotCenter(MAP_PLOTS[i]);
     let dx=x-c.x, dy=y-c.y;
+    if(dx<-PLOT_BB||dx>PLOT_BB||dy<-PLOT_BB||dy>PLOT_BB) continue;
     if(Math.hypot(dx,dy) <= plotRadius(i,Math.atan2(dy,dx))) return true;
     const L=LOBES[i]; dx=x-L.x; dy=y-L.y;
     if(Math.hypot(dx,dy) <= lobeRadius(i,Math.atan2(dy,dx))) return true;
   }
   // central city island (octagon)
   { const dx=x-CITY_ISL.x, dy=y-CITY_ISL.y;
-    if(Math.hypot(dx,dy) <= cityRadius(Math.atan2(dy,dx))) return true; }
+    if(!(dx<-CITY_BB||dx>CITY_BB||dy<-CITY_BB||dy>CITY_BB) && Math.hypot(dx,dy) <= cityRadius(Math.atan2(dy,dx))) return true; }
   // outpost islets
   for(let i=0;i<POINTS_DEFS.length;i++){
     const pt=POINTS_DEFS[i]; if(pt.city) continue;
     const dx=x-pt.x, dy=y-pt.y;
+    if(dx<-ILET_BB||dx>ILET_BB||dy<-ILET_BB||dy>ILET_BB) continue;
     if(Math.hypot(dx,dy) <= isletRadius(i,Math.atan2(dy,dx))) return true;
   }
   // bridges
-  for(const b of BRIDGES) if(distSeg(x,y,b.ax,b.ay,b.bx,b.by)<=BRIDGE_W) return true;
+  for(let i=0;i<BRIDGES.length;i++){
+    const r=BRIDGE_BB[i];
+    if(x<r.x0||x>r.x1||y<r.y0||y>r.y1) continue;
+    if(distSeg(x,y,BRIDGES[i].ax,BRIDGES[i].ay,BRIDGES[i].bx,BRIDGES[i].by)<=BRIDGE_W) return true;
+  }
   return false;
 }
 const CELL=40, GW=Math.ceil(WORLD.w/CELL), GH=Math.ceil(WORLD.h/CELL);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Build a Military Base 2.5D — v7 NAVAL UPDATE</title>
+<title>Build a Military Base 2.5D — v8 PERFORMANCE &amp; PEACE UPDATE</title>
 <style>
 :root{--panel:#232b3b;--panel2:#1b2230;--line:#3d4763;--line2:#4a5578;--txt:#eef2f8;--dim:#9aa7bd;--gold:#f5b53f;--green:#5bc24e;--blue:#4a90e2;--red:#d6493f}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -28,13 +28,30 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 .tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
 </style></head><body><div class="wrap">
 <h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
-<div class="sub">v7 · NAVAL UPDATE · the code is now grouped in folders · <span class="dim">fan project, not affiliated with Roblox</span></div>
+<div class="sub">v8 · PERFORMANCE &amp; PEACE UPDATE · potato mode, permanent buildings, a world twice as big · <span class="dim">fan project, not affiliated with Roblox</span></div>
 
 <a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
 <a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
 <a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
 
-<div class="card"><h2>WHAT CHANGED (v7)</h2>
+<div class="card"><h2>WHAT CHANGED (v8 — this round)</h2>
+<div>
+<span class="tag new">potato mode</span><span class="tag new">hide trees &amp; decor</span><span class="tag new">world ×2</span>
+<span class="tag new">no drive-by shooting</span><span class="tag new">march on the middle</span><span class="tag">permanent buildings</span>
+<span class="tag">enemy base grids hidden</span><span class="tag">lag fixes</span>
+</div>
+<ul>
+<li><b>🥔 POTATO MODE</b> — ⚙ SETTINGS has two new rows: <b>UNIT GRAPHICS</b> and <b>BUILDING GRAPHICS</b>, each <code>Normal</code> or <code>Potato</code>. Potato turns every troop and building into one coloured blob drawn ×1.45 bigger in x and y, and skips the sprite drawing completely — the biggest frame-time win in the game.</li>
+<li><b>🌳 TREES &amp; DECOR</b> toggle — hide (and show again) trees, rocks, grass patches and the floating crystals. On a busy base that's ~350 tree draws per frame gone.</li>
+<li><b>✨ EFFECTS High/Low</b> (was GRAPHICS MODE) — Low now also drops the ocean glints, the shipping-lane glow and draws coastlines with 28 instead of 72 segments.</li>
+<li><b>🚫 BUILDINGS ARE PERMANENT</b> — nothing can destroy a building any more (raids, the Mecha Worm, artillery) and <b>right-click no longer sells your own</b> by accident. ⚙ SETTINGS → <b>INDESTRUCTIBLE BUILDINGS</b> off brings destructible bases and the 50% refund back.</li>
+<li><b>🗺️ THE WORLD IS TWICE AS BIG</b> — 4800 → <b>9600</b> px, with the bases pushed out to a 2600px ring. Islands are ~1990px apart with wide ocean between them, so the march to the middle is a real journey and ships have room to sail. Shipping lanes, outposts, crystals and the city all scaled up.</li>
+<li><b>🎯 NO MORE DRIVE-BY SHOOTING</b> — units only pick a fight when the enemy is CLOSE (210px while marching). Artillery used to shell your base from 430px away as it walked past. Units that HOLD a spot (garrisons, base defenders, idle troops) still shoot at full range.</li>
+<li><b>🏃 IDLE TROOPS MARCH ON THE MIDDLE</b> — with no order your army heads for the CITY (then the nearest point you don't own) and fights whatever it meets on the way, instead of beelining for somebody's spawn.</li>
+<li><b>🕶️ ENEMY BASES: BUILDINGS + TROOPS ONLY</b> — their build grids, dashed outlines and name labels are hidden. ⚙ SETTINGS → <b>ENEMY BASE GRIDS</b> brings the labels back if you want them.</li>
+</ul></div>
+
+<div class="card"><h2>WHAT CHANGED (v7 — previous round)</h2>
 <div>
 <span class="tag">folder reorg</span><span class="tag sea">naval line</span><span class="tag new">water lanes</span>
 <span class="tag new">money capacity</span><span class="tag new">wave-defense garrison</span><span class="tag new">structure power</span>
@@ -63,7 +80,7 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 <tr><td><code>js/core/</code></td><td>8</td><td><code>01-helpers.js</code> <code>02-state.js</code> <code>03-save.js</code> <code>04-audio.js</code> <code>05-camera.js</code> <code>06-fx.js</code> <code>07-loop.js</code> <code>08-init.js</code></td></tr>
 <tr><td><code>js/data/</code></td><td>12</td><td><code>01-world.js</code> <code>02-factions.js</code> <code>03-classes.js</code> <code>04-units.js</code> <code>05-unit-helpers.js</code> <code>06-buildings.js</code> <code>07-unit-buildings.js</code> <code>08-rarities.js</code> <code>09-units-naval.js</code> <code>10-units-expansion.js</code> <code>11-buildings-production.js</code> <code>12-buildings-expansion.js</code></td></tr>
 <tr><td><code>js/maps/</code></td><td>2</td><td><code>01-map.js</code> <code>02-sea.js</code></td></tr>
-<tr><td><code>js/render/</code></td><td>4</td><td><code>01-render.js</code> <code>02-render-units.js</code> <code>03-render-ground.js</code> <code>04-minimap.js</code></td></tr>
+<tr><td><code>js/render/</code></td><td>5</td><td><code>01-render.js</code> <code>02-render-units.js</code> <code>03-render-ground.js</code> <code>04-minimap.js</code> <code>05-potato.js</code> <span class="dim">(new: potato mode)</span></td></tr>
 <tr><td><code>js/rewards/</code></td><td>5</td><td><code>01-crates-data.js</code> <code>02-codes.js</code> <code>03-rewards-data.js</code> <code>04-crates.js</code> <code>05-rewards-ui.js</code></td></tr>
 <tr><td><code>js/systems/</code></td><td>4</td><td><code>01-power.js</code> <code>02-economy.js</code> <code>03-waves.js</code> <code>04-captures.js</code></td></tr>
 <tr><td><code>js/textures/</code></td><td>5</td><td><code>01-sprites.js</code> <code>02-sprites-units.js</code> <code>03-sprites-naval.js</code> <code>04-sprites-new-units.js</code> <code>05-sprites-buildings.js</code></td></tr>
@@ -72,11 +89,12 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 </table></div>
 
 <div class="card"><h2>HOW TO TRY THE NEW STUFF</h2><ul>
+<li><b>LAGGING?</b> ⚙ SETTINGS (left rail) → EFFECTS <b>Low</b>, UNIT GRAPHICS <b>Potato</b>, BUILDING GRAPHICS <b>Potato</b>, TREES &amp; DECOR <b>Off</b>. Everything is live — no reload.</li>
 <li>Press <b>F1</b> → <b>ADMIN</b> for cash (<b>+100M</b>), any building (<b>BP</b> = to backpack) and any unit (<b>SPAWN</b>).</li>
 <li><b>SHOP → UNITS → ⚓ NAVAL</b>: buy a dock, place it near your coast; the ship launches into the water.</li>
 <li>Buy a <b>Bank</b> and some money buildings → watch the <b>🏦 stored</b> row fill up, then click a building to empty its safe.</li>
 <li><b>ADMIN → RAID ALERT</b> (or wait for a wave): your barracks/factories muster a free garrison.</li>
 <li><b>Left rail → 📜 PATCHES</b> shows this changelog inside the game.</li>
 </ul></div>
-<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (146 assertions, all green)</div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (159 assertions, all green)</div>
 </div></body></html>

@@ -65,6 +65,16 @@
 - [x] City center (octagon + plaza)
 - [x] **Water lanes for ships** (v7) — a ring of shipping lanes around the CITY (r 955), 8 radial lanes out to the open sea and an outer loop (r 2260), with bobbing buoys. Ships path on a SEA grid (maps/02-sea.js) and shell the shore from the closest water.
 
+### Performance & quality of life (v8)
+- [x] **POTATO MODE** — ⚙ SETTINGS gained UNIT GRAPHICS and BUILDING GRAPHICS rows, each `Normal` or `Potato`. Potato draws one faction-coloured blob per troop/building (×POTATO.x / ×POTATO.y = ×1.45 bigger) and skips the sprite blit entirely (`js/render/05-potato.js`).
+- [x] **TREES & DECOR** toggle — trees, rocks, grass patches and the floating crystals can be hidden and shown again.
+- [x] **EFFECTS High/Low** (was GRAPHICS MODE) — Low now also drops the ocean glints, the lane glow and halves the coastline detail (72 → 28 segments).
+- [x] **INDESTRUCTIBLE BUILDINGS** (default ON) — nothing can damage a building and right-click no longer sells yours; switching it off restores destructible bases + the 50% refund.
+- [x] **World ×2** — WORLD 4800→9600, RING 1700→2600 (see MAPS). Load stays ~100 ms: `walkableAt` rejects most of the 57 600 walk cells by bounding box before any trig.
+- [x] **No drive-by shooting** — `aggroReach()`: MARCHING units engage at `min(range+60, AGGRO.march 210)`; units that HOLD (garrisons, base defenders, idle troops) keep `range+220`.
+- [x] **Idle troops march on the MIDDLE** — no order → the CITY, then the nearest point you don't own, fighting only what comes close.
+- [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
+
 ---
 
 ## 📁 FOLDER LAYOUT (v7)
@@ -416,14 +426,16 @@ Dev/test buildings (skip): Blender, Farm, LARGE Farm, LARGE ProPyramids, Mitosis
 - [x] City center arena ring
 - [x] Plot layout fixed: no more fused/overlapping islands (world 3800², all gaps water-verified by flood fill)
 - [x] Troop colors = team colors (bug fixed: bot-trained units now carry their bot's faction; sprites tint by faction)
-- [ ] Floating water crystals (animated, decorative)
-- [ ] Water lanes for ships once the naval line lands
+- [x] Floating water crystals (animated, decorative)
+- [x] Water lanes for ships once the naval line lands (v7) — v8 radii: ring 1580, outer loop 3400, radial lanes out to 3460
+- [x] **World ×2** (v8) — WORLD 9600², RING 2600, city r 460, outposts r 1150, crystals r 1400; islands 1990px apart, wide ocean for ships
 
-## ✅ Current build status (round 6, all green)
+## ✅ Current build status (round 8, all green)
 - 8 separate organic islands + bridges + city island + point islets; A* pathfinding; air flies over water
 - 7 named bot factions (distinct colors, troops tinted per team) fight each other, default-march on the CITY
 - Unit types: land / air / armored / stealth (detection: in combat, <70px, or sensor range)
 - Spectre (stealth) + Stealth Bay building (elite/premium crates)
 - Point capture by faction plurality; owner garrisons; v3 saves auto-migrate
-- 65-assertion headless smoke test: `node smoke.js`
+- 65-assertion headless smoke test: `node smoke.js` (**159 assertions in v8**)
+- v8: potato mode, trees/decor toggle, permanent buildings, 2× world, close-range aggro, troops march on the middle
 - Serve: `python3 -m http.server 8000 --bind 0.0.0.0` from this folder

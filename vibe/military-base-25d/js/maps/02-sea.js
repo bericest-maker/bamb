@@ -16,9 +16,9 @@ const isSeaAt = (x,y)=>{ const [cx,cy]=cellOf(x,y); return SEA[cy*GW+cx]===1; };
 const seaCell = (x,y)=>{ const [cx,cy]=cellOf(x,y); return cy*GW+cx; };
 
 // ---- lane geometry ----
-const LANE_RING   = 955;    // inner ring: squeezed between the outpost islets (≤927) and the plot lobes (≥974)
-const LANE_OUT    = 2320;   // how far the radial lanes reach
-const LANE_OUTER  = 2260;   // outer ring that closes the loop (clears the plots, which reach r≈2178)
+const LANE_RING   = 1580;   // inner ring: squeezed between the outpost islets (≤1317) and the plot lobes (≥1852)
+const LANE_OUT    = 3460;   // how far the radial lanes reach
+const LANE_OUTER  = 3400;   // outer ring that closes the loop (clears the plots, which reach r≈3273)
 const LANE_SPOKES = [-157.5,-112.5,-67.5,-22.5,22.5,67.5,112.5,157.5];   // the 8 gaps between plots
 const SEA_LANES = [];       // {ax,ay,bx,by} segments (polylines, so they draw as one path)
 { const N=64;

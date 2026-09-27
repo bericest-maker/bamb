@@ -6,6 +6,17 @@ let uid = 1;
 const nid = ()=> uid++;
 const SAVE_V = 4;   // v4 = radial map + 35 units (v1-v3 saves migrate on load)
 
+// ================= settings (⚙ SETTINGS panel) =================
+// v8: the graphics/perf rows. Every one of them is live — no reload needed.
+//   gfx        High | Low    — Low drops particles, booms, the ocean glint, the lane glow and coastline detail
+//   units      Normal | Potato — Potato draws every troop as one coloured blob (POTATO.x/y × bigger)
+//   blds       Normal | Potato — the same for buildings (footprint pad + blob)
+//   trees      on/off        — trees, rocks, grass patches and the floating crystals
+//   botGrid    on/off        — dashed grid + name label over each enemy base (off = only their buildings/troops)
+//   indestruct on/off        — buildings can never be damaged or sold (see damageBuilding)
+function defaultSettings(){
+  return {music:true, sfx:true, dmg:true, gfx:'High', units:'Normal', blds:'Normal', trees:true, botGrid:false, indestruct:true};
+}
 function defaultState(){
   return {
     v:SAVE_V, grid:SLOT, cash:500, rebirth:0, time:0, wave:0,   // grid = cell size the saved gx/gy use
@@ -14,7 +25,7 @@ function defaultState(){
     points: POINTS_DEFS.map(p=>({...p, owner:'neutral', faction:-1, respawnT:8, cool:0})),
     inventory:[], stats:defaultStats(),
     rewards:{}, codes:{}, achievements:{}, premiumPity:0,
-    settings:{music:true, sfx:true, dmg:true, gfx:'High'},
+    settings:defaultSettings(),
     attackCity:false, placing:null,
     bankT:60,
     bots:[

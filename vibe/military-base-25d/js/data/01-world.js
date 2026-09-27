@@ -4,13 +4,13 @@
 // Layout copies the original map: 8 square plots on a ring around an octagon CITY,
 // each plot with a small lobe island facing the middle, straight bridges (spokes) to the city,
 // 4 outpost islets between the spokes and 4 floating water crystals in the other gaps.
-const WORLD  = {w:4800, h:4800};   // v6: plots are rotated to face the city (like the original) → ring a bit wider so diamonds don't touch
+const WORLD  = {w:9600, h:9600};   // v8: TWICE the old map (4800 → 9600) — wide open ocean between the islands
 const ISLAND = {x:60, y:60, w:WORLD.w-120, h:WORLD.h-120};   // camera clamp area
 const SLOT   = 16;                                            // px per build-grid cell (v6: fine grid — 64 → 16; footprints come from each sprite's real size)
 const GRID_K = 4;                                             // old coarse slot = 4×4 fine cells (presets + old saves are converted with this)
 const PLOT_W = 52, PLOT_H = 36;                               // every plot is 52×36 cells (= 832×576 px, same land as before)
 const MAP_C  = {x:WORLD.w/2, y:WORLD.h/2};                    // map centre = CITY
-const RING   = 1700;                                          // distance city → plot centre
+const RING   = 2600;                                          // distance city → plot centre (v8: 1700 → 2600 — islands pushed apart)
 // forest margin around each build grid; taller than wide because the view squashes y to 72% → plots LOOK square
 const PLOT_MX = 40, PLOT_MY = 168;   // v6: island is a 912×912 square in plot-local space (grid centred), rotated with the plot
 const DEG    = Math.PI/180;
@@ -34,8 +34,8 @@ const BOT_DEFS = [
 
 // outposts sit between spokes (like the original), crystals float in the other 4 gaps
 const OUTPOST_ANGS = [-67.5, 22.5, -157.5, 112.5];   // N-ish, E-ish, W-ish, S-ish (order matches POINTS_DEFS)
-const OUTPOST_R    = 760;
-const CRYSTALS     = [-112.5, -22.5, 67.5, 157.5].map(a=>({...ringPos(a,900), ang:a}));
+const OUTPOST_R    = 1150;                                    // v8: 760 → 1150 (outposts stay between the spokes, further out)
+const CRYSTALS     = [-112.5, -22.5, 67.5, 157.5].map(a=>({...ringPos(a,1400), ang:a}));   // v8: 900 → 1400
 
 // Bot base presets: [buildingType, gx, gy] on the COARSE 13×9 layout (×GRID_K → fine cells; a free spot nearby is used if the real footprint doesn't fit)
 const PRESETS = [
