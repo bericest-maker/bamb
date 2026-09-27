@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Build a Military Base 2.5D — v7 NAVAL UPDATE</title>
+<style>
+:root{--panel:#232b3b;--panel2:#1b2230;--line:#3d4763;--line2:#4a5578;--txt:#eef2f8;--dim:#9aa7bd;--gold:#f5b53f;--green:#5bc24e;--blue:#4a90e2;--red:#d6493f}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1219;color:var(--txt);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;padding:28px 22px 60px;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto}
+h1{font-size:26px;letter-spacing:.5px;margin-bottom:4px}
+.sub{color:var(--dim);font-size:13px;margin-bottom:18px}
+.play{display:inline-block;background:var(--green);border:2px solid #fff;border-radius:10px;color:#04120a;
+  font-weight:900;font-size:19px;letter-spacing:2px;padding:14px 34px;text-decoration:none;margin:6px 0 22px}
+.play:hover{filter:brightness(1.1)}
+.play.ghost{background:transparent;color:var(--txt);border-color:var(--line2);font-size:14px;padding:11px 22px;margin-left:8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+h2{font-size:15px;letter-spacing:1.4px;margin-bottom:10px;color:var(--gold)}
+ul{margin-left:18px;font-size:13.5px}
+li{margin:5px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-size:11px;letter-spacing:1px}
+code{background:#161d2a;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:11.5px}
+code.file{background:transparent;border:0;padding:0;color:var(--dim)}
+.dim{color:var(--dim)}
+.tag{display:inline-block;background:rgba(91,194,78,.15);color:var(--green);border:1px solid rgba(91,194,78,.4);
+  border-radius:20px;font-size:11px;font-weight:800;padding:2px 10px;margin:0 6px 6px 0}
+.tag.new{background:rgba(245,181,63,.15);color:var(--gold);border-color:rgba(245,181,63,.45)}
+.tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
+</style></head><body><div class="wrap">
+<h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
+<div class="sub">v7 · NAVAL UPDATE · the code is now grouped in folders · <span class="dim">fan project, not affiliated with Roblox</span></div>
+
+<a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
+<a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
+<a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
+
+<div class="card"><h2>WHAT CHANGED (v7)</h2>
+<div>
+<span class="tag">folder reorg</span><span class="tag sea">naval line</span><span class="tag new">water lanes</span>
+<span class="tag new">money capacity</span><span class="tag new">wave-defense garrison</span><span class="tag new">structure power</span>
+<span class="tag new">scaling bounties</span><span class="tag new">spawn footprints</span><span class="tag new">officer aura</span>
+<span class="tag new">patch notes panel</span>
+</div>
+<ul>
+<li><b>Codebase split into 12 folders</b> — <code>core</code>, <code>data</code>, <code>maps</code>, <code>textures</code>, <code>systems</code>, <code>buildings</code>, <code>units</code>, <code>rewards</code>, <code>achievements</code>, <code>render</code>, <code>ui</code>, <code>admin</code>. Same load order (index.html), nothing lost — the 500-line files were split by concern.</li>
+<li><b>⚓ NAVAL LINE</b> — Speedboat, Gunboat, Frigate, Submarine, Zumwalt, Battleship, Carrier + 7 dock buildings and a <b>NAVAL shop tab</b>. Submarine &amp; Zumwalt are STEALTH.</li>
+<li><b>WATER LANES</b> — a ring of shipping lanes around the CITY, 8 radial lanes to the open sea and an outer loop, with bobbing buoys. Ships sail a SEA grid and shell the shore from the water.</li>
+<li><b>MONEY CAPACITY</b> — money buildings store what they earn (up to their Capacity) and pay out every 30s, or the moment you <b>click the building</b>. New HUD row shows stored/capacity. The <b>Bank pays 5% of stored cash</b>.</li>
+<li><b>WAVE-DEFENSE GARRISON</b> — while a raid is incoming every unit building trains FREE defenders of its own type (MaxCap each, 24 slots base-wide). They stand down when the base is safe.</li>
+<li><b>STRUCTURE POWER</b> split from army power — the leaderboard shows both.</li>
+<li><b>KILL BOUNTIES scale with the victim</b> (wave HP buff × unit tier).</li>
+<li><b>Unit footprints matter when spawning</b> — recruits take a free spot their own size.</li>
+<li><b>New units</b> — Light Tank, Mantis, TIGR, Swarm Drone, PZH 2000, Leopard 2A5, ICBM Launcher, Centurion (UNIQUE), F-15, F-35, SU-47, KA-52 and the <b>Officer</b> (support: +25% damage aura).</li>
+<li><b>New buildings</b> — 9 more production steps (Advanced Solar → Automated Factory) and 20 new unit buildings incl. Submarine Cavern, Centurion Support Site and Airship Docks.</li>
+<li><b>📜 PATCH NOTES panel</b> in the game's left rail — the same list you're reading now.</li>
+</ul></div>
+
+<div class="card"><h2>FOLDER LAYOUT (js/)</h2>
+<table><tr><th>Folder</th><th>Files</th><th>Contents</th></tr>
+<tr><td><code>js/achievements/</code></td><td>3</td><td><code>01-achievements-data.js</code> <code>02-achievements.js</code> <code>03-achievements-ui.js</code></td></tr>
+<tr><td><code>js/admin/</code></td><td>1</td><td><code>01-admin.js</code></td></tr>
+<tr><td><code>js/buildings/</code></td><td>5</td><td><code>01-placement.js</code> <code>02-production.js</code> <code>03-bots.js</code> <code>04-turrets.js</code> <code>05-support.js</code></td></tr>
+<tr><td><code>js/core/</code></td><td>8</td><td><code>01-helpers.js</code> <code>02-state.js</code> <code>03-save.js</code> <code>04-audio.js</code> <code>05-camera.js</code> <code>06-fx.js</code> <code>07-loop.js</code> <code>08-init.js</code></td></tr>
+<tr><td><code>js/data/</code></td><td>12</td><td><code>01-world.js</code> <code>02-factions.js</code> <code>03-classes.js</code> <code>04-units.js</code> <code>05-unit-helpers.js</code> <code>06-buildings.js</code> <code>07-unit-buildings.js</code> <code>08-rarities.js</code> <code>09-units-naval.js</code> <code>10-units-expansion.js</code> <code>11-buildings-production.js</code> <code>12-buildings-expansion.js</code></td></tr>
+<tr><td><code>js/maps/</code></td><td>2</td><td><code>01-map.js</code> <code>02-sea.js</code></td></tr>
+<tr><td><code>js/render/</code></td><td>4</td><td><code>01-render.js</code> <code>02-render-units.js</code> <code>03-render-ground.js</code> <code>04-minimap.js</code></td></tr>
+<tr><td><code>js/rewards/</code></td><td>5</td><td><code>01-crates-data.js</code> <code>02-codes.js</code> <code>03-rewards-data.js</code> <code>04-crates.js</code> <code>05-rewards-ui.js</code></td></tr>
+<tr><td><code>js/systems/</code></td><td>4</td><td><code>01-power.js</code> <code>02-economy.js</code> <code>03-waves.js</code> <code>04-captures.js</code></td></tr>
+<tr><td><code>js/textures/</code></td><td>5</td><td><code>01-sprites.js</code> <code>02-sprites-units.js</code> <code>03-sprites-naval.js</code> <code>04-sprites-new-units.js</code> <code>05-sprites-buildings.js</code></td></tr>
+<tr><td><code>js/ui/</code></td><td>10</td><td><code>01-ui-core.js</code> <code>02-shop.js</code> <code>03-tooltips.js</code> <code>04-backpack.js</code> <code>05-leaderboard.js</code> <code>06-settings.js</code> <code>07-rebirth.js</code> <code>08-tutorial.js</code> <code>09-input.js</code> <code>10-patch-notes.js</code></td></tr>
+<tr><td><code>js/units/</code></td><td>5</td><td><code>01-spawn.js</code> <code>02-movement.js</code> <code>03-spatial-grid.js</code> <code>04-ai.js</code> <code>05-combat.js</code></td></tr>
+</table></div>
+
+<div class="card"><h2>HOW TO TRY THE NEW STUFF</h2><ul>
+<li>Press <b>F1</b> → <b>ADMIN</b> for cash (<b>+100M</b>), any building (<b>BP</b> = to backpack) and any unit (<b>SPAWN</b>).</li>
+<li><b>SHOP → UNITS → ⚓ NAVAL</b>: buy a dock, place it near your coast; the ship launches into the water.</li>
+<li>Buy a <b>Bank</b> and some money buildings → watch the <b>🏦 stored</b> row fill up, then click a building to empty its safe.</li>
+<li><b>ADMIN → RAID ALERT</b> (or wait for a wave): your barracks/factories muster a free garrison.</li>
+<li><b>Left rail → 📜 PATCHES</b> shows this changelog inside the game.</li>
+</ul></div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (146 assertions, all green)</div>
+</div></body></html>

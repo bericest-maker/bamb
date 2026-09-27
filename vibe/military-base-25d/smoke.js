@@ -317,8 +317,12 @@ B.placeBuilding('hospital',1,6);
   const w=B.mkUnit('tank','p',hs.x+50,hs.y); w.hp=10; S().units.push(w); pump(2200);
   assert(w.hp>=20,'Field Hospital heals nearby units'); }
 S().units=[];
-S().cash=100000; B.placeBuilding('bank',3,7); S().bankT=0.01; const c0=S().cash; B.bankTick(0.02);
-assert(S().cash-c0>=4999,`Bank pays 5% interest (+${Math.round(S().cash-c0)})`);
+S().cash=100000; B.placeBuilding('bank',3,7); B.placeBuilding('industrial',6,7);
+{ const ind=S().buildings[S().buildings.length-1]; ind.stored=200000;
+  S().bankT=0.01; const c0=S().cash; B.bankTick(0.02);
+  assert(S().cash-c0>=9999,`Bank pays 5% of STORED cash (+${Math.round(S().cash-c0)})`);
+  ind.stored=0; S().bankT=0.01; const c1=S().cash; B.bankTick(0.02);
+  assert(S().cash===c1,'Bank pays nothing when the safes are empty'); }
 // ---- shop rules ----
 const rbSave=S().rebirth; S().rebirth=0;
 assert(!!B.buyBlock('monument'),'Monument needs a rebirth');
@@ -370,6 +374,105 @@ assert(G('load')().v===4,'v3 save migrates to v4 on load');
   assert(!S().units.some(u=>u.dead),'dead units are compacted out after the frame');
   console.log(`  [perf] 300-unit brawl: 3s of game time in ${ms}ms (${S().units.length} left)`);
   S().units=[]; S().admin.noRespawn=false; }
+
+// ================= v7: money capacity, naval line, garrisons, bounties, structure power =================
+S().units=[]; S().admin.noRespawn=true; S().buildings=S().buildings.filter(b=>b.owner!=='p');
+// ---- money capacity: buildings store what they earn, up to their cap, and pay out ----
+B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
+{ const [s1,s2]=S().buildings.filter(b=>b.owner==='p');
+  const CAP=G('BUILD').solar.cap;
+  assert(CAP>0,`solar has a money capacity ($${CAP})`);
+  S().cash=0; s1.stored=0; pump(20*1000);
+  assert((s1.stored||0)>0,`money is STORED inside the building ($${Math.floor(s1.stored)})`);
+  const before=S().cash, stored=s1.stored;
+  const paid=G('collectStored')(s1);
+  assert(paid>0 && Math.abs(S().cash-before-paid)<1 && s1.stored===0,`clicking a building empties its safe (+$${paid})`);
+  s1.stored=CAP*5; pump(1000); assert(s1.stored<=CAP+1,`storage never exceeds the cap (${Math.floor(s1.stored)} <= ${CAP})`);
+  s1.stored=0; s2.stored=0; }
+
+// ---- structure power vs army power ----
+{ S().units=[]; const b0=G('structurePower')();
+  S().units.push(B.mkUnit('tank','p',PC.x,PC.y));
+  const a0=G('armyPower')(), t0=G('totalPower')();
+  assert(t0===b0+a0,`totalPower = structure (${b0}) + army (${a0})`);
+  assert(a0===G('UNITS').tank.power,'a tank counts as army power');
+  S().units=[]; }
+
+// ---- kill bounty scales with the victim ----
+{ const rifle=B.mkUnit('rifle','e',0,0), mammoth=B.mkUnit('mammoth','e',0,0);
+  const rBase=G('UNITS').rifle.reward, mBase=G('UNITS').mammoth.reward;
+  assert(G('killReward')(rifle)>=rBase,`rifleman bounty >= base (${G('killReward')(rifle)})`);
+  assert(G('killReward')(mammoth)>mBase,`heavy bounty scales with tier (${G('killReward')(mammoth)} > ${mBase})`);
+  mammoth.maxHp=mammoth.maxHp*2;
+  assert(G('killReward')(mammoth)>mBase*1.8,'a wave-buffed unit pays more'); }
+
+// ---- officer aura ----
+{ S().units=[]; const off=B.mkUnit('officer','p',PC.x,PC.y), buddy=B.mkUnit('rifle','p',PC.x+40,PC.y);
+  S().units.push(off,buddy); G('refreshDetectors')(1);
+  const near=G('auraFor')(buddy), far=G('auraFor')(B.mkUnit('rifle','p',PC.x+900,PC.y));
+  assert(near===1.25,`officer gives +25% damage to allies nearby (×${near})`);
+  assert(far===1,'allies out of range get nothing'); S().units=[]; }
+
+// ---- wave-defense garrison ----
+{ S().buildings=S().buildings.filter(b=>b.owner!=='p');
+  S().units=[]; S().admin.noRespawn=false;
+  B.placeBuilding('barracks',1,1); B.placeBuilding('tankfac',5,1);
+  S().waveAlert=60; S().units=[];
+  pump(25*1000);
+  const defs=S().units.filter(u=>u.wd!=null);
+  assert(defs.length>0,`unit buildings train a free garrison while a raid is incoming (${defs.length} defenders)`);
+  { const keep=S().units; S().units=defs;
+    assert(defs.every(u=>u.home==null)&&G('capUsed')()===0,'garrison units are FREE (they do not eat the troop cap)');
+    S().units=keep; }
+  const perBuilding={}; for(const u of defs) perBuilding[u.wd]=(perBuilding[u.wd]||0)+1;
+  assert(Object.values(perBuilding).every(n=>n<=G('wdCapOf')(G('BUILD').barracks)),`each building respects its MaxCap (${Object.values(perBuilding)})`);
+  S().waveAlert=0; S().units=defs; G('updateWaveDefense')(0.1);
+  assert(S().units.length===0,'the garrison stands down when the base is safe');
+  S().units=[]; S().admin.noRespawn=true; }
+
+// ---- naval: the sea grid, water lanes and ships ----
+{ const SEA=G('SEA');
+  assert(G('SEA_LANES').length>0 && G('SEA_BUOYS').length>0,`shipping lanes exist (${G('SEA_LANES').length} segments, ${G('SEA_BUOYS').length} buoys)`);
+  const openSea=G('ringPos')(-22.5,1400);                     // the gap between two plots
+  assert(G('isSeaAt')(openSea.x,openSea.y) && !B.walkableAt(openSea.x,openSea.y),'open water is sea, not land');
+  assert(!G('isSeaAt')(PC.x,PC.y),'your plot is not sea');
+  const lanes=G('SEA_LANES').filter(l=>B.walkableAt((l.ax+l.bx)/2,(l.ay+l.by)/2));
+  assert(lanes.length===0,'every shipping lane runs through water');
+  // a ship sails across the ocean, a tank cannot
+  S().units=[];
+  const ship=B.mkUnit('frigate','p',G('nearestSea')(PC.x,PC.y).x,G('nearestSea')(PC.x,PC.y).y);
+  S().units.push(ship);
+  const goal=G('coastGoal')(MC.x,MC.y), d0=Math.hypot(ship.x-goal.x,ship.y-goal.y);
+  S().units.forEach(u=>{ u.order={x:goal.x,y:goal.y}; });
+  pump(20*1000);
+  const d1=Math.hypot(ship.x-goal.x,ship.y-goal.y);
+  assert(d1<d0,`a frigate sailed across the water toward its target (${Math.round(d0)} -> ${Math.round(d1)} px)`);
+  assert(G('isSeaAt')(ship.x,ship.y),'the ship stayed in the water');
+  // naval buildings launch their ships into the sea
+  S().units=[]; S().buildings=S().buildings.filter(b=>b.owner!=='p');
+  B.placeBuilding('gunboatpier',1,4);
+  const pier=S().buildings[S().buildings.length-1]; B.bPos(pier);
+  pier.t=0; G('productionTick')(0.02);
+  const boats=S().units.filter(u=>u.type==='gunboat');
+  assert(boats.length>0 && boats.every(b=>G('isSeaAt')(b.x,b.y)||B.walkableAt(b.x,b.y)),'the Gunboat Pier launches its boat toward the water');
+  S().units=[]; S().buildings=S().buildings.filter(b=>b.owner!=='p'); }
+
+// ---- new content is wired up: shop tabs, sprites, buildings ----
+{ const U=G('UNITS'), BLD=G('BUILD'), SPR=G('SPR');
+  assert(['speedboat','gunboat','frigate','submarine','zumwalt','battleship','carrier'].every(k=>U[k]&&U[k].sea),'7 ships in the naval line');
+  assert(['lighttank','icbm','leopard','pzh','mantis','tigr','swarmdrone','f15','f35','su47','ka52','officer','centurion'].every(k=>U[k]),'P2/P3 expansion units present');
+  assert(BLD.submarinecavern&&BLD.submarinecavern.unit==='submarine','Submarine Cavern trains the Submarine');
+  assert(BLD.centurionsite&&BLD.centurionsite.unit==='centurion','Centurion Support Site trains the Centurion');
+  assert(BLD.zeppeldock.name==='Airship Docks','Airship Docks (Zeppelin) is in');
+  assert(Object.values(BLD).filter(b=>b.cap).length>=20,`${Object.values(BLD).filter(b=>b.cap).length} money buildings have a Capacity`);
+  S().shopTab='units'; S().shopSub='sea';
+  let ok=true; try{ G('renderShop')(); }catch(e){ ok=false; console.error(e.message); }
+  assert(ok,'the NAVAL shop tab renders');
+  S().shopTab='production'; S().shopSub='light';
+  ok=true; try{ for(const k of Object.keys(BLD)) G('tipHTML')(k); }catch(e){ ok=false; console.error('  tip',e.message); }
+  assert(ok,'every tooltip still renders (incl. capacity + bounty rows)');
+  S().units=[]; }
+S().admin.noRespawn=false;
 
 console.log(`\n${T.frames} frames simulated. ${process.exitCode?'SMOKE TEST FAILED':'ALL SMOKE TESTS PASSED'}`);
 process.exit(process.exitCode||0);

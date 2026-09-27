@@ -185,6 +185,7 @@ D = {
  'initAudio':'lazy WebAudio on first gesture', 'tone':'one oscillator note (optional slide)', 'noise':'filtered noise burst', 'sfx':'named one-shots (see Sound effects)', 'musicTick':'soft 4-chord chiptune loop',
  # 08 sprites
  'reg':'register a sprite {w,h,draw(g,t,u)} into SPR', 'O':'shared dark outline style', 'drawCrateIcon':'crate box + rarity colour + label',
+ 'ship':'TEMPLATE → ship sprite (wake, hull, waterline, superstructure, mast, turrets, flight deck, VLS, missile rack)',
  'infantry':'TEMPLATE → soldier sprite (helmet type, gun length, scope, rocket tube, medic cross, bulk)',
  'vehicle':'TEMPLATE → ground vehicle (tracks/wheels, hull, turret, twin gun, flak, rocket rack, artillery barrel, radar dish, rail glow)',
  'heliT':'TEMPLATE → helicopter (size, door gunner, guns, twin tail, angular stealth body)',
@@ -239,6 +240,39 @@ D = {
  'drawItemIcon':'building icon for cards', 'renderBackpack':'backpack cards (place / open crate)', 'drawCrateIconMini':'small crate icon',
  'renderRewards':'REWARDS claim list', 'renderRobux':'premium crate offers (in-game cash)', 'renderSettings':'settings toggles',
  'renderRebirth':'rebirth preview', 'doRebirth':'rebirth: reset base except golden + Monument, points neutral, cash 500', 'bindToggle':'wire a settings toggle',
+ # ---- v7: money capacity, garrisons, naval line ----
+ 'isSea':'unit is a SHIP (UNITS.sea) — it sails the water grid, not the land grid',
+ 'unitRadius':'footprint radius of a unit (9 + 5·size) — spawn spacing + crowd separation',
+ 'killReward':'BOUNTY for a kill = base reward × wave HP buff × tier (1 + power/40000, capped at ×3)',
+ 'isSeaAt':'is this world point open water? (SEA grid)', 'seaCell':'world point → SEA grid index',
+ 'nearestSea':'closest water cell to a point (spawning ships / getting un-beached)',
+ 'coastGoal':'where a ship should stand to shell a LAND target (cached per target cell)',
+ 'seaAstar':'A* on the SEA grid (same code as land A*, different grid)',
+ 'seaAstarShared':'sea A* with a 2s per-cell-pair cache (perf, like astarShared)',
+ 'stepSeaUnit':'ship movement: straight to the water if beached, then sea A* / coastal approach',
+ 'storedTotal':'cash sitting inside all your buildings (what the Bank pays interest on)',
+ 'storedCap':'total money capacity of all your buildings',
+ 'collectStored':'empty one building’s safe into your wallet (click a building to do this)',
+ 'collectAllStored':'empty every safe (admin button)',
+ 'spawnSpotFor':'pick a spawn point for a trained unit: water for ships, else the closest spot where its FOOTPRINT fits',
+ 'wdCapOf':'wave-defense MaxCap of a unit building (cheap buildings field a squad, the top-end one vehicle)',
+ 'wdCount':'defenders currently fielded by one building', 'wdSlots':'troop slots used by your whole garrison',
+ 'standDownDefenders':'dismiss the garrison when the raid is over',
+ 'updateWaveDefense':'while waveAlert > 0 every unit building trains FREE defenders up to its MaxCap',
+ 'productionTick':'per-building tick: earn → store (capped) → pay out every cycle; train units; garrison upkeep',
+ 'structurePower':'StructurePower = Σ power of YOUR buildings', 'armyPower':'Σ power of YOUR units',
+ 'powerSplit':'{structure, army, total} — shown in the leaderboard',
+ 'incomeMult':'the combined income multiplier (rebirth × outposts+city × logistics)',
+ 'updateWaveAlert':'keeps the "raid incoming" timer alive while a wave is fresh or hostiles are near your plot',
+ 'waveAlert':'seconds of raid alert left (>0 → garrisons muster)',
+ 'waveTick':'wave + boss countdown (skipped when the admin freezes them)',
+ 'pointRespawnTick':'capture-point garrison upkeep (one replacement troop per timer)',
+ 'botRaidTick':'bots dispatch idle troops to march on the CITY',
+ 'botRebuildTick':'destroyed bot bases rebuild after 25s',
+ 'fxTick':'advance tracers / floats / booms / particles one frame',
+ 'auraFor':'support aura multiplier of an attacker (Officer: ×1.25 to allies in 280px)',
+ 'drawSeaLanes':'the water lanes: dashed route + bobbing buoys (drawn under the islands)',
+ 'renderPatchNotes':'the 📜 PATCHES panel',
  # 15/16/17/19
  'buildingAt':'world point → building under it', 'cancelPlacement':'drop placement ghost', 'showTut':'first-launch tutorial',
  'frame':'RAF wrapper → update + render', 'update':'THE tick: camera, income, production (cap by size), bot raids, detectors, turrets, hospitals, banks, bot rebuilds, units, garrisons, waves/boss, captures, fx, power+achievements, HUD, autosave',
@@ -253,6 +287,8 @@ ADMIN_D = {
  'go':'camera teleport — coords derived from the map (base/city/n/ne/e/se/sw/w/nw/boss)', 'tickStats':'live debug readout',
  'setBotAll':'one preset for all bots', 'cashCustom':'cash from #aCash (K/M/B)', 'giveAllBuildings':'one of every building → backpack',
  'crate':'give a crate', 'rebirth':'add rebirths or force one', 'claimRewards':'claim all ready rewards', 'exportSave':'state JSON → #aSave',
+ 'collectAll':'v7: empty every money building’s safe into your wallet',
+ 'garrison':'v7: muster the wave-defense garrison / stand it down', 'raid':'v7: raise the raid alert (60s)',
  'importSave':'#aSave JSON (v1–v4) → save → reload', 'wipe':'delete save → reload',
 }
 NESTED_D = {
@@ -270,7 +306,9 @@ HANDLER_D = {
  "window|mouseup":'finish drag select / click / Ctrl-move', "#tutNext|onclick":'advance tutorial', "cv|wheel":'zoom around cursor',
  "document|pointerdown":'unlock WebAudio', "window|beforeunload":'save on close', "#btnAdmin|onclick":'open admin', "#aClose|onclick":'close admin',
  "window|resize":'resize canvas', "#btnCrateDone|onclick":'close crate reveal', "#btnRebirthYes|onclick":'confirm rebirth',
- "#aSpeed .abtn|forEach":'admin time scale', "#aGod|onclick":'GOD MODE: your units + YOUR buildings take no damage',
+ "#aSpeed .abtn|forEach":'admin time scale',
+ "#stStoredRow|n/a":'v7 HUD: cash stored inside your buildings (click a building to empty it)',
+ "#p-patch|rail":'v7: 📜 PATCHES panel — what changed in every build', "#aGod|onclick":'GOD MODE: your units + YOUR buildings take no damage',
  "#aFreeze|onclick":'freeze wave/boss timers', "#aNoResp|onclick":'stop garrison respawn',
 }
 FILE_D = {
@@ -297,6 +335,7 @@ for i in range(1, 6):
 
 # ---------- CHANGELOG (newest first) — ⚠️ one line per change ----------
 CHANGELOG = [
+ ('2026-09-27', '**v7: NAVAL UPDATE + folder reorganisation + money capacity.** `js/` is no longer one flat list of 24 files — it is now **12 folders**: `core` (helpers/state/save/audio/camera/fx/loop/init), `data` (world, factions, classes, units, unit-helpers, buildings, unit-buildings, rarities + the two new unit/building tables), `maps` (island map + **02-sea.js**: the SEA grid, shipping lanes, ship navigation), `textures` (sprite library: base sprites, unit templates, naval ships, new units, buildings), `systems` (power, economy, waves, captures), `buildings` (placement, **production: money capacity + training + wave-defense garrison**, bots, turrets, support), `units` (spawn, movement, spatial grid, AI, combat), `rewards` (crate tables, codes, rewards data + UI), `achievements` (data, check loop, 🏆 panel), `render` (frame, units, ground, minimap), `ui` (core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes), `admin`. Load order is still index.html; nothing was lost, several 500-line files were split by concern. \u26a1 **Naval line:** 7 ships (Speedboat → Carrier; Submarine + Zumwalt are STEALTH) with 7 dock buildings and a ⚓ NAVAL shop tab. \u26a1 **Water lanes:** a ring of shipping lanes around the CITY (r 955, squeezed between the outpost islets and the plot lobes), 8 radial lanes out to the open sea and an outer loop (r 2260) — drawn as buoy lines, used by ship pathfinding (SEA grid + sea A*, coastal approach to shell land targets). \u26a1 **Money Capacity:** every money building stores what it earns up to its Capacity (≈10 min of production) and pays out every 30s — or the instant you click it (new HUD row shows stored/cap). The **Bank now pays 5% of STORED cash**. 9 new production buildings (Advanced Solar → Automated Factory). \u26a1 **Wave-defense garrisons:** while a raid is incoming (or hostiles are within 1300px of your plot) every unit building trains FREE defenders of its own type up to its MaxCap (24 slots base-wide); they stand down when the base is safe. \u26a1 **StructurePower** split from army power (leaderboard shows both). \u26a1 **Kill bounties** scale with the victim (wave HP buff × tier). \u26a1 Unit **footprints** now matter when spawning (recruits look for a free spot their own size). \u26a1 New units: Light Tank, Mantis, TIGR, Swarm Drone, PZH 2000, Leopard 2A5, ICBM Launcher, **Centurion (UNIQUE)**, F-15, F-35, SU-47, KA-52, **Officer** (support: +25% damage aura) + 20 new buildings incl. Submarine Cavern, Centurion Support Site and Airship Docks. \u26a1 Your own stealth units (incl. submarines) are no longer invisible to you. \u26a1 New 📜 PATCHES panel (left rail) + admin buttons (EMPTY ALL SAFES / MUSTER GARRISON / RAID ALERT).'),
  ('2026-09-26', '**v6: fine grid + rotated plots.** Build grid 13×9 slots of 64px → 52×36 cells of 16px; every footprint is computed from its sprite (width = model × 1.3 rounded up to cells, depth ≈ half) so the pad hugs the model. Bot presets keep their coarse layout (×4) and slide to the nearest free spot; old saves convert (grid field) and overlapping buildings go to the backpack. Bot plots are rotated to face the city like the original (diagonals are diamonds): pads, grids, outlines, trees, minimap, walkable shape and click hit-tests follow the rotation. Square 912px islands, RING 1450→1700, WORLD 4800, city r 330, bigger lobes, outposts r 760 turned to face the city. Max zoom 1.6× → 3×. Stronger grid lines.'),
  ('2026-09-26', '**v5: compact map + real sizes + performance.** Map shrunk like the original (WORLD 5600→4000, SLOT 85→64, RING 2000→1450, city r 400→300, shorter bridges, outposts r 610, crystals r 860). Buildings are drawn at their real footprint size on a faction-edged concrete pad; units scale with troop size. Admin: scrollable + searchable building/unit lists, QTY 1–1000 (BP/PL/SPAWN), FOR (you or any bot), spiral spawn on walkable land. Perf (1400 units: 40→9 ms/frame sim): spatial hash with faction bitmask, cached targets (~3×/s) and foe scans (~5×/s), A* budget 24/frame + shared paths, deferred unit removal, sprite cache (offscreen canvases), minimap 10×/s, fx caps, crowd separation. Fixes: selection rings never drew (selUnits holds objects), placement ghost used old 50/100px slot, typing in inputs panned the camera, splash could kill a unit twice (double reward), dead building could still be hit.'),
  ('2026-09-26', '**v4 big update.** Split game.js into 24 files in js/ (load order = index.html). New radial map copied from ref-map-original.png: 8 square forest plots on a ring, a lobe island each, octagon CITY, 8 long bridges, 4 outpost islets with bridges, 4 floating crystals. 35 units in 4 classes (10 light / 10 armored / 10 air / 5 stealth) with the original damage-modifier system (×0 = can\'t target), splash, medic heal, saboteur ×3 vs buildings, drone = flying light. One building per unit (generated sprites with a unit signboard) + shop sub-tabs. New production (wind, iron mines, steel, refinery, power plant, skyscraper, fusion), special (pillbox, radar, SAM site, field hospital, fortress cannon, bank, Monument [rebirth]) and decor. Hover stat tooltips, 🏆 15 achievements, 📊 leaderboard, troop cap by unit size, rarity colours fixed, faction-coloured building flags. Save v4 (v1–v3 migrate). Tests: 104 checks; gen_info v3 reads live data.'),
@@ -306,7 +345,8 @@ CHANGELOG = [
 ]
 # ---------- KNOWN ISSUES (remove when fixed) ----------
 KNOWN_ISSUES = [
- ('balance', '35 new units / 45 new buildings use first-pass numbers adapted from the original — expect tuning.'),
+ ('balance', '55 units / 100 buildings use first-pass numbers adapted from the original — expect tuning (especially the naval line and the new production ladder).'),
+ ('naval', 'Ships sail the open sea but have no water-lane patrol AI yet: with no orders they head for the nearest enemy building and shell it from the coast.'),
  ('visual check', 'The map/sprites were checked in headless renders only; small overlaps of signboards on 1×1 buildings are possible.'),
 ]
 
@@ -401,6 +441,30 @@ for i, f in enumerate(JS_FILES):
     fn = [n for ff, _, n, _ in funcs if ff == f]
     A(f"| {i+1} | `{f}` | {len(SRC[f])} | {file_head.get(f,'')} | {len(fn)} |")
 A("")
+FOLDER_D = {
+ 'core':'the engine: helpers, state, save, audio, camera+ground texture, fx, the main loop and boot',
+ 'data':'pure DATA tables: world/map layout, factions, classes, units, buildings, rarities (+ the two new unit/building tables)',
+ 'maps':'the island map (shapes, walk grid, A*, city flow field) and the SEA: water lanes, sea grid, ship navigation',
+ 'textures':'the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation)',
+ 'systems':'cross-cutting game systems: power, economy, waves/boss, capture points',
+ 'buildings':'everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support',
+ 'units':'units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties',
+ 'rewards':'crate tables, redeem codes, the REWARDS list + its panel',
+ 'achievements':'the achievement list, the unlock loop and the 🏆 panel',
+ 'render':'drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap',
+ 'ui':'panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes',
+ 'admin':'the F1 admin/debug drawer',
+}
+flds = {}
+for f in JS_FILES:
+    d = f.split('/')[1] if '/' in f else '.'
+    flds.setdefault(d, []).append(f)
+A("## 📁 Folder map (v7)\n")
+A("`js/` is grouped by concern — each folder is a layer, and files inside it load in numeric order.\n")
+A("| Folder | Files | Lines | What lives there |\n|---|---|---|---|")
+for d, fs in flds.items():
+    A(f"| `js/{d}/` | {len(fs)} | {sum(len(SRC[f]) for f in fs)} | {FOLDER_D.get(d,'⚠️ undocumented — add to FOLDER_D')} |")
+A("")
 W_, P_ = DATA['WORLD'], DATA['PLOT']
 A("## 🧮 Core constants\n\n| Const | Value | Meaning |\n|---|---|---|")
 A(f"| `WORLD` | {W_['w']}×{W_['h']} | world px (water outside islands) |")
@@ -456,7 +520,7 @@ for tab, label in DATA['SHOP_TABS']:
     A(f"### {label} ({len(rows)})\n")
     if tab == 'units':
         A("| id | Name | Sub-tab | Trains | Every s | Cost | Size | Power | HP | Needs PWR | Rarity | Sprite style |\n|---|---|---|---|---|---|---|---|---|---|---|---|")
-        for k, b in sorted(rows, key=lambda r: (DATA['CLASSES'].index(r[1]['sub']), r[1]['cost'])):
+        for k, b in sorted(rows, key=lambda r: ((DATA['CLASSES']+['sea']).index(r[1]['sub']), r[1]['cost'])):
             A(f"| `{k}` | {b['name']} | {b['sub']} | {U[b['unit']]['name']} | {b['spawnEvery']} | {fmt_money(b['cost'])} | {b['w']}×{b['h']} | {b['power']} | {b['hp']} | {b.get('req','–')} | {b['rar']} | {b.get('style') or 'hand-drawn'} |")
     else:
         A("| id | Name | Cost | Size | $/s | Power | HP | Needs | Rarity | Info |\n|---|---|---|---|---|---|---|---|---|---|")

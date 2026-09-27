@@ -13,17 +13,18 @@
 - [x] Shop tabs like the original: PRODUCTION / UNITS / DECORATION / SPECIAL (+ UNITS sub-tabs per class) — v4
 - [x] Tooltips with full stats: classes, damage modifiers, footprint (UnitSize)
 - [x] Achievements panel (see ACHIEVEMENTS) — v4 🏆
-- [x] Leaderboard stub — v4 📊 (8 factions by power + flags held)
+- [x] Leaderboard stub — v4 📊 (8 factions by power + flags held + v7 structure/army split)
 - [x] Crate UI for the full rarity ladder (new colors for Limited / Unique / Rebirth)
+- [x] **📜 PATCH NOTES panel** (v7) — every build's changes, readable in game (left rail)
 
 ### Game (mechanics)
 - [x] **Damage modifiers (matchups)** (v4) — damage multiplied per TARGET class (e.g. Heavy Tank: armored ×1.2, light ×0.7, air ×0.5, stealth ✝; Anti-Air Vehicle: air ×1.5, ground ✝). Replaces/augments current flat armor.
-- [x] **Multi-class units** (v4: Phantom, Spectre, Saboteur, Stealth Heli, B-2) — 2+ classes per unit (Party Wagon = Light+Armored, Aerial Assault Carrier = Air+Armored, Phantom = Stealth+Armored…)
-- [~] **UnitSize footprints** — v4: size 1–5 counts toward the troop cap (no spawn space yet)
-- [ ] **Wave-defense garrisons** — unit buildings auto-train defenders up to MaxCap while a wave is incoming (original's `WaveDefenseUnitProduction`)
-- [ ] **Money Capacity** — production buildings store cash up to a cap (needed for Bank % income)
-- [x] **Bank building** — v4: 5% of cash every 60s (max $50k, max 3)
-- [ ] StructurePower = per-building power score (leaderboard/defense metric)
+- [x] **Multi-class units** (v4: Phantom, Spectre, Saboteur, Stealth Heli, B-2) — 2+ classes per unit
+- [x] **UnitSize footprints** — v4 cap counting + **v7 spawn spacing** (a trained unit looks for a free spot its own size instead of stacking on the building)
+- [x] **Wave-defense garrisons** (v7) — while a raid is incoming (or hostiles are within 1300px of your plot) every unit building trains FREE defenders of its own type, up to its MaxCap (24 troop slots base-wide). They stand down when the base is safe. (original's `WaveDefenseUnitProduction`)
+- [x] **Money Capacity** (v7) — every money building stores what it earns up to a cap (≈10 min of production) and pays out every 30s, or the instant you click it (new HUD row: stored/cap)
+- [x] **Bank building** — v4; v7: pays 5% of the cash **stored inside your buildings** (original: IncomePercent on capacity)
+- [x] **StructurePower** (v7) — a building's power score is tracked separately from army power; the leaderboard shows both
 
 ### Achievements
 (not in the uploaded data — design our own)
@@ -33,52 +34,75 @@
 ### Rewards
 - [x] Extend rarity ladder: Common → Uncommon → Rare → Epic → Legendary → Mythic → **Limited → Unique → Rebirth** (skip Dev)
 - [x] Crate drop pools include the new units/buildings (see UNITS / BUILDINGS below)
-- [ ] Kill rewards scale with unit power
+- [x] **Kill rewards scale with unit power** (v7) — bounty = base reward × wave HP buff × tier (×1 rifleman … ×3 Centurion)
 
 ### Boosts
 - [x] Outpost points: each held point +10% production (original: 8 outposts; we have city +20% only)
 - [x] Supply Depot: +10 troop cap (max 100)
-- [x] Bank: % of cash (see Game)
+- [x] Bank: % of stored cash (see Game)
 - [x] Rebirth +10% each (already in)
 
 ### Units
-- [x] P1 (cheap, high impact) — v4 has Sniper, Commando, Rocket, Humvee, Ranger, APC, Huey, Flak, Drone (+ Scout, ATV, Medic, Heavy Inf); still missing Mantis, TIGR, Swarm Drone —: Sniper, Commando, Rocket Trooper, Humvee, Ranger, APC, Huey, Mobile Flak, Mantis, TIGR, Drone, Swarm Drone
-- [~] P2 (heavies) — v4 has Heavy Tank, Railgun, AC-130, B52, Mammoth, Artillery; missing the rest —: Light Tank, Heavy Tank, Railgun Tank, AC-130, B52, ICBM Launcher, Mammoth, Leopard 2A5, PZH 2000, Battleship, Carrier
-- [~] P3 (specialists) — v4 has F22, Cobra, Blackhawk, A-10, B2, Stealth Heli, Medic —: F15/F22/F35/SU-47/KA-52/Cobra/Blackhawk, B2, Stealth Helicopter, Medic + Officer (support, 0 damage)
-- [ ] Naval line: Gunboat, Frigate, Battleship, Carrier, Submarine, Zumwalt, Speedboat
+- [x] P1 (cheap, high impact) — v7 adds the stragglers **Mantis, TIGR, Swarm Drone** (Sniper, Commando, Rocket, Humvee, Ranger, APC, Huey, Flak, Drone were v4)
+- [x] P2 (heavies) — v7 adds **Light Tank, ICBM Launcher, Leopard 2A5, PZH 2000** (Heavy Tank, Railgun, AC-130, B52, Mammoth, Artillery were v4)
+- [x] P3 (specialists) — v7 adds **F-15, F-35, SU-47, KA-52 + Officer** (support, 0 damage, gives allies +25% damage) (F22, Cobra, Blackhawk, A-10, B2, Stealth Heli, Medic were v4)
+- [x] **Naval line** (v7) — **Gunboat, Frigate, Battleship, Carrier, Submarine, Zumwalt, Speedboat** (+ the UNIQUE **Centurion**). Ships sail the water lanes; Submarine + Zumwalt are STEALTH.
 
 ### Textures (sprites)
-- [x] New 2.5D flat sprites for every new unit & building (same style as existing)
+- [x] New 2.5D flat sprites for every new unit & building (v7: a **ship template** for the navy, **dock** + **silo** building styles, Centurion walker, ICBM truck)
 - [x] Map dressing from `ref-map-original.png`: trees, flowers, floating water crystals, city arena ring
 - [x] Rarity colors for the 3 new tiers
+- [x] v7: shipping lanes, buoys and ship wakes
 
 ### Buildings
-- [~] Production ladder (v4: 12 of the list) (full list in BUILDINGS below — add to the shop)
-- [x] One unit building per new unit (depot / hangar / helipad / fortress naming)
-- [~] Special: Supply Depot ✔, Pentagon ✔ (AC-130), still missing:, Airship Docks, Submarine Cavern, Centurion Support Site
+- [~] Production ladder — v7: **21 of the original's 48** (9 more added: Advanced Solar → Hydroponics → Gas Storage Tank → Alloy Foundry → Offshore Oil Rig → Naval Beacon → Particle Accelerator → Corporate Campus → Automated Factory)
+- [x] One unit building per new unit (depot / hangar / helipad / **dock** naming)
+- [x] Special: Supply Depot ✔, Pentagon ✔, **Airship Docks ✔ (v7)**, **Submarine Cavern ✔ (v7)**, **Centurion Support Site ✔ (v7)**
 
 ### Maps
 - [x] Organic blobby coastlines fused around each square plot (v4 radial map like the picture) (see MAPS)
 - [x] Trees on islands, floating water crystals
 - [x] City center (octagon + plaza)
-- [ ] Water lanes for ships once the naval line lands
+- [x] **Water lanes for ships** (v7) — a ring of shipping lanes around the CITY (r 955), 8 radial lanes out to the open sea and an outer loop (r 2260), with bobbing buoys. Ships path on a SEA grid (maps/02-sea.js) and shell the shore from the closest water.
+
+---
+
+## 📁 FOLDER LAYOUT (v7)
+
+`js/` used to be one flat list of 24 files. It is now **12 folders** (load order still comes from `index.html`; every file keeps its `/* Military Base 2.5D — file.js · … */` header so `gen_info.py` can document it):
+
+| Folder | What lives there |
+|---|---|
+| `js/core/` | the engine — helpers, state, save, audio, camera + ground texture, fx, the main loop, boot/init |
+| `js/data/` | pure DATA — world + map layout, factions, classes, units (+ unit helpers), buildings, unit buildings, rarities, the naval units, the expansion units, the new production buildings, the new unit buildings |
+| `js/maps/` | the island map (shapes, walk grid, A*, city flow field) **+ the sea** (SEA grid, shipping lanes, ship navigation) |
+| `js/textures/` | the whole sprite library — base sprites, unit templates (infantry/vehicle/heli/plane), ships, new units, buildings (+ footprint computation) |
+| `js/systems/` | cross-cutting systems — power, economy, waves/boss, capture points |
+| `js/buildings/` | what buildings DO — placement, **production (money capacity, training, wave-defense garrison)**, bots, turrets, support |
+| `js/units/` | spawn + garrisons, movement (**land + sea**), spatial hash, AI/detection, combat & bounties |
+| `js/rewards/` | crate tables, redeem codes, the REWARDS list + its panel |
+| `js/achievements/` | the achievement list, the unlock loop, the 🏆 panel |
+| `js/render/` | the frame, unit/boss/flag sprites, the ground (ocean, lanes, islands, trees…), the minimap |
+| `js/ui/` | core (toasts/panels/buttons), shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, **patch notes** |
+| `js/admin/` | the F1 admin/debug drawer |
 
 ---
 
 ## 🖥️ UI (current state)
-- Shop: PRODUCTION / UNITS tabs; backpack placement; crates (Standard/Decorative/Elite/Premium + pity 80)
-- Admin drawer (F1): cash, buildings, units, boss, waves, points, speed/pause, god mode, bot presets
-- HUD: wave + boss timers, minimap, toasts, tutorial
-- Gaps vs original: no DECORATION/SPECIAL tabs, no tooltips w/ modifiers, no achievements, no leaderboard
+- Shop: PRODUCTION / UNITS (**+ ⚓ NAVAL sub-tab**) / SPECIAL / DECOR tabs; backpack placement; crates (Standard/Decorative/Elite/Premium + pity 80)
+- Admin drawer (F1): cash, buildings, units, boss, waves, points, speed/pause, god mode, bot presets, **EMPTY ALL SAFES / MUSTER GARRISON / STAND DOWN / RAID ALERT**
+- HUD: wave (+ 🛡 garrison alert) + boss timers, minimap (with shipping lanes), toasts, tutorial, **🏦 stored cash / capacity row**
+- 📜 PATCH NOTES panel (left rail) — what changed in every build
+- Gaps vs original: no DECORATION tab label (we call it DECOR)
 
 ## 🎮 Game (mechanics — what the original does that we don't)
 1. **Damage modifiers** — each unit has per-target-class multipliers (`DamageModifiers` in the data). `0` = cannot damage that class (e.g. most heavies can't hurt Stealth; Anti-Air can't hurt ground). This is the real counter system — far richer than flat armor.
 2. **Classes** = the type system we built (Light ≈ our "land", Armored, Air, Stealth) — original allows **multiple classes per unit**.
 3. **AttackRate** is "per 100 ticks" (100 = 1/sec baseline): A10 Warthog 300 = 3 shots/sec, ICBM 7 = 1 shot/14s.
 4. **UnitSize** = footprint in cells (1…20; Carrier 18, Behemoth 18, Leviathan 20).
-5. **Wave defense** — buildings train garrison units automatically (`WaveDefenseUnitProduction` MaxCap) when waves spawn. We do this only for points.
-6. **ResourceProduction Capacity** — buildings store cash up to a cap; Bank converts % of stored cash to income.
-7. **StructurePower** — power score of buildings (we track unit+building power; align naming).
+5. **Wave defense** — buildings train garrison units automatically (`WaveDefenseUnitProduction` MaxCap) when waves spawn. ✔ **v7** (buildings/02-production.js).
+6. **ResourceProduction Capacity** — buildings store cash up to a cap; Bank converts % of stored cash to income. ✔ **v7** (`BUILD[].cap` + `cycle`, HUD row, click to collect).
+7. **StructurePower** — power score of buildings (we track unit+building power; align naming). ✔ **v7** (`structurePower()` / `armyPower()` / `powerSplit()`).
 8. **RequiredPower** — power-gated building placement (we have this).
 
 ## 🏆 Achievements
@@ -94,9 +118,9 @@ See GOALS → Achievements. (Original data didn't include these.)
 |---|---|---|
 | City held | +20% production | +20% ✓ |
 | Each outpost | +10% production | ✗ (points give no income yet) |
-| Supply Depot | +10 troop cap (max 100) | ✗ |
+| Supply Depot | +10 troop cap (max 100) | ✓ |
 | Rebirth | +10% each | ✓ |
-| Bank | 5% of stored cash | ✗ |
+| Bank | 5% of stored cash | ✓ (v7) |
 
 ## 🪖 Units — original game (full stats in `ref/units-original.txt`)
 

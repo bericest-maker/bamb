@@ -50,6 +50,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1219;font-family:
 .statbar{background:rgba(24,31,45,.9);border:1px solid var(--line);border-radius:8px;height:27px;
   display:flex;align-items:center;gap:7px;padding:0 10px;font-size:13px;font-weight:800;min-width:122px}
 .statbar.cash{min-width:158px}
+/* v7: money stored inside your buildings (Bank interest) */
+.statbar.bank{min-width:158px;border-color:#7a6528}
+.statbar.bank .s-ico{filter:drop-shadow(0 0 4px rgba(245,181,63,.5))}
+.statbar.bank .s-cap{color:var(--dim)}
 .s-ico{font-size:13px}
 .s-cap{margin-left:auto;font-size:9px;color:var(--dim);letter-spacing:1px}
 
