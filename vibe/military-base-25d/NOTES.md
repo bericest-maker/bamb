@@ -73,6 +73,7 @@
 - [x] **World ×2** — WORLD 4800→9600, RING 1700→2600 (see MAPS). Load stays ~100 ms: `walkableAt` rejects most of the 57 600 walk cells by bounding box before any trig.
 - [x] **No drive-by shooting** — `aggroReach()`: MARCHING units engage at `min(range+60, AGGRO.march 210)`; units that HOLD (garrisons, base defenders, idle troops) keep `range+220`.
 - [x] **Idle troops march on the MIDDLE** — no order → the CITY, then the nearest point you don't own, fighting only what comes close.
+- [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
 ---

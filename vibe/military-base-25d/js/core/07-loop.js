@@ -19,7 +19,7 @@ function update(dt,t){
   if(keys['s']||keys['arrowdown']) cam.ty+=sp;
   if(keys['a']||keys['arrowleft']) cam.tx-=sp;
   if(keys['d']||keys['arrowright']) cam.tx+=sp;
-  cam.tx=clamp(cam.tx,ISLAND.x+60,ISLAND.x+ISLAND.w-60); cam.ty=clamp(cam.ty,ISLAND.y+60,ISLAND.y+ISLAND.h-60);
+  clampCam();   // v8: keeps you over the island, or locks to the map centre once the view covers the world
   cam.x=lerp(cam.x,cam.tx,1-Math.pow(.001,dt));
   cam.y=lerp(cam.y,cam.ty,1-Math.pow(.001,dt));
   const cap=unitCap();
@@ -93,9 +93,10 @@ function update(dt,t){
 cv.addEventListener('wheel',e=>{
   e.preventDefault();
   const before=s2w(e.clientX,e.clientY);
-  cam.z=clamp(cam.z*(e.deltaY>0?.9:1.1),.5,3);   // v6: max zoom 3×
+  cam.z=clamp(cam.z*(e.deltaY>0?.9:1.1),MINZ,3);   // v8: zoom out until the WHOLE map fits (was .5)
   const after=s2w(e.clientX,e.clientY);
   cam.tx+=before.x-after.x; cam.ty+=before.y-after.y;
+  clampCam();
   cam.x=cam.tx; cam.y=cam.ty;
 },{passive:false});
 

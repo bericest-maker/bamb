@@ -544,6 +544,17 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   const nb=Math.hypot(BC(0).x-BC(1).x, BC(0).y-BC(1).y);
   assert(nb>1900,`neighbouring bases are far apart (${Math.round(nb)}px between BOT 1 and BOT 2)`);
   assert(G('SEA_BUOYS').length>0 && G('SEA_LANES').every(l=>!B.walkableAt((l.ax+l.bx)/2,(l.ay+l.by)/2)),'every shipping lane still runs through water on the bigger map');
+  // ---- zoom out until the WHOLE map fits ----
+  const WO=G('WORLD'), MCc=G('MAP_C'), MINZ=G('MINZ');   // cam is already in scope above
+  assert(MINZ<0.5,`zoom-out limit now fits the map (MINZ ${MINZ.toFixed(3)}, was 0.5)`);
+  { const o=cam.z; cam.z=MINZ; cam.x=cam.tx=MCc.x; cam.y=cam.ty=MCc.y;
+    const vb=G('viewBounds')();
+    assert(vb.x0<=0&&vb.x1>=WO.w&&vb.y0<=0&&vb.y1>=WO.h,`at MINZ the whole ${WO.w}px map is on screen`);
+    cam.z=o; }
+  cam.z=MINZ; G('clampCam')();
+  assert(Math.abs(cam.tx-MCc.x)<1&&Math.abs(cam.ty-MCc.y)<1,'fully zoomed out the camera locks to the map centre (nothing cut off)');
+  cam.z=1; cam.tx=PC.x; cam.ty=PC.y; G('clampCam')();
+  assert(Math.abs(cam.tx-PC.x)<1&&Math.abs(cam.ty-PC.y)<1,'at normal zoom the camera still pans freely');
   // leave the settings as they started
   S().settings.units='Normal'; S().settings.blds='Normal'; S().settings.trees=true; S().settings.botGrid=false;
 }

@@ -3,11 +3,15 @@
 // ================= canvas / camera =================
 const cv=$('#cv'), ctx=cv.getContext('2d');
 let W=0,H=0,DPR=1;
+// v8: MINZ = the zoom at which the WHOLE map fits on screen (you can zoom out to see everything).
+// The view is W/z wide and H/(z·0.72) tall in world px, so both must cover WORLD → take the smaller z.
+let MINZ=.5;
 function resize(){
   DPR=Math.min(2,window.devicePixelRatio||1);
   W=window.innerWidth; H=window.innerHeight;
   cv.width=W*DPR; cv.height=H*DPR;
   cv.style.width=W+'px'; cv.style.height=H+'px';
+  MINZ=Math.min(W/WORLD.w, H/(WORLD.h*.72));   // zoom out past this and you'd only see ocean
 }
 window.addEventListener('resize',resize); resize();
 
@@ -17,6 +21,13 @@ function viewBounds(){
   return {x0:cam.x-hw-80, x1:cam.x+hw+80, y0:cam.y-hh-80, y1:cam.y+hh+80};
 }
 function s2w(mx,my){ return { x:(mx-W/2)/cam.z+cam.x, y:(my-H/2)/(cam.z*.72)+cam.y }; }
+// v8: the camera may not leave the island — unless the view is BIGGER than the world, in which case
+// there is nothing left to pan to and it locks to the map centre, so zooming out really shows EVERYTHING.
+function clampCam(){
+  const hw=W/2/cam.z, hh=H/2/(cam.z*.72);
+  cam.tx = hw>=WORLD.w/2 ? MAP_C.x : clamp(cam.tx,ISLAND.x+60,ISLAND.x+ISLAND.w-60);
+  cam.ty = hh>=WORLD.h/2 ? MAP_C.y : clamp(cam.ty,ISLAND.y+60,ISLAND.y+ISLAND.h-60);
+}
 // pseudo-depth scale: things lower on screen (nearer) are bigger
 function depth(y){
   const topY=cam.y-(H/2)/(cam.z*.72), spanY=H/(cam.z*.72);

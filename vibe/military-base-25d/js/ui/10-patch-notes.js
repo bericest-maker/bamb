@@ -11,6 +11,7 @@ const PATCH_NOTES = [
     '\u2694\uFE0F NO MORE ATTACKING PEOPLE AT THEIR SPAWN: units only pick a fight when the enemy is CLOSE (AGGRO.march 210px). Snipers and artillery used to shell your base from 320-430px away while marching past \u2014 now they walk on. Units that HOLD a position (garrisons, base defenders, idle troops) keep their full reach.',
     '\uD83C\uDFAF IDLE TROOPS MARCH ON THE MIDDLE: with no order your army heads for the CITY (then the nearest point you don\u2019t own) and fights what it meets on the way, instead of beelining for somebody\u2019s base.',
     '\uD83D\uDDD1\uFE0F ENEMY BASES: their build grids, dashed outlines and name labels are hidden now \u2014 you see their buildings and their troops, nothing else. \u2699 SETTINGS \u2192 ENEMY BASE GRIDS brings the labels back.',
+    '\uD83D\uDD0D YOU CAN ZOOM OUT TO SEE THE WHOLE MAP: the zoom-out limit is now whatever fits the 9600px world in your window (MINZ, recomputed on resize) instead of a fixed 0.5\u00d7. Zoom all the way out and the camera locks to the map centre so nothing is cut off.',
     'Map load got cheaper: the land test rejects most of the (now 57 600) walk cells with a bounding box before any trigonometry.',
   ]},
   { v:'v7 \u2014 NAVAL UPDATE', date:'2026-09-27', items:[

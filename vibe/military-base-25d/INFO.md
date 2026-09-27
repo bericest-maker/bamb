@@ -16,7 +16,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Check | Result |
 |---|---|
-| Top-level functions without description (228) | ✅ none |
+| Top-level functions without description (229) | ✅ none |
 | Nested helpers without description (10) | ✅ none |
 | Admin methods without description (28) | ✅ none |
 | Event bindings without description (34) | ✅ none |
@@ -27,7 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
-| 2026-09-27 | **v8: PERFORMANCE & PEACE UPDATE.** ⚡ **POTATO MODE** — ⚙ SETTINGS gained two rows, UNIT GRAPHICS and BUILDING GRAPHICS, each `Normal` or `Potato`. Potato replaces every troop/building with one faction-coloured blob drawn ×POTATO.x/×POTATO.y bigger (js/render/05-potato.js); the sprite blit is skipped entirely, the single biggest frame-time win in the game (smoke test: 216 sprite draws per 24 frames → 0). ⚡ **TREES & DECOR** toggle — hides trees, rocks, grass patches and the floating crystals (350 tree draws/frame → 0). ⚡ **EFFECTS High/Low** (was GRAPHICS MODE) now also drops the ocean glints, the lane glow and halves the coastline detail (72 → 28 segments). ⚡ **BUILDINGS ARE PERMANENT** — `damageBuilding` returns early while ⚙ INDESTRUCTIBLE BUILDINGS is on (default), so nothing can destroy a building and right-click no longer sells your own; switching it off restores destructible bases and the 50% refund. ⚡ **THE WORLD IS TWICE AS BIG**: WORLD 4800→9600, RING 1700→2600, outposts 760→1150, crystals 900→1400, city r 330→460, lanes 955/2260→1580/3400. Islands sit far apart (1990px between neighbours) with wide ocean for ships. Map load stayed cheap: the land test rejects most of the 57 600 walk cells with a bounding box (PLOT_BB/CITY_BB/ILET_BB/BRIDGE_BB) before any trigonometry — verified identical to the un-optimised test over 319 225 samples. ⚡ **NO MORE DRIVE-BY SHOOTING**: units only engage what is CLOSE — `aggroReach()` gives marching units `min(range+60, AGGRO.march 210)` while holders (garrisons, base defenders, idle troops) keep `range+220`. Artillery used to shell your base from 430px away while walking past. ⚡ **IDLE TROOPS MARCH ON THE MIDDLE**: with no order your army heads for the CITY (then the nearest point you do not own) and fights what it meets en route, instead of beelining for somebody’s base. ⚡ **ENEMY BASES**: their build-grid pads, dashed outlines and name labels are hidden — you see their buildings and their troops. ⚙ ENEMY BASE GRIDS brings the labels back. |
+| 2026-09-27 | **v8: PERFORMANCE & PEACE UPDATE.** ⚡ **POTATO MODE** — ⚙ SETTINGS gained two rows, UNIT GRAPHICS and BUILDING GRAPHICS, each `Normal` or `Potato`. Potato replaces every troop/building with one faction-coloured blob drawn ×POTATO.x/×POTATO.y bigger (js/render/05-potato.js); the sprite blit is skipped entirely, the single biggest frame-time win in the game (smoke test: 216 sprite draws per 24 frames → 0). ⚡ **TREES & DECOR** toggle — hides trees, rocks, grass patches and the floating crystals (350 tree draws/frame → 0). ⚡ **EFFECTS High/Low** (was GRAPHICS MODE) now also drops the ocean glints, the lane glow and halves the coastline detail (72 → 28 segments). ⚡ **BUILDINGS ARE PERMANENT** — `damageBuilding` returns early while ⚙ INDESTRUCTIBLE BUILDINGS is on (default), so nothing can destroy a building and right-click no longer sells your own; switching it off restores destructible bases and the 50% refund. ⚡ **THE WORLD IS TWICE AS BIG**: WORLD 4800→9600, RING 1700→2600, outposts 760→1150, crystals 900→1400, city r 330→460, lanes 955/2260→1580/3400. Islands sit far apart (1990px between neighbours) with wide ocean for ships. Map load stayed cheap: the land test rejects most of the 57 600 walk cells with a bounding box (PLOT_BB/CITY_BB/ILET_BB/BRIDGE_BB) before any trigonometry — verified identical to the un-optimised test over 319 225 samples. ⚡ **NO MORE DRIVE-BY SHOOTING**: units only engage what is CLOSE — `aggroReach()` gives marching units `min(range+60, AGGRO.march 210)` while holders (garrisons, base defenders, idle troops) keep `range+220`. Artillery used to shell your base from 430px away while walking past. ⚡ **IDLE TROOPS MARCH ON THE MIDDLE**: with no order your army heads for the CITY (then the nearest point you do not own) and fights what it meets en route, instead of beelining for somebody’s base. ⚡ **ENEMY BASES**: their build-grid pads, dashed outlines and name labels are hidden — you see their buildings and their troops. ⚙ ENEMY BASE GRIDS brings the labels back. ⚡ **ZOOM OUT TO THE WHOLE MAP**: the zoom-out limit is no longer a fixed 0.5× but `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))`, recomputed on resize, so at full zoom-out the entire 9600px world fits your window; `clampCam()` then locks the camera to the map centre so no corner is cut off. |
 | 2026-09-27 | **v7: NAVAL UPDATE + folder reorganisation + money capacity.** `js/` is no longer one flat list of 24 files — it is now **12 folders**: `core` (helpers/state/save/audio/camera/fx/loop/init), `data` (world, factions, classes, units, unit-helpers, buildings, unit-buildings, rarities + the two new unit/building tables), `maps` (island map + **02-sea.js**: the SEA grid, shipping lanes, ship navigation), `textures` (sprite library: base sprites, unit templates, naval ships, new units, buildings), `systems` (power, economy, waves, captures), `buildings` (placement, **production: money capacity + training + wave-defense garrison**, bots, turrets, support), `units` (spawn, movement, spatial grid, AI, combat), `rewards` (crate tables, codes, rewards data + UI), `achievements` (data, check loop, 🏆 panel), `render` (frame, units, ground, minimap), `ui` (core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes), `admin`. Load order is still index.html; nothing was lost, several 500-line files were split by concern. ⚡ **Naval line:** 7 ships (Speedboat → Carrier; Submarine + Zumwalt are STEALTH) with 7 dock buildings and a ⚓ NAVAL shop tab. ⚡ **Water lanes:** a ring of shipping lanes around the CITY (r 955, squeezed between the outpost islets and the plot lobes), 8 radial lanes out to the open sea and an outer loop (r 2260) — drawn as buoy lines, used by ship pathfinding (SEA grid + sea A*, coastal approach to shell land targets). ⚡ **Money Capacity:** every money building stores what it earns up to its Capacity (≈10 min of production) and pays out every 30s — or the instant you click it (new HUD row shows stored/cap). The **Bank now pays 5% of STORED cash**. 9 new production buildings (Advanced Solar → Automated Factory). ⚡ **Wave-defense garrisons:** while a raid is incoming (or hostiles are within 1300px of your plot) every unit building trains FREE defenders of its own type up to its MaxCap (24 slots base-wide); they stand down when the base is safe. ⚡ **StructurePower** split from army power (leaderboard shows both). ⚡ **Kill bounties** scale with the victim (wave HP buff × tier). ⚡ Unit **footprints** now matter when spawning (recruits look for a free spot their own size). ⚡ New units: Light Tank, Mantis, TIGR, Swarm Drone, PZH 2000, Leopard 2A5, ICBM Launcher, **Centurion (UNIQUE)**, F-15, F-35, SU-47, KA-52, **Officer** (support: +25% damage aura) + 20 new buildings incl. Submarine Cavern, Centurion Support Site and Airship Docks. ⚡ Your own stealth units (incl. submarines) are no longer invisible to you. ⚡ New 📜 PATCHES panel (left rail) + admin buttons (EMPTY ALL SAFES / MUSTER GARRISON / RAID ALERT). |
 | 2026-09-26 | **v6: fine grid + rotated plots.** Build grid 13×9 slots of 64px → 52×36 cells of 16px; every footprint is computed from its sprite (width = model × 1.3 rounded up to cells, depth ≈ half) so the pad hugs the model. Bot presets keep their coarse layout (×4) and slide to the nearest free spot; old saves convert (grid field) and overlapping buildings go to the backpack. Bot plots are rotated to face the city like the original (diagonals are diamonds): pads, grids, outlines, trees, minimap, walkable shape and click hit-tests follow the rotation. Square 912px islands, RING 1450→1700, WORLD 4800, city r 330, bigger lobes, outposts r 760 turned to face the city. Max zoom 1.6× → 3×. Stronger grid lines. |
 | 2026-09-26 | **v5: compact map + real sizes + performance.** Map shrunk like the original (WORLD 5600→4000, SLOT 85→64, RING 2000→1450, city r 400→300, shorter bridges, outposts r 610, crystals r 860). Buildings are drawn at their real footprint size on a faction-edged concrete pad; units scale with troop size. Admin: scrollable + searchable building/unit lists, QTY 1–1000 (BP/PL/SPAWN), FOR (you or any bot), spiral spawn on walkable land. Perf (1400 units: 40→9 ms/frame sim): spatial hash with faction bitmask, cached targets (~3×/s) and foe scans (~5×/s), A* budget 24/frame + shared paths, deferred unit removal, sprite cache (offscreen canvases), minimap 10×/s, fx caps, crowd separation. Fixes: selection rings never drew (selUnits holds objects), placement ghost used old 50/100px slot, typing in inputs panned the camera, splash could kill a unit twice (double reward), dead building could still be hit. |
@@ -57,13 +57,13 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 144.1 KB | 1930 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 35.6 KB | 442 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 144.6 KB | 1936 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 35.8 KB | 443 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 61.3 KB | 657 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 61.7 KB | 658 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 18.1 KB | 377 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
-| `military-base-25d/smoke.js` | 34.0 KB | 554 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
+| `military-base-25d/smoke.js` | 34.8 KB | 565 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
 | `military-base-25d/style.css` | 17.9 KB | 277 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
 | `military-base-25d/test-stubs.js` | 3.2 KB | 77 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
@@ -79,9 +79,9 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/core/02-state.js` | 3.0 KB | 54 | state: S + defaultState + POINTS_DEFS |
 | `military-base-25d/js/core/03-save.js` | 1.1 KB | 29 | save / load (localStorage) |
 | `military-base-25d/js/core/04-audio.js` | 3.2 KB | 76 | audio: WebAudio sfx + music |
-| `military-base-25d/js/core/05-camera.js` | 3.5 KB | 62 | canvas, camera, mouse, ground texture |
+| `military-base-25d/js/core/05-camera.js` | 4.2 KB | 73 | canvas, camera, mouse, ground texture |
 | `military-base-25d/js/core/06-fx.js` | 1.2 KB | 16 | fx: tracers, floats, booms, particles |
-| `military-base-25d/js/core/07-loop.js` | 5.3 KB | 122 | main loop: frame + update + HUD, wheel zoom, test hook |
+| `military-base-25d/js/core/07-loop.js` | 5.4 KB | 123 | main loop: frame + update + HUD, wheel zoom, test hook |
 | `military-base-25d/js/core/08-init.js` | 3.0 KB | 61 | init: load save → migrate → start |
 | `military-base-25d/js/data/01-world.js` | 7.0 KB | 76 | world size, radial map layout (like ref-map-original.png), bot bases, bot presets |
 | `military-base-25d/js/data/02-factions.js` | 1.1 KB | 20 | factions: colors, names, palettes |
@@ -125,7 +125,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
 | `military-base-25d/js/ui/09-input.js` | 5.0 KB | 135 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 5.1 KB | 55 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/10-patch-notes.js` | 5.3 KB | 56 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.1 KB | 31 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 2.6 KB | 40 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
@@ -180,7 +180,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 25 | `js/textures/05-sprites-buildings.js` | 350 | sprites for new production/special/decor buildings + generated unit buildings | 3 |
 | 26 | `js/core/03-save.js` | 28 | save / load (localStorage) | 2 |
 | 27 | `js/core/04-audio.js` | 75 | audio: WebAudio sfx + music | 5 |
-| 28 | `js/core/05-camera.js` | 61 | canvas, camera, mouse, ground texture | 4 |
+| 28 | `js/core/05-camera.js` | 72 | canvas, camera, mouse, ground texture | 5 |
 | 29 | `js/core/06-fx.js` | 15 | fx: tracers, floats, booms, particles | 5 |
 | 30 | `js/systems/01-power.js` | 29 | military power: structure power + army power (leaderboard / unlocks) | 6 |
 | 31 | `js/systems/02-economy.js` | 46 | income, bonuses, troop cap, bank interest | 8 |
@@ -214,9 +214,9 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
 | 61 | `js/ui/09-input.js` | 134 | input: minimap, keyboard, mouse | 2 |
-| 62 | `js/ui/10-patch-notes.js` | 54 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 62 | `js/ui/10-patch-notes.js` | 55 | the 📜 PATCHES panel (what changed in each build) | 1 |
 | 63 | `js/admin/01-admin.js` | 276 | admin panel (window.Admin) | 0 |
-| 64 | `js/core/07-loop.js` | 121 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
+| 64 | `js/core/07-loop.js` | 122 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
 | 65 | `js/core/08-init.js` | 60 | init: load save → migrate → start | 1 |
 
 ## 📁 Folder map (v7)
@@ -225,7 +225,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 
 | Folder | Files | Lines | What lives there |
 |---|---|---|---|
-| `js/core/` | 8 | 432 | the engine: helpers, state, save, audio, camera+ground texture, fx, the main loop and boot |
+| `js/core/` | 8 | 444 | the engine: helpers, state, save, audio, camera+ground texture, fx, the main loop and boot |
 | `js/data/` | 12 | 426 | pure DATA tables: world/map layout, factions, classes, units, buildings, rarities (+ the two new unit/building tables) |
 | `js/rewards/` | 5 | 133 | crate tables, redeem codes, the REWARDS list + its panel |
 | `js/achievements/` | 3 | 54 | the achievement list, the unlock loop and the 🏆 panel |
@@ -235,7 +235,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/buildings/` | 5 | 272 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 495 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
 | `js/render/` | 5 | 525 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 527 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/ui/` | 10 | 528 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
 | `js/admin/` | 1 | 276 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
@@ -771,10 +771,11 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 6 | `resize()` | canvas = window × DPR |
-| 15 | `viewBounds()` | visible world rect (+80px) |
-| 19 | `s2w(mx,my)` | screen → world (incl. 0.72 vertical squash) |
-| 21 | `depth(y)` | pseudo-2.5D scale by y |
+| 9 | `resize()` | canvas = window × DPR |
+| 19 | `viewBounds()` | visible world rect (+80px) |
+| 23 | `s2w(mx,my)` | screen → world (incl. 0.72 vertical squash) |
+| 26 | `clampCam()` | camera limits: keeps you over the island, or — once the view covers the world (MINZ) — locks to the map centre |
+| 32 | `depth(y)` | pseudo-2.5D scale by y |
 
 ### `js/core/06-fx.js` — fx: tracers, floats, booms, particles
 
@@ -1083,7 +1084,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 39 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 40 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -1105,10 +1106,10 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 | js/maps/01-map.js:18 | `sr()` | `(top-level { } block)` | seeded pseudo-random 0..1 (Park–Miller) — identical coastlines / trees every load |
 | js/maps/01-map.js:114 | `hPush(f,i)` | `astar` | A* heap push |
 | js/maps/01-map.js:115 | `hPop()` | `astar` | A* heap pop |
-| js/core/05-camera.js:33 | `sr()` | `(top-level { } block)` | seeded pseudo-random 0..1 (Park–Miller) — identical coastlines / trees every load |
-| js/core/05-camera.js:34 | `col()` | `(top-level { } block)` | random grass-patch tint |
-| js/core/05-camera.js:35 | `nearBridge(x,y,m)` | `(top-level { } block)` | is a point on/near a bridge (keeps trees off bridges) |
-| js/core/05-camera.js:36 | `putTree(x,y)` | `(top-level { } block)` | push a tree unless it would block a bridge |
+| js/core/05-camera.js:44 | `sr()` | `(top-level { } block)` | seeded pseudo-random 0..1 (Park–Miller) — identical coastlines / trees every load |
+| js/core/05-camera.js:45 | `col()` | `(top-level { } block)` | random grass-patch tint |
+| js/core/05-camera.js:46 | `nearBridge(x,y,m)` | `(top-level { } block)` | is a point on/near a bridge (keeps trees off bridges) |
+| js/core/05-camera.js:47 | `putTree(x,y)` | `(top-level { } block)` | push a tree unless it would block a bridge |
 | js/buildings/04-turrets.js:20 | `hit(tgt,mult)` | `updateTurrets` | turret damage to one target (mods, armor, god mode, kill) |
 | js/units/04-ai.js:126 | `add(f,x,y,r)` | `refreshDetectors` | push a sensor {x,y,r} for a faction |
 | js/ui/03-tooltips.js:7 | `row(k,v)` | `tipHTML` | append a tooltip grid row |
@@ -1198,7 +1199,7 @@ Open with **F1**, **`** or 🛠 ADMIN.
 
 | File:Line | Target | Event | What it does |
 |---|---|---|---|
-| js/core/05-camera.js:12 | `window` | resize | resize canvas |
+| js/core/05-camera.js:16 | `window` | resize | resize canvas |
 | js/rewards/04-crates.js:59 | `#btnCrateDone` | onclick | close crate reveal |
 | js/ui/01-ui-core.js:30 | `#btnShop` | onclick | open SHOP |
 | js/ui/01-ui-core.js:31 | `#btnHome` | onclick | cancel placement, close panels, pan to your plot centre |
@@ -1230,7 +1231,7 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/admin/01-admin.js:95 | `#aSpeed .abtn` | forEach | admin time scale |
 | js/admin/01-admin.js:273 | `window` | keydown | keys map, Esc, F1/` admin |
 | js/core/07-loop.js:93 | `cv` | wheel | zoom around cursor |
-| js/core/07-loop.js:103 | `document` | pointerdown | unlock WebAudio |
+| js/core/07-loop.js:104 | `document` | pointerdown | unlock WebAudio |
 | js/core/08-init.js:56 | `window` | beforeunload | save on close |
 
 ## 🌐 Global variables (top-level const/let, not functions)
@@ -1317,11 +1318,12 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/core/04-audio.js:56 | const | `CHORDS` | `[` |
 | js/core/05-camera.js:4 | const | `cv` | `$('#cv'), ctx=cv.getContext('2d');` |
 | js/core/05-camera.js:5 | let | `W` | `0,H=0,DPR=1;` |
-| js/core/05-camera.js:14 | const | `cam` | `{x:PLOT.x+PLOT.w*SLOT/2, y:PLOT.y+PLOT.h*SLOT/2+40, z:.8, tx:PLOT.x+PLOT.w*SL…` |
-| js/core/05-camera.js:26 | const | `mouse` | `{x:0,y:0,wx:0,wy:0,down:false,dragX:0,dragY:0,dragging:false};` |
-| js/core/05-camera.js:27 | let | `selUnits` | `[];` |
-| js/core/05-camera.js:28 | let | `dragBand` | `null;` |
-| js/core/05-camera.js:31 | const | `PATCHES` | `[], TREES=[], ROCKS=[];` |
+| js/core/05-camera.js:8 | let | `MINZ` | `.5;` |
+| js/core/05-camera.js:18 | const | `cam` | `{x:PLOT.x+PLOT.w*SLOT/2, y:PLOT.y+PLOT.h*SLOT/2+40, z:.8, tx:PLOT.x+PLOT.w*SL…` |
+| js/core/05-camera.js:37 | const | `mouse` | `{x:0,y:0,wx:0,wy:0,down:false,dragX:0,dragY:0,dragging:false};` |
+| js/core/05-camera.js:38 | let | `selUnits` | `[];` |
+| js/core/05-camera.js:39 | let | `dragBand` | `null;` |
+| js/core/05-camera.js:42 | const | `PATCHES` | `[], TREES=[], ROCKS=[];` |
 | js/core/06-fx.js:4 | let | `fx` | `{tracers:[],floats:[],parts:[],booms:[]};` |
 | js/systems/03-waves.js:54 | const | `WAVE_POOL` | `[[1,['rifle']],[2,['scout','hinf']],[3,['atv']],[5,['humvee','rocket','heli']…` |
 | js/systems/04-captures.js:5 | let | `capTimer` | `0;` |
@@ -1727,7 +1729,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 240 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
 | 263 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
 
-## ✔️ Smoke test assertions (159)
+## ✔️ Smoke test assertions (163)
 
 | Line | Group | Asserts |
 |---|---|---|
@@ -1890,6 +1892,10 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 543 | the world is twice as big | world is …px wide, bases sit on a …px ring |
 | 545 | the world is twice as big | neighbouring bases are far apart (…px between BOT 1 and BOT 2) |
 | 546 | the world is twice as big | every shipping lane still runs through water on the bigger map |
+| 549 | zoom out until the WHOLE map fits | zoom-out limit now fits the map (MINZ …, was 0.5) |
+| 552 | zoom out until the WHOLE map fits | at MINZ the whole …px map is on screen |
+| 555 | zoom out until the WHOLE map fits | fully zoomed out the camera locks to the map centre (nothing cut off) |
+| 557 | zoom out until the WHOLE map fits | at normal zoom the camera still pans freely |
 
 ## 🗒️ NOTES.md outline
 
