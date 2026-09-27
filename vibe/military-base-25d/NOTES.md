@@ -66,7 +66,7 @@
 - [x] **Water lanes for ships** (v7) — a ring of shipping lanes around the CITY (r 955), 8 radial lanes out to the open sea and an outer loop (r 2260), with bobbing buoys. Ships path on a SEA grid (maps/02-sea.js) and shell the shore from the closest water.
 
 ### Performance & quality of life (v8)
-- [x] **POTATO MODE** — ⚙ SETTINGS gained UNIT GRAPHICS and BUILDING GRAPHICS rows, each `Normal` or `Potato`. Potato draws one faction-coloured blob per troop/building (×POTATO.x / ×POTATO.y = ×1.45 bigger) and skips the sprite blit entirely (`js/render/05-potato.js`).
+- [x] **BLOCK MODE** (v8.2, was POTATO MODE) — ⚙ SETTINGS gained UNIT GRAPHICS and BUILDING GRAPHICS rows, each `Normal` or `Blocks`. Blocks draws one plain rectangle per troop EXACTLY its sprite's size (SPR w×h) and per building EXACTLY its footprint — just the owner's colour, no shadow/outline/highlight (`js/render/05-blocks.js`). Old `Potato` saves migrate to `Blocks`.
 - [x] **TREES & DECOR** toggle — trees, rocks, grass patches and the floating crystals can be hidden and shown again.
 - [x] **EFFECTS High/Low** (was GRAPHICS MODE) — Low now also drops the ocean glints, the lane glow and halves the coastline detail (72 → 28 segments).
 - [x] **INDESTRUCTIBLE BUILDINGS** (default ON) — nothing can damage a building and right-click no longer sells yours; switching it off restores destructible bases + the 50% refund.

@@ -43,11 +43,11 @@ function render(){
       // concrete foundation = the building's real footprint, edged in its faction colour
       const fw=d.w*SLOT, fh=d.h*SLOT, own=it.b.owner??'p';
       plotRectPath(own,it.b.gx*SLOT+1,it.b.gy*SLOT+1,fw-2,fh-2);
-      ctx.fillStyle='rgba(120,126,134,.6)'; ctx.fill();
-      ctx.strokeStyle=hexA(facC(fac),.7); ctx.lineWidth=1.5; ctx.stroke();
-      if(potatoBlds()){                                  // v8: POTATO MODE — one blob per building
-        drawPotatoBuilding(sp.w,sp.h,s,fac,it.x,it.y-3);
+      if(blockBlds()){                                   // v8: BLOCK MODE — the footprint itself, in the owner's colour
+        ctx.fillStyle=facC(fac); ctx.fill();
       } else {
+        ctx.fillStyle='rgba(120,126,134,.6)'; ctx.fill();
+        ctx.strokeStyle=hexA(facC(fac),.7); ctx.lineWidth=1.5; ctx.stroke();
         ctx.fillStyle='rgba(0,0,0,.2)'; ctx.beginPath(); ctx.ellipse(it.x,it.y-3,sp.w*bs*.45,Math.min(fh*.3,sp.w*bs*.16)+2,0,0,pi2); ctx.fill();
         if(it.b.flash>0){ ctx.globalAlpha=.5+Math.sin(performance.now()/30)*.3; }
         drawSpr(ctx,it.b.type,it.x,it.y-3,s,isBot?'e':'p',fac,performance.now()/1000);

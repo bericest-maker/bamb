@@ -9,8 +9,8 @@ const SAVE_V = 4;   // v4 = radial map + 35 units (v1-v3 saves migrate on load)
 // ================= settings (⚙ SETTINGS panel) =================
 // v8: the graphics/perf rows. Every one of them is live — no reload needed.
 //   gfx        High | Low    — Low drops particles, booms, the ocean glint, the lane glow and coastline detail
-//   units      Normal | Potato — Potato draws every troop as one coloured blob (POTATO.x/y × bigger)
-//   blds       Normal | Potato — the same for buildings (footprint pad + blob)
+//   units      Normal | Blocks — Blocks draws every troop as one plain rectangle its sprite's exact size
+//   blds       Normal | Blocks — the same for buildings: the footprint rectangle, nothing else
 //   trees      on/off        — trees, rocks, grass patches and the floating crystals
 //   botGrid    on/off        — dashed grid + name label over each enemy base (off = only their buildings/troops)
 //   indestruct on/off        — buildings can never be damaged or sold (see damageBuilding)

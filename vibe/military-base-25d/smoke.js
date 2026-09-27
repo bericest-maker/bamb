@@ -495,19 +495,22 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   const normalSpr=sprN();
   G('__treeN = 0'); pump(200);
   const treesOn=treeN();
-  S().settings.units='Potato'; S().settings.blds='Potato'; S().settings.trees=false;
+  S().settings.units='Blocks'; S().settings.blds='Blocks'; S().settings.trees=false;
   G('__sprN = 0'); G('__treeN = 0'); pump(400);
   const potatoSpr=sprN(), treesOff=treeN();
-  assert(normalSpr>20 && potatoSpr===0,`POTATO MODE blits no sprites at all (${normalSpr} draws → ${potatoSpr})`);
+  assert(normalSpr>20 && potatoSpr===0,`BLOCK MODE blits no sprites at all (${normalSpr} draws → ${potatoSpr})`);
   assert(treesOn>0 && treesOff===0,`TREES & DECOR off draws no trees (${treesOn} → ${treesOff} per 12 frames)`);
   G('drawSpr = __origSpr; drawTree = __origTree;');
-  // every unit + building has a potato shape
+  // every unit + building has a block shape, and every block is EXACTLY its own size
   let ok=true;
-  for(const k of Object.keys(G('UNITS'))){ const u=B.mkUnit(k,'e',PC.x,PC.y); try{ G('drawPotatoUnit')(u,1); }catch(e){ ok=false; console.error('  potato unit',k,e.message); } }
-  assert(ok,'potato mode draws all 55 unit types as a blob (no sprite)');
+  for(const k of Object.keys(G('UNITS'))){ const u=B.mkUnit(k,'e',PC.x,PC.y); try{ G('drawBlockUnit')(u,1); }catch(e){ ok=false; console.error('  block unit',k,e.message); } }
+  assert(ok,'block mode draws all 55 unit types as a rectangle (no sprite)');
   ok=true;
-  for(const [k,d] of Object.entries(G('BUILD'))){ const sp=G('SPR')[k]; try{ G('drawPotatoBuilding')(sp.w,sp.h,1,3,PC.x,PC.y); }catch(e){ ok=false; console.error('  potato bld',k,e.message); } }
-  assert(ok,'potato mode draws all 100 building types as a blob (no sprite)');
+  for(const k of Object.keys(G('BUILD'))){ try{ G('drawBlockBuilding')('p',1,1,G('BUILD')[k].w*16,G('BUILD')[k].h*16,3); }catch(e){ ok=false; console.error('  block bld',k,e.message); } }
+  assert(ok,'block mode draws all 100 building types as their footprint rectangle');
+  { const SPR=G('SPR');
+    const rw=SPR.rifle.w, cw=SPR.carrier.w, iw=SPR.industrial.w;
+    assert(rw<cw && iw>0,`a block is EXACTLY its model's box: rifle ${rw}px < carrier ${cw}px, industrial bld ${iw}px`); }
   S().units=[];
   // right-click must NOT demolish any more (and does again once destructible is restored)
   S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');

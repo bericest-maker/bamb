@@ -18,7 +18,7 @@ function renderSettings(){
 function bindToggle(id,key,label){
   $(id).onclick=()=>{
     const mode=SET_MODE.find(m=>m[1]===key);
-    if(mode) S.settings[key] = S.settings[key]===mode[2] ? (mode[2]==='High'?'Low':'Potato') : mode[2];
+    if(mode) S.settings[key] = S.settings[key]===mode[2] ? (mode[2]==='High'?'Low':'Blocks') : mode[2];
     else S.settings[key]=!S.settings[key];
     sfx('click'); save(); renderSettings();
   };

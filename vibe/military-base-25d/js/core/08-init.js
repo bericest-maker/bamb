@@ -8,6 +8,8 @@ function init(){
   // fill fields added in later versions
   S.stats=Object.assign(defaultStats(), S.stats||{});
   S.settings=Object.assign(defaultSettings(), S.settings||{});   // v8: graphics/perf rows added in later builds
+  if(S.settings.units==='Potato') S.settings.units='Blocks';     // v8.2: potato blobs are plain rectangles now
+  if(S.settings.blds==='Potato') S.settings.blds='Blocks';
   S.achievements=S.achievements||{};
   S.rewards=S.rewards||{}; S.codes=S.codes||{}; S.inventory=S.inventory||[];
   S.shopSub=S.shopSub||'light'; S.bankT=S.bankT??60;

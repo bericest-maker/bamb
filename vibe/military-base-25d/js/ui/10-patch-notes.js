@@ -3,7 +3,7 @@
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
   { v:'v8 \u2014 PERFORMANCE & PEACE UPDATE', date:'2026-09-27', items:[
-    '\u26a1 POTATO MODE: \u2699 SETTINGS has two new rows \u2014 UNIT GRAPHICS and BUILDING GRAPHICS, each Normal or Potato. Potato replaces every troop/building with one coloured blob (drawn 1.45\u00d7 bigger in x and y so crowds stay readable). It is the single biggest frame-time win in the game.',
+    '\u26a1 BLOCK MODE (was POTATO MODE): \u2699 SETTINGS has two rows \u2014 UNIT GRAPHICS and BUILDING GRAPHICS, each Normal or Blocks. Blocks replaces every troop with a plain rectangle EXACTLY its sprite\u2019s size and every building with its footprint rectangle \u2014 just the owner\u2019s colour, nothing else (no shadows, no outlines). It is the single biggest frame-time win in the game.',
     '\u2699 TREES & DECOR toggle \u2014 hide the trees, rocks, grass patches and floating crystals.',
     '\u2699 EFFECTS High/Low (was GRAPHICS MODE) \u2014 Low also drops the ocean glints, the lane glow and halves the coastline detail.',
     '\uD83D\uDEAB BUILDINGS ARE PERMANENT: nothing can destroy a building any more (raids, the worm, artillery) and right-click no longer sells your own. \u2699 SETTINGS \u2192 INDESTRUCTIBLE BUILDINGS turns destructible bases (and the 50% refund) back on.',
