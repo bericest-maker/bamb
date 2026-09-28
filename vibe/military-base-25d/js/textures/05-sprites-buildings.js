@@ -341,10 +341,16 @@ reg('automated',76,60,(g,t)=>{                     // robot factory: arms + sola
 
 // ---- v6: footprints come from the sprite — the concrete pad is exactly as wide as the model (fine 16px grid) ----
 // width  = sprite width × BLD_K, rounded up to whole cells; depth ≈ half the width (it's a 2.5D view). The old coarse size is kept in cw/ch.
-const BLD_K = 1.3;
+const BLD_K = 1.3/3;   // v8.3: buildings are drawn 3× smaller (their footprint follows the model, so ~5× more fit on an island)
 for(const id of Object.keys(BUILD)){
   const d=BUILD[id], sp=SPR[id]; if(!sp) continue;
   d.cw=d.w; d.ch=d.h;
   d.w=Math.max(2,Math.ceil(sp.w*BLD_K/SLOT));
   d.h=Math.max(2,Math.ceil(sp.w*BLD_K*.5/SLOT));
+}
+// v8.3: WATER buildings — they go in your WATER YARD behind the island, never on the land grid
+// (every dock = a building that trains a ship, plus the two offshore money makers)
+for(const id of Object.keys(BUILD)){
+  const d=BUILD[id];
+  d.water = !!(d.unit && UNITS[d.unit] && UNITS[d.unit].sea) || id==='offshore' || id==='navalbeacon';
 }

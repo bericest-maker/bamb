@@ -12,9 +12,10 @@ function spawnGarrison(i,n=1){
   let made=0;
   for(let k=0;k<n;k++){
     if(garrisonCount(i)>=cap) break;
-    const isTank = p.city && Math.random()<.4;
+    const isTank = p.city && !p.water && Math.random()<.4;
+    const type = p.water ? 'gunboat' : (isTank?'tank':'rifle');   // v8.3: the rigs are held by boats
     const a=rnd(0,pi2), rr=rnd(p.r*.4,p.r*.8);
-    S.units.push(mkUnit(isTank?'tank':'rifle', f===0?'p':'e', p.x+Math.cos(a)*rr,p.y+Math.sin(a)*rr,{home:i,faction:f}));
+    S.units.push(mkUnit(type, f===0?'p':'e', p.x+Math.cos(a)*rr,p.y+Math.sin(a)*rr,{home:i,faction:f}));
     made++;
   }
   return made;

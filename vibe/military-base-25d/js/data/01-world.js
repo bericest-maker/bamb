@@ -6,9 +6,9 @@
 // 4 outpost islets between the spokes and 4 floating water crystals in the other gaps.
 const WORLD  = {w:9600, h:9600};   // v8: TWICE the old map (4800 → 9600) — wide open ocean between the islands
 const ISLAND = {x:60, y:60, w:WORLD.w-120, h:WORLD.h-120};   // camera clamp area
-const SLOT   = 16;                                            // px per build-grid cell (v6: fine grid — 64 → 16; footprints come from each sprite's real size)
-const GRID_K = 4;                                             // old coarse slot = 4×4 fine cells (presets + old saves are converted with this)
-const PLOT_W = 52, PLOT_H = 36;                               // every plot is 52×36 cells (= 832×576 px, same land as before)
+const SLOT   = 8;                                             // px per build-grid cell (v8.3: 16 → 8 — twice as fine; footprints come from each sprite's real size)
+const GRID_K = 8;                                             // old coarse slot = 8×8 fine cells (presets + old saves are converted with this)
+const PLOT_W = 104, PLOT_H = 72;                              // every plot is 104×72 cells of 8px (= 832×576 px — the island is the same physical size)
 const MAP_C  = {x:WORLD.w/2, y:WORLD.h/2};                    // map centre = CITY
 const RING   = 2600;                                          // distance city → plot centre (v8: 1700 → 2600 — islands pushed apart)
 // forest margin around each build grid; taller than wide because the view squashes y to 72% → plots LOOK square
@@ -21,6 +21,14 @@ const plotTL  = angDeg => { const c=ringPos(angDeg,RING); return {x:Math.round(c
 const plotRot = angDeg => (angDeg-90)*DEG;   // local 'up' (−y) always points at the city; player (south) = 0
 const PLOT = {...plotTL(90), w:PLOT_W, h:PLOT_H, ang:90, rot:0};
 
+// v8.3: YOUR WATER YARD — a buildable strip of open sea BEHIND your island (away from the city).
+// Only WATER buildings (docks, the Offshore Oil Rig, the Naval Beacon) can be placed there, and
+// ships launch straight into it instead of having to walk to the coast first.
+const YARD_W = 104, YARD_H = 28;                     // cells — as wide as your island, 224px deep
+const YARD_GAP = 60;                                 // px of open water between the coast and the yard
+const WATER_YARD = {x:PLOT.x, y:Math.round(PLOT.y + PLOT_H*SLOT + PLOT_MY + YARD_GAP), w:YARD_W, h:YARD_H, ang:90, rot:0, water:true};
+const inYard = (x,y) => x>=WATER_YARD.x && x<=WATER_YARD.x+YARD_W*SLOT && y>=WATER_YARD.y && y<=WATER_YARD.y+YARD_H*SLOT;
+
 // 7 bot bases on the ring (angles in degrees, 0 = east, 90 = south)
 const BOT_DEFS = [
   {name:'BOT 1', dir:'NORTH',     ang:-90 },
@@ -30,7 +38,7 @@ const BOT_DEFS = [
   {name:'BOT 5', dir:'SOUTHWEST', ang:135 },
   {name:'BOT 6', dir:'WEST',      ang:180 },
   {name:'BOT 7', dir:'NORTHWEST', ang:-135},
-].map(b=>({...b, plot:{...plotTL(b.ang), rot:plotRot(b.ang)}, rot:plotRot(b.ang)}));
+].map(b=>({...b, plot:{...plotTL(b.ang), w:PLOT_W, h:PLOT_H, rot:plotRot(b.ang)}, rot:plotRot(b.ang)}));
 
 // outposts sit between spokes (like the original), crystals float in the other 4 gaps
 const OUTPOST_ANGS = [-67.5, 22.5, -157.5, 112.5];   // N-ish, E-ish, W-ish, S-ish (order matches POINTS_DEFS)
@@ -50,24 +58,24 @@ const PRESETS = [
 ];
 const PRESET_MAP = Object.fromEntries(PRESETS.map(p=>[p.id,p]));
 const plotAt = (gx,gy)=> ({ x: PLOT.x + gx*SLOT, y: PLOT.y + gy*SLOT });
-const plotOrigin = owner => owner==='p' ? PLOT : BOT_DEFS[owner].plot;
+const plotOrigin = (owner,zone) => owner==='p' ? (zone==='water'?WATER_YARD:PLOT) : BOT_DEFS[owner].plot;
 const plotRotOf = owner => owner==='p' ? 0 : BOT_DEFS[owner].rot;
 // plot-local px (0,0 = grid top-left) → world, honouring the plot's rotation
-function plotToWorld(owner,lx,ly){
-  const o=plotOrigin(owner), r=plotRotOf(owner), hw=PLOT_W*SLOT/2, hh=PLOT_H*SLOT/2;
+function plotToWorld(owner,lx,ly,zone){
+  const o=plotOrigin(owner,zone), r=plotRotOf(owner), hw=o.w*SLOT/2, hh=o.h*SLOT/2;
   const dx=lx-hw, dy=ly-hh, c=Math.cos(r), s=Math.sin(r);
   return {x:o.x+hw+dx*c-dy*s, y:o.y+hh+dx*s+dy*c};
 }
 // world → plot-local px (inverse of plotToWorld)
-function worldToPlot(owner,x,y){
-  const o=plotOrigin(owner), r=plotRotOf(owner), hw=PLOT_W*SLOT/2, hh=PLOT_H*SLOT/2;
+function worldToPlot(owner,x,y,zone){
+  const o=plotOrigin(owner,zone), r=plotRotOf(owner), hw=o.w*SLOT/2, hh=o.h*SLOT/2;
   const dx=x-o.x-hw, dy=y-o.y-hh, c=Math.cos(r), s=Math.sin(r);
   return {x:hw+dx*c+dy*s, y:hh-dx*s+dy*c};
 }
 // anchor = footprint centre pushed down to the footprint's lowest screen point (bottom-centre when unrotated). caches b.x/b.y (+ b.cx/b.cy = centre)
 function bPos(b){
   const owner=b.owner??"p", d=BUILD[b.type], r=plotRotOf(owner);
-  const c=plotToWorld(owner,(b.gx+d.w/2)*SLOT,(b.gy+d.h/2)*SLOT);
+  const c=plotToWorld(owner,(b.gx+d.w/2)*SLOT,(b.gy+d.h/2)*SLOT,b.zone);
   const ext=Math.abs(Math.sin(r))*d.w*SLOT+Math.abs(Math.cos(r))*d.h*SLOT;
   b.cx=c.x; b.cy=c.y; b.x=c.x; b.y=c.y+ext/2; return {x:b.x,y:b.y};
 }

@@ -25,8 +25,11 @@ window.addEventListener('keydown',e=>{
 window.addEventListener('keyup',e=>{});
 // continuous camera with held keys
 const keys={};
-window.addEventListener('keydown',e=>{ if(/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return; keys[e.key.toLowerCase()]=true; });   // fixed: typing in admin search boxes panned the camera
-window.addEventListener('keyup',e=>{ delete keys[e.key.toLowerCase()]; });
+window.addEventListener('keydown',e=>{ if(/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return; const k=e.key.toLowerCase(); keys[k]=true;
+  if(k==='q'&&!holdQ){ holdQ=true; sfx('click'); }   // v8.3: hold Q → freeze the battle and look around
+});
+window.addEventListener('keyup',e=>{ const k=e.key.toLowerCase(); delete keys[k]; if(k==='q'){ holdQ=false; sfx('click'); } });
+window.addEventListener('blur',()=>{ holdQ=false; });
 
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 cv.addEventListener('mousedown',e=>{
@@ -59,9 +62,9 @@ cv.addEventListener('mousedown',e=>{
   if(S.placing){
     const g=ghostSlot();
     if(g.ok){
-      placeBuilding(S.placing,g.gx,g.gy);
+      placeBuilding(S.placing,g.gx,g.gy,'p',g.zone);
       S.placing=null;
-    } else { toast('Can\'t place there','#ef5350'); sfx('error'); }
+    } else { toast(g.why||'Can\'t place there','#ef5350'); sfx('error'); }
     return;
   }
 });
@@ -73,7 +76,21 @@ cv.addEventListener('mousemove',e=>{
   if(mouse.dragging && !S.placing){
     dragBand={x1:mouse.dragX,y1:mouse.dragY,x2:e.clientX,y2:e.clientY};
   }
+  hoverUnit(e);   // v8.3: hover a troop → its stat card (throttled + spatial-hash lookup = free with 1000 units)
 });
+// v8.3: HOVER INSPECT — the unit under the cursor, at most ~12×/s, html rebuilt only when it changes
+let hoverU=null, hoverAt=0, hoverBuilt=0;
+function hoverUnit(e){
+  const now=performance.now();
+  if(now-hoverAt<80) return; hoverAt=now;
+  if(S.placing||mouse.dragging){ if(hoverU){ hoverU=null; hideTip(); } return; }
+  let u=unitAt(mouse.wx,mouse.wy,26);
+  if(u&&(u.dead||(isStealth(u)&&!u.revealed&&u.faction!==0))) u=null;   // can't inspect what you can't see
+  if(u!==hoverU){ hoverU=u; hoverBuilt=now; if(u) showUnitTip(e,u); else hideTip(); return; }
+  if(!u) return;
+  if(now-hoverBuilt>400){ hoverBuilt=now; showUnitTip(e,u); }          // keep hp/dps live while it fights
+  else moveTip(e);
+}
 window.addEventListener('mouseup',e=>{
   if(e.button!==0) return;
   if(!mouse.down) return;
@@ -116,7 +133,7 @@ window.addEventListener('mouseup',e=>{
 
 function buildingAt(wx,wy,who){
   for(const b of S.buildings){
-    const d=BUILD[b.type], l=worldToPlot(b.owner??"p",wx,wy);   // v6: plot-local test (bot plots are rotated)
+    const d=BUILD[b.type], l=worldToPlot(b.owner??"p",wx,wy,b.zone);   // v6: plot-local test (bot plots are rotated)
     const x=b.gx*SLOT, y=b.gy*SLOT;
     if(l.x>=x&&l.x<=x+d.w*SLOT&&l.y>=y&&l.y<=y+d.h*SLOT){
       if(who==="p"&&(b.owner??"p")!=="p") continue;

@@ -35,6 +35,7 @@ function depth(y){
 }
 
 const mouse={x:0,y:0,wx:0,wy:0,down:false,dragX:0,dragY:0,dragging:false};
+let holdQ=false;   // v8.3: true while Q is held → the battle freezes but the camera, hover cards and UI stay live
 let selUnits=[];
 let dragBand=null;
 
@@ -63,7 +64,7 @@ const PATCHES=[], TREES=[], ROCKS=[];
   for(let a=0;a<12;a++){ const th=sr()*pi2, rr=180+sr()*(cityRadius(th)-210); PATCHES.push({x:CITY_ISL.x+Math.cos(th)*rr, y:CITY_ISL.y+Math.sin(th)*rr, r:20+sr()*40, c:col()}); }
   for(let a=0;a<40;a++){ const th=sr()*pi2, R=cityRadius(th), rr=R-18-sr()*60; if(rr>230) putTree(CITY_ISL.x+Math.cos(th)*rr, CITY_ISL.y+Math.sin(th)*rr); }
   for(let i=0;i<POINTS_DEFS.length;i++){
-    const pt=POINTS_DEFS[i]; if(pt.city) continue;
+    const pt=POINTS_DEFS[i]; if(pt.city||pt.water) continue;
     for(let a=0;a<3;a++){ const th=sr()*pi2, rr=sr()*Math.max(10,isletRadius(i,th)-18); PATCHES.push({x:pt.x+Math.cos(th)*rr, y:pt.y+Math.sin(th)*rr, r:10+sr()*18, c:col()}); }
     for(let a=0;a<14;a++){ const th=sr()*pi2, R=isletRadius(i,th), lo=pt.r+14, hi=R-12;
       if(hi>lo) putTree(pt.x+Math.cos(th)*(lo+sr()*(hi-lo)), pt.y+Math.sin(th)*(lo+sr()*(hi-lo))); }

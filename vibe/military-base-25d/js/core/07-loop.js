@@ -12,7 +12,7 @@ function frame(now){
   render();
 }
 function update(dt,t){
-  const gdt=dt*(S.admin?(S.admin.speed==null?1:S.admin.speed):1); // admin time scale (0 = paused)
+  const gdt=dt*(S.admin?(S.admin.speed==null?1:S.admin.speed):1)*(holdQ?0:1); // admin time scale · v8.3: holding Q = pause
   // camera (real time — you can look around even while paused)
   const sp=520*dt;
   if(keys['w']||keys['arrowup']) cam.ty-=sp;

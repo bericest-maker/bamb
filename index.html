@@ -28,13 +28,27 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 .tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
 </style></head><body><div class="wrap">
 <h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
-<div class="sub">v8 · PERFORMANCE &amp; PEACE UPDATE · potato mode, permanent buildings, a world twice as big · <span class="dim">fan project, not affiliated with Roblox</span></div>
+<div class="sub">v8.3 · HARBOUR UPDATE · water yard + water capture points · finer grid · hover stats · <span class="dim">fan project, not affiliated with Roblox</span></div>
 
 <a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
 <a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
 <a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
 
-<div class="card"><h2>WHAT CHANGED (v8 — this round)</h2>
+<div class="card"><h2>WHAT CHANGED (v8.3 — this round)</h2>
+<div>
+<span class="tag sea">water yard</span><span class="tag sea">4 water points</span><span class="tag new">finer grid</span>
+<span class="tag new">buildings 3× smaller</span><span class="tag new">hover troop stats</span><span class="tag new">hold Q to pause</span>
+</div>
+<ul>
+<li><b>⚓ YOUR WATER YARD</b> — a buildable strip of sea <b>behind your island</b> (832×224px, as wide as your base). Every <b>dock</b>, the <b>Offshore Oil Rig</b> and the <b>Naval Beacon</b> go there; land buildings are refused with a reason. Ships launch straight into the water instead of walking to the coast.</li>
+<li><b>⚓ 4 WATER CAPTURE POINTS</b> — RIG NW / NE / SE / SW out in the ocean. Only ships can reach them, a held rig is garrisoned by gunboats, and each one gives <b>+10% production</b> just like an outpost.</li>
+<li><b>🧱 FINER GRID</b> — build cells went from 16px to <b>8px</b> (104×72 cells); your island is the same size, you just place with twice the precision.</li>
+<li><b>🏢 BUILDINGS 3× SMALLER</b> — a Solar panel is 24px wide instead of 64px, so several times more of them fit on your island.</li>
+<li><b>🔍 HOVER ANY TROOP</b> for its card: HP, damage, DPS, range, speed, troop-cap size, armour, detection, splash, aura, bounty, damage modifiers and what it's doing right now. It uses the spatial hash, so it's instant even in a 1000-unit battle.</li>
+<li><b>⏸ HOLD Q</b> to freeze the battle and look around — the camera, the hover cards and all panels keep working. Release Q to resume.</li>
+</ul></div>
+
+<div class="card"><h2>WHAT CHANGED (v8 — previous round)</h2>
 <div>
 <span class="tag new">block mode</span><span class="tag new">hide trees &amp; decor</span><span class="tag new">world ×2</span>
 <span class="tag new">no drive-by shooting</span><span class="tag new">march on the middle</span><span class="tag">permanent buildings</span>
@@ -96,5 +110,5 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 <li><b>ADMIN → RAID ALERT</b> (or wait for a wave): your barracks/factories muster a free garrison.</li>
 <li><b>Left rail → 📜 PATCHES</b> shows this changelog inside the game.</li>
 </ul></div>
-<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (159 assertions, all green)</div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (189 assertions, all green)</div>
 </div></body></html>

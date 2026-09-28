@@ -5,8 +5,8 @@ const mini=$('#mini'), mctx=mini.getContext('2d');
 // v5: a building's picture fills its footprint (w slots wide) — "stuff is ACTUALLY its size"
 const bScale = type => BLD_K;   // v6: every model is drawn at the same scale; its footprint was sized from the model (see 08c)
 // path a plot-local rectangle (px, grid top-left origin) in world space — follows the plot's rotation
-function plotRectPath(owner,x,y,w,h){
-  const a=plotToWorld(owner,x,y), b=plotToWorld(owner,x+w,y), c=plotToWorld(owner,x+w,y+h), d=plotToWorld(owner,x,y+h);
+function plotRectPath(owner,x,y,w,h,zone){
+  const a=plotToWorld(owner,x,y,zone), b=plotToWorld(owner,x+w,y,zone), c=plotToWorld(owner,x+w,y+h,zone), d=plotToWorld(owner,x,y+h,zone);
   ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.lineTo(c.x,c.y); ctx.lineTo(d.x,d.y); ctx.closePath();
 }
 let miniT=-1e9;
@@ -42,7 +42,7 @@ function render(){
       const isBot=typeof(it.b.owner??"p")==="number", fac=bFaction(it.b);
       // concrete foundation = the building's real footprint, edged in its faction colour
       const fw=d.w*SLOT, fh=d.h*SLOT, own=it.b.owner??'p';
-      plotRectPath(own,it.b.gx*SLOT+1,it.b.gy*SLOT+1,fw-2,fh-2);
+      plotRectPath(own,it.b.gx*SLOT+1,it.b.gy*SLOT+1,fw-2,fh-2,it.b.zone);
       if(blockBlds()){                                   // v8: BLOCK MODE — the footprint itself, in the owner's colour
         ctx.fillStyle=facC(fac); ctx.fill();
       } else {
@@ -127,9 +127,9 @@ function render(){
   // placement ghost
   if(S.placing){
     const g=ghostSlot();
-    const q=plotAt(g.gx,g.gy), d=BUILD[S.placing];
-    ctx.fillStyle=g.ok?'rgba(91,194,78,.25)':'rgba(214,73,63,.3)';
-    ctx.strokeStyle=g.ok?'#5bc24e':'#d6493f';
+    const go=g.zone==='water'?WATER_YARD:PLOT, q={x:go.x+g.gx*SLOT, y:go.y+g.gy*SLOT}, d=BUILD[S.placing];
+    ctx.fillStyle=g.ok?(d.water?'rgba(88,200,232,.30)':'rgba(91,194,78,.25)'):'rgba(214,73,63,.3)';
+    ctx.strokeStyle=g.ok?(d.water?'#58c8e8':'#5bc24e'):'#d6493f';
     ctx.lineWidth=2;
     ctx.fillRect(q.x,q.y,d.w*SLOT,d.h*SLOT);
     ctx.strokeRect(q.x,q.y,d.w*SLOT,d.h*SLOT);
@@ -142,4 +142,13 @@ function render(){
   // minimap (v5 perf: redrawn 10×/s instead of every frame)
   const nowMs=performance.now();
   if(nowMs-miniT>=100||nowMs<miniT){ miniT=nowMs; drawMini(); }
+  // v8.3: PAUSED badge (holding Q) — drawn in screen space on top of everything
+  if(holdQ){
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.fillStyle='rgba(13,18,25,.85)'; ctx.fillRect(W/2-150,16,300,32);
+    ctx.strokeStyle='#ffd54f'; ctx.lineWidth=2; ctx.strokeRect(W/2-150,16,300,32);
+    ctx.fillStyle='#ffd54f'; ctx.font='900 15px "Segoe UI"'; ctx.textAlign='center';
+    ctx.fillText('\u23f8 PAUSED \u2014 hold Q (release to resume)',W/2,38);
+    ctx.textAlign='left';
+  }
 }

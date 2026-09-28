@@ -33,8 +33,8 @@ function renderBackpack(){
       if(it.kind==='c'){ openCrateModal(it.type); S.inventory.splice(idx,1); }
       else {
         S.inventory.splice(idx,1);
-        S.placing=it.type;
         closePanel('backpack');
+        startPlacing(it.type);
         toast(`Placing ${d.name} — click a free plot slot. RMB to cancel.`,'#4a90e2');
       }
       renderBackpack();

@@ -25,7 +25,7 @@ function drawMini(){
     miniPoly(th=>plotRadius(i,th),c.x,c.y,sx,sy); miniPoly(th=>lobeRadius(i,th),L.x,L.y,sx,sy);
   }
   miniPoly(cityRadius,CITY_ISL.x,CITY_ISL.y,sx,sy);
-  POINTS_DEFS.forEach((p,i)=>{ if(!p.city) miniPoly(th=>isletRadius(i,th),p.x,p.y,sx,sy); });
+  POINTS_DEFS.forEach((p,i)=>{ if(!p.city&&!p.water) miniPoly(th=>isletRadius(i,th),p.x,p.y,sx,sy); });
   // plot squares: yours highlighted, bots in faction colour (red if rebuilding)
   for(let i=0;i<MAP_PLOTS.length;i++){
     const p=MAP_PLOTS[i];
@@ -34,6 +34,9 @@ function drawMini(){
     for(const [lx,ly] of [[0,0],[PLOT_W*SLOT,0],[PLOT_W*SLOT,PLOT_H*SLOT],[0,PLOT_H*SLOT]]){ const q=plotToWorld(own,lx,ly); mctx.lineTo(q.x*sx,q.y*sy); }
     mctx.closePath(); mctx.fill();
   }
+  // v8.3: your water yard (behind your island)
+  { const Y=WATER_YARD, sx2=mw/WORLD.w, sy2=mh/WORLD.h;
+    mctx.fillStyle='rgba(88,200,232,.35)'; mctx.fillRect(Y.x*sx2,Y.y*sy2,Y.w*SLOT*sx2,Y.h*SLOT*sy2); }
   // crystals
   mctx.fillStyle='#bff3ff'; for(const c of CRYSTALS){ mctx.fillRect(c.x*sx-1.5,c.y*sy-1.5,3,3); }
   // points (owner faction color)

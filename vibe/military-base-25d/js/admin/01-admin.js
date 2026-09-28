@@ -109,11 +109,13 @@ const Admin={
     const d=BUILD[id];
     n=Math.max(1,Math.min(1000,Math.round(Number(n))||1));
     if(place){
+      // v8.3: water buildings fill the WATER YARD behind your island, everything else the land grid
+      const zone=d.water?'water':'land', o=d.water?WATER_YARD:PLOT;
       let made=0;
-      for(let y=0;y<=PLOT.h-d.h&&made<n;y++) for(let x=0;x<=PLOT.w-d.w&&made<n;x++){
-        if(canPlaceAt(id,x,y)){ placeBuilding(id,x,y); made++; }
+      for(let y=0;y<=o.h-d.h&&made<n;y++) for(let x=0;x<=o.w-d.w&&made<n;x++){
+        if(canPlaceAt(id,x,y,zone)){ placeBuilding(id,x,y,'p',zone); made++; }
       }
-      if(!made){ toast('No free plot space!','#ef5350'); sfx('error'); return 0; }
+      if(!made){ toast(d.water?'No free space in your WATER YARD!':'No free plot space!','#ef5350'); sfx('error'); return 0; }
       toast(`${made}x ${d.name} placed`,'#5bc24e'); return made;
     }
     for(let i=0;i<n;i++) giveItem('b',id);

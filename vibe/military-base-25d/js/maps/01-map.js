@@ -42,7 +42,7 @@ const BRIDGE_W = 40;
 const BRIDGES = [];
 for(const p of MAP_PLOTS){ const c=plotCenter(p); BRIDGES.push({ax:CITY_ISL.x,ay:CITY_ISL.y,bx:c.x,by:c.y,spoke:true}); }
 for(const pt of POINTS_DEFS){
-  if(pt.city) continue;
+  if(pt.city||pt.water) continue;
   for(const da of [-22.5,22.5]){
     const f=ringPos(pt.ang+da, OUTPOST_R*Math.cos(22.5*DEG));
     BRIDGES.push({ax:pt.x,ay:pt.y,bx:f.x,by:f.y,spoke:false});
@@ -72,7 +72,7 @@ function walkableAt(x,y){
     if(!(dx<-CITY_BB||dx>CITY_BB||dy<-CITY_BB||dy>CITY_BB) && Math.hypot(dx,dy) <= cityRadius(Math.atan2(dy,dx))) return true; }
   // outpost islets
   for(let i=0;i<POINTS_DEFS.length;i++){
-    const pt=POINTS_DEFS[i]; if(pt.city) continue;
+    const pt=POINTS_DEFS[i]; if(pt.city||pt.water) continue;
     const dx=x-pt.x, dy=y-pt.y;
     if(dx<-ILET_BB||dx>ILET_BB||dy<-ILET_BB||dy>ILET_BB) continue;
     if(Math.hypot(dx,dy) <= isletRadius(i,Math.atan2(dy,dx))) return true;

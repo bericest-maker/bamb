@@ -97,7 +97,7 @@ function drawGround(vb){
   drawBridges(BRIDGES,BRIDGE_W*2-6);
   // outpost islets
   for(let i=0;i<POINTS_DEFS.length;i++){
-    const pt=POINTS_DEFS[i]; if(pt.city||!inView(pt.x,pt.y,220,vb)) continue;
+    const pt=POINTS_DEFS[i]; if(pt.city||pt.water||!inView(pt.x,pt.y,220,vb)) continue;
     landShape(th=>isletRadius(i,th),pt.x,pt.y);
   }
   // plot islands (0 = player, 1-7 = bots) + their lobes
@@ -145,6 +145,22 @@ function drawGround(vb){
     ctx.fillStyle='#ffe08a'; ctx.font='900 15px "Segoe UI"'; ctx.textAlign='center';
     ctx.fillText('⬆ YOUR BASE',p.x+w/2,p.y-26);
   }
+  // v8.3: YOUR WATER YARD — a build grid in the sea behind your island (docks + offshore rigs go here)
+  { const p=WATER_YARD, w=p.w*SLOT, h=p.h*SLOT;
+    if(inView(p.x+w/2,p.y+h/2,Math.max(w,h),vb)){
+      ctx.fillStyle='rgba(40,120,190,.30)'; ctx.fillRect(p.x,p.y,w,h);
+      ctx.strokeStyle= S.placing&&BUILD[S.placing].water ? 'rgba(120,225,255,.85)' : 'rgba(120,225,255,.30)';
+      ctx.lineWidth=2; ctx.strokeRect(p.x,p.y,w,h);
+      if(S.placing&&BUILD[S.placing].water){                 // grid + label while a water building is in hand
+        ctx.strokeStyle='rgba(160,235,255,.22)'; ctx.lineWidth=1; ctx.beginPath();
+        for(let gx=GRID_K;gx<p.w;gx+=GRID_K){ ctx.moveTo(p.x+gx*SLOT,p.y); ctx.lineTo(p.x+gx*SLOT,p.y+h); }
+        for(let gy=GRID_K;gy<p.h;gy+=GRID_K){ ctx.moveTo(p.x,p.y+gy*SLOT); ctx.lineTo(p.x+w,p.y+gy*SLOT); }
+        ctx.stroke();
+      }
+      ctx.fillStyle='#9fe8ff'; ctx.font='900 13px "Segoe UI"'; ctx.textAlign='center';
+      ctx.fillText('\u2693 YOUR WATER YARD \u2014 \u2693 water buildings only',p.x+w/2,p.y+h+22);
+      ctx.textAlign='left';
+    } }
   // bot plot outlines + labels — v8: OFF by default (⚙ SETTINGS → ENEMY BASE GRIDS to bring them back).
   // You see what matters: their buildings and their troops.
   if(set.botGrid) for(let i=0;i<MAP_PLOTS.length;i++){
@@ -165,10 +181,20 @@ function drawGround(vb){
       ctx.fillText(`REBUILDING ${Math.max(0,Math.ceil(bb.downT))}s`,cx,cy+3);
     }
   }
-  // capture pads (owner color)
+  // capture pads (owner color) — v8.3: the WATER points are drawn as offshore rigs on stilts
   for(const p of S.points){
     const f=pointFaction(p);
     const c=f<0?'#a0aab4':facC(f);
+    if(p.water){
+      ctx.fillStyle='rgba(20,70,120,.35)'; ctx.beginPath(); ctx.ellipse(p.x,p.y+26,p.r*.9,p.r*.4,0,0,pi2); ctx.fill();
+      ctx.fillStyle='#39404a';                                    // 4 legs in the water
+      for(const [dx,dy] of [[-1,-1],[1,-1],[-1,1],[1,1]]) ctx.fillRect(p.x+dx*p.r*.46-5,p.y-6,10,p.r*.9);
+      ctx.fillStyle='#4d5763'; ctx.fillRect(p.x-p.r*.72,p.y-p.r*.6,p.r*1.44,p.r*1.2);   // deck
+      ctx.fillStyle=hexA(c,.45); ctx.fillRect(p.x-p.r*.72,p.y-p.r*.6,p.r*1.44,p.r*1.2);
+      ctx.strokeStyle=hexA(c,.95); ctx.lineWidth=4; ctx.strokeRect(p.x-p.r*.72,p.y-p.r*.6,p.r*1.44,p.r*1.2);
+      ctx.fillStyle='#2b3238'; ctx.fillRect(p.x-6,p.y-p.r*.95,12,p.r*.4);               // derrick
+      continue;
+    }
     ctx.fillStyle='#9aa0a6'; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,pi2); ctx.fill();
     ctx.fillStyle=hexA(c,.14); ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,pi2); ctx.fill();
     ctx.strokeStyle=hexA(c,.9); ctx.lineWidth=5; ctx.beginPath(); ctx.arc(p.x,p.y,p.r-4,0,pi2); ctx.stroke();

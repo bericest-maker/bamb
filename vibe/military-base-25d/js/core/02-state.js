@@ -43,11 +43,14 @@ function defaultState(){
 function defaultStats(){ return {kills:0, bosses:0, captures:0, tut:false, cratesOpened:0, placed:0}; }
 
 // 5 capture points: 4 outpost islets between the spokes + the CITY (index 2 = CITY_IDX, kept for old saves)
+// v8.3: the 4 RIGS are WATER points — only ships can reach them, and they are held by a boat garrison.
+const RIG_ANGS = [-112.5,-22.5,67.5,157.5], RIG_R = 2100, RIG_NAMES = ['RIG NW','RIG NE','RIG SE','RIG SW'];
 const POINTS_DEFS = [
   {id:0, name:'OUTPOST N', ...ringPos(OUTPOST_ANGS[0],OUTPOST_R), r:65,  garrison:3, tank:0, ang:OUTPOST_ANGS[0]},
   {id:1, name:'OUTPOST E', ...ringPos(OUTPOST_ANGS[1],OUTPOST_R), r:65,  garrison:3, tank:0, ang:OUTPOST_ANGS[1]},
   {id:2, name:'CITY',      x:MAP_C.x, y:MAP_C.y,                  r:130, garrison:4, tank:2, city:true},
   {id:3, name:'OUTPOST W', ...ringPos(OUTPOST_ANGS[2],OUTPOST_R), r:65,  garrison:3, tank:0, ang:OUTPOST_ANGS[2]},
   {id:4, name:'OUTPOST S', ...ringPos(OUTPOST_ANGS[3],OUTPOST_R), r:65,  garrison:3, tank:0, ang:OUTPOST_ANGS[3]},
+  ...RIG_ANGS.map((a,i)=>({id:5+i, name:RIG_NAMES[i], ...ringPos(a,RIG_R), r:80, garrison:2, tank:0, ang:a, water:true})),
 ];
 const CITY_IDX = 2;

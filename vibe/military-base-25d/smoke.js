@@ -27,12 +27,14 @@ assert(walkCell(300,300)===0,'open water is not walkable');
 // radial map like the original: 8 plots + 8 lobes + octagon city + 4 outpost islets + bridges + crystals in water
 assert(B.MAP_PLOTS.length===8 && B.LOBES.length===8,'8 plot islands, each with a lobe');
 assert(B.LOBES.every(L=>B.walkableAt(L.x,L.y)),'every lobe island is land');
-assert(B.POINTS_DEFS.filter(p=>!p.city).every(p=>B.walkableAt(p.x,p.y)),'4 outpost islets are land');
+assert(B.POINTS_DEFS.filter(p=>!p.city&&!p.water).every(p=>B.walkableAt(p.x,p.y)),'4 outpost islets are land');
+assert(B.POINTS_DEFS.filter(p=>p.water).length===4 && B.POINTS_DEFS.filter(p=>p.water).every(p=>!B.walkableAt(p.x,p.y)),'4 WATER points (rigs) float in the open sea');
 assert(B.BRIDGES.filter(b=>b.spoke).length===8 && B.BRIDGES.length===16,'8 spoke bridges + 8 outpost bridges');
 assert(G('CRYSTALS').every(c=>!B.walkableAt(c.x,c.y)),'crystals float in the water');
 assert(B.BOT_DEFS.every((b,i)=>Math.abs(Math.hypot(BC(i).x-MC.x,BC(i).y-MC.y)-G('RING'))<2),'bot plots sit on the ring around the city');
 { const mid={x:(PC.x+MC.x)/2,y:(PC.y+MC.y)/2}; assert(B.walkableAt(mid.x,mid.y) && !B.walkableAt(mid.x+120,mid.y),'spoke bridge is walkable, water beside it is not'); }
-for(const p of B.POINTS_DEFS.filter(p=>!p.city)){ const pp=B.astar(PC.x,PC.y,p.x,p.y); assert(!!pp,`A* reaches ${p.name} from your base`); }
+for(const p of B.POINTS_DEFS.filter(p=>!p.city&&!p.water)){ const pp=B.astar(PC.x,PC.y,p.x,p.y); assert(!!pp,`A* reaches ${p.name} from your base`); }
+for(const p of B.POINTS_DEFS.filter(p=>p.water)){ assert(G('isSeaAt')(p.x,p.y),`${p.name} sits on water (only ships can hold it)`); }
 // A*: player base -> city stays on land/bridges
 const path=B.astar(PC.x,PC.y,MC.x,MC.y);
 assert(!!path,'A* found a path: player base -> CITY');
@@ -349,7 +351,7 @@ assert(G('load')().v===4,'v3 save migrates to v4 on load');
 { const SPR=G('SPR'), bScale=G('bScale'), unitScale=G('unitScale'), SLOT=G('SLOT');
   const bad=Object.keys(BUILD).filter(id=>{ const mw=SPR[id].w*bScale(id), fw=BUILD[id].w*SLOT; return mw>fw+.01 || (BUILD[id].w>2 && fw-mw>=SLOT); });
   assert(!bad.length,`every footprint hugs its model (model ≤ pad < model + 1 cell) (${bad.slice(0,3)})`);
-  assert(G('PLOT_W')===52&&G('PLOT_H')===36&&SLOT===16,'fine build grid: 52×36 cells of 16px');
+  assert(G('PLOT_W')===104&&G('PLOT_H')===72&&SLOT===8,`fine build grid: 104×72 cells of 8px (island still 832×576px)`);
   // rotated bot plots: presets still build, and clicking a bot building finds it
   B.setBotPreset(1,'fortified',true);
   const nb=B.botBuildings(1).length, want=G('PRESET_MAP').fortified.b.length;
@@ -560,6 +562,63 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   assert(Math.abs(cam.tx-PC.x)<1&&Math.abs(cam.ty-PC.y)<1,'at normal zoom the camera still pans freely');
   // leave the settings as they started
   S().settings.units='Normal'; S().settings.blds='Normal'; S().settings.trees=true; S().settings.botGrid=false;
+}
+
+// ---- v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q ----
+{
+  // grid + building size
+  assert(SLOT===8 && G('PLOT_W')===104,`build grid is twice as fine (${G('PLOT_W')}x${G('PLOT_H')} cells of ${SLOT}px)`);
+  assert(G('BLD_K')<0.5,`buildings are drawn 3x smaller (BLD_K ${G('BLD_K').toFixed(3)} = 1.3/3)`);
+  assert(G('BUILD').solar.w*SLOT<64,`a Solar panel went from 64px wide to ${G('BUILD').solar.w*SLOT}px`);
+  // ---- your WATER YARD behind the island ----
+  const Y=G('WATER_YARD');
+  assert(Y.w*SLOT===832 && Y.h*SLOT===224,`the water yard is ${Y.w*SLOT}x${Y.h*SLOT}px — as wide as your island, behind it`);
+  assert(!B.walkableAt(Y.x+10,Y.y+10)&&!B.walkableAt(Y.x+Y.w*SLOT-10,Y.y+Y.h*SLOT-10),'the whole yard is water, not land');
+  assert(G('isSeaAt')(Y.x+40,Y.y+40),'the yard counts as SEA (ships can sail into it)');
+  assert(G('BUILD').gunboatpier.water && G('BUILD').offshore.water && !G('BUILD').barracks.water,'docks + the offshore rig are WATER buildings, the barracks is not');
+  assert(!G('fitsAt')('gunboatpier',2,2,'p','land') && G('fitsAt')('gunboatpier',2,2,'p','water'),'a dock fits in the yard and nowhere else');
+  assert(!G('fitsAt')('barracks',2,2,'p','water') && G('fitsAt')('barracks',2,2,'p','land'),'a barracks fits on the island and not in the water');
+  const mouse=G('mouse'); mouse.wx=Y.x+200; mouse.wy=Y.y+100; S().placing='gunboatpier';
+  const gh=G('ghostSlot')();
+  assert(gh.zone==='water'&&gh.ok,`the placement ghost snaps into the water yard (zone ${gh.zone})`);
+  S().placing='barracks';
+  assert(!G('ghostSlot')().ok && /WATER YARD/.test(G('ghostSlot')().why||''),'a land building over the yard is refused with a reason');
+  mouse.wx=PC.x; mouse.wy=PC.y;
+  assert(G('ghostSlot')().zone==='land','over your island the ghost goes back to the land grid');
+  S().placing=null;
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  B.placeBuilding('gunboatpier',4,4,'p','water');
+  const pier=S().buildings[S().buildings.length-1], pp=B.bPos(pier);
+  assert(G('inYard')(pp.x,pp.y),`the pier stands in the yard (${Math.round(pp.x)},${Math.round(pp.y)})`);
+  pier.t=0; G('productionTick')(0.02);
+  const boats=S().units.filter(u=>u.type==='gunboat');
+  assert(boats.length>0&&G('isSeaAt')(boats[0].x,boats[0].y),'the pier launched its gunboat straight into the sea');
+  // ---- WATER POINTS: 4 rigs, held by boats ----
+  const rigs=S().points.filter(p=>p.water);
+  assert(rigs.length===4,`4 water capture points (${rigs.map(r=>r.name).join(', ')})`);
+  { const r=rigs[0]; r.owner='player'; r.faction=0; r.respawnT=0;
+    S().units=S().units.filter(u=>u.home!==r.id);
+    const made=G('spawnGarrison')(r.id,2), g=S().units.filter(u=>u.home===r.id);
+    assert(made>0&&g.every(u=>G('isSea')(u)),`a held rig is garrisoned by BOATS (${g.map(u=>u.type).join(', ')})`);
+    S().units=S().units.filter(u=>u.home!==r.id); r.owner='neutral'; r.faction=-1; }
+  // ---- hover a troop → its stat card ----
+  const spy=B.mkUnit('rifle','p',PC.x,PC.y); S().units=[spy]; pump(50);
+  assert(G('unitAt')(PC.x,PC.y,26)===spy,'unitAt finds the troop under the cursor (spatial hash, not a full scan)');
+  assert(G('unitAt')(PC.x+400,PC.y,26)===null,'unitAt finds nothing when the cursor is over empty ground');
+  { let ok=true, html='';
+    for(const k of Object.keys(G('UNITS'))){ const u=B.mkUnit(k,'e',PC.x,PC.y); try{ html=G('unitTipHTML')(u); }catch(e){ ok=false; console.error('  tip',k,e.message); } }
+    assert(ok,'every one of the 55 unit types has a hover stat card');
+    assert(/Troop cap/.test(html)&&/DPS/.test(html)&&/HP/.test(html),'the card shows troop-cap size, DPS and HP');
+    const boss=B.mkUnit('rifle','e',PC.x,PC.y,{boss:true});
+    try{ G('unitTipHTML')(boss); assert(true,'the MECHA WORM has a hover card too'); }catch(e){ assert(false,'boss hover card: '+e.message); } }
+  // ---- hold Q = pause ----
+  S().units=[];
+  G('holdQ = true');
+  const tq=S().time; pump(1000);
+  assert(S().time===tq,'holding Q freezes the battle (game time does not move)');
+  G('holdQ = false');
+  pump(1000);
+  assert(S().time>tq,'releasing Q resumes it');
 }
 S().admin.noRespawn=false;
 

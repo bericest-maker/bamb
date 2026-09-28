@@ -73,6 +73,13 @@
 - [x] **World ×2** — WORLD 4800→9600, RING 1700→2600 (see MAPS). Load stays ~100 ms: `walkableAt` rejects most of the 57 600 walk cells by bounding box before any trig.
 - [x] **No drive-by shooting** — `aggroReach()`: MARCHING units engage at `min(range+60, AGGRO.march 210)`; units that HOLD (garrisons, base defenders, idle troops) keep `range+220`.
 - [x] **Idle troops march on the MIDDLE** — no order → the CITY, then the nearest point you don't own, fighting only what comes close.
+### Harbour & inspection (v8.3)
+- [x] **Your WATER YARD** (v8.3) — a buildable 832x224px strip of sea behind your island. Every dock + the Offshore Oil Rig + the Naval Beacon are `water` buildings and only fit there; land buildings are refused. Ships launch straight into it.
+- [x] **4 water capture points** (v8.3) — RIG NW/NE/SE/SW at r 2100; only ships can reach them, a held rig garrisons gunboats, +10% production each (8 outposts total like the original).
+- [x] **Build grid twice as fine** (v8.3) — SLOT 16 -> 8, PLOT 104x72 cells (island unchanged), GRID_K 8, save migration from any older cell size.
+- [x] **Buildings 3x smaller** (v8.3) — `BLD_K` 1.3 -> 1.3/3, so several times more of them fit on an island.
+- [x] **Hover a troop -> its stat card** (v8.3) — hp/damage/DPS/range/speed/troop-cap/armour/detect/splash/aura/bounty/modifiers/order, via the spatial hash (`unitAt`), throttled so it stays free with 1000 units.
+- [x] **Hold Q to pause** (v8.3) — freezes the battle, keeps the camera + hover cards + panels live.
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
@@ -431,12 +438,13 @@ Dev/test buildings (skip): Blender, Farm, LARGE Farm, LARGE ProPyramids, Mitosis
 - [x] Water lanes for ships once the naval line lands (v7) — v8 radii: ring 1580, outer loop 3400, radial lanes out to 3460
 - [x] **World ×2** (v8) — WORLD 9600², RING 2600, city r 460, outposts r 1150, crystals r 1400; islands 1990px apart, wide ocean for ships
 
-## ✅ Current build status (round 8, all green)
+## ✅ Current build status (round 8.3, all green)
 - 8 separate organic islands + bridges + city island + point islets; A* pathfinding; air flies over water
 - 7 named bot factions (distinct colors, troops tinted per team) fight each other, default-march on the CITY
 - Unit types: land / air / armored / stealth (detection: in combat, <70px, or sensor range)
 - Spectre (stealth) + Stealth Bay building (elite/premium crates)
 - Point capture by faction plurality; owner garrisons; v3 saves auto-migrate
 - 65-assertion headless smoke test: `node smoke.js` (**159 assertions in v8**)
-- v8: potato mode, trees/decor toggle, permanent buildings, 2× world, close-range aggro, troops march on the middle
+- v8: block mode, trees/decor toggle, permanent buildings, 2× world, close-range aggro, troops march on the middle
+- v8.3: water yard + water capture points, 8px grid, 3× smaller buildings, hover troop stats, hold-Q pause
 - Serve: `python3 -m http.server 8000 --bind 0.0.0.0` from this folder

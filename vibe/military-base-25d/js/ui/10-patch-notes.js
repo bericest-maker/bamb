@@ -2,6 +2,14 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.3 \u2014 HARBOUR UPDATE', date:'2026-09-27', items:[
+    '\u2693 YOUR WATER YARD: a buildable strip of sea BEHIND your island (832\u00d7224px, as wide as your base). Every dock, the Offshore Oil Rig and the Naval Beacon now go there \u2014 and your ships launch straight into it instead of walking to the coast.',
+    '\u2693 4 NEW WATER CAPTURE POINTS \u2014 RIG NW / NE / SE / SW out in the ocean. Only ships can reach them and a held rig is garrisoned by gunboats. Like the outposts, each one you hold is +10% production.',
+    '\uD83D\uDDD2\uFE0F BUILD GRID IS TWICE AS FINE: 16px cells \u2192 8px (104\u00d772 cells, your island is the same size).',
+    '\uD83C\uDFE2 BUILDINGS ARE 3\u00d7 SMALLER (BLD_K 1.3 \u2192 0.433) \u2014 a Solar panel is 24px wide instead of 64px, so several times more of them fit on your island.',
+    '\uD83D\uDD0D HOVER ANY TROOP to read its card: HP, damage, DPS, range, speed, troop-cap size, armour, detection, splash, aura, bounty, damage modifiers and what it is currently doing. It uses the spatial hash, so it stays instant in a 1000-unit battle, and the card is rebuilt ~2.5\u00d7/s instead of every frame.',
+    '\u23F8 HOLD Q to freeze the battle \u2014 the camera, hover cards and every panel keep working while you look around. Release Q to resume.',
+  ]},
   { v:'v8 \u2014 PERFORMANCE & PEACE UPDATE', date:'2026-09-27', items:[
     '\u26a1 BLOCK MODE (was POTATO MODE): \u2699 SETTINGS has two rows \u2014 UNIT GRAPHICS and BUILDING GRAPHICS, each Normal or Blocks. Blocks replaces every troop with a plain rectangle EXACTLY its sprite\u2019s size and every building with its footprint rectangle \u2014 just the owner\u2019s colour, nothing else (no shadows, no outlines). It is the single biggest frame-time win in the game.',
     '\u2699 TREES & DECOR toggle \u2014 hide the trees, rocks, grass patches and floating crystals.',

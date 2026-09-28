@@ -25,6 +25,21 @@ function removeUnits(pred){ for(const u of S.units) if(pred(u)) u.dead=true; S.u
 function removeBuildings(pred){ for(const b of S.buildings) if(pred(b)) b.dead=true; S.buildings=S.buildings.filter(b=>!b.dead); }
 function compactUnits(){ if(NEED_COMPACT){ S.units=S.units.filter(u=>!u.dead); NEED_COMPACT=false; } }
 
+// v8.3: the unit under a world point (hover tooltip). Reads the spatial hash directly, so the cost is
+// "the few cells around the cursor" instead of "every unit on the map" — hovering stays free in a 1000-unit battle.
+function unitAt(x,y,r){
+  let best=null, bd=r*r;
+  if(UGRID.size){
+    const R=Math.ceil(r/GRID_C), gx=Math.floor(x/GRID_C), gy=Math.floor(y/GRID_C);
+    for(let cx=gx-R;cx<=gx+R;cx++) for(let cy=gy-R;cy<=gy+R;cy++){
+      const a=UGRID.get(cx*4096+cy); if(!a) continue;
+      for(const e of a){ if(e.dead) continue; const dx=e.x-x, dy=e.y-y, d2=dx*dx+dy*dy; if(d2<bd){bd=d2;best=e;} }
+    }
+    return best;
+  }
+  for(const e of S.units){ if(e.dead) continue; const dx=e.x-x, dy=e.y-y, d2=dx*dx+dy*dy; if(d2<bd){bd=d2;best=e;} }
+  return best;
+}
 // nearest foreign unit within 700 of a bot's base — shared by all its defenders, refreshed ≤ 4×/s (v5 perf)
 const BOT_THREAT={};
 function botThreat(i,bc,fac){

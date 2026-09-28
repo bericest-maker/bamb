@@ -10,6 +10,7 @@ function tipHTML(id){
   if(d.income) row('Income',`$${fmt(d.income)}/s`);
   if(d.cap) row('Money capacity',`$${fmt(d.cap)} · pays out every ${d.cycle||MONEY_CYCLE}s`);
   if(d.unit&&d.wdCap) row('Wave defense',`${d.wdCap} free defenders`);
+  if(d.water) row('Terrain','\u2693 WATER — place it in your water yard behind the island');
   if(d.req) row('Needs',`${fmt(d.req)} PWR`);
   if(d.reqRebirth) row('Needs',`${d.reqRebirth} rebirth`);
   if(d.turret){ const T=d.turret; row('Turret',`${T.dmg} dmg / ${T.rate}s · ${T.range}px${T.splash?' · splash':''}`); }
@@ -35,6 +36,32 @@ function tipHTML(id){
   if(d.turret) return h+`</div><div class="t-m">${modTxt(d.turret.mods)}</div>`;
   return h+'</div>';
 }
+// v8.3: hover a troop → its card. Same skin as the building tooltip.
+function unitTipHTML(u){
+  const d=unitDef(u), cls=unitCls(u);
+  const col = u.boss?'#ef5350' : (u.faction===0?'#5bc24e':facC(u.faction));
+  let h=`<div class="t-h" style="color:${col}">${u.boss?'MECHA WORM':d.name}</div>`;
+  h+=`<div class="dim">${u.side==='p'?'YOUR TROOP':facN(u.faction)+' TROOP'} \u00b7 ${cls.map(c=>CLASS_INFO[c].ico+' '+CLASS_INFO[c].label).join(' ')}`
+    + `${d.sea?' \u00b7 \u2693 NAVAL':''}${d.fly?' \u00b7 FLYER':''}${d.heal?' \u00b7 MEDIC':''}</div><div class="t-g">`;
+  const row=(k,v)=>{ h+=`<span>${k}</span><span>${v}</span>`; };
+  row('HP',`${Math.ceil(u.hp)} / ${Math.round(u.maxHp)}`);
+  if(d.dmg){ row('Damage',`${d.dmg} / ${d.rate}s`); row('DPS',(d.dmg/d.rate).toFixed(1)); row('vs buildings','\u00d7'+(d.bld??1)); }
+  else if(d.heal) row('Heals',`${d.heal} hp/s`);
+  if(d.splash) row('Splash',d.splash+'px');
+  row('Range',d.range); row('Speed',d.speed);
+  row('Troop cap',`${u.boss?0:(d.size||1)} slot${(d.size||1)>1?'s':''}`);
+  if(d.armor) row('Armor',d.armor);
+  if(d.detect) row('Detect',d.detect+'px');
+  if(d.buff) row('Aura',`allies +${Math.round((d.buff.dmg-1)*100)}% dmg within ${d.buff.r}px`);
+  if(!u.boss) row('Bounty',`$${fmt(killReward(u))}`);
+  row('Order', u.order ? (u.order.bid?'assault that base':(u.order.point!==undefined?'capture point':'move here'))
+      : (u.home!=null?'garrison':(u.wd!=null?'base defence':(isSea(u)?'sail the lanes':'march on the CITY'))));
+  h+='</div>';
+  if(d.mods&&Object.keys(d.mods).length) h+=`<div class="t-m">${modTxt(d.mods)}</div>`;
+  if(u.revealed&&isStealth(u)) h+='<div class="t-m dim">DETECTED</div>';
+  return h;
+}
+function showUnitTip(e,u){ const t=$('#tip'); t.innerHTML=unitTipHTML(u); t.hidden=false; moveTip(e); }
 function showTip(e,id){ const t=$('#tip'); t.innerHTML=tipHTML(id); t.hidden=false; moveTip(e); }
 function moveTip(e){ const t=$('#tip'); if(t.hidden) return;
   const w=t.offsetWidth||220, hh=t.offsetHeight||180;
