@@ -1,0 +1,754 @@
+Building traits — original game (user paste, dump 1/4, 2026-09-28)
+80 traits + TraitsConfig roll pools/weights (Production / Unit / Logistics / MissileTurret + Test).
+Kept verbatim in the user's format; parsed index lives in NOTES.md → 🧬 Traits.
+
+trait: Sandstorm
+rarity: Unique
+description: Increases production generation by 2000% and decreases cycle time by 20%
+IncomeSpeed: 0.25
+ResourceProduction: 20
+unit UnitDamage: 1.5
+unit UnitHealth: 1.5
+size: 1
+bounty money: 10000000
+--------------------
+trait: Lightning
+rarity: Unique
+description: Increases attack rate by 100% and increases damage by 50%.
+unit UnitDamage: 0.5
+unit UnitAttackRate: 1
+bounty money: 10000000
+--------------------
+trait: Arctic
+rarity: Unique
+description: Decreases production time by 3/4 and production by 500%. Structures are 20% smaller.
+IncomeSpeed: 4
+ResourceProduction: 5
+size: 0.8
+bounty money: 10000000
+--------------------
+trait: Cooldown IV
+rarity: Epic
+description: Decreases collector cooldown by 80%
+bounty money: 4000000
+--------------------
+trait: Cooldown III
+rarity: Rare
+description: Decreases collector cooldown by 60%
+bounty money: 3000000
+--------------------
+trait: Cooldown II
+rarity: Uncommon
+description: Decreases collector cooldown by 40%
+bounty money: 2000000
+--------------------
+trait: Employment Agency II
+rarity: Mythic
+description: Increases collector amount by 2
+bounty money: 2000000
+--------------------
+trait: Range III
+rarity: Legendary
+description: Increases collection range by 6 studs
+bounty money: 3000000
+--------------------
+trait: Range II
+rarity: Epic
+description: Increases collection range by 4 studs
+bounty money: 2000000
+--------------------
+trait: Overtime V
+rarity: Epic
+description: Increases collector speed by 50%
+bounty money: 5000000
+--------------------
+trait: Overtime IV
+rarity: Epic
+description: Increases collector speed by 40%
+bounty money: 4000000
+--------------------
+trait: Overtime III
+rarity: Rare
+description: Increases collector speed by 30%
+bounty money: 3000000
+--------------------
+trait: Overtime II
+rarity: Uncommon
+description: Increases collector speed by 20%
+bounty money: 2000000
+--------------------
+trait: Cooldown I
+rarity: Common
+description: Decreases collector cooldown by 20%
+bounty money: 1000000
+--------------------
+trait: Range I
+rarity: Rare
+description: Increases collection range by 2 studs
+bounty money: 1000000
+--------------------
+trait: Employment Agency I
+rarity: Legendary
+description: Increases collector amount by 1
+bounty money: 1000000
+--------------------
+trait: Overtime I
+rarity: Common
+description: Increases collector speed by 10%
+bounty money: 1000000
+--------------------
+trait: Cooldown V
+rarity: Legendary
+description: Decreases collector cooldown by 100%
+bounty money: 5000000
+--------------------
+trait: Gloom
+rarity: Unique
+description: Decreases unit speed by 50%, increases health by 220%. Decreases unit supply by 2.
+unit UnitHealth: 2.2
+unit UnitSpeed: -0.5
+unit UnitSize: -2
+bounty money: 10000000
+--------------------
+trait: Volatile IX
+rarity: Legendary
+description: Increases unit damage by 70%
+unit UnitDamage: 0.7
+bounty money: 9000000
+--------------------
+trait: Volatile VIII
+rarity: Epic
+description: Increases unit damage by 65%
+unit UnitDamage: 0.65
+bounty money: 8000000
+--------------------
+trait: Volatile VII
+rarity: Epic
+description: Increases unit damage by 60%
+unit UnitDamage: 0.6
+bounty money: 7000000
+--------------------
+trait: Volatile VI
+rarity: Rare
+description: Increases unit damage by 55%
+unit UnitDamage: 0.55
+bounty money: 6000000
+--------------------
+trait: Volatile V
+rarity: Rare
+description: Increases unit damage by 50%
+unit UnitDamage: 0.5
+bounty money: 5000000
+--------------------
+trait: Volatile IV
+rarity: Uncommon
+description: Increases unit damage by 40%
+unit UnitDamage: 0.4
+bounty money: 4000000
+--------------------
+trait: Volatile III
+rarity: Uncommon
+description: Increases unit damage by 30%
+unit UnitDamage: 0.3
+bounty money: 3000000
+--------------------
+trait: Volatile II
+rarity: Common
+description: Increases unit damage by 20%
+unit UnitDamage: 0.2
+bounty money: 2000000
+--------------------
+trait: Rapid Response I
+rarity: Epic
+description: Spawns 1 additional unit
+unit UnitSpawnCount: 1
+bounty money: 1000000
+--------------------
+trait: Supply Lines III
+rarity: Mythic
+description: Reduces unit supply size by 3
+unit UnitSize: -3
+bounty money: 3000000
+--------------------
+trait: Supply Lines II
+rarity: Legendary
+description: Reduces unit supply size by 2
+unit UnitSize: -2
+bounty money: 2000000
+--------------------
+trait: Swift X
+rarity: Mythic
+description: Increases unit speed by 125%
+unit UnitSpeed: 1.25
+bounty money: 10000000
+--------------------
+trait: Swift IX
+rarity: Legendary
+description: Increases unit speed by 90%
+unit UnitSpeed: 0.9
+bounty money: 9000000
+--------------------
+trait: Swift VIII
+rarity: Epic
+description: Increases unit speed by 80%
+unit UnitSpeed: 0.8
+bounty money: 8000000
+--------------------
+trait: Swift VII
+rarity: Epic
+description: Increases unit speed by 70%
+unit UnitSpeed: 0.7
+bounty money: 7000000
+--------------------
+trait: Swift VI
+rarity: Rare
+description: Increases unit speed by 60%
+unit UnitSpeed: 0.6
+bounty money: 6000000
+--------------------
+trait: Volatile X
+rarity: Mythic
+description: Increases unit damage by 80%
+unit UnitDamage: 0.8
+bounty money: 10000000
+--------------------
+trait: Swift V
+rarity: Rare
+description: Increases unit speed by 50%
+unit UnitSpeed: 0.5
+bounty money: 5000000
+--------------------
+trait: Swift IV
+rarity: Uncommon
+description: Increases unit speed by 40%
+unit UnitSpeed: 0.4
+bounty money: 4000000
+--------------------
+trait: Swift III
+rarity: Uncommon
+description: Increases unit speed by 30%
+unit UnitSpeed: 0.3
+bounty money: 3000000
+--------------------
+trait: Swift II
+rarity: Common
+description: Increases unit speed by 20%
+unit UnitSpeed: 0.2
+bounty money: 2000000
+--------------------
+trait: Titanic X
+rarity: Mythic
+description: Increases production by 1400%. Increases structure size by 50%. Increases unit health by 125%
+ResourceProduction: 14
+unit UnitHealth: 1.25
+size: 1.5
+bounty money: 10000000
+--------------------
+trait: Titanic IX
+rarity: Legendary
+description: Increases production by 800%. Increases structure size by 45%. Increases unit health by 100%
+ResourceProduction: 8
+unit UnitHealth: 1
+size: 1.45
+bounty money: 9000000
+--------------------
+trait: Titanic VIII
+rarity: Epic
+description: Increases production by 600%. Increases structure size by 40%. Increases unit health by 40%
+ResourceProduction: 6
+unit UnitHealth: 0.8
+size: 1.4
+bounty money: 8000000
+--------------------
+trait: Titanic VII
+rarity: Epic
+description: Increases production by 400%. Increases structure size by 35%. Increases unit health by 35%
+ResourceProduction: 4
+unit UnitHealth: 0.35
+size: 1.35
+bounty money: 7000000
+--------------------
+trait: Titanic VI
+rarity: Rare
+description: Increases production by 280%. Increases structure size by 30%. Increases unit health by 30%
+ResourceProduction: 2.8
+unit UnitHealth: 0.3
+size: 1.3
+bounty money: 6000000
+--------------------
+trait: Titanic V
+rarity: Rare
+description: Increases production by 200%. Increases structure size by 25%. Increases unit health by 25%
+ResourceProduction: 2
+unit UnitHealth: 0.25
+size: 1.25
+bounty money: 5000000
+--------------------
+trait: Titanic IV
+rarity: Uncommon
+description: Increases production by 120%. Increases structure size by 20%. Increases unit health by 20%
+ResourceProduction: 1.2
+unit UnitHealth: 0.2
+size: 1.2
+bounty money: 4000000
+--------------------
+trait: Titanic III
+rarity: Uncommon
+description: Increases production by 80%. Increases structure size by 15%. Increases unit health by 10%
+ResourceProduction: 0.8
+unit UnitHealth: 0.1
+size: 1.15
+bounty money: 3000000
+--------------------
+trait: Titanic II
+rarity: Common
+description: Increases production by 40%. Increases structure size by 10%. Increases unit health by 7%
+ResourceProduction: 0.4
+unit UnitHealth: 0.07
+size: 1.1
+bounty money: 2000000
+--------------------
+trait: Tiny X
+rarity: Mythic
+description: Increases production by 400%. Reduces unit size by 50%. Increases unit damage by 52%
+ResourceProduction: 4
+unit UnitDamage: 0.52
+size: 0.5
+bounty money: 10000000
+--------------------
+trait: Tiny IX
+rarity: Legendary
+description: Increases production by 300%. Reduces unit size by 50%. Increases unit damage by 48%
+ResourceProduction: 3
+unit UnitDamage: 0.48
+size: 0.5
+bounty money: 9000000
+--------------------
+trait: Tiny VIII
+rarity: Epic
+description: Increases production by 250%. Reduces unit size by 45%. Increases unit damage by 43%
+ResourceProduction: 2.5
+unit UnitDamage: 0.43
+size: 0.55
+bounty money: 8000000
+--------------------
+trait: Tiny VII
+rarity: Epic
+description: Increases production by 200%. Reduces unit size by 40%. Increases unit damage by 38%
+ResourceProduction: 2
+unit UnitDamage: 0.38
+size: 0.6
+bounty money: 7000000
+--------------------
+trait: Tiny VI
+rarity: Rare
+description: Increases production by 140%. Reduces unit size by 35%. Increases unit damage by 33%
+ResourceProduction: 1.4
+unit UnitDamage: 0.33
+size: 0.65
+bounty money: 6000000
+--------------------
+trait: Tiny V
+rarity: Rare
+description: Increases production by 100%. Reduces unit size by 30%. Increases unit damage by 28%
+ResourceProduction: 1
+unit UnitDamage: 0.28
+size: 0.7
+bounty money: 5000000
+--------------------
+trait: Tiny IV
+rarity: Uncommon
+description: Increases production by 60%. Reduces unit size by 25%. Increases unit damage by 22%
+ResourceProduction: 0.6
+unit UnitDamage: 0.22
+size: 0.75
+bounty money: 4000000
+--------------------
+trait: Tiny III
+rarity: Uncommon
+description: Increases production by 40%. Reduces unit size by 20%. Increases unit damage by 17%
+ResourceProduction: 0.4
+unit UnitDamage: 0.17
+size: 0.8
+bounty money: 3000000
+--------------------
+trait: Tiny II
+rarity: Common
+description: Increases production by 20%. Reduces unit size by 15%. Increases unit damage by 12%
+ResourceProduction: 0.2
+unit UnitDamage: 0.12
+size: 0.85
+bounty money: 2000000
+--------------------
+trait: Overclocked X
+rarity: Mythic
+description: Increases production by 500%
+ResourceProduction: 5
+bounty money: 10000000
+--------------------
+trait: Overclocked IX
+rarity: Legendary
+description: Increases production by 400%
+ResourceProduction: 4
+bounty money: 9000000
+--------------------
+trait: Overclocked VIII
+rarity: Epic
+description: Increases production by 300%
+ResourceProduction: 3
+bounty money: 8000000
+--------------------
+trait: Overclocked VII
+rarity: Epic
+description: Increases production by 250%
+ResourceProduction: 2.5
+bounty money: 7000000
+--------------------
+trait: Overclocked VI
+rarity: Rare
+description: Increases production by 180%
+ResourceProduction: 1.8
+bounty money: 6000000
+--------------------
+trait: Overclocked V
+rarity: Rare
+description: Increases production by 140%
+ResourceProduction: 1.4
+bounty money: 5000000
+--------------------
+trait: Overclocked IV
+rarity: Uncommon
+description: Increases production by 110%
+ResourceProduction: 1.1
+bounty money: 4000000
+--------------------
+trait: Overclocked III
+rarity: Uncommon
+description: Increases production by 75%
+ResourceProduction: 0.75
+bounty money: 3000000
+--------------------
+trait: Overclocked II
+rarity: Common
+description: Increases production by 40%
+ResourceProduction: 0.4
+bounty money: 2000000
+--------------------
+trait: Ghostly
+rarity: Unique
+description: Increases production generation by 1000% and decreases collection time by 2/3. Increases unit health and damage by 100%. Increases speed by 30%. Decreases unit size by 1.
+IncomeSpeed: 2
+ResourceProduction: 10
+unit UnitHealth: 1
+unit UnitDamage: 1
+unit UnitSpeed: 0.3
+unit UnitSize: -1
+size: 0.5
+bounty money: 10000000
+--------------------
+trait: Tiny I
+rarity: Common
+description: Increases production by 10%. Reduces unit size by 10%. Increases unit damage by 5%
+ResourceProduction: 0.1
+unit UnitDamage: 0.05
+size: 0.9
+bounty money: 1000000
+--------------------
+trait: Titanic I
+rarity: Common
+description: Increases production by 20%. Increases structure size by 5%. Increases unit health by 5%
+ResourceProduction: 0.2
+unit UnitHealth: 0.05
+size: 1.05
+bounty money: 1000000
+--------------------
+trait: Elite
+rarity: Legendary
+description: Increases health and damage by 50%
+unit UnitDamage: 0.5
+unit UnitHealth: 0.5
+bounty money: 10000000
+--------------------
+trait: Supply Lines I
+rarity: Epic
+description: Reduces unit supply size by 1
+unit UnitSize: -1
+bounty money: 1000000
+--------------------
+trait: Rapid Response II
+rarity: Legendary
+description: Spawns 2 additional units
+unit UnitSpawnCount: 2
+bounty money: 2000000
+--------------------
+trait: Swift I
+rarity: Common
+description: Increases unit speed by 10%
+unit UnitSpeed: 0.1
+bounty money: 1000000
+--------------------
+trait: Overclocked I
+rarity: Common
+description: Increases production by 20%
+ResourceProduction: 0.2
+bounty money: 1000000
+--------------------
+trait: Volatile I
+rarity: Common
+description: Increases unit damage by 5%
+unit UnitDamage: 0.05
+bounty money: 1000000
+--------------------
+trait: Awakened
+rarity: Unique
+description: Increases production generation by 1200% and decreases collection time by 2/3s. Units receive a 150% HP and damage buff.
+IncomeSpeed: 2
+ResourceProduction: 12
+unit UnitDamage: 1.5
+unit UnitHealth: 1.5
+bounty money: 10000000
+--------------------
+trait: Reference Trait
+rarity: Mythic
+description: none
+IncomeSpeed: 2
+ResourceProduction: 2
+unit UnitHealth: 2
+unit UnitDamage: 2
+unit UnitSpeed: 2
+unit UnitSize: 1
+unit UnitSpawnCount: 1
+size: 2
+bounty money: 10000000
+--------------------
+trait: Unstable
+rarity: Unique
+description: Increases attack rate, damage, and speed by 100%. Decreases health by 90%
+IncomeSpeed: 2
+ResourceProduction: 10
+unit UnitAttackRate: 1
+unit UnitSpeed: 1
+unit UnitDamage: 1
+unit UnitHealth: -0.9
+size: 0.75
+bounty money: 10000000
+--------------------
+trait: Void
+rarity: Unique
+description: Increases production generation by 1000% and decreases collection time by 3/4. Increases unit size by 3. Increases unit spawn amount by 3. Increases damage by 200% and health by 100%.
+IncomeSpeed: 3
+ResourceProduction: 10
+unit UnitDamage: 2
+unit UnitHealth: 1
+unit UnitSize: 3
+unit UnitSpawnCount: 3
+size: 1
+bounty money: 10000000
+```
+
+-- Script Path: game:GetService("ReplicatedStorage").Shared.Resources.TraitResources.TraitsConfig
+-- Took 0.24s to decompile.
+-- Executor: Delta (1.1.738.1397)
+
+-- Decompiled using ByteFall
+-- discord.gg/pHTnqmmWzk
+return {
+    Production = {
+        Traits = {
+            Unique = { Awakened = 0.0001 },
+            Mythic = { ["Overclocked X"] = 1, ["Tiny X"] = 1, ["Titanic X"] = 1 },
+            Legendary = { ["Overclocked IX"] = 1, ["Tiny IX"] = 1, ["Titanic IX"] = 1 },
+            Epic = {
+                ["Overclocked VII"] = 2,
+                ["Overclocked VIII"] = 1,
+                ["Tiny VII"] = 2,
+                ["Tiny VIII"] = 1,
+                ["Titanic VII"] = 2,
+                ["Titanic VIII"] = 1
+            },
+            Rare = {
+                ["Overclocked V"] = 2,
+                ["Overclocked VI"] = 1,
+                ["Tiny V"] = 2,
+                ["Tiny VI"] = 1,
+                ["Titanic V"] = 2,
+                ["Titanic VI"] = 1
+            },
+            Uncommon = {
+                ["Overclocked III"] = 2,
+                ["Overclocked IV"] = 1,
+                ["Tiny III"] = 2,
+                ["Tiny IV"] = 1,
+                ["Titanic III"] = 2,
+                ["Titanic IV"] = 1
+            },
+            Common = {
+                ["Overclocked I"] = 2,
+                ["Overclocked II"] = 1,
+                ["Tiny I"] = 2,
+                ["Tiny II"] = 1,
+                ["Titanic I"] = 2,
+                ["Titanic II"] = 1
+            }
+        },
+        Rarities = {
+            Unique = 0.01,
+            Mythic = 0.04,
+            Legendary = 0.06,
+            Epic = 5,
+            Rare = 13,
+            Uncommon = 27,
+            Common = 54.89
+        }
+    },
+    Unit = {
+        Traits = {
+            Unique = { Awakened = 0.0001 },
+            Mythic = {
+                ["Volatile X"] = 1,
+                ["Swift X"] = 1,
+                ["Tiny X"] = 1,
+                ["Titanic X"] = 1,
+                ["Supply Lines III"] = 1
+            },
+            Legendary = {
+                ["Volatile IX"] = 1,
+                ["Swift IX"] = 1,
+                ["Tiny IX"] = 1,
+                ["Titanic IX"] = 1,
+                ["Rapid Response II"] = 1,
+                ["Supply Lines II"] = 1,
+                Elite = 1
+            },
+            Epic = {
+                ["Volatile VII"] = 2,
+                ["Volatile VIII"] = 1,
+                ["Swift VII"] = 2,
+                ["Swift VIII"] = 1,
+                ["Tiny VII"] = 2,
+                ["Tiny VIII"] = 1,
+                ["Titanic VII"] = 2,
+                ["Titanic VIII"] = 1,
+                ["Rapid Response I"] = 1,
+                ["Supply Lines I"] = 1
+            },
+            Rare = {
+                ["Volatile V"] = 2,
+                ["Volatile VI"] = 1,
+                ["Swift V"] = 2,
+                ["Tiny V"] = 2,
+                ["Tiny VI"] = 1,
+                ["Titanic V"] = 2,
+                ["Titanic VI"] = 1,
+                ["Swift VI"] = 1
+            },
+            Uncommon = {
+                ["Volatile III"] = 2,
+                ["Volatile IV"] = 1,
+                ["Swift III"] = 2,
+                ["Swift IV"] = 1,
+                ["Tiny III"] = 2,
+                ["Tiny IV"] = 1,
+                ["Titanic III"] = 2,
+                ["Titanic IV"] = 1
+            },
+            Common = {
+                ["Volatile I"] = 2,
+                ["Volatile II"] = 1,
+                ["Swift I"] = 2,
+                ["Swift II"] = 1,
+                ["Tiny I"] = 2,
+                ["Tiny II"] = 1,
+                ["Titanic I"] = 2,
+                ["Titanic II"] = 1
+            }
+        },
+        Rarities = {
+            Unique = 0.01,
+            Mythic = 0.04,
+            Legendary = 0.06,
+            Epic = 5,
+            Rare = 13,
+            Uncommon = 27,
+            Common = 54.89
+        }
+    },
+    Test = {
+        ["Volatile I"] = 0.06358,
+        ["Volatile II"] = 0.0425,
+        ["Volatile III"] = 0.03,
+        ["Volatile IV"] = 0.02,
+        ["Volatile V"] = 0.01,
+        ["Volatile VI"] = 0.0075,
+        ["Volatile VII"] = 0.0005,
+        ["Volatile VIII"] = 0.005,
+        ["Volatile IX"] = 0.0005,
+        ["Volatile X"] = 0.00005,
+        ["Swift I"] = 0.05,
+        ["Swift II"] = 0.04232,
+        ["Swift III"] = 0.03,
+        ["Swift IV"] = 0.02,
+        ["Swift V"] = 0.01,
+        ["Swift VI"] = 0.0075,
+        ["Swift VII"] = 0.0005,
+        ["Swift VIII"] = 0.005,
+        ["Swift IX"] = 0.0005,
+        ["Swift X"] = 0.00005,
+        ["Tiny I"] = 0.08,
+        ["Tiny II"] = 0.07,
+        ["Tiny III"] = 0.06,
+        ["Tiny IV"] = 0.04,
+        ["Tiny V"] = 0.022,
+        ["Tiny VI"] = 0.015,
+        ["Tiny VII"] = 0.001,
+        ["Tiny VIII"] = 0.01,
+        ["Tiny IX"] = 0.001,
+        ["Tiny X"] = 0.0001,
+        ["Titanic I"] = 0.1,
+        ["Titanic II"] = 0.085,
+        ["Titanic III"] = 0.06,
+        ["Titanic IV"] = 0.04,
+        ["Titanic V"] = 0.02,
+        ["Titanic VI"] = 0.015,
+        ["Titanic VII"] = 0.001,
+        ["Titanic VIII"] = 0.01,
+        ["Titanic IX"] = 0.001,
+        ["Titanic X"] = 0.0001,
+        ["Rapid Response I"] = 0.01,
+        ["Rapid Response II"] = 0.001,
+        ["Supply Lines I"] = 0.01,
+        ["Supply Lines II"] = 0.001,
+        ["Supply Lines III"] = 0.0001,
+        Elite = 0.001,
+        Awakened = 0.0001
+    },
+    Logistics = {
+        ["Overtime I"] = 0.0999,
+        ["Overtime II"] = 0.08,
+        ["Overtime III"] = 0.05,
+        ["Overtime IV"] = 0.03,
+        ["Overtime V"] = 0.02,
+        ["Cooldown I"] = 0.1,
+        ["Cooldown II"] = 0.08,
+        ["Cooldown III"] = 0.05,
+        ["Cooldown IV"] = 0.03,
+        ["Cooldown V"] = 0.02,
+        ["Tiny I"] = 0.08,
+        ["Tiny II"] = 0.07,
+        ["Tiny III"] = 0.06,
+        ["Tiny IV"] = 0.04,
+        ["Tiny V"] = 0.022,
+        ["Tiny VI"] = 0.015,
+        ["Tiny VII"] = 0.001,
+        ["Tiny VIII"] = 0.01,
+        ["Tiny IX"] = 0.001,
+        ["Tiny X"] = 0.0001,
+        ["Employment Agency I"] = 0.05,
+        ["Employment Agency II"] = 0.001,
+        ["Range I"] = 0.05,
+        ["Range II"] = 0.025,
+        ["Range III"] = 0.015
+    },
+    MissileTurret = { Weaponized = 0.2, Supersonic = 0.2, Accuracy = 0.2 }
+}
+```

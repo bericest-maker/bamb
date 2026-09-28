@@ -365,11 +365,13 @@ FILE_D = {
  'military-base-25d/INFO.md':'THIS file — what the game IS (generated, do not hand-edit)',
  'military-base-25d/gen_info.py':'regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here)',
  'military-base-25d/ref/units-original.txt':'original game\'s units (raw upload)', 'military-base-25d/ref/buildings-original.txt':'original game\'s buildings (raw upload)',
+ 'military-base-25d/ref/traits-original.txt':'original game\'s building traits + TraitsConfig roll pools (raw upload, dump 1/4)',
  'military-base-25d/ref-map-original.png':'screenshot of the original map — the v4 map copies this layout',
  'notes/build-a-military-base-research.md':'web research on the original Roblox game',
  'uploads/Vehicle Depot Rarity=Legendary,Buil.txt':'user upload — copy of ref/units-original.txt',
  'uploads/Vehicle Depot Rarity=Legendary,Buil2.txt':'user upload — copy of ref/buildings-original.txt',
  'uploads/image-1.png':'user upload — screenshot of an EARLIER build of this remake',
+ 'uploads/Screenshot 2026-09-27 173841.png':'user upload — reference screenshot of the ORIGINAL game UI (mostly blank capture: shop/home pills, left rail, ATTACK button, quests panel)',
 }
 for f in JS_FILES:
     FILE_D.setdefault('military-base-25d/' + f, file_head.get(f, '') or '⚠️ add a header comment')
@@ -379,6 +381,7 @@ for i in range(1, 6):
 
 # ---------- CHANGELOG (newest first) — ⚠️ one line per change ----------
 CHANGELOG = [
+ ('2026-09-28', '**DOCS: TRAIT GOALS (dump 1/4).** No gameplay change. Saved the user\'s 80-trait dump + decompiled `TraitsConfig` as `ref/traits-original.txt` and added a roadmap spec: NOTES.md → new GOALS subsection `Traits & reroll` (pools per building model, rarity weights, 10% double trait, stat mapping, collector gap, reroll design, UI, save) + a `🧬 Traits` index (Production/Unit/Logistics/MissileTurret pools, field→model mapping table, family ladders). Missing from 1/4: MissileTurret trait defs, reroll costs/rules, collector stats.'),
  ('2026-09-27', '**v8.10: BOSS SPAWN CENTER.** Bosses now spawn at the exact world/map centre (`MAP_C`, the CITY center) instead of a random offset within the city. This applies to the automatic timer and ADMIN summon; the worm still attacks after surfacing. Smoke verifies the default and custom-HP spawns are exact.'),
  ('2026-09-27', '**v8.9: UNIT VISUAL POLISH.** The full roster gets a cohesive sprite pass: faction-colored infantry gain fitted vests, kit and clearer rifles; tanks and support vehicles get layered hulls, tracks, wheels, hatches and weapons; helicopters and aircraft gain cockpit glass, panel lines and rotor/engine detail; ships gain portholes, deck edges and sharper turrets. A cached, alpha-clipped sheen/shadow pass adds depth to unit sprites only. Sprite dimensions and gameplay are unchanged; buildings and exact-size Blocks mode are untouched. Smoke draws every registered unit through the cache.'),
  ('2026-09-27', '**v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red.'),

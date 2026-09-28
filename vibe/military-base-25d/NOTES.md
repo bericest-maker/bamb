@@ -3,6 +3,7 @@
 **Reference data (uploaded by user — full raw files kept in `ref/`, not duplicated here):**
 - `ref/units-original.txt` — 116 units from the original game (stats, classes, damage modifiers)
 - `ref/buildings-original.txt` — 154 buildings from the original game (categories, production, power)
+- `ref/traits-original.txt` — 80 building traits + `TraitsConfig` roll pools/weights (dump 1/4; parsed index in 🧬 Traits below)
 - `ref-map-original.png` — screenshot of the original game's map (see MAPS)
 
 ---
@@ -58,6 +59,16 @@
 - [~] Production ladder — v7: **21 of the original's 48** (9 more added: Advanced Solar → Hydroponics → Gas Storage Tank → Alloy Foundry → Offshore Oil Rig → Naval Beacon → Particle Accelerator → Corporate Campus → Automated Factory)
 - [x] One unit building per new unit (depot / hangar / helipad / **dock** naming)
 - [x] Special: Supply Depot ✔, Pentagon ✔, **Airship Docks ✔ (v7)**, **Submarine Cavern ✔ (v7)**, **Centurion Support Site ✔ (v7)**
+
+### Traits & reroll (NEW — full spec in 🧬 Traits below; data: dump 1/4)
+- [ ] **Trait pools per building model** — Production pool → `tab:'production'` money buildings; Unit pool → `tab:'units'` trainers; Logistics pool → `special:'logistics'` collectors; MissileTurret pool → `turret:{}` defence buildings (defs NOT in dump 1/4 — stub: Weaponized / Supersonic / Accuracy)
+- [ ] **Rarity roll, then trait roll** — Unique 0.01 / Mythic 0.04 / Legendary 0.06 / Epic 5 / Rare 13 / Uncommon 27 / Common 54.89, then weighted pick inside the rarity (low tier ×2, high tier ×1; Logistics uses one flat table instead)
+- [ ] **10% double trait** — every roll has a 10% chance to grant 2 traits instead of 1 (never the same trait twice)
+- [ ] **Stat mapping onto our models** — ResourceProduction → income mult; IncomeSpeed → payout cycle ÷ (1+speed); size → building draw scale; unit UnitDamage/Health/Speed/AttackRate/SpawnCount/Size → trained-unit stats; bounty money → kill-reward pool (see mapping table)
+- [ ] **Collector stats need a home** — Overtime (collector speed), Cooldown, Range, Employment Agency assume collector units we don't have; either add collectors or reinterpret as payout-cycle / aura-radius / logistics-cap bonuses
+- [ ] **Trait reroll** — spend escalating cash to re-spin a placed building's traits; keep-old vs take-new choice; double-trait chance applies to rerolls too
+- [ ] **UI** — trait pips on shop/backpack cards + tooltip rows; reroll button on the building click panel
+- [ ] **Save** — `b.traits=[...]` on buildings; backpack stacks split by trait set
 
 ### Maps
 - [x] Organic blobby coastlines fused around each square plot (v4 radial map like the picture) (see MAPS)
@@ -457,6 +468,56 @@ Dev/test units (skip): Animated Unit Rig Test, Animated Unit Test, Artemis, Chon
 • **Advanced Supply Depot** [Mythic] $250/10s cap 100000
 
 Dev/test buildings (skip): Blender, Farm, LARGE Farm, LARGE ProPyramids, Mitosis, Providence Station, Space Elevator, Test Mutation Vehicle Depot, Test Unit Building, Tribute to Honor
+
+## 🧬 Traits — original game (full stats in `ref/traits-original.txt`, dump 1/4)
+
+80 traits in 4 roll pools (`TraitsConfig`: Production / Unit / Logistics / MissileTurret + a flat `Test` table).
+Trait rarity ladder: Common → Uncommon → Rare → Epic → Legendary → Mythic → **Unique** (no Limited/Rebirth traits).
+Every roll: 10% chance of **2 traits** instead of 1 (never duplicates).
+
+### Roll pools (pool = building model)
+| Pool | Our buildings | How it rolls |
+|---|---|---|
+| Production | `tab:'production'` (Solar … Automated Factory) | rarity first (weights below), then weighted trait inside the rarity |
+| Unit | `tab:'units'` (Barracks … Carrier Dock) | same two-step roll, bigger trait list |
+| Logistics | `special:'logistics'` (Logistics Warehouse) | ONE flat table (no rarity step): Overtime I .0999 … Employment Agency II .001 |
+| MissileTurret | `turret:{}` (Pillbox / SAM / Cannon) | STUB — `Weaponized / Supersonic / Accuracy` ×0.2 each, no definitions in dump 1/4 |
+| Test | — | flat debug table, ignore |
+
+Rarity weights (Production + Unit): Unique 0.01 · Mythic 0.04 · Legendary 0.06 · Epic 5 · Rare 13 · Uncommon 27 · Common 54.89.
+Inside a rarity the low tier has ×2 weight, the high tier ×1 (e.g. Epic: Overclocked VII ×2, VIII ×1).
+
+### Stat fields → our models
+| Original field | Meaning | Maps to |
+|---|---|---|
+| ResourceProduction | +fraction income (0.2 = +20%) | `BUILD.income` multiplier |
+| IncomeSpeed | payout cycle ÷ (1+speed): 0.25→−20% ✓, 2→−2/3 ✓, 3→−3/4 ✓, 4→−4/5 (Arctic desc says −3/4, ≈) | `BUILD.cycle` divisor |
+| size | structure draw scale (Tiny ×0.5–0.9, Titanic ×1.05–1.5) | `bScale()` / footprint |
+| unit UnitDamage / UnitHealth / UnitSpeed / UnitAttackRate | +fraction on trained units (0.5 = +50%) | `UNITS` dmg/hp/speed/rate at spawn |
+| unit UnitSpawnCount | +N units per cycle (Rapid Response +1/+2, Void +3) | `spawnEvery` batch |
+| unit UnitSize | ±N troop-cap slots (Supply −1..−3, Gloom −2, Ghostly −1, Void +3) | `unitSize()` |
+| bounty money | tier N = N×$1M (all uniques $10M; Elite $10M flat) | kill-reward pool (TBD) |
+| Overtime / Cooldown / Range / Employment | collector speed / cooldown / radius / count | NO collector system yet — see goal above |
+
+### Trait families (tiers → rarities C/U/R/E/L/M)
+| Family | Effect across tiers I→X | Ladder |
+|---|---|---|
+| Overclocked ×10 | production +20→500% | C,C,U,U,R,R,E,E,L,M |
+| Tiny ×10 | production +10→400% · structure ×0.9→×0.5 · unit dmg +5→52% | same |
+| Titanic ×10 | production +20→1400% · structure ×1.05→×1.5 · unit hp +5→125% | same |
+| Volatile ×10 | unit dmg +5→80% | same |
+| Swift ×10 | unit speed +10→125% | same |
+| Overtime I–V | collector speed +10→50% | C,U,R,E,E |
+| Cooldown I–V | collector cooldown −20→100% | C,U,R,E,L |
+| Range I–III | collection range +2/+4/+6 | R,E,L |
+| Employment Agency I–II | +1/+2 collectors | L,M |
+| Supply Lines I–III | unit supply −1/−2/−3 | E,L,M |
+| Rapid Response I–II | +1/+2 spawned units | E,L |
+| Elite (L) | unit dmg +50% · hp +50% | — |
+| Uniques ×8 | Sandstorm · Lightning · Arctic · Gloom · Ghostly · Awakened · Unstable · Void (see ref) | — |
+
+Quirks in the dump: Titanic VIII says hp +40% but the value is 0.8 (+80%); Unstable hides ResourceProduction 10 with no mention in its desc; `Reference Trait` (Mythic, all-2s) is dev/test — skip.
+Missing from dump 1/4: MissileTurret trait definitions (Weaponized / Supersonic / Accuracy), reroll costs/rules, collector system stats.
 
 ## 🗺️ Maps
 ### Reference screenshot (`ref-map-original.png`) — observations
