@@ -1,0 +1,970 @@
+[Vehicle Depot]
+ROOT|583.70,2,17.55
+bounds|Part|11,4,7|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|10.52,2.44,7.16|0,-0.73,0|-0,0,0|m=rbxassetid://128043858507322|c=0.24,0.24,0.24
+Crates|MeshPart|1.67,0.31,1.08|-2.02,-1.79,2.46|-0,0,0|m=rbxassetid://140095073974388|c=0.34,0.26,0.21
+Window|MeshPart|5.39,0.03,0|-0.08,-0.28,0.12|-0,0,0|m=rbxassetid://75089811561699|c=0.43,0.60,0.79
+MetalColor|MeshPart|10.06,1.99,6.69|0,-0.95,-0|-0,0,0|m=rbxassetid://115060111450514|c=0.31,0.31,0.31
+Cover|MeshPart|1.06,0.14,0.93|-1.70,-1.71,2.39|-0,0,0|m=rbxassetid://94307678283981|c=0.50,0.73,0.86
+MetalColor|MeshPart|8.92,3.95,5.66|-0.08,0.02,-0.33|-0,0,0|m=rbxassetid://88846281437275|c=0.24,0.24,0.24
+Lights|MeshPart|2.52,3.73,2.74|1.13,0.07,-0.40|-0,0,0|m=rbxassetid://136271434185246|c=0.77,0.16,0.11
+Sandbags|MeshPart|0.80,0.25,1.02|2.36,-1.82,-0.66|-0,0,0|m=rbxassetid://94149240179056|c=0.84,0.77,0.60
+MainBaseColor|MeshPart|10.99,2.59,7.63|0,-0.66,0|-0,0,0|m=rbxassetid://117231565191319|c=0.18,0.20,0.13
+
+[Barracks]
+ROOT|663.85,2.02,-12
+Lights|MeshPart|2.68,0.03,5.63|0,0,0|-0,0,0|m=rbxassetid://117005516305198
+Window|MeshPart|1.84,0.19,3.92|0.27,0.77,0|-0,0,0|m=rbxassetid://98524160089010|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|3.12,1.66,6.07|0,0.81,0|-0,0,0|m=rbxassetid://85729354877893|c=0.18,0.20,0.13
+Flooring|MeshPart|2.80,1.52,5.75|0,0.75,0|-0,0,0|m=rbxassetid://122111012144665|c=0.11,0.16,0.21
+MetalColor|MeshPart|2.46,1.56,4.81|0.08,0.77,-0.19|-0,0,0|m=rbxassetid://92849232843906|c=0.31,0.31,0.31
+bounds|Part|3,1.74,6|0,0.85,0|-0,0,0|a=1|c=1,0,0
+
+[Drone Center]
+ROOT|673.13,3.42,-15.77
+bounds|Part|4,2.84,4|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|4.21,1.49,4.07|0,-0.68,0|-0,180,0|m=rbxassetid://128774158150971|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|4.25,1.43,4.11|0,-0.71,0|-0,180,0|m=rbxassetid://135269199609139|c=0.18,0.20,0.13
+Neon|MeshPart|1,0.09,1|0,-0.47,0|-0,180,0|m=rbxassetid://76587379019339|c=0.43,0.60,0.79
+Window|MeshPart|0.81,0.08,2.28|0,-0.82,0|-0,180,0|m=rbxassetid://128603632315753|c=0.43,0.60,0.79
+Linework|MeshPart|3.85,0,3.71|0,-0,0|-0,180,0|m=rbxassetid://123418833584106|c=0.90,0.90,0.90
+Flooring|MeshPart|4.07,1.42,3.90|0,-0.71,0|-0,180,0|m=rbxassetid://106722841956007|c=0.11,0.16,0.21
+
+[Oil Drill]
+ROOT|474.72,3.05,-74.84
+MainBaseColor|MeshPart|0.20,0.78,2.80|0,0,0|-0,0,0|m=rbxassetid://94303928076633|c=0.18,0.20,0.13
+MetalColor|MeshPart|0.56,1.64,2.99|0,-0.65,-0.18|-0,0,0|m=rbxassetid://103495000627415|c=0.36,0.36,0.41
+bounds|Part|1.70,3.70,6|0,-1.18,0.12|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|1.54,0.23,5.67|0,-2.93,0.12|-0,0,0|m=rbxassetid://112047078936553|c=0.31,0.31,0.31
+Meshes/Oil Well_4 (1)|MeshPart|0.65,0.86,4.37|-0.11,-2.11,0.50|-0,0,0|m=rbxassetid://83121243939222|c=0.35,0.30,0.26
+MainBaseColor|MeshPart|1.17,2.80,5.29|-0.08,-1.62,0.09|-0,0,0|m=rbxassetid://89434469782972|c=0.18,0.20,0.13
+MetalColor1|MeshPart|0.16,0.22,0.10|0,-1.81,-1.67|-0,0,0|m=rbxassetid://137470990633817|c=0.36,0.36,0.41
+MetalColor|MeshPart|1.10,2.88,5.27|-0.10,-1.59,0.07|-0,0,0|m=rbxassetid://99687653173190|c=0.36,0.36,0.41
+rotationJoint|Part|0.10,0.10,0.10|0,-0.20,0.02|-0,180,0
+
+[Research Lab]
+ROOT|689.19,4.97,-16.22
+bounds|Part|9.10,5.95,7.60|0,0,0|-0,0,0|a=1|c=1,0,0
+Lights|MeshPart|8.71,0.02,7.06|0,-2.94,-0.01|-0,0,0|m=rbxassetid://108690064135951|c=0.91,0.91,0.93
+Flooring|MeshPart|8.79,0,7.14|-0,-2.95,-0|-0,0,0|m=rbxassetid://87454291541789|c=0.11,0.16,0.21
+MainBaseColor|MeshPart|9.13,2.89,7.46|0,-1.51,0|-0,0,0|m=rbxassetid://115467144720201|c=0.18,0.20,0.13
+MetalColor|MeshPart|8.14,3.07,6.32|-0.06,-1.42,0.01|-0,0,0|m=rbxassetid://128856370287251|c=0.31,0.31,0.31
+Ball|MeshPart|3.01,2.93,3.14|1.29,1.32,1.07|-0,0,0|m=rbxassetid://105164585691958
+Dish|MeshPart|1.42,1.23,1.42|-2.97,0.40,0.71|-0,0,0|m=rbxassetid://105371062975763
+Window|MeshPart|5.33,1.40,3.96|-0.37,-1.40,0.32|-0,0,0|m=rbxassetid://100966193958174|c=0.43,0.60,0.79
+
+[Power Plant]
+ROOT|672.42,3.78,-25.65
+bounds|Part|6.10,3.55,5.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Lights|MeshPart|0.03,0.27,0.05|1.58,-0.34,-0.97|-0,0,0|m=rbxassetid://115258774772889|c=0.91,0.91,0.93
+MetalColor|MeshPart|5.61,3.53,6.31|-0.21,-0.01,-0.42|-0,0,0|m=rbxassetid://129484228397630|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|5.20,3.42,6.20|0.31,-0.07,-0.41|-0,0,0|m=rbxassetid://99492580103178|c=0.18,0.20,0.13
+MetalColor|MeshPart|3.96,1.09,3.24|0.45,-0.37,-1.79|-0,0,0|m=rbxassetid://103079656269838|c=0.31,0.31,0.31
+Window|MeshPart|1.62,0.03,2.35|-1.08,-0.67,-0.97|-0,0,0|m=rbxassetid://117904910933177|c=0.43,0.60,0.79
+MetalColor|MeshPart|5.90,0.87,5.09|0.06,-1.34,-0.47|-0,0,0|m=rbxassetid://117547261520749|c=0.31,0.31,0.31
+MetalColor|MeshPart|1.30,2.06,3.28|-1.14,0.73,0.44|-0,0,0|m=rbxassetid://97357834695240|c=0.31,0.31,0.31
+
+[Radar Complex]
+ROOT|691.35,3.78,-22.25
+bounds|Part|6,3.55,6|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|4.63,3.39,5.88|-0.07,-0.03,0|-0,180,0|m=rbxassetid://139356125041813|c=0.31,0.31,0.31
+Lights|MeshPart|4.22,2.98,4.22|-0,-0.06,0|-0,180,0|m=rbxassetid://138288925993585|c=0.91,0.91,0.93
+MainBaseColor|MeshPart|6.31,3.42,6.31|-0,-0.02,0|-0,180,0|m=rbxassetid://89719399499440|c=0.18,0.20,0.13
+Secondary|MeshPart|3.60,2.99,4.28|-0.66,0.25,0|-0,180,0|m=rbxassetid://118180479371464|c=0.36,0.36,0.41
+Flooring|MeshPart|6.11,0.69,6.11|-0,-1.38,0|-0,180,0|m=rbxassetid://98954866685364|c=0.11,0.16,0.21
+
+[Solar Array]
+ROOT|606.90,1.25,29.65
+bounds|Part|4,2.50,4|0,0,0|-0,0,0|a=1|c=1,0,0
+Flooring|MeshPart|3.79,0.26,3.79|0,-1.07,0|-0,0,0|m=rbxassetid://74066250622821|c=0.11,0.16,0.21
+Solar Panels|MeshPart|5.66,1.04,2.70|0,0.68,-0.03|-0,0,0|m=rbxassetid://125617932431737|c=0.15,0.26,0.38
+MetalColor|MeshPart|5.77,2.48,3.95|0,-0.01,0|-0,0,0|m=rbxassetid://133358062273541|c=0.31,0.31,0.31
+Lights|MeshPart|2.47,1.14,2.47|0,-0.53,0|-0,0,0|m=rbxassetid://120856261128488
+MainBaseColor|MeshPart|5.70,2.43,4.24|0,-0.01,0|-0,0,0|m=rbxassetid://99591439579154|c=0.18,0.20,0.13
+
+[Refinery]
+ROOT|595.55,1.95,24.82
+bounds|Part|6.40,3.90,5.50|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|6.34,2.03,7.25|0,-0.93,-0.90|-0,0,0|m=rbxassetid://119808807662414|c=0.31,0.31,0.31
+Lights|MeshPart|0.31,1.17,0.30|0.94,0.21,-0.94|-0,0,0|m=rbxassetid://83847165981451
+Flooring|MeshPart|1.13,0.21,2.09|0.25,-1.84,-3.44|-0,0,0|m=rbxassetid://118181819035186|c=0.11,0.16,0.21
+MetalColor|MeshPart|6.08,3.65,5.18|-0.01,-0,0.05|-0,0,0|m=rbxassetid://70454941594976|c=0.27,0.26,0.27
+Window|MeshPart|3.14,0.07,4.47|0.25,-1.44,0.37|-0,0,0|m=rbxassetid://106662523615129|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|6.18,3.32,6.76|0,-0.29,-0.77|-0,0,0|m=rbxassetid://124697172174228|c=0.18,0.20,0.13
+Void|MeshPart|3.63,2.78,4.29|0.82,-0.38,-0.72|-0,0,0|m=rbxassetid://80412011118687|c=0.11,0.16,0.21
+efficiencyEmitter|Part|0.05,0,0.05|0.25,1.24,-0.25|0.01,-21.03,-0.03|a=1
+
+[Space Elevator]
+ROOT|613.75,229.07,92.60
+bounds|Part|23,458.15,22|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Space Elevator (1)_Cube.014|MeshPart|22.29,11.52,22.29|0,-223.32,0|-0,180,0|m=rbxassetid://77011032599172|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.009|MeshPart|8.62,0.45,8.62|0,-227.43,0|-0,180,0|m=rbxassetid://86303795829444|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-209.72,-0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-209.72,-0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-204.16,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-204.16,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-198.60,-0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-198.60,-0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-193.05,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-193.05,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-187.49,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-187.49,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-181.94,-0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-181.94,-0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-176.38,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-176.38,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-170.83,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-170.83,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-165.27,-0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-165.27,-0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-159.71,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-159.71,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-154.16,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-154.16,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-148.60,-0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-148.60,-0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-143.05,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-143.05,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-137.49,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-137.49,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-131.93,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-131.93,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-126.38,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-126.38,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+AAA|MeshPart|13.47,4.76,0.85|0,-126.38,0|-0,180,0|m=rbxassetid://99417936466007|c=0.49,0.49,0.49
+AAA|MeshPart|13.18,5.51,1.60|0,-126.38,0|-0,180,0|m=rbxassetid://139805003078834|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-207.52,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-207.52,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-207.04,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-207.52,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-201.96,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-201.96,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-201.48,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-201.96,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-196.41,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-196.41,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-195.93,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-196.41,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-190.85,-0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-190.85,-0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-190.37,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-190.85,-0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-185.29,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-185.30,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-184.81,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-185.29,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-179.74,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-179.74,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-179.26,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-179.74,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-174.18,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-174.18,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-173.70,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-174.18,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-168.63,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-168.63,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-168.15,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-168.63,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-163.07,-0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-163.07,-0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-162.59,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-163.07,-0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-157.52,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-157.52,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-157.03,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-157.52,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-151.96,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-151.96,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-151.48,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-151.96,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-146.40,-0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-146.40,-0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-145.92,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-146.40,-0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-140.85,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-140.85,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-140.37,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-140.85,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-135.29,-0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-135.29,-0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-134.81,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-135.29,-0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-129.74,-0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-129.74,-0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-129.26,0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-129.74,-0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-124.18,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-124.18,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-123.70,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-124.18,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.024|MeshPart|12.88,0.28,10.27|0,-124.18,0|-0,180,0|m=rbxassetid://133210666165181|c=0.12,0.12,0.12
+Meshes/Space Elevator (1)_Cylinder.021|MeshPart|13.07,1.47,13.39|0,-124.18,0|-0,180,0|m=rbxassetid://90065612993881|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.022|MeshPart|6.48,0.32,12.79|0,-123.70,-0|-0,180,0|m=rbxassetid://85639048251473|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.023|MeshPart|11.90,0.28,10.27|0,-124.18,0|-0,180,0|m=rbxassetid://100410937464261
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-166.33,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-168.55,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-170.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-173,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-175.22,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-177.44,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-179.66,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-181.89,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-184.11,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-188.55,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-190.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-193,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-195.22,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-197.44,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-199.66,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-201.89,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-204.11,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-206.33,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-161.88,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-159.66,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-157.44,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-155.22,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-153,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-150.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-148.55,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-146.33,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-144.11,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-164.11,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-139.66,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-137.44,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-135.22,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-132.99,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-130.77,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-128.55,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-126.33,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-124.10,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-121.88,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-141.88,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-117.44,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-115.22,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-112.99,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-110.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-108.55,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-106.33,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-104.10,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-101.88,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-99.66,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-119.66,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-95.21,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-92.99,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-90.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-88.55,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-86.33,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-84.10,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-81.88,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-79.66,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-77.44,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-97.44,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-72.99,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-70.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-68.55,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-66.32,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-64.10,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-61.88,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-59.66,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-57.43,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-55.21,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-75.21,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-50.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-48.55,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-46.32,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-44.10,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-41.88,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-39.66,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-37.43,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-35.21,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-32.99,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-52.99,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-28.54,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-26.32,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-24.10,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-21.88,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-19.66,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-17.43,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-15.21,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-12.99,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-10.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-30.77,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-8.54,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-6.32,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,4.79,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,2.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,0.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-1.88,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-4.10,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,15.90,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,13.68,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,11.46,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,9.23,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,7.01,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,27.01,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,24.79,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,22.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,20.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,18.12,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,38.13,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,35.90,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,33.68,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,31.46,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,29.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,49.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,47.01,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,44.79,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,42.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,40.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,60.35,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,58.13,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,55.90,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,53.68,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,51.46,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,71.46,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,69.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,67.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,64.79,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,62.57,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,82.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,80.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,78.13,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,75.90,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,73.68,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,93.68,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,91.46,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,89.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,87.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,84.79,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,104.80,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,102.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,100.35,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,98.13,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,95.91,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,115.91,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,113.68,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,111.46,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,109.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,107.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,127.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,124.80,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,122.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,120.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,118.13,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,138.13,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,135.91,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,133.69,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,131.46,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,129.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,149.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,147.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,144.80,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,142.57,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,140.35,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,160.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,158.13,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,155.91,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,153.69,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,151.46,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,171.47,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,169.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,167.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,164.80,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,162.58,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,182.58,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,180.35,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,178.13,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,175.91,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,173.69,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,193.69,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,191.47,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,189.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,187.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,184.80,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,204.80,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,202.58,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,200.36,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,198.13,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,195.91,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,215.91,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,213.69,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,211.47,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,209.24,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,207.02,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,227.02,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,224.80,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,222.58,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,220.36,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,218.13,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-208.55,0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-126.38,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-131.93,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-137.49,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-143.05,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-148.60,-0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-154.16,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-159.71,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-165.27,-0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-170.83,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-176.38,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-181.94,-0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-187.49,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-193.05,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-198.60,-0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-204.16,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+AAA|MeshPart|12.87,5.21,1.47|0,-209.72,-0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.005|MeshPart|0.67,11.61,0.67|0,-1.04,0|-0,180,0|m=rbxassetid://112298711655783|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.005|MeshPart|0.67,222.73,0.67|0,115.63,0|-0,180,0|m=rbxassetid://112298711655783|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cube.002|MeshPart|11.37,5.02,11.37|0,-226.56,0|-0,180,0|m=rbxassetid://140027641598647|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.010|MeshPart|5,0.01,5|0,-227.66,0|-0,180,0|m=rbxassetid://87270087717388|c=0.65,0.64,0.65
+Meshes/Space Elevator (1)_Cylinder.012|MeshPart|6.60,0.57,6.60|0,-214.32,-0|-0,180,0|m=rbxassetid://110254826356439|c=0.63,0.63,0.64
+Meshes/Space Elevator (1)_Cube.013|MeshPart|14.14,2.25,14.14|0,-219.06,0|-0,180,0|m=rbxassetid://139889547153029|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cube.012|MeshPart|22.72,5.35,22.72|0,-226.33,0|-0,180,0|m=rbxassetid://113475710148493|c=0.29,0.29,0.29
+Meshes/Space Elevator (1)_Cylinder.001|MeshPart|7.61,3.53,7.61|0,-225.12,0|-0,180,0|m=rbxassetid://72177535135394|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.014|MeshPart|15.24,2.52,14.98|0,-213.28,0|-0,180,0|m=rbxassetid://140616550366985|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.008|MeshPart|17.10,0,17.10|0,-228.22,0|-0,180,0|m=rbxassetid://73347965881674|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cube.004|MeshPart|17.99,1.72,17.99|0,-228.22,0|-0,180,0|m=rbxassetid://111002981396589|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.016|MeshPart|10.69,0.27,9.03|0,-212.29,0|-0,180,0|m=rbxassetid://135262821423740
+Meshes/Space Elevator (1)_Cylinder.026|MeshPart|8.08,3.69,8.08|0,-225.12,0|-0,180,0|m=rbxassetid://97839904311792|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.015|MeshPart|14.61,0.48,14.61|0,-213.12,0|-0,180,0|m=rbxassetid://115952936698471
+Meshes/Space Elevator (1)_Cube.020|MeshPart|19.24,22.21,1.57|0,-198.74,-0|-0,180,0|m=rbxassetid://93768044521649|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.020|MeshPart|3.14,202.07,3.14|0,-107.49,0|-0,180,0|m=rbxassetid://127883695513620|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.018|MeshPart|14.61,0.48,14.58|0,-213.12,0.02|-0,180,0|m=rbxassetid://93584284397606|c=0.12,0.12,0.12
+AAA|MeshPart|12.87,5.21,1.47|0,-126.38,0|-0,180,0|m=rbxassetid://81975315959020|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cube.019|MeshPart|18.37,23.13,2.60|0,-198.53,-0|-0,180,0|m=rbxassetid://96244424127297|c=0.59,0.59,0.59
+Meshes/Space Elevator (1)_Cube.021|MeshPart|17.77,16.33,2.04|0,-200.59,0|-0,180,0|m=rbxassetid://71569418920544|c=0.29,0.29,0.29
+Meshes/Space Elevator (1)_Cylinder.006|MeshPart|7.83,1.03,7.83|0,-216.38,0|-0,180,0|m=rbxassetid://81776103197156|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.019|MeshPart|8.41,0.80,8.41|0,-217.54,0|-0,180,0|m=rbxassetid://103367345544188|c=0.69,0.69,0.69
+Meshes/Space Elevator (1)_Cube.010|MeshPart|21.74,10.70,21.74|0,-223.52,0|-0,180,0|m=rbxassetid://95569556514029|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cube.001|MeshPart|17.99,1.80,17.99|0,-228.18,0|-0,180,0|m=rbxassetid://124000626106711|c=0.59,0.59,0.59
+Meshes/Space Elevator (1)_Cylinder|MeshPart|21.60,1.66,21.60|0,-228.25,0|-0,180,0|m=rbxassetid://127290101865910|c=0.39,0.37,0.38
+Meshes/Space Elevator (1)_Cylinder.003|MeshPart|9.97,7.86,9.97|0,-220.59,0|-0,180,0|m=rbxassetid://128632055510214|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cube.023|MeshPart|15.35,23.53,3|0,-198.53,-0|-0,180,0|m=rbxassetid://81345394471356|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cube.022|MeshPart|14.16,4.77,2.09|0,-208.22,-0|-0,180,0|m=rbxassetid://136981086873033|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.017|MeshPart|9.75,0.79,9.75|0,-223.49,-0|-0,180,0|m=rbxassetid://91845430630410|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.013|MeshPart|8.61,1.80,8.61|0,-215.37,0|-0,180,0|m=rbxassetid://89893231835433|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.020|MeshPart|3.14,224.30,3.14|0,103.63,0|-0,180,0|m=rbxassetid://127883695513620|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.002|MeshPart|10.29,2.04,10.29|0,-228.06,0|-0,180,0|m=rbxassetid://116335239593514|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.025|MeshPart|4.70,0.61,4.70|0,-186.33,-0|-0,180,0|m=rbxassetid://108039013074644|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.011|MeshPart|5.92,0.01,5.92|0,-227.66,0|-0,180,0|m=rbxassetid://92598230918555|c=0.36,0.36,0.41
+Meshes/Space Elevator (1)_Cylinder.005|MeshPart|0.67,222.73,0.67|0,-117.71,0|-0,180,0|m=rbxassetid://112298711655783|c=0.35,0.35,0.35
+Meshes/Space Elevator (1)_Cylinder.004|MeshPart|8.51,4.38,8.51|0,-220.55,0|-0,180,0|m=rbxassetid://101619000986084|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cylinder.007|MeshPart|13.29,3.44,13.29|0,-212.32,0|-0,180,0|m=rbxassetid://135003747941105|c=0.49,0.49,0.49
+Meshes/Space Elevator (1)_Cube.009|MeshPart|10.83,3.87,10.83|0,-227.02,0|-0,180,0|m=rbxassetid://96972509213048|c=0.59,0.59,0.59
+Meshes/Space Elevator (1)_Cube.024|MeshPart|13.74,4.36,1.89|0,-208.22,-0|-0,180,0|m=rbxassetid://77893950399911|c=0.49,0.49,0.49
+
+[Heavy Infantry Building]
+ROOT|575.10,0.93,12.22
+bounds|Part|3.90,1.85,2.80|0,0,0|-0,0,0|a=1|c=1,0,0
+Flooring|MeshPart|0.32,0.35,0.71|0,-0.75,-1.31|-0,0,0|m=rbxassetid://130477735379887|c=0.11,0.16,0.21
+Window|MeshPart|0.96,0.02,0.02|0,0.34,-0.68|-0,0,0|m=rbxassetid://94582449464237|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|3.56,1.62,2.95|0,-0.11,-0.21|-0,0,0|m=rbxassetid://106540845800934|c=0.18,0.20,0.13
+MetalColor|MeshPart|3.63,1.81,2.95|0,-0.02,-0.16|-0,0,0|m=rbxassetid://121289678783600|c=0.39,0.39,0.39
+Lights|MeshPart|3.52,0.61,1.56|0,-0.60,-0.85|-0,0,0|m=rbxassetid://107813840001635|c=0.91,0.91,0.93
+MetalColor|MeshPart|3.97,0.95,3.12|0,-0.45,-0.13|-0,0,0|m=rbxassetid://128297899652944|c=0.31,0.31,0.31
+Window|MeshPart|2.11,1.39,1.39|0,-0.11,0.41|-0,0,0|m=rbxassetid://108871002446857|c=0.43,0.60,0.79
+
+[Advanced Solar Array]
+ROOT|568.28,1.75,12.03
+bounds|Part|4.80,3.50,4.70|0,0,0|-0,0,0|a=1|c=1,0,0
+Solar Panels|MeshPart|5.49,1.67,5.49|0,0.45,-0|-0,180,0|m=rbxassetid://109802856783153|c=0.15,0.26,0.38
+MetalColor|MeshPart|5.59,3.06,5.59|0,-0.22,-0|-0,180,0|m=rbxassetid://139762157335772|c=0.31,0.31,0.31
+Flooring|MeshPart|3.67,0.26,3.67|0,-1.57,-0.04|-0,180,0|m=rbxassetid://125353624220531|c=0.11,0.16,0.21
+Neon|MeshPart|2.40,1.11,2.40|0,-1.05,-0.04|-0,180,0|m=rbxassetid://123783942572028
+MainBaseColor|MeshPart|5.52,3.01,5.52|0,-0.22,-0|-0,180,0|m=rbxassetid://133488691346136|c=0.18,0.20,0.13
+
+[Rally Center]
+ROOT|602.35,0.40,45.90
+bounds|Part|3,0.80,3|0,0,0|-0,0,0|a=1|c=1,0,0
+Cylinder|MeshPart|3.02,0.03,3.02|0,-0.37,0|-0,0,0|m=rbxassetid://98336580207280|c=0.40,0.40,0.40
+teamColor|MeshPart|1.27,0.16,1.26|0,-0.17,0|-0,0,0|m=rbxassetid://99703273175754|c=0.91,0.91,0.93
+Cylinder.001|MeshPart|2.98,0.39,2.98|0,-0.16,0|-0,0,0|m=rbxassetid://129365063053401
+Cylinder.002|MeshPart|2.59,0.39,2.57|0,-0.18,0|-0,0,0|m=rbxassetid://80922236858053
+Cylinder.003|MeshPart|2.56,0.33,2.42|0,-0.13,-0.04|-0,0,0|m=rbxassetid://112227808725762|c=0.49,0.49,0.49
+teamColor|MeshPart|2.54,0.30,2.39|0,-0.13,-0.04|-0,0,0|m=rbxassetid://106943439611017|c=0.91,0.91,0.93
+Cylinder.005|MeshPart|1.65,0.21,1.64|0,-0.12,-0|-0,0,0|m=rbxassetid://99270131067651|a=0.75
+teamColor|MeshPart|0.64,0.12,0.64|0,-0.18,0.01|-0,0,0|m=rbxassetid://118434627652000|c=0.91,0.91,0.93
+Cube.395|MeshPart|1.15,1.88,3.83|-278.08,0.54,297.92|-0,90,0|m=rbxassetid://130998129325855|c=0.50,0.73,0.86
+Mesh|MeshPart|3.87,1.92,5.94|-278.32,0.56,291.60|-0,90,0|m=rbxassetid://128924831240007|c=0.50,0.73,0.86
+Cube.002|MeshPart|1.62,2.45,0.96|-279.37,0.82,283.50|-0,-90,0|m=rbxassetid://83731945021700|c=0.50,0.73,0.86
+
+[Test Mutation Vehicle Depot]
+ROOT|5.49,2.06,-0.06
+road|MeshPart|2.40,0.13,5.93|0,0,0|-0,0,0|m=rbxassetid://79151943694116|c=0.11,0.16,0.21
+idk|MeshPart|7.92,1.23,6.91|-0.31,0.55,3.02|-0,0,0|m=rbxassetid://101954570067249
+MetalColor|MeshPart|8.99,3.47,11.43|-0.36,1.67,2.76|-0,0,0|m=rbxassetid://110376157359297|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|8.84,2.23,11.24|-0.29,1.05,2.72|-0,0,0|m=rbxassetid://85815142856939|c=0.18,0.20,0.13
+Window|MeshPart|4.53,1.22,9.41|1.46,1.13,2.17|-0,0,0|m=rbxassetid://123721890330148|c=0.43,0.60,0.79
+MetalColor|MeshPart|6.91,2.91,10.12|-1.40,1.39,2.01|-0,0,0|m=rbxassetid://133402986415607|c=0.31,0.31,0.31
+Crates|MeshPart|7.55,0.71,5.91|0.32,0.29,3.48|-0,0,0|m=rbxassetid://88015192868784|c=0.27,0.28,0.32
+Light|MeshPart|4.06,2.58,8.33|0.65,2.05,2.65|-0,0,0|m=rbxassetid://121599933942278|c=0.91,0.91,0.93
+efficiencyEmitter|Part|0.05,0,0.05|-2.62,2.96,4.30|0.01,-21.03,-0.03|a=1
+efficiencyEmitter|Part|0.05,0,0.05|-3.92,2.96,6.20|0.01,-21.03,-0.03|a=1
+void|Part|3.34,0,2.10|-0.03,0.07,2.96|-0,0,0|c=0.07,0.07,0.07
+bounds|Part|9.30,3.47,11.73|-0.39,1.67,2.71|-0,0,0|a=1|c=1,0,0
+
+[Special Forces Compound]
+ROOT|553.78,0.83,14.10
+bounds|Part|3.40,1.65,2.50|0,0,0|-0,0,0|a=1|c=1,0,0
+MainBaseColor|MeshPart|2.90,1.15,1.97|-0.08,-0.25,0.01|-0,0,0|m=rbxassetid://129919272949707|c=0.18,0.20,0.13
+Flooring|MeshPart|3.39,0.09,2.82|0,-0.78,-0.12|-0,0,0|m=rbxassetid://136514878509770|c=0.11,0.16,0.21
+Window|MeshPart|1.10,0.61,0.37|0.52,-0.06,-0.24|-0,0,0|m=rbxassetid://125071730365297|c=0.43,0.60,0.79
+Black|MeshPart|0.87,1.06,0.94|-0.18,-0.16,0.08|-0,0,0|m=rbxassetid://75914453351102|c=0.11,0.16,0.21
+MetalColor|MeshPart|2.99,1.63,2.02|-0.03,-0.01,0.04|-0,0,0|m=rbxassetid://90202254280319|c=0.28,0.28,0.28
+Lights|MeshPart|0.53,0.01,0|-0.15,-0.11,-0.44|-0,0,0|m=rbxassetid://118709619646405|c=0.79,0.80,0.82
+
+[Humvee Plant]
+ROOT|659.05,5.49,-13.95
+bounds|Part|6.70,2.50,4.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Sandbags|MeshPart|0.97,0.25,1.04|-2.76,-1.07,-1.37|-0,0,0|m=rbxassetid://71045864506295|c=0.84,0.77,0.60
+Bottom|MeshPart|0.64,0.24,0.83|1.74,0.10,-0.16|-0,0,0|m=rbxassetid://119154669928800|c=0.84,0.77,0.60
+Flooring|MeshPart|6.39,1.44,4.06|0,-0.48,0.06|-0,0,0|m=rbxassetid://108959164146300|c=0.11,0.16,0.21
+Top|MeshPart|0.65,0.11,0.84|1.74,0.17,-0.16|-0,0,0|m=rbxassetid://84837439286088|c=0.11,0.16,0.21
+Window|MeshPart|3.20,0.06,2.81|-0.32,-0.29,0.55|-0,0,0|m=rbxassetid://77975058453585|c=0.43,0.60,0.79
+MetalColor2|MeshPart|4.95,2.21,3.98|0.33,-0.09,-0.21|-0,0,0|m=rbxassetid://92720652804045|c=0.44,0.44,0.44
+Canopy|MeshPart|1.84,0.24,0.87|0.87,0.05,-1.79|-0,0,0|m=rbxassetid://109359470371092|c=0.84,0.77,0.60
+Lights|MeshPart|3.80,2.26,2.58|0.09,0.13,-0.09|-0,0,0|m=rbxassetid://82621482380833|c=0.77,0.16,0.11
+MetalColor|MeshPart|6.16,2.51,4.25|-0.01,0.05,-0.08|-0,0,0|m=rbxassetid://138270698437513|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|6.66,1.53,4.33|0,-0.44,0.06|-0,0,0|m=rbxassetid://109587692774596|c=0.18,0.20,0.13
+
+[Sniper's Nest]
+ROOT|679.55,3.22,-7
+bounds|Part|3.20,2.45,3.40|0,0,0|-0,0,0|a=1|c=1,0,0
+Door|MeshPart|0.20,0.38,0.12|-0.09,-0.96,-1|-0,0,0|m=rbxassetid://127494396614236|c=0.49,0.36,0.27
+MainBaseColor|MeshPart|3.23,1.73,3.42|0,-0.31,0|-0,0,0|m=rbxassetid://79092694101914|c=0.18,0.20,0.13
+Window|MeshPart|1.79,0.46,1.08|-0.01,-0.49,-0|-0,0,0|m=rbxassetid://108301963656376|c=0.43,0.60,0.79
+Flooring|MeshPart|3.07,0.44,3.26|0,-0.96,0|-0,0,0|m=rbxassetid://88620105396123|c=0.11,0.16,0.21
+MetalColor|MeshPart|2.93,2.41,3|0.03,0.03,0.07|-0,0,0|m=rbxassetid://79723252296957|c=0.31,0.31,0.31
+
+[Munitions Depot]
+ROOT|606.66,0.95,63.70
+bounds|Part|4.80,1.90,3.70|0,0,0|-0,0,0|a=1|c=1,0,0
+Crates|MeshPart|4.11,0.56,1.36|-0.09,-0.67,-0.61|-0,0,0|m=rbxassetid://96999578072274|c=0.89,0.61,0.25
+MetalColor|MeshPart|4.37,2.11,3.42|0.03,0.11,-0.09|-0,0,0|m=rbxassetid://120003394871990|c=0.31,0.31,0.31
+WeaponBottom|MeshPart|0.17,0.14,0.13|1.64,-0.79,-0.44|-0,0,0|m=rbxassetid://75520278759844|c=0.49,0.36,0.27
+Lights|MeshPart|0.09,0.46,0.06|1.45,0.88,1.01|-0,0,0|m=rbxassetid://71932983203176|c=0.77,0.16,0.11
+MainBaseColor|MeshPart|4.80,1.74,3.20|-0.03,-0.08,0.20|-0,0,0|m=rbxassetid://90048731331494|c=0.18,0.20,0.13
+Flooring|MeshPart|4.59,1.79,2.99|-0.03,-0.06,0.20|-0,0,0|m=rbxassetid://124056591991853|c=0.11,0.16,0.21
+Window|MeshPart|3.50,1.14,1.63|-0.03,0.08,0.32|-0,0,0|m=rbxassetid://91878081795973|c=0.43,0.60,0.79
+WeaponTop|MeshPart|0.49,0.47,0.33|1.58,-0.72,-0.46|-0,0,0|m=rbxassetid://105187525334602|c=0.50,0.56,0.39
+Sandbags|MeshPart|2.63,0.25,0.79|-0.22,-0.82,-0.91|-0,0,0|m=rbxassetid://86459327529494|c=0.84,0.77,0.60
+Flooring|MeshPart|2.24,1.48,2.78|-0.81,-0.21,-0.15|-0,0,0|m=rbxassetid://130289931824630|c=0.11,0.16,0.21
+
+[Logistics Warehouse]
+ROOT|605.35,0.65,10.05
+bounds|Part|3.10,1.30,3.20|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|2.17,0.94,2.07|0.10,-0.13,0.02|-0,90,0|m=rbxassetid://102514257976309|c=0.39,0.39,0.39
+Boxes|MeshPart|0.92,0.97,2.39|-0.18,-0.11,-0.08|-0,90,0|m=rbxassetid://98285968497090|c=0.34,0.26,0.21
+Sandbags|MeshPart|0.55,0.20,0.41|0.84,0.44,-0.25|-0,90,0|m=rbxassetid://105436964925579|c=0.84,0.77,0.60
+Flooring|MeshPart|2.92,1.13,2.86|0,-0.04,0|-0,90,0|m=rbxassetid://100266137714176|c=0.11,0.16,0.21
+Window|MeshPart|0.52,0.19,0|-0.84,0.02,-0.09|-0,90,0|m=rbxassetid://74869304037075|c=0.43,0.60,0.79
+MetalColor|MeshPart|2.61,1.20,2.18|0.18,0,-0.06|-0,90,0|m=rbxassetid://71725240001804|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|3.15,1.16,3.10|0,-0.02,0|-0,90,0|m=rbxassetid://90672515967383|c=0.18,0.20,0.13
+
+[Light Tank Factory]
+ROOT|596.25,1.30,17.10
+bounds|Part|7.10,2.60,5.20|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|6.44,2.21,4.50|0,-0.14,0|-0,0,0|m=rbxassetid://94737436957490|c=0.31,0.31,0.31
+MetalColor|MeshPart|6.05,2.51,4.11|-0.02,0.01,0.07|-0,0,0|m=rbxassetid://117593496570410|c=0.24,0.24,0.24
+Window|MeshPart|4.74,1.59,2.68|0.59,-0.07,0.18|-0,0,0|m=rbxassetid://127035705086741|c=0.43,0.60,0.79
+Lights|MeshPart|4.73,0.50,0.13|0.22,0.25,-0.87|-0,0,0|m=rbxassetid://105131251582964|c=0.91,0.91,0.93
+MetalColor|MeshPart|6.70,2.46,4.76|0,-0.01,0|-0,0,0|m=rbxassetid://71051406751200|c=0.24,0.24,0.24
+MainBaseColor|MeshPart|7.05,2.42,5.11|0,-0.03,0|-0,0,0|m=rbxassetid://86203135693073|c=0.18,0.20,0.13
+
+[Experimental Gantry]
+ROOT|574.15,2.12,22.90
+bounds|Part|11.90,4.25,8.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Lights|MeshPart|6.68,1.32,4.89|-0.43,0.63,-0.37|-0,0,0|m=rbxassetid://132863934829449|c=0.91,0.91,0.93
+MainBaseColor|MeshPart|11.82,4.20,8.41|0,0.02,0|-0,0,0|m=rbxassetid://114903910245831|c=0.18,0.20,0.13
+Window|MeshPart|6.36,2.33,3.46|0.30,0.38,0.95|-0,0,0|m=rbxassetid://138025817404317|c=0.43,0.60,0.79
+MetalColor|MeshPart|10.15,3.54,7.44|-0.35,-0.31,0|-0,0,0|m=rbxassetid://71631349969580|c=0.31,0.31,0.31
+MetalColor|MeshPart|10.53,4.14,6.95|-0.04,-0,-0.08|-0,0,0|m=rbxassetid://97487422334715|c=0.31,0.31,0.31
+MetalColor|MeshPart|11.42,4.13,8|0,-0.01,0|-0,0,0|m=rbxassetid://131079030890694|c=0.24,0.24,0.24
+
+[Headquarters]
+ROOT|680.24,2.08,-5.06
+road|MeshPart|3.09,0.17,7.64|0,0,0|-0,0,0|m=rbxassetid://79151943694116|c=0.11,0.16,0.21
+idk|MeshPart|10.20,1.58,8.90|-0.40,0.71,3.89|-0,0,0|m=rbxassetid://101954570067249
+MetalColor|MeshPart|11.58,4.47,14.72|-0.47,2.15,3.55|-0,0,0|m=rbxassetid://110376157359297|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|11.40,2.87,14.48|-0.38,1.35,3.50|-0,0,0|m=rbxassetid://85815142856939|c=0.18,0.20,0.13
+Window|MeshPart|5.84,1.57,12.12|1.88,1.46,2.80|-0,0,0|m=rbxassetid://123721890330148|c=0.43,0.60,0.79
+MetalColor|MeshPart|8.91,3.75,13.04|-1.80,1.79,2.59|-0,0,0|m=rbxassetid://133402986415607|c=0.31,0.31,0.31
+Crates|MeshPart|9.73,0.92,7.62|0.41,0.38,4.49|-0,0,0|m=rbxassetid://88015192868784|c=0.27,0.28,0.32
+Light|MeshPart|5.24,3.32,10.73|0.84,2.64,3.41|-0,0,0|m=rbxassetid://121599933942278|c=0.91,0.91,0.93
+efficiencyEmitter|Part|0.06,0,0.06|-3.38,3.81,5.54|0.01,-21.03,-0.03|a=1
+efficiencyEmitter|Part|0.06,0,0.06|-5.05,3.81,7.99|0.01,-21.03,-0.03|a=1
+void|Part|4.30,0,2.71|-0.04,0.08,3.81|-0,0,0|c=0.07,0.07,0.07
+bounds|Part|11.90,4.47,15.10|-0.50,2.15,3.49|-0,0,0|a=1|c=1,0,0
+
+[Logistics Hub]
+ROOT|586.68,0.98,18.79
+bounds|Part|4.50,1.95,3.30|0,0,0|-0,0,0|a=1|c=1,0,0
+Flooring|MeshPart|4.05,1.78,2.88|0,-0.08,0|-0,0,0|m=rbxassetid://116253983085317|c=0.11,0.16,0.21
+Window|MeshPart|3,0.09,0|0,-0.21,-0.50|-0,0,0|m=rbxassetid://134924613404498|c=0.43,0.60,0.79
+Lights|MeshPart|2.46,1.64,1.46|-0.25,0.12,0.10|-0,0,0|m=rbxassetid://104125927310066|c=0.79,0.80,0.82
+MetalColor|MeshPart|4.18,1.22,3|0,-0.37,0|-0,0,0|m=rbxassetid://71255998169245|c=0.29,0.29,0.29
+MainBaseColor|MeshPart|4.48,1.24,3.31|0,-0.36,0|-0,0,0|m=rbxassetid://89205350410210|c=0.18,0.20,0.13
+MetalColor|MeshPart|3.94,1.96,2.74|0,0.01,0.01|-0,0,0|m=rbxassetid://100248496904411|c=0.24,0.24,0.24
+
+[Logistics Center]
+ROOT|574.05,1.10,-0.95
+bounds|Part|6.30,2.20,4.50|0,0,0|-0,0,0|a=1|c=1,0,0
+MainBaseColor|MeshPart|6.28,1.97,4.46|0,-0.11,0|-0,0,0|m=rbxassetid://132941492951332|c=0.18,0.20,0.13
+Lights|MeshPart|2.58,1.99,2.01|-1.20,0.04,-0.14|-0,0,0|m=rbxassetid://102521477860129|c=0.91,0.91,0.93
+MetalColor|MeshPart|5.89,0.94,4.08|0,-0.63,0|-0,0,0|m=rbxassetid://128451525445302|c=0.29,0.29,0.29
+Flooring|MeshPart|5.57,1.59,3.76|0,-0.26,0|-0,0,0|m=rbxassetid://72620515182789|c=0.11,0.16,0.21
+Crates|MeshPart|0.72,0.12,3.48|0.65,-0.99,0.08|-0,0,0|m=rbxassetid://96402573001869|c=0.69,0.58,0.51
+Steel|MeshPart|0.84,0.17,0.89|-2.30,-0.97,-1.28|-0,0,0|m=rbxassetid://134925919558431|c=0.39,0.37,0.38
+MetalColor|MeshPart|5.67,2.17,3.51|-0.03,-0.01,0.08|-0,0,0|m=rbxassetid://80386797537300|c=0.24,0.24,0.24
+HelipadText|MeshPart|1.60,0.01,1.85|1.67,-0.64,-0.36|-0,0,0|m=rbxassetid://122486666871978|c=0.91,0.91,0.93
+Sandbags|MeshPart|0.54,0.20,0.50|0.49,-0.96,1.52|-0,0,0|m=rbxassetid://90238539389579|c=0.69,0.58,0.51
+Window|MeshPart|0.73,0.10,0|-0.72,0.28,-1.06|-0,0,0|m=rbxassetid://84300876930079|c=0.43,0.60,0.79
+
+[Wind Turbine]
+ROOT|492.15,6.08,-81.79
+MetalColor|MeshPart|4.90,4.24,0.41|0,0,0|-0,0,0|m=rbxassetid://114220285842368|c=0.65,0.65,0.67
+bounds|Part|1.50,8.20,1.50|0,-1.98,0.56|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|0.70,0.08,0.70|0,-6.05,0.55|-0,0,0|m=rbxassetid://107852276041596|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|0.67,5.57,1.12|0,-3.22,0.76|-0,0,0|m=rbxassetid://106498281950696|c=0.79,0.80,0.82
+rotationJoint|Part|0.05,0.05,0.05|0,-0.70,-0.15|-0,180,0
+
+[Supply Depot]
+ROOT|651.75,1.45,208.17
+rotationJoint|MeshPart|0.76,0.14,0.76|0,0,0|-0,0,0|m=rbxassetid://95882614624117|c=0.59,0.59,0.59
+rotationJoint1|MeshPart|0.11,0.46,0.46|-1.07,-0.82,-0.48|-0,0,0|m=rbxassetid://106914487455211|c=0.59,0.59,0.59
+rotationJoint2|MeshPart|0.11,0.46,0.46|-1.07,-0.82,0.48|-0,0,0|m=rbxassetid://85667113537090|c=0.59,0.59,0.59
+bounds|Part|4,2.10,5|0,-0.40,-0.22|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|3.83,2.02,3.92|-0.08,-0.39,-0.09|-0,0,0|m=rbxassetid://95252710335668|c=0.25,0.25,0.25
+Sandbags|MeshPart|0.69,0.30,0.89|-1.30,-1.25,-1.82|-0,0,0|m=rbxassetid://98579014996825|c=0.84,0.77,0.60
+MetalColor|MeshPart|3.89,1.01,4.47|0,-0.90,-0.22|-0,0,0|m=rbxassetid://106237409098664|c=0.31,0.31,0.31
+Lights|MeshPart|0.34,1.66,2.68|-0.30,-0.24,0.15|-0,0,0|m=rbxassetid://139069968184767|c=0.77,0.16,0.11
+Window|MeshPart|2.08,0.92,3.11|0.39,-0.46,-0.36|-0,0,0|m=rbxassetid://109321496336591|c=0.43,0.60,0.79
+Pallet|MeshPart|0.81,0.05,0.81|-1.27,-1.37,-1.92|-0,0,0|m=rbxassetid://100368181594407|c=0.35,0.30,0.26
+Flooring|MeshPart|4.31,1.36,4.89|0,-0.72,-0.22|-0,0,0|m=rbxassetid://133733110378142|c=0.11,0.16,0.21
+MainBaseColor|MeshPart|4.55,1.50,5.13|0,-0.65,-0.22|-0,0,0|m=rbxassetid://112031263783697|c=0.18,0.20,0.13
+Gate|MeshPart|1.50,0.06,0.05|0,-1.17,-1.93|-0,0,0|m=rbxassetid://135871066993738|c=0.64,0.29,0.29
+
+[Pentagon]
+ROOT|522.73,1.47,-11.05
+bounds|Part|12.50,2.95,18|0,0,0|-0,0,0|a=1|c=1,0,0
+InnerDoors|MeshPart|4.73,0.16,4.50|0,-1.32,-0.18|-0,0,0|m=rbxassetid://110441501325197|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|22.22,2.40,21.84|0,-0.27,-0.72|-0,0,0|m=rbxassetid://101047826074128|c=0.79,0.73,0.57
+Railings|MeshPart|21.45,0.23,20.40|0,-1.35,-1.44|-0,0,0|m=rbxassetid://90269441205113|c=0.24,0.24,0.24
+MetalColor|MeshPart|12.78,2.11,12.15|0,-0.41,-0.78|-0,0,0|m=rbxassetid://99549183420562|c=0.47,0.47,0.47
+MetalColor|MeshPart|19.67,2.66,18.90|0,-0.14,-0.90|-0,0,0|m=rbxassetid://106540153050297|c=0.31,0.31,0.31
+Pillars|MeshPart|20.92,1.36,20.22|0,-0.64,-0.80|-0,0,0|m=rbxassetid://94513782514800|c=0.90,0.82,0.64
+Windows|MeshPart|20.38,1.49,20.34|0,-0.37,-0.23|-0,0,0|m=rbxassetid://74891979552236|c=0.43,0.60,0.79
+InnerFrame|MeshPart|6.17,1.21,5.86|0,-0.19,-0.28|-0,0,0|m=rbxassetid://122735601081047|c=0.11,0.16,0.21
+Doors|MeshPart|20.32,0.20,19.55|0,-1.19,-0.62|-0,0,0|m=rbxassetid://137491094069117|c=0.35,0.30,0.26
+Roofing|MeshPart|20.96,2.32,21.01|0,-0.01,-0.41|-0,0,0|m=rbxassetid://122694106794139|c=0.13,0.18,0.24
+WindowFrame|MeshPart|20.38,1.04,20.35|0,-0.61,-0.22|-0,0,0|m=rbxassetid://121809568195614|c=0.11,0.16,0.21
+
+[Steel Factory]
+ROOT|556.58,1.22,-30.93
+bounds|Part|5.10,2.45,6.60|0,0,0|-0,0,0|a=1|c=1,0,0
+Steel|MeshPart|0.81,0.17,2.58|0.02,-0.83,-1.02|-0,0,0|m=rbxassetid://136030656642127|c=0.24,0.24,0.24
+Lights|MeshPart|1.35,0.95,0.86|0,0.26,-0.35|-0,0,0|m=rbxassetid://133757375807730|c=0.79,0.80,0.82
+Windows|MeshPart|0.68,0.59,0.42|0,0.38,-0.08|-0,0,0|m=rbxassetid://95529567416225|c=0.43,0.60,0.79
+MetalColor|MeshPart|4.57,2.37,5.47|0.11,-0.04,0.09|-0,0,0|m=rbxassetid://71942401286459|c=0.25,0.25,0.25
+MainBaseColor|MeshPart|5.24,2.20,6.65|0,-0.12,0|-0,0,0|m=rbxassetid://120463843981924|c=0.18,0.20,0.13
+Flooring|MeshPart|4.99,2.29,6.40|0,-0.07,0|-0,0,0|m=rbxassetid://102084428701087|c=0.11,0.16,0.21
+Flooring|MeshPart|4.52,0.53,5.96|0,-0.96,0.01|-0,0,0|m=rbxassetid://83632536480625|c=0.24,0.24,0.24
+
+[ADMIN BUILDING]
+ROOT|667.17,2.07,-9.72
+MetalColor|MeshPart|1.25,0.14,0.52|0,0,0|-0,0,0|m=rbxassetid://114650218584567|c=0.83,0.75,0.59
+bounds|Part|3.60,3.55,0.40|1.25,1.71,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|1.25,0.14,0.52|1.25,0,0|-0,0,0|m=rbxassetid://114650218584567|c=0.83,0.75,0.59
+Part|Part|1.23,0,0.36|2.50,2.96,-0.10|-90,-180,0|a=1
+Part|Part|1.23,0,0.36|2.50,2.76,0.29|-0,180,0|a=1
+Cube.102|MeshPart|1.25,0.01,0.38|2.50,2.76,0.29|-0,0,0|m=rbxassetid://87844825854139|c=0.83,0.75,0.59
+Cube.101|MeshPart|1.25,0.09,0.24|2.50,2.75,0|-0,0,0|m=rbxassetid://137057373139076|c=0.83,0.75,0.59
+Cube.096|MeshPart|1.25,0.38,0.01|2.50,2.96,-0.10|-0,0,0|m=rbxassetid://115692832693118|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.21|2.50,2.32,0|-0,0,0|m=rbxassetid://140026540590618|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.52|2.50,1.42,0|-0,0,0|m=rbxassetid://79022609479812|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.52|2.50,0.52,0|-0,0,0|m=rbxassetid://114650218584567|c=0.83,0.75,0.59
+MetalColor|MeshPart|1.25,0.14,0.52|2.50,0,0|-0,0,0|m=rbxassetid://114650218584567|c=0.83,0.75,0.59
+Part|Part|1.23,0,0.36|1.25,2.96,-0.10|-90,-180,0|a=1
+Part|Part|1.23,0,0.36|1.25,2.76,0.29|-0,180,0|a=1
+Cube.102|MeshPart|1.25,0.01,0.38|1.25,2.76,0.29|-0,0,0|m=rbxassetid://87844825854139|c=0.83,0.75,0.59
+Cube.101|MeshPart|1.25,0.09,0.24|1.25,2.75,0|-0,0,0|m=rbxassetid://137057373139076|c=0.83,0.75,0.59
+Cube.096|MeshPart|1.25,0.38,0.01|1.25,2.96,-0.10|-0,0,0|m=rbxassetid://115692832693118|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.21|1.25,2.32,0|-0,0,0|m=rbxassetid://140026540590618|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.52|1.25,1.42,0|-0,0,0|m=rbxassetid://79022609479812|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.52|1.25,0.52,0|-0,0,0|m=rbxassetid://114650218584567|c=0.83,0.75,0.59
+Part|Part|1.23,0,0.36|0,2.96,-0.10|-90,-180,0|a=1
+Part|Part|1.23,0,0.36|-0,2.76,0.29|-0,180,0|a=1
+Cube.102|MeshPart|1.25,0.01,0.38|-0,2.76,0.29|-0,0,0|m=rbxassetid://87844825854139|c=0.83,0.75,0.59
+Cube.101|MeshPart|1.25,0.09,0.24|0,2.75,0|-0,0,0|m=rbxassetid://137057373139076|c=0.83,0.75,0.59
+Cube.096|MeshPart|1.25,0.38,0.01|-0,2.96,-0.10|-0,0,0|m=rbxassetid://115692832693118|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.21|0,2.32,0|-0,0,0|m=rbxassetid://140026540590618|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.52|0,1.42,0|-0,0,0|m=rbxassetid://79022609479812|c=0.83,0.75,0.59
+MainBaseColor|MeshPart|1.25,0.90,0.52|0,0.52,0|-0,0,0|m=rbxassetid://114650218584567|c=0.83,0.75,0.59
+
+[Golden Advanced Solar Array]
+ROOT|560.40,1.75,11.95
+bounds|Part|4.80,3.50,4.70|0,0,0|-0,0,0|a=1|c=1,0,0
+Solar Panels|MeshPart|5.49,1.67,5.49|0,0.45,-0|-0,180,0|m=rbxassetid://109802856783153|c=0.15,0.26,0.38
+MetalColor|MeshPart|5.59,3.06,5.59|0,-0.22,-0|-0,180,0|m=rbxassetid://139762157335772|c=0.93,0.78,0.56
+Flooring|MeshPart|3.67,0.26,3.67|0,-1.57,-0.04|-0,180,0|m=rbxassetid://125353624220531|c=0.93,0.78,0.56
+Neon|MeshPart|2.40,1.11,2.40|0,-1.05,-0.04|-0,180,0|m=rbxassetid://123783942572028
+MainBaseColor|MeshPart|5.52,3.01,5.52|0,-0.22,-0|-0,180,0|m=rbxassetid://133488691346136|c=0.31,0.31,0.31
+
+[Golden Wind Turbine]
+ROOT|47.40,7.79,84.84
+MetalColor|MeshPart|6.27,5.43,0.53|0,0,0|-0,0,0|m=rbxassetid://114220285842368|c=0.93,0.78,0.56
+bounds|Part|1.50,10.50,1.50|0,-2.54,0.71|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|0.90,0.10,0.90|0,-7.74,0.71|-0,0,0|m=rbxassetid://107852276041596|c=0.31,0.31,0.31
+MainBaseColor|MeshPart|0.86,7.14,1.43|0,-4.12,0.98|-0,0,0|m=rbxassetid://106498281950696|c=0.93,0.78,0.56
+rotationJoint|Part|0.06,0.06,0.06|0,-0.90,-0.19|-0,180,0
+
+[Iron Mines]
+ROOT|9.06,0.33,-10
+Meshes/Mine Cart_MIC2|MeshPart|0.45,0.14,0.48|0,0,0|-0,0,0|m=rbxassetid://81084171690860|c=0.79,0.80,0.82
+Meshes/Mine Cart_MIC1|MeshPart|0.49,0.27,0.53|0,-0.07,0|-0,0,0|m=rbxassetid://108473727690657|c=0.46,0.39,0.34
+mainJoint|MeshPart|0.51,0.32,0.57|0,-0.12,0|-0,0,0|m=rbxassetid://91257496946370|c=0.31,0.31,0.31
+bounds|Part|3.50,1.60,2.20|1.36,0.47,1.66|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|2.98,0.82,2.02|1.29,0.08,0.72|-0,0,0|m=rbxassetid://97850072605363|c=0.24,0.24,0.24
+Rocks|MeshPart|5.41,1.25,1.84|1.36,0.30,1.71|-0,0,0|m=rbxassetid://135689724815775|c=0.39,0.37,0.38
+MetalColor|MeshPart|0.96,0.09,0.03|1.66,1.11,1.40|-0,0,0|m=rbxassetid://124211400379388|c=0.49,0.49,0.49
+Crate|MeshPart|0.54,0.27,0.95|-0.76,-0.19,0.57|-0,0,0|m=rbxassetid://79078874174197|c=0.49,0.36,0.27
+Black|MeshPart|0.81,0.70,0.14|-0.02,0.02,1.77|-0,0,0|m=rbxassetid://92272233893521|c=0.11,0.16,0.21
+MetalColor|MeshPart|3.12,1.57,3.23|1.31,0.46,1.22|-0,0,0|m=rbxassetid://131085951179534|c=0.27,0.27,0.27
+Window|MeshPart|0.34,0.05,0.47|2.47,0.73,1.27|-0,0,0|m=rbxassetid://120105107338154|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|2.26,1.25,2.55|1.68,0.35,1.56|-0,0,0|m=rbxassetid://71429118127459|c=0.18,0.20,0.13
+
+[Bank]
+ROOT|545.33,2.28,43.93
+bounds|Part|5.20,4.55,3.50|0,0,0|-0,0,0|a=1|c=1,0,0
+RobuxIcon|MeshPart|4.32,0.25,2.87|0,-0.89,0|-0,0,0|m=rbxassetid://76934988009210|c=0.62,0.63,0.67
+Robux|MeshPart|1.87,2.01,0.26|0,1.24,0|-0,0,0|m=rbxassetid://83169750971812|c=0.62,0.63,0.67
+Window|MeshPart|4.86,2.90,3.20|0,-0.55,0|-0,0,0|m=rbxassetid://70660907814935|c=0.43,0.60,0.79
+MetalColor|MeshPart|3.65,1.22,0.75|0,0.38,-0.01|-0,0,0|m=rbxassetid://123662302277475|c=0.29,0.29,0.29
+Door|MeshPart|2.05,0.11,0|0,-2.22,-1.29|-0,0,0|m=rbxassetid://108390040201402|c=0.11,0.16,0.21
+MainBaseColor|MeshPart|5.13,3.22,3.41|0,-0.66,0|-0,0,0|m=rbxassetid://85539285976861|c=0.79,0.73,0.57
+Accent|MeshPart|5.07,1.97,3.36|0,-1.13,0|-0,0,0|m=rbxassetid://137139002407535|c=0.49,0.45,0.35
+
+[Hydroponics Facility]
+ROOT|534.35,1.07,45.74
+bounds|Part|6.20,2.15,6.80|0,0,0|-0,0,0|a=1|c=1,0,0
+MainBaseColor|MeshPart|6.19,1.57,6.81|0,-0.28,-0.03|-0,0,0|m=rbxassetid://130730753226731|c=0.18,0.20,0.13
+PipesYellow|MeshPart|0.28,0.28,4.36|1.48,-0.04,0.32|-0,0,0|m=rbxassetid://112958161586735|c=0.83,0.75,0.59
+PipesRed|MeshPart|0.63,0.63,4.36|0.71,0.09,0.32|-0,0,0|m=rbxassetid://108153421865994|c=0.75,0.41,0.38
+Flooring|MeshPart|5.78,1.63,6.39|0,-0.26,-0.03|-0,0,0|m=rbxassetid://103901510043669|c=0.11,0.16,0.21
+Glass|MeshPart|0.94,0.44,3.67|-2.01,-0.62,0.33|-0,0,0|m=rbxassetid://94217952016445|a=0.50|c=0.62,0.63,0.67
+Lights|MeshPart|0.82,0.03,0|0.32,0.36,-2.75|-0,0,0|m=rbxassetid://129594830463372
+PipesBlue|MeshPart|0.28,0.28,4.36|1.24,0.17,0.32|-0,0,0|m=rbxassetid://126505368413651|c=0.62,0.68,0.75
+3|MeshPart|0.87,0.54,0.87|-2.01,-0.62,1.69|-0,0,0|m=rbxassetid://123424490785015|c=0.05,0.52,0.93
+Pipes|MeshPart|2.46,1.61,5.31|-0.86,-0.11,-0.09|-0,0,0|m=rbxassetid://125156620614773|c=0.33,0.33,0.33
+MetalColor|MeshPart|5.11,2.12,5.83|0.02,-0.02,-0.11|-0,0,0|m=rbxassetid://90218188352387|c=0.25,0.25,0.25
+2|MeshPart|0.87,0.54,0.87|-2.01,-0.62,0.32|-0,0,0|m=rbxassetid://125394689115679|c=0.05,0.52,0.93
+1|MeshPart|0.87,0.54,0.87|-2.01,-0.62,-1.04|-0,0,0|m=rbxassetid://135188407685654|c=0.05,0.52,0.93
+
+[Golden Bank]
+ROOT|545.33,2.28,43.93
+bounds|Part|5.20,4.55,3.50|0,0,0|-0,0,0|a=1|c=1,0,0
+RobuxIcon|MeshPart|4.32,0.25,2.87|0,-0.89,0|-0,0,0|m=rbxassetid://76934988009210|c=0.62,0.63,0.67
+Robux|MeshPart|1.87,2.01,0.26|0,1.24,0|-0,0,0|m=rbxassetid://83169750971812|c=0.93,0.78,0.56
+Window|MeshPart|4.86,2.90,3.20|0,-0.55,0|-0,0,0|m=rbxassetid://70660907814935|c=0.43,0.60,0.79
+MetalColor|MeshPart|3.65,1.22,0.75|0,0.38,-0.01|-0,0,0|m=rbxassetid://123662302277475|c=0.29,0.29,0.29
+Door|MeshPart|2.05,0.11,0|0,-2.22,-1.29|-0,0,0|m=rbxassetid://108390040201402|c=0.11,0.16,0.21
+MainBaseColor|MeshPart|5.13,3.22,3.41|0,-0.66,0|-0,0,0|m=rbxassetid://85539285976861|c=0.93,0.78,0.56
+Accent|MeshPart|5.07,1.97,3.36|0,-1.13,0|-0,0,0|m=rbxassetid://137139002407535|c=0.49,0.45,0.35
+
+[Apache Helipad]
+ROOT|553,1.38,70.20
+bounds|Part|8.20,2.77,7.60|0,0,0|-0,0,0|a=1|c=1,0,0
+Flooring|MeshPart|7.87,0.56,7.27|0,-1.09,0|-0,180,0|m=rbxassetid://128870120476897|c=0.11,0.16,0.21
+H|MeshPart|3.89,0.02,3.89|0.30,-0.80,0|-0,180,0|m=rbxassetid://138854055725638
+MainBaseColor|MeshPart|8.23,2.32,7.62|0,-0.23,0|-0,180,0|m=rbxassetid://108284223218582|c=0.18,0.20,0.13
+Windows|MeshPart|7.59,1.72,6.50|-0.24,-0.21,0|-0,180,0|m=rbxassetid://117663920945350|c=0.43,0.60,0.79
+Lights|MeshPart|4.28,0.03,0.35|0.30,-0.59,0|-0,180,0|m=rbxassetid://77602438461818|c=0.79,0.80,0.82
+MetalColor|MeshPart|7.67,2.69,6.88|-0.24,-0.03,0.15|-0,180,0|m=rbxassetid://97730973688716|c=0.27,0.27,0.27
+Dish|MeshPart|6.90,2.34,5.84|-0.30,0.22,0|-0,180,0|m=rbxassetid://91119510718411|c=0.62,0.63,0.67
+
+[Cobra Helipad]
+ROOT|543.82,0.52,71.07
+Flooring|MeshPart|5.45,1,5.45|0,0,0|-0,0,0|m=rbxassetid://128588235144527|c=0.11,0.16,0.21
+Lights|MeshPart|2.94,1.36,4.07|0.59,0.45,-0.33|-0,0,0|m=rbxassetid://139566982809446|c=0.77,0.16,0.11
+H|MeshPart|3,0.02,3|0,-0.32,0|-0,0,0|m=rbxassetid://72682213154418
+Dish|MeshPart|1.11,1.31,2.35|2.04,0.32,-0.55|-0,0,0|m=rbxassetid://135470701577857|c=0.62,0.63,0.67
+MainBaseColor|MeshPart|5.90,1.11,5.90|0,0.04,0|-0,0,0|m=rbxassetid://80026946558494|c=0.18,0.20,0.13
+Cover|MeshPart|0.41,0.07,0.18|-1.51,-0.24,-1.45|-0,0,0|m=rbxassetid://82089815943696|c=0.58,0.47,0.47
+Crates|MeshPart|0.63,0.12,3.66|-1.62,-0.27,-0.19|-0,0,0|m=rbxassetid://124547846516454|c=0.35,0.30,0.26
+Sandbags|MeshPart|0.29,0.14,0.42|-1.62,-0.26,1.51|-0,0,0|m=rbxassetid://81833380552219|c=0.83,0.75,0.59
+Windows|MeshPart|0.84,0.39,1.76|2.19,0.06,0.99|-0,0,0|m=rbxassetid://94706276195054|c=0.43,0.60,0.79
+MetalColor|MeshPart|5.15,1.69,5.22|0.08,0.33,-0.12|-0,0,0|m=rbxassetid://130126904900139|c=0.31,0.31,0.31
+bounds|Part|5.90,1.72,5.90|0,0.34,0|-0,180,0|a=1|c=1,0,0
+
+[Statue of Freedom]
+ROOT|541.45,5.96,63.63
+bounds|Part|4,11.92,4|0,0,0|-0,0,0|a=1|c=1,0,0
+teamColor|MeshPart|1.45,1.53,1.54|0.04,3.23,0.03|-0,0,0|m=rbxassetid://8713983541|c=0.18,0.53,0.36
+aaa|MeshPart|1.20,0.19,0.90|0.04,3.20,-0.09|-0,0,0|m=rbxassetid://1577360|c=0.18,0.53,0.36
+Head|Part|1.74,0.87,0.87|0.04,3.08,0.03|-0,0,0|c=0.18,0.53,0.36
+aaa|MeshPart|1.20,0.19,0.90|0.04,3.24,-0.09|-0,0,0|m=rbxassetid://1577360|c=0.18,0.53,0.36
+teamColor|MeshPart|1.45,1.53,1.54|0.04,3.28,0.03|-0,0,0|m=rbxassetid://8713983541|c=0.18,0.53,0.36
+Head|Part|1.74,0.87,0.87|0.04,3.12,0.03|-0,0,0|c=0.18,0.53,0.36
+Union|UnionOperation|3.24,5.85,4.29|0.07,2.19,-0.77|14.48,-3.97,-15.50|c=0.18,0.53,0.36
+Main|MeshPart|4,5.26,4|0,-3.33,0|-0,180,0|m=rbxassetid://98257372064745|c=0.79,0.73,0.57
+Non|MeshPart|3.88,4.22,3.88|0,-3.69,0|-0,180,0|m=rbxassetid://83717286551148|c=0.11,0.16,0.21
+
+[Monument]
+ROOT|550.28,6.36,61.87
+bounds|Part|4,12.72,4|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Washington Monument_WMON5|MeshPart|0.41,0.02,0.64|0,5.66,0|-0,180,0|m=rbxassetid://103023028933712|c=0.11,0.16,0.21
+Main|MeshPart|1.44,12.66,1.44|0,-0.01,0|-0,180,0|m=rbxassetid://132472396568987|c=0.79,0.73,0.57
+Secondary|MeshPart|6.03,0.06,6.03|0,-6.33,0|-0,180,0|m=rbxassetid://78758886343148|c=0.79,0.73,0.57
+Bench|MeshPart|3.09,0.11,3.09|0,-6.25,0|-0,180,0|m=rbxassetid://139344499950412|c=0.35,0.30,0.26
+Flooring|MeshPart|5.92,0,5.92|0,-6.32,0|-0,180,0|m=rbxassetid://107061210189574|c=0.11,0.16,0.21
+
+[Clocktower]
+ROOT|536.20,5.73,65.95
+bounds|Part|2.40,11.47,2.40|0,0,0|-0,0,0|a=1|c=1,0,0
+Roofing|MeshPart|1.34,1.86,1.34|0,4.72,0|-0,180,0|m=rbxassetid://130922445384112|c=0.11,0.16,0.21
+Clockface|MeshPart|2.32,1.33,2.32|0,2.34,0|-0,180,0|m=rbxassetid://114964156263416|c=0.79,0.80,0.82
+Siding|MeshPart|2.40,5.51,2.40|0,0.20,0|-0,180,0|m=rbxassetid://121274017179684|c=0.11,0.16,0.21
+Main|MeshPart|2.38,11.38,2.38|0,-0.04,0|-0,180,0|m=rbxassetid://116221836207639|c=0.79,0.73,0.57
+
+[Capitol Building]
+ROOT|543.51,3.51,77.38
+bounds|Part|13.10,7.02,4.30|0,0,0|-0,0,0|a=1|c=1,0,0
+Frame|MeshPart|2.83,0.39,4.54|4.94,-3.23,-0.06|-0,0,0|m=rbxassetid://130152384856361|c=0.59,0.59,0.59
+Black|MeshPart|13.02,3.54,4.86|0,-1.69,0.05|-0,0,0|m=rbxassetid://99370665902190|c=0.11,0.16,0.21
+Frame|MeshPart|6.74,0.39,1.95|0,-3.23,1.51|-0,0,0|m=rbxassetid://138234643053645|c=0.59,0.59,0.59
+Roof2|MeshPart|12.99,5.28,5.12|0,0.83,-0.17|-0,0,0|m=rbxassetid://99856405428743|c=0.35,0.45,0.36
+MainBuilding|MeshPart|13.28,1.78,6.78|0,-2.62,-0.86|-0,0,0|m=rbxassetid://108475938943821|c=0.78,0.78,0.78
+Frame|MeshPart|2.83,0.70,4.38|4.94,-2.45,-0.20|-0,0,0|m=rbxassetid://103749652934889|c=0.59,0.59,0.59
+Main|MeshPart|5.82,4.68,3.74|0,0.38,-0.15|-0,0,0|m=rbxassetid://107101682410149|c=0.78,0.78,0.78
+Frame|MeshPart|6.74,0.70,0.58|0,-2.45,-1.63|-0,0,0|m=rbxassetid://92929986888002|c=0.59,0.59,0.59
+Doors|MeshPart|10.77,0.25,0.57|0,-2.80,-2.09|-0,0,0|m=rbxassetid://111875805179430|c=0.11,0.16,0.21
+Frame|MeshPart|6.74,0.70,1.83|0,-2.45,1.29|-0,0,0|m=rbxassetid://132792686665064|c=0.59,0.59,0.59
+Frame|MeshPart|2.83,0.39,4.54|-4.94,-3.23,-0.06|-0,0,0|m=rbxassetid://108110092350380|c=0.59,0.59,0.59
+Frame|MeshPart|2.83,0.70,4.38|-4.94,-2.45,-0.20|-0,0,0|m=rbxassetid://107949102728917|c=0.59,0.59,0.59
+Roof|MeshPart|12.26,0.51,4.62|0,-1.64,-0.56|-0,0,0|m=rbxassetid://114110935304755|c=0.35,0.45,0.36
+Pillars|MeshPart|13.18,0.86,5.24|0,-2.50,-0.17|-0,0,0|m=rbxassetid://89961344209991|c=0.69,0.69,0.69
+Frame|MeshPart|6.74,0.42,0.68|0,-3.25,-1.84|-0,0,0|m=rbxassetid://92758783716710|c=0.59,0.59,0.59
+
+[Executive Residence]
+ROOT|530.05,1.48,78.51
+bounds|Part|8,2.97,3.70|0,0,0|-0,0,0|a=1|c=1,0,0
+Siding|MeshPart|5.09,0.56,0.02|0,-1.11,-0.60|-0,0,0|m=rbxassetid://137336549790457|c=0.38,0.22,0.22
+Roof|MeshPart|9.85,2.42,6.35|0,0.27,-1.30|-0,0,0|m=rbxassetid://90065380352556|c=0.20,0.41,0.51
+Top|MeshPart|9.28,0.99,5.59|0,-0.24,-1.25|-0,0,0|m=rbxassetid://136478049274207|c=0.67,0.61,0.48
+Windows|MeshPart|5.04,0.53,0.02|0,-1.11,-0.59|-0,0,0|m=rbxassetid://76103269312816|c=0.43,0.60,0.79
+Walls|MeshPart|9.92,2.96,6.42|0,0.02,-1.30|-0,0,0|m=rbxassetid://112174340128693|c=0.51,0.51,0.51
+Red|MeshPart|8.25,2.11,4.79|0,0.34,-1.44|-0,0,0|m=rbxassetid://123016083294637|c=0.38,0.22,0.22
+SideFlooring|MeshPart|4.46,0.05,1.33|0,-1.46,-2.61|-0,0,0|m=rbxassetid://87896250776874|c=0.56,0.52,0.40
+WallLining|MeshPart|9.27,1.32,5.61|0,-0.66,-1.24|-0,0,0|m=rbxassetid://88760664491261|c=0.29,0.29,0.29
+Flooring|MeshPart|9.54,0.08,6.02|0,-1.44,-1.16|-0,0,0|m=rbxassetid://136004769060752|c=0.53,0.53,0.53
+
+[Jet Hangar]
+ROOT|546.41,2.21,93.30
+bounds|Part|7.30,4.42,4.30|0,0,0|-0,0,0|a=1|c=1,0,0
+Windows|MeshPart|4.92,0.94,2.01|0.87,-0.12,0.17|-0,0,0|m=rbxassetid://123495260670953|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|8.08,3.72,4.68|-0.22,-0.34,0.23|-0,0,0|m=rbxassetid://94540688636443|c=0.18,0.20,0.13
+Flooring|MeshPart|5.88,0.09,3.23|0,-2.17,-1.55|-0,0,0|m=rbxassetid://110798120304525|c=0.11,0.16,0.21
+MetalColor|MeshPart|8.26,4.28,4.77|-0.29,-0.07,0.21|-0,0,0|m=rbxassetid://84531505990398|c=0.24,0.24,0.24
+Black|MeshPart|6.82,2.33,2.32|0,-1.04,0.57|-0,0,0|m=rbxassetid://104954876561824|c=0.11,0.16,0.21
+Lights|MeshPart|5.91,3.18,4.52|0,0.43,0.32|-0,0,0|m=rbxassetid://73072601289742|c=0.97,0.97,0.97
+MetalColor|MeshPart|8.89,4.41,5.39|0,-0,-0.59|-0,0,0|m=rbxassetid://127094838245964|c=0.29,0.29,0.29
+
+[Industrial Drill]
+ROOT|524.95,3.03,106.93
+bounds|Part|5.30,6.07,5.20|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|5.08,2.19,5.08|0,-1.81,0|-0,0,0|m=rbxassetid://75388896448739|c=0.59,0.59,0.59
+Yellow|MeshPart|5.27,3.08,5.27|0,-1.34,0|-0,0,0|m=rbxassetid://115241101959814|c=0.84,0.67,0.25
+MetalColor|MeshPart|5.24,5.17,5.24|0,-0.31,0|-0,0,0|m=rbxassetid://108906207236698|c=0.55,0.55,0.55
+Meshes/Industrial Drill_IDDRIG|MeshPart|0.43,4.78,0.50|0,-0.52,0|-0,0,0|m=rbxassetid://117995471474420
+MoreYellow|MeshPart|1.23,2.09,1.23|0,-1.96,0|-0,0,0|m=rbxassetid://135731452985802|c=0.94,0.63,0.27
+Blue|MeshPart|1.08,0.23,1.08|0,-0.50,0|-0,0,0|m=rbxassetid://86009171522362|c=0.46,0.46,0.46
+MetalColor|MeshPart|5.53,5.80,5.53|0,-0.13,0|-0,0,0|m=rbxassetid://97260183530051|c=0.22,0.22,0.22
+
+[Mechanized Armory]
+ROOT|595.10,2.21,121.30
+bounds|Part|8.80,4.42,6|0,0,0|-0,0,0|a=1|c=1,0,0
+Pink|MeshPart|0.48,0.15,0.88|2.64,-1.98,-3.73|-0,0,0|m=rbxassetid://118073043796994|c=0.75,0.45,0.65
+Flooring|MeshPart|8.41,2.13,7.25|0,-1.09,-0.82|-0,0,0|m=rbxassetid://82038566647010|c=0.11,0.16,0.21
+MetalColor|MeshPart|1.92,0.16,2.76|0,-2.08,-2.17|-0,0,0|m=rbxassetid://76460543813920|c=0.24,0.24,0.24
+MetalColor|MeshPart|7.23,3,5.09|0,-0.66,-0.21|-0,0,0|m=rbxassetid://78751180487792|c=0.29,0.29,0.29
+Pallets|MeshPart|5.68,0.25,0.92|0.04,-2.03,-3.70|-0,0,0|m=rbxassetid://139609935340539|c=0.35,0.30,0.26
+Lights|MeshPart|6.37,1.57,4.57|0,-0.19,0.02|-0,0,0|m=rbxassetid://109029051080725|c=0.91,0.91,0.93
+Door|MeshPart|0.40,0.72,0|2.04,-1.60,1.97|-0,0,0|m=rbxassetid://104877733375281|c=0.35,0.30,0.26
+Windows|MeshPart|7.16,0.60,4.47|0,-0.69,0.03|-0,0,0|m=rbxassetid://123583855821941|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|8.75,2.22,7.59|0,-1.10,-0.82|-0,0,0|m=rbxassetid://125013054785014|c=0.18,0.20,0.13
+Truss|MeshPart|1.61,0.34,1.33|-1.71,-0.39,1.11|-0,0,0|m=rbxassetid://121126914447855|c=0.36,0.36,0.41
+Sandbags|MeshPart|0.71,0.30,0.87|-2.45,-2.01,-3.54|-0,0,0|m=rbxassetid://107149952204360|c=0.84,0.77,0.60
+MetalColor|MeshPart|7.86,2.48,6.26|0,-0.92,-0.55|-0,0,0|m=rbxassetid://99094540363479|c=0.35,0.35,0.35
+
+[Fusion Reactor]
+ROOT|584.35,2.01,120.72
+bounds|Part|9.10,4.01,9.80|0,0,0|-0,0,0|a=1|c=1,0,0
+Orb|MeshPart|2,2,2|-0.03,0.98,0|-0,180,0|m=rbxassetid://89826672213326|a=0.70|c=0.11,0.16,0.21
+Orb|MeshPart|2.14,2.14,2.14|-0.03,0.98,0|-0,180,0|m=rbxassetid://140185778046804|c=0.43,0.60,0.79
+MetalColor|MeshPart|8.18,3.96,8.83|0,-0.03,0|-0,180,0|m=rbxassetid://115903125549862|c=0.24,0.24,0.24
+MainBaseColor|MeshPart|9.14,3.99,9.76|0,-0.01,0|-0,180,0|m=rbxassetid://85382988277719|c=0.18,0.20,0.13
+3|MeshPart|0.39,0.39,0.39|0,0.98,0|-0,180,0|m=rbxassetid://82453463051605|c=0.97,0.97,0.97
+Flooring|MeshPart|8.71,1.76,9.27|0,-1.10,0|-0,180,0|m=rbxassetid://118536676273670|c=0.11,0.16,0.21
+Lights|MeshPart|0.24,0.03,4.41|0,-0.61,0|-0,180,0|m=rbxassetid://129056798435213|c=0.43,0.60,0.79
+4|MeshPart|0.43,0.61,0.74|0,0.98,0|-0,180,0|m=rbxassetid://121531286856319|c=0.97,0.97,0.97
+MetalColor|MeshPart|5.97,3.27,5.87|0,0.10,0|-0,180,0|m=rbxassetid://81249758525616|c=0.49,0.49,0.49
+2|MeshPart|1.22,1,1.22|0,0.98,0|-0,180,0|m=rbxassetid://131282937650684|c=0.97,0.97,0.97
+1|MeshPart|1.89,0.11,1.89|0,0.98,0|-0,180,0|m=rbxassetid://120137942182868|c=0.97,0.97,0.97
+
+[ATC Tower]
+ROOT|565.28,4.36,93.79
+bounds|Part|7.10,8.72,4.70|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|6.78,8.56,5.39|0.11,-0.08,-0.50|-0,0,0|m=rbxassetid://109331791462435|c=0.22,0.22,0.22
+Black|MeshPart|3.87,2.50,3.79|-0.46,-3.11,-0.29|-0,0,0|m=rbxassetid://90744782053846|c=0.11,0.16,0.21
+Windows|MeshPart|4.18,4.81,3.78|0.04,-0.18,0.24|-0,0,0|m=rbxassetid://123413037259592|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|6.60,7.65,5.10|0.11,-0.48,-0.43|-0,0,0|m=rbxassetid://107622163659257|c=0.18,0.20,0.13
+Meshes/A10 ATC (1)_ATC6|MeshPart|1.61,6.99,2.83|1.87,0.63,-1.17|-0,0,0|m=rbxassetid://106389452809341|c=0.91,0.91,0.93
+MetalColor|MeshPart|7.11,8.70,5.95|0,-0.01,-0.60|-0,0,0|m=rbxassetid://78983540711906|c=0.35,0.35,0.35
+
+[Storage Facility]
+ROOT|523.28,1.35,37.72
+bounds|Part|4.80,2.10,6.30|0,0,0|-0,0,0|a=1|c=1,0,0
+MetalColor|MeshPart|1.69,0.22,1.82|-0.82,-0.95,-1.73|-0,0,0|m=rbxassetid://93946096150310|c=0.29,0.29,0.29
+MetalColor|MeshPart|4.35,1.86,5.23|0.01,-0.24,0.47|-0,0,0|m=rbxassetid://115371069256633|c=0.24,0.24,0.24
+Windows|MeshPart|1.43,0.53,2.20|1.11,0.11,1.68|-0,0,0|m=rbxassetid://135596055385058|c=0.43,0.60,0.79
+Top|MeshPart|0.19,0,2.87|-1.40,0.99,0.85|-0,0,0|m=rbxassetid://137673829621340|c=0.12,0.12,0.12
+Yellow|MeshPart|4.15,1.91,5.08|0.19,-0.29,0.22|-0,0,0|m=rbxassetid://73844059824056|c=0.79,0.60,0.19
+Lining|MeshPart|1.17,1.90,3.94|-1.40,-0.21,0.81|-0,0,0|m=rbxassetid://139051417831913|c=0.45,0.45,0.45
+MainBaseColor|MeshPart|2.40,1.71,5.11|1.05,-0.37,0.26|-0,0,0|m=rbxassetid://110669890650117|c=0.18,0.20,0.13
+MetalColor|MeshPart|0.84,0.13,1.01|0.91,0.24,1.64|-0,0,0|m=rbxassetid://103580408197407|c=0.33,0.33,0.33
+MainBaseColor|MeshPart|4.74,2.37,6.29|0.03,-0.16,0|-0,0,0|m=rbxassetid://88280169209541|c=0.18,0.20,0.13
+Cylinder|MeshPart|1.17,1.92,3.85|-1.40,-0.06,0.85|-0,0,0|m=rbxassetid://112911158364520|c=0.59,0.59,0.59
+Black|MeshPart|2.60,1.11,2.36|-0.19,-0.51,-0.61|-0,0,0|m=rbxassetid://77250060817665|c=0.11,0.16,0.21
+Flooring|MeshPart|4.44,0.04,5.99|0.03,-0.97,0|-0,0,0|m=rbxassetid://134018781236036|c=0.11,0.16,0.21
+Black|MeshPart|0.55,0.10,0.74|0.88,0.45,1.64|-0,0,0|m=rbxassetid://86999809531026|c=0.11,0.16,0.21
+Red|MeshPart|1.35,1.37,5.20|-1.31,-0.32,0.17|-0,0,0|m=rbxassetid://118121061725703|c=0.49,0.22,0.22
+MetalColor|MeshPart|4.69,1.82,5.73|-0.05,-0.36,0.23|-0,0,0|m=rbxassetid://138956173298254|c=0.25,0.25,0.25
+
+[Central Office]
+ROOT|543.08,2.24,-8.44
+3|MeshPart|0.34,0.34,2.94|0,0,0|-0,0,0|m=rbxassetid://83798389604497|c=0.11,0.16,0.21
+TramWindows|MeshPart|0.36,0.16,2.88|0,0.06,-0.03|-0,0,0|m=rbxassetid://110609060277993|c=0.91,0.91,0.93
+TramWindows|MeshPart|0.36,0.16,2.88|-2.20,-1.44,-0.03|-0,0,0|m=rbxassetid://110609060277993|c=0.91,0.91,0.93
+1|MeshPart|0.34,0.34,2.94|-2.20,-1.50,0|-0,0,0|m=rbxassetid://83798389604497|c=0.11,0.16,0.21
+TramWindows|MeshPart|0.36,0.16,2.88|1.10,-1.08,-0.03|-0,0,0|m=rbxassetid://110609060277993|c=0.91,0.91,0.93
+2|MeshPart|0.34,0.34,2.94|1.10,-1.14,0|-0,0,0|m=rbxassetid://83798389604497|c=0.11,0.16,0.21
+bounds|Part|15,6.36,12.20|-2.51,0.95,-4.01|-0,90,0|a=1|c=1,0,0
+MainBaseColor|MeshPart|17.11,6.34,14.98|-0.04,0.93,-4.01|-0,0,0|m=rbxassetid://72319797901598|c=0.18,0.20,0.13
+RedLights|MeshPart|10.34,0.99,9.77|3.30,3.62,-4.01|-0,0,0|m=rbxassetid://83293180510873|c=1,0,0
+Windows|MeshPart|3.96,1.74,5.56|-0.55,-0.65,-4.01|-0,0,0|m=rbxassetid://127457501538519|a=0.70|c=0.43,0.60,0.79
+Yellow|MeshPart|12.62,4.81,13.82|0.06,0.91,-4.01|-0,0,0|m=rbxassetid://113613000573934|c=0.82,0.62,0.19
+PhantomlineLogo|MeshPart|0.32,0.30,0.15|5.50,2.56,-8.99|-0,0,0|m=rbxassetid://107602378870384
+MainMetal|MeshPart|16.85,6.25,14.72|0.03,0.96,-4.01|-0,0,0|m=rbxassetid://130678037263228|c=0.31,0.31,0.31
+DarkMetal|MeshPart|12.48,2.63,12.68|1.80,1,-4.01|-0,0,0|m=rbxassetid://88783420923176|c=0.16,0.16,0.16
+MetalColor|MeshPart|12.24,5.82,5.56|1.92,1.12,-4.01|-0,0,0|m=rbxassetid://90159478351941|c=0.22,0.22,0.22
+MetalColor|MeshPart|11.51,4.14,12.61|1.99,2.06,-4.01|-0,0,0|m=rbxassetid://128965434912478|c=0.49,0.49,0.49
+Lights|MeshPart|13.62,4.73,12.73|1.46,0.86,-4.01|-0,0,0|m=rbxassetid://94156588395507|c=0.91,0.91,0.93
+
+[Secret Weapons Facility]
+ROOT|552.30,2.21,102.98
+bounds|Part|12.70,4.42,7.10|0,0,0|-0,0,0|a=1|c=1,0,0
+Lights|MeshPart|11.39,3.04,7.59|0,-0.54,0.05|-0,0,0|m=rbxassetid://73433451247395|c=0.50,0.75,0.84
+MetalColor|MeshPart|13.69,4.38,8.35|0,-0.02,-0.05|-0,0,0|m=rbxassetid://129234234465550|c=0.25,0.25,0.25
+DarkMetal|MeshPart|13,3.31,8.13|0,-0.55,-0.13|-0,0,0|m=rbxassetid://132696008116385|c=0.18,0.18,0.18
+Black|MeshPart|5.33,2.72,6.16|0,-0.79,0.29|-0,0,0|m=rbxassetid://101609146759517|c=0.11,0.16,0.21
+

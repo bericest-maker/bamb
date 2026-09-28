@@ -1,0 +1,520 @@
+[Mechanical Hive]
+ROOT|872.65,1.90,152.85
+bounds|Part|9.30,3.60,9.30|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Rover Barracks_Yellow|MeshPart|9.68,1.17,8.88|0,-1.11,-0.04|-0,0,0|m=rbxassetid://135476836832504|c=0.63,0.43,0
+Meshes/Rover Barracks_Radar|MeshPart|0.54,0.18,0.13|2.91,0.86,1.21|-0,0,0|m=rbxassetid://125319114772293|c=0.62,0.63,0.67
+Meshes/Rover Barracks_Neon White|MeshPart|9.02,1.54,6.87|0,-0.42,0.40|-0,0,0|m=rbxassetid://127477163577158|c=0.79,0.80,0.82
+Meshes/Rover Barracks_Glass|MeshPart|6.62,0.35,2.57|0,-0.11,1.57|-0,0,0|m=rbxassetid://72432778140047|c=0.43,0.60,0.79
+Meshes/Rover Barracks_Dark Grey|MeshPart|10.62,3.76,9.77|0,0.08,0|-0,0,0|m=rbxassetid://101505333823198|c=0.24,0.24,0.24
+Meshes/Rover Barracks_Black|MeshPart|7.10,0.80,0.26|0,-1.14,-3.23|-0,0,0|m=rbxassetid://140209155552825|c=0.11,0.16,0.21
+Meshes/Rover Barracks_Base2|MeshPart|9.27,2.59,8.30|0,-0.48,-0.03|-0,0,0|m=rbxassetid://114059184390920|c=0.35,0.35,0.35
+Meshes/Rover Barracks_Base|MeshPart|9.16,2.58,8.43|0,-0.41,-0.05|-0,0,0|m=rbxassetid://77064623718643|c=0.25,0.25,0.25
+
+[Global Command Post]
+ROOT|865.90,32.36,75.67
+NeonWHITE|MeshPart|17.85,8.68,16.45|0,0,0|-0,0,0|m=rbxassetid://99531537934249|c=0.98,0.98,1
+Meshes/StationFix_Cylinder.036|MeshPart|9.14,11.76,7.13|0,-5.46,-0.29|-0,0,0|m=rbxassetid://108187592689616|c=0.39,0.39,0.39
+Meshes/StationFix_Cylinder.032|MeshPart|15.56,7.80,13.88|0,-7.12,-0.27|-0,0,0|m=rbxassetid://128669108088802|c=0.29,0.29,0.29
+Meshes/StationFix_Cylinder.031|MeshPart|19.66,12.27,20|0,-1.04,0.03|-0,0,0|m=rbxassetid://96976967966175|c=0.47,0.47,0.47
+NeonRED|MeshPart|19.67,7.76,20.04|0,-7.48,0.03|-0,0,0|m=rbxassetid://75711185856633|c=0.49,0,0.02
+Meshes/StationFix_Cylinder.033|MeshPart|19.66,15.26,20|0,-2.51,0.03|-0,0,0|m=rbxassetid://82025728839733|c=0.71,0.44,0.22
+Meshes/StationFix_Cylinder.029|MeshPart|15.62,2.07,13.94|0,-4.55,-0.27|-0,0,0|m=rbxassetid://119370205930246|c=0.39,0.39,0.39
+Meshes/StationFix_Cylinder.030|MeshPart|8.81,0.66,7.37|0,-3.67,-0.59|-0,0,0|m=rbxassetid://129145527286703|c=0.35,0.35,0.35
+bounds|Part|0.50,3.60,0.50|0,-30.56,0.03|-0,180,0|a=1|c=1,0,0
+Meshes/StationFix_Cylinder.027|MeshPart|16.19,6.79,14.74|0,-6.74,-0.11|-0,0,0|m=rbxassetid://123074911458001|c=0.79,0.80,0.82
+
+[Semiconductor Plant]
+ROOT|909.18,2.30,90.05
+bounds|Part|5.80,4.60,5.80|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Fission_Dark Grey|MeshPart|5.68,4.49,5.73|-0.03,-0.05,0|-0,-90,0|m=rbxassetid://107682904702012|c=0.31,0.31,0.31
+Meshes/Fission_Grey|MeshPart|5.32,4.27,4.97|-0.32,-0.17,-0.13|-0,-90,0|m=rbxassetid://84011572641581|c=0.39,0.39,0.39
+Meshes/Fission_Neon White|MeshPart|4.39,4.41,5.40|0.10,-0.03,-0.03|-0,-90,0|m=rbxassetid://110721245296369|c=0.79,0.80,0.82
+Meshes/Fission_Light Grey|MeshPart|4.96,4.48,5.64|0.08,-0.06,0.20|-0,-90,0|m=rbxassetid://121880450648680|c=0.55,0.55,0.55
+
+[Conglomerate Skyscraper]
+ROOT|873.27,6.38,105.15
+bounds|Part|6.50,12.75,3.35|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Skyscraper (2)_Glass|MeshPart|2.84,11.98,6.27|0,-0.38,0.25|-0,-90,0|m=rbxassetid://84238676639726|c=0.32,0.49,0.68
+Meshes/Skyscraper (2)_Logo|MeshPart|0.08,0.76,0.76|0,-5.64,-1.25|-0,-90,0|m=rbxassetid://115185776916185
+Meshes/Skyscraper (2)_Logo 3|MeshPart|1.10,0.95,0.65|0,-5.64,-1.25|-0,-90,0|m=rbxassetid://117379356315086|c=0.93,0.78,0.56
+Meshes/Skyscraper (2)_Logo 2|MeshPart|1.50,0.84,1.28|0,-5.64,-1.25|-0,-90,0|m=rbxassetid://108076455224049|c=0.93,0.78,0.56
+Meshes/Skyscraper (2)_Light Grey 2|MeshPart|3.01,6.13,6.58|0,2.64,0.24|-0,-90,0|m=rbxassetid://82652706507509|c=0.49,0.49,0.49
+Meshes/Skyscraper (2)_Dark Grey|MeshPart|2.69,0.29,6.17|0,5.68,0.25|-0,-90,0|m=rbxassetid://112564060874795|c=0.49,0.49,0.49
+Meshes/Skyscraper (2)_Light Grey|MeshPart|3.51,6.06,6.58|0,-3.34,-0.01|-0,-90,0|m=rbxassetid://88388372202510|c=0.49,0.49,0.49
+
+[Artillery Factory]
+ROOT|913.50,1.80,98.90
+bounds|Part|3.70,3.60,6.20|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Artillery Barracks_Light Grey|MeshPart|2.25,3.52,2.50|0.42,-0.04,0.88|-0,-90,0|m=rbxassetid://122267083226582|c=0.49,0.49,0.49
+Meshes/Artillery Barracks_Green|MeshPart|5.97,2.15,3.61|-0.02,-0.73,-0.01|-0,-90,0|m=rbxassetid://112790755659941|c=0.18,0.20,0.13
+Meshes/Artillery Barracks_Grey|MeshPart|5.63,2.95,3.56|-0.04,-0.32,0.16|-0,-90,0|m=rbxassetid://92319077046372|c=0.39,0.39,0.39
+Meshes/Artillery Barracks_Black|MeshPart|3.77,3.50,3.44|-0.04,-0.05,-0.63|-0,-90,0|m=rbxassetid://110791630120967|c=0.11,0.16,0.21
+Meshes/Artillery Barracks_Dark Grey|MeshPart|6.11,3.53,3.63|0.02,-0.03,-0|-0,-90,0|m=rbxassetid://130755330156245|c=0.29,0.29,0.29
+Meshes/Artillery Barracks_Neon Orange|MeshPart|2.19,2.56,2.39|0.42,-0.17,0.86|-0,-90,0|m=rbxassetid://106804793800202|c=0.84,0.45,0.24
+
+[Tank Warehouse]
+ROOT|922.08,1.23,80.02
+bounds|Part|6.10,2.45,3.20|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Abrams Barracks_Dark Grey|MeshPart|3.27,2.19,6.53|0,-0.13,-0.07|-0,-90,0|m=rbxassetid://109886470338065|c=0.39,0.39,0.39
+Meshes/Abrams Barracks_Glass|MeshPart|2.78,0.47,5.96|0,0.29,0.15|-0,-90,0|m=rbxassetid://85719536804676|c=0.43,0.60,0.79
+Meshes/Abrams Barracks_Base|MeshPart|3.51,1.84,6|0,-0,-0.02|-0,-90,0|m=rbxassetid://136694296541754|c=0.37,0.36,0.29
+Meshes/Abrams Barracks_Base 3|MeshPart|3.64,2.22,6.09|0,-0.11,0.01|-0,-90,0|m=rbxassetid://136821332043459|c=0.35,0.32,0.27
+Meshes/Abrams Barracks_Light|MeshPart|3.24,0.58,6.06|0,0.19,-0.08|-0,-90,0|m=rbxassetid://74784185827142
+Meshes/Abrams Barracks_Base 2|MeshPart|3.64,2.26,6.05|0,-0.09,0.01|-0,-90,0|m=rbxassetid://84419322101734|c=0.51,0.46,0.38
+Meshes/Abrams Barracks_Grey|MeshPart|3.50,1.78,6.11|0.03,-0.33,-0.08|-0,-90,0|m=rbxassetid://88587796976104|c=0.31,0.31,0.31
+Meshes/Abrams Barracks_Black|MeshPart|0.02,1.30,2.42|0,-0.57,-1.55|-0,-90,0|m=rbxassetid://81456754250572|c=0.11,0.16,0.21
+
+[Hospital]
+ROOT|921.15,1.72,92.28
+bounds|Part|2.60,3.45,5.20|0,0,0|-0,0,0|a=1|c=1,0,0
+Grey|MeshPart|5.16,3.36,3.02|0,-0.05,0|0,90,0|m=rbxassetid://132204909103145|c=0.30,0.30,0.30
+Base|MeshPart|4.90,2.78,2.81|0,-0.33,-0.05|0,90,0|m=rbxassetid://136225303137257|c=0.61,0.61,0.61
+Green|MeshPart|2.94,1.52,0.90|-0.27,-0.59,-0.70|0,90,0|m=rbxassetid://101385742208421|c=0.35,0.71,0.22
+White|MeshPart|3.37,0.94,1.87|0,-0.57,0.72|0,90,0|m=rbxassetid://100810582246030
+Glass|MeshPart|4.66,1.47,1.83|-0.01,-0.89,-0.01|0,90,0|m=rbxassetid://120355602045748|c=0.44,0.51,0.57
+Black|MeshPart|4.16,1.80,1.87|0,-0.78,0.19|0,90,0|m=rbxassetid://128023285471854|c=0.20,0.20,0.20
+NeonOrange|MeshPart|1.63,1.44,1.95|-0.04,0.77,-1.41|0,90,0|m=rbxassetid://94215050773059|c=0.85,0.83,0.76
+
+[Armament Forge]
+ROOT|939.85,2.95,75.64
+bounds|Part|4.70,5.90,4.70|0,0,0|-0,0,0|a=1|c=1,0,0
+Neon|MeshPart|3.09,0.85,3.09|-0,0.85,0|0,90,0|m=rbxassetid://117025419369863
+Dark Grey|MeshPart|4.34,5.61,4.34|-0,0.04,0|0,90,0|m=rbxassetid://127344836076007|c=0.29,0.29,0.29
+Light Grey|MeshPart|4.68,5.77,4.68|-0,-0.07,0|0,90,0|m=rbxassetid://124392709610542|c=0.39,0.39,0.39
+Black|MeshPart|3.99,5.47,3.99|-0,0.04,0|0,90,0|m=rbxassetid://73278544821260|c=0.25,0.25,0.25
+Glass|MeshPart|2.71,0.55,2.71|-0,1.97,0|0,90,0|m=rbxassetid://99547517470158|c=0.35,0.40,0.43
+Yellow|MeshPart|3.44,4.37,3.44|-0,0.63,0|0,90,0|m=rbxassetid://85256475006066|c=0.45,0.41,0.13
+
+[Officer Quarters]
+ROOT|912.15,2.28,73.65
+bounds|Part|7.90,4.55,4|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/CommandBuilding (1)_Cube.328|MeshPart|6.40,0.28,2.20|0.03,-0.57,-0.02|-0,180,0|m=rbxassetid://137598222974996|c=0.59,0.33,0.33
+Main|MeshPart|7.74,2.77,4.07|0,-0.89,0|-0,180,0|m=rbxassetid://133235481444482|c=0.18,0.20,0.13
+Meshes/CommandBuilding (1)_Cube.331|MeshPart|7.68,2.69,4|0,-0.81,0|-0,180,0|m=rbxassetid://99266682495950|c=0.24,0.24,0.24
+Meshes/CommandBuilding (1)_RadarROTATES|MeshPart|2.93,1.53,0.79|0,1.16,-0.03|-0,180,0|m=rbxassetid://109174237364100|c=0.49,0.49,0.49
+Meshes/CommandBuilding (1)_Cube.337|MeshPart|6.83,1.43,2.80|0,-0.39,0|-0,180,0|m=rbxassetid://86775645677968|c=0.11,0.16,0.21
+Meshes/CommandBuilding (1)_Cube.336|MeshPart|7.47,1.16,2.92|0,-0.38,0|-0,180,0|m=rbxassetid://138835580748612|c=0.79,0.80,0.82
+Meshes/CommandBuilding (1)_Cube.332|MeshPart|3.96,1.07,2.50|0,-1.62,0|-0,180,0|m=rbxassetid://109193112896188|c=0.49,0.49,0.49
+Meshes/CommandBuilding (1)_Cube.335|MeshPart|5.76,0.15,3.26|0,-2.08,0|-0,180,0|m=rbxassetid://84780082332781|c=0.94,0.72,0.22
+Meshes/CommandBuilding (1)_Cube.333|MeshPart|5.76,0.69,3.32|0,-1.81,0|-0,180,0|m=rbxassetid://80365482693077|c=0.67,0.33,0
+
+[Railgun Armory]
+ROOT|1013.42,1.78,163.72
+bounds|Part|8.25,3.56,8.25|0,0,0|-0,0,0|a=1|c=1,0,0
+Light Grey|MeshPart|7.55,2.59,7.55|-0,-0.48,0|-0,-90,0|m=rbxassetid://105857140269869|c=0.38,0.38,0.37
+Grey|MeshPart|8.13,2.77,8.13|-0,-0.40,0|-0,-90,0|m=rbxassetid://105796941789702|c=0.25,0.25,0.26
+Green|MeshPart|7.90,2.65,7.90|-0,-0.18,0|-0,-90,0|m=rbxassetid://119082654234857|c=0.40,0.42,0.31
+Neon Orange|MeshPart|6.36,1.76,6.36|-0,-0.31,0|-0,-90,0|m=rbxassetid://113852364569408|c=1,0.61,0.17
+Dark Grey|MeshPart|7.84,2.54,7.84|-0,-0.48,0|-0,-90,0|m=rbxassetid://130646724491259|c=0.17,0.18,0.19
+
+[Ancient Missile Battery]
+ROOT|-459.50,67.37,261.95
+Yellow|MeshPart|0.09,0.37,0.09|0,0,0|-0,0,0|m=rbxassetid://70957387902165|c=0.72,0.55,0.17
+Top|MeshPart|0.07,0.08,0.07|0,0.28,0|-0,0,0|m=rbxassetid://97199237131780|c=0.62,0.63,0.67
+Black|MeshPart|0.20,0.72,0.20|0,-0.11,0|-0,0,0|m=rbxassetid://80887102750024|c=0.16,0.16,0.16
+bounds|Part|5.10,6,5.10|-1394.75,-64.37,177.35|-0,0,0|a=1|c=1,0,0
+Turret4.003|MeshPart|5.05,1.16,5.32|-1394.75,-66.92,177.25|-0,0,0|m=rbxassetid://118470063782187|c=0.48,0.45,0.37
+Turret4|MeshPart|5.08,0.98,3.89|-1394.75,-66.90,177.25|-0,0,0|m=rbxassetid://120225205647323|c=0.24,0.24,0.24
+Turret2|MeshPart|6.60,1.85,2.28|-1394.75,-63.12,178.13|-0,0,0|m=rbxassetid://121881368251954|c=0.25,0.25,0.25
+Turret2.003|MeshPart|5.24,1.84,1.06|-1394.75,-63.51,175.87|-0,0,0|m=rbxassetid://79484335794276|c=0.64,0.29,0.29
+Ancient Turret|MeshPart|0.98,1.92,1.55|-1394.75,-62.74,176.31|-0,0,0|m=rbxassetid://101267197436277|c=0.64,0.29,0.29
+Turret2.002|MeshPart|6.84,4.58,4.91|-1394.75,-63.81,177.65|-0,0,0|m=rbxassetid://111163869047796|c=0.51,0.48,0.40
+Turret2.005|MeshPart|5.28,2.42,3.75|-1394.75,-63.84,177.51|-0,0,0|m=rbxassetid://94632179992218|c=0.11,0.16,0.21
+Stick|MeshPart|0.24,3.06,0.24|-1394.75,-65.08,177.27|-0,0,0|m=rbxassetid://131123547649036|a=1
+Turret2.004|MeshPart|3.41,3.25,3.41|-1394.75,-66.30,177.27|-0,0,0|m=rbxassetid://109544140312489|c=0.24,0.24,0.24
+
+[Mech Gantry]
+ROOT|995.30,5.32,152.72
+bounds|Part|8.40,10.65,4.95|0,0,0|-0,0,0|a=1|c=1,0,0
+Green|MeshPart|8.31,9.08,3.08|0,0.01,0.97|-0,0,0|m=rbxassetid://85871296127900|c=0.33,0.39,0.31
+Yellow|MeshPart|7.19,6.35,3.70|0,-1.67,-0.39|-0,0,0|m=rbxassetid://91446983930916|c=0.91,0.77,0.44
+Black|MeshPart|8.16,7.01,3.82|0,-1.77,-0.32|-0,0,0|m=rbxassetid://137214077808198|c=0.16,0.16,0.16
+Dark Grey|MeshPart|7.51,7.46,4.14|0,-1.12,-0.22|-0,0,0|m=rbxassetid://110062398021248|c=0.23,0.22,0.21
+Light Green|MeshPart|7.38,5.56,0.48|0,-0.35,0.03|-0,0,0|m=rbxassetid://129071206967452|c=0.62,0.62,0.57
+Grey|MeshPart|9.09,9.38,5.48|0,-0.63,0.22|-0,0,0|m=rbxassetid://73880021521026|c=0.33,0.32,0.30
+
+[Skyscraper]
+ROOT|999.60,9.30,195.55
+bounds|Part|4.30,18.60,8|0,0,0|-0,0,0|a=1|c=1,0,0
+Grey|MeshPart|6.88,16.18,1.71|-0.01,-1.03,0.39|0,90,0|m=rbxassetid://72241765087221|c=0.57,0.57,0.57
+Light Grey|MeshPart|7.66,16.28,3.99|0,-0.97,0|0,90,0|m=rbxassetid://70990940214449|c=0.66,0.66,0.66
+Black|MeshPart|3.68,15.81,1.99|0,-1.05,0.55|0,90,0|m=rbxassetid://101229948559775|c=0.02,0.02,0.02
+Dark Grey|MeshPart|8,17.58,4.33|0,-0.51,-0|0,90,0|m=rbxassetid://99229462494852|c=0.27,0.27,0.27
+
+[Test Unit Building]
+ROOT|663.85,2.02,-12
+Lights|MeshPart|2.68,0.03,5.63|0,0,0|-0,0,0|m=rbxassetid://117005516305198
+Window|MeshPart|1.84,0.19,3.92|0.27,0.77,0|-0,0,0|m=rbxassetid://98524160089010|c=0.43,0.60,0.79
+MainBaseColor|MeshPart|3.12,1.66,6.07|0,0.81,0|-0,0,0|m=rbxassetid://85729354877893|c=0.18,0.20,0.13
+Flooring|MeshPart|2.80,1.52,5.75|0,0.75,0|-0,0,0|m=rbxassetid://122111012144665|c=0.11,0.16,0.21
+MetalColor|MeshPart|2.46,1.56,4.81|0.08,0.77,-0.19|-0,0,0|m=rbxassetid://92849232843906|c=0.31,0.31,0.31
+bounds|Part|3,1.74,6|0,0.85,0|-0,0,0|a=1|c=1,0,0
+
+[Stealth Hangar]
+ROOT|975.40,1.50,-27.75
+bounds|Part|6.40,3,6.30|0,0,0|-0,0,0|a=1|c=1,0,0
+Cube.349|MeshPart|6.31,2.17,5.80|0,-0.40,0|-0,0,0|m=rbxassetid://98627041192092|c=0.34,0.34,0.38
+Cube.347|MeshPart|4.52,0.88,5.90|0,0.27,0|-0,0,0|m=rbxassetid://109335251922848
+Cube.343|MeshPart|6.37,2.19,6.34|0,-0.40,0|-0,0,0|m=rbxassetid://91665671501172
+
+[Desert Bastion]
+ROOT|955,1.50,-40.06
+bounds|Part|8.20,3,14.30|0,0,0|-0,0,0|a=1|c=1,0,0
+MainBase1BEIGE.002|MeshPart|15.06,4.29,14.49|-0.32,0.75,-0.41|-0,0,0|m=rbxassetid://100962562403075|c=0.49,0.46,0.38
+NeonRed.005|MeshPart|0.69,0.27,1.39|-7.59,1.12,3.18|-0,0,0|m=rbxassetid://72425017006333|c=0.65,0,0.01
+MainBaseBeigeLIGHT.002|MeshPart|8.35,4.29,5.57|-0.68,2.22,1.36|-0,0,0|m=rbxassetid://130421052842933|c=0.64,0.60,0.49
+MainBasePlating1.002|MeshPart|15.12,4.48,14.46|-0.32,0.81,-0.38|-0,0,0|m=rbxassetid://138968670145593|c=0.42,0.39,0.32
+NeonWhite.002|MeshPart|0.61,0.76,1.24|-7.31,1.31,3.01|-0,0,0|m=rbxassetid://135100552997087
+Silo.002|MeshPart|1.97,0.45,2.34|-0.04,-0,-0.13|-0,0,0|m=rbxassetid://79620802430281|c=0.64,0.60,0.49
+VeryDarkMetal.002|MeshPart|11.53,3.58,5.07|-2.34,2.64,1.71|-0,0,0|m=rbxassetid://88076816407191|c=0.29,0.29,0.29
+PureDarkness.002|MeshPart|12.35,5.79,11.79|0.06,1.49,-0.25|-0,0,0|m=rbxassetid://126504274724287|c=0.08,0.08,0.08
+MetalLight.002|MeshPart|9.40,5.75,4.12|-1.35,1.48,4.66|-0,0,0|m=rbxassetid://112271226350429|c=0.49,0.49,0.49
+MainBaseDarkBeige.002|MeshPart|15.39,4.96,14.98|-0.54,1.14,0.08|-0,0,0|m=rbxassetid://79116479543050|c=0.29,0.29,0.29
+Tower.002|MeshPart|8.40,5.89,5.40|-0.68,1.55,5.01|-0,0,0|m=rbxassetid://119232599910284|c=0.60,0.56,0.46
+VeryDarkMetal.004|MeshPart|8.95,1.58,7.75|-0.50,-0.41,0.67|-0,0,0|m=rbxassetid://116055571242275|c=0.29,0.29,0.29
+Cube.346|MeshPart|16.44,0,15.39|0.11,-1.31,0|-0,0,0|m=rbxassetid://126204550974268|c=0.49,0.46,0.38
+Cube.344|MeshPart|16.61,0.19,15.54|0.10,-1.41,0|-0,0,0|m=rbxassetid://102813020892390|c=0.29,0.29,0.29
+VeryDarkMetal.003|MeshPart|8.67,1.31,7.51|-0.50,-0.40,0.73|-0,0,0|m=rbxassetid://91130157384270|c=0.49,0.49,0.49
+VeryDarkMetal.005|MeshPart|4.73,0.12,3.26|-6.05,0.91,2.40|-0,0,0|m=rbxassetid://73166077378146|c=0.29,0.29,0.29
+
+[Atmospheric Deployment Center]
+ROOT|987.30,2.18,7.75
+bounds|Part|2,4.15,2|0,0,0|-0,0,0|a=1|c=1,0,0
+Light Grey|MeshPart|0.92,0.25,0.19|0,-0.09,-0.97|-0,0,0|m=rbxassetid://135775944556882
+Grey|MeshPart|2.08,3.13,2.26|0,0.52,-0|-0,0,0|m=rbxassetid://93708028399428|c=0.25,0.25,0.26
+Black|MeshPart|1.44,1.44,1.74|0,0.84,-0.16|-0,0,0|m=rbxassetid://136881291116273|c=0.13,0.13,0.13
+Yellow|MeshPart|1.72,2.67,1.83|0,0.15,-0|-0,0,0|m=rbxassetid://83196815226132|c=0.56,0.44,0.18
+Dark Grey|MeshPart|1.89,4.04,2.16|0,-0.06,-0.05|-0,0,0|m=rbxassetid://114466272624007|c=0.20,0.20,0.20
+bounds|Part|8.50,3,6.40|-19.70,-0.68,-78.55|-0,0,0|a=1|c=1,0,0
+Meshes/Drop Pod Building_Base|MeshPart|7.61,2.12,5.22|-19.61,-1.05,-78.82|-0,0,0|m=rbxassetid://85128639907553|c=0.31,0.33,0.38
+Meshes/Drop Pod Building_Rig1|MeshPart|0.20,0.64,0.38|-22.05,0.07,-77.15|-0,0,0|m=rbxassetid://87876409687689|t=rbxassetid://72777417114516
+Meshes/Drop Pod Building_Orange|MeshPart|7.61,1.55,4.96|-19.61,-1.33,-78.69|-0,0,0|m=rbxassetid://102250609480488|c=0.76,0.58,0.18
+Meshes/Drop Pod Building_Light Grey|MeshPart|9.25,4.80,7.23|-19.70,0.22,-78.55|-0,0,0|m=rbxassetid://91798189995644|c=0.49,0.49,0.49
+Meshes/Drop Pod Building_Yellow|MeshPart|5.46,0.25,2.46|-19.38,-1.19,-79.61|-0,0,0|m=rbxassetid://122083332185792|c=1,0.95,0.73
+Meshes/Drop Pod Building_Dark Grey|MeshPart|8.38,5.54,6.36|-19.70,0.59,-78.55|-0,0,0|m=rbxassetid://117732470998055|c=0.29,0.29,0.29
+Meshes/Drop Pod Building_Rig2|MeshPart|0.15,0.37,0.12|-22.06,0.03,-77.38|-0,0,0|m=rbxassetid://87851040364663|t=rbxassetid://72777417114516
+
+[Advanced Supply Depot]
+ROOT|1013.54,1.50,85.16
+bounds|Part|3.30,3,3.80|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Mythic Supply Depot_Black|MeshPart|2,2.60,3.83|0,-0.20,-0.07|-0,0,0|m=rbxassetid://71973516302578|c=0.11,0.16,0.21
+Meshes/Mythic Supply Depot_Yellow|MeshPart|1.61,0.98,2.63|0,0.61,0.31|-0,0,0|m=rbxassetid://115381486084705|c=0.94,0.72,0.22
+Meshes/Mythic Supply Depot_Light Grey|MeshPart|3.39,2.62,4|0,-0.19,0|-0,0,0|m=rbxassetid://135700688035953|c=0.59,0.59,0.59
+Meshes/Mythic Supply Depot_Dark Grey|MeshPart|3.51,1.99,3.94|0,-0.51,-0|-0,0,0|m=rbxassetid://131041712848982|c=0.29,0.29,0.29
+Meshes/Mythic Supply Depot_Neon White|MeshPart|2.23,0.72,3.83|0,-1.09,-0.07|-0,0,0|m=rbxassetid://138810357322704
+
+[Monitoring Center]
+ROOT|0,4.82,-4.93
+bounds|Part|3,2.90,7.75|0,0,0|-0,0,0|a=1|c=1,0,0
+Blue|MeshPart|7.22,4.54,7.30|0,1.86,0.27|-0,0,0|m=rbxassetid://113422430997611|c=0.23,0.27,0.45
+Base|MeshPart|9.07,6.44,8.09|0,1.77,0.08|-0,0,0|m=rbxassetid://79492024257169|c=0.31,0.32,0.27
+White|MeshPart|2.48,0,2.48|0,-0.12,-0.96|-0,0,0|m=rbxassetid://88905849710693|c=0.91,0.91,0.91
+Grey|MeshPart|8.80,6.53,8.06|0,1.82,0.06|-0,0,0|m=rbxassetid://73824483084946|c=0.23,0.23,0.23
+Black|MeshPart|8.75,4.26,6.85|0,0.68,0.63|-0,0,0|m=rbxassetid://133990543053699|c=0,0,0
+Rig|MeshPart|1.16,0.31,0.28|0,5.23,2.57|-0,0,0|m=rbxassetid://119355350664374|c=0.23,0.23,0.23
+
+[Patrol Station]
+ROOT|995.63,5.23,-66.48
+bounds|Part|1,10.45,1|0,0,0|-0,0,0|a=1|c=1,0,0
+Grey|MeshPart|7.55,6.78,5.74|-0.12,16.27,0.10|-0,90,0|m=rbxassetid://122579167794677
+Dark Grey|MeshPart|7.50,5.10,5.86|-0.12,17.11,0.10|-0,90,0|m=rbxassetid://115563486315480|c=0.26,0.26,0.26
+Black|MeshPart|3.95,1.20,3.73|-0.12,18.97,0.10|-0,90,0|m=rbxassetid://140457412892936|c=0.05,0.05,0.05
+Orange|MeshPart|6.94,1.15,5.43|-0.12,18.97,0.10|-0,90,0|m=rbxassetid://126180779918946|c=0.66,0.22,0.12
+White|MeshPart|7.05,4.78,5.74|-0.12,17.21,0.10|-0,90,0|m=rbxassetid://133651840917852|c=0.91,0.91,0.93
+
+[Submarine Cavern]
+ROOT|993.02,7.70,-45.50
+bounds|Part|3.90,3,5|0,0,0|-0,0,0|a=1|c=1,0,0
+Grey|MeshPart|3.54,3.20,4.10|0,-5.37,0|-0,180,0|m=rbxassetid://117463719351713|c=0.34,0.36,0.37
+Base Black|MeshPart|1.42,0.78,2.79|0,-7.36,0|-0,180,0|m=rbxassetid://128508219598494|c=0.11,0.11,0.11
+Light Grey|MeshPart|3.67,3.72,4.62|0,-5.11,0|-0,180,0|m=rbxassetid://83597593884019|c=0.37,0.39,0.41
+Black|MeshPart|1.43,0.95,2.79|0,-6.49,0|-0,180,0|m=rbxassetid://110885056781756|c=0.11,0.11,0.11
+Blue|MeshPart|2.32,1.23,2.24|0,-4.55,0|-0,180,0|m=rbxassetid://123819605270958|c=0.43,0.60,0.79
+Red|MeshPart|1.24,2.26,3.43|0,-4.35,0|-0,180,0|m=rbxassetid://79517455119950|c=0.77,0.16,0.11
+Base Dark Grey|MeshPart|3.90,8.09,4.91|0,-11,0|-0,180,0|m=rbxassetid://72120268281996|c=0.25,0.27,0.29
+Dark Grey|MeshPart|2.40,4.29,4.19|0,-4.82,0|-0,180,0|m=rbxassetid://87885549114225|c=0.25,0.27,0.29
+
+[Centurion Support Site]
+ROOT|920.63,4.47,-20.80
+bounds|Part|15,3.45,15|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/RailgunBoatBUILDING_Cylinder.052|MeshPart|23.58,3.07,26.89|0,-1.15,0|-0,180,0|m=rbxassetid://94470954353763|t=rbxassetid://122275510640899
+Meshes/RailgunBoatBUILDING_Cylinder.046|MeshPart|12.67,15.68,14.01|6.33,-7.29,-0|-0,180,0|m=rbxassetid://109485121063129|t=rbxassetid://86380207506345
+Meshes/RailgunBoatBUILDING_Cylinder.043|MeshPart|12.13,15.68,14.01|-6.07,-7.29,7|-0,180,0|m=rbxassetid://118395746242191|t=rbxassetid://94011158685153
+Meshes/RailgunBoatBUILDING_Cylinder.042|MeshPart|12.67,15.68,14.01|-6.33,-7.29,0|-0,180,0|m=rbxassetid://78391292784301|t=rbxassetid://94344025028005
+Meshes/RailgunBoatBUILDING_Cylinder.049|MeshPart|12.13,15.68,14.01|-6.07,-7.29,-7|-0,180,0|m=rbxassetid://133161420562801|t=rbxassetid://126870158910739
+Meshes/RailgunBoatBUILDING_Cylinder.044|MeshPart|12.13,15.68,14.01|6.07,-7.29,7|-0,180,0|m=rbxassetid://71041036412144|t=rbxassetid://86499610579311
+Meshes/RailgunBoatBUILDING_Cylinder.048|MeshPart|12.13,15.68,14.01|6.07,-7.29,-7|-0,180,0|m=rbxassetid://75014183018702|t=rbxassetid://92827657802322
+
+[Washing Machine]
+ROOT|985.01,0.90,30.40
+bounds|Part|0.90,1.80,0.80|0,0,0|-0,0,0|a=1|c=1,0,0
+Meshes/Washing Machine_WasherWhite|MeshPart|0.87,1.23,0.92|0,-0.28,0|-0,0,0|m=rbxassetid://135084663540619|c=0.79,0.80,0.82
+Meshes/Washing Machine_WasherBlack|MeshPart|0.47,0.67,0.02|0,-0.17,-0.43|-0,0,0|m=rbxassetid://139619982402069|c=0.11,0.16,0.21
+movement|Part|0.90,1.80,0.80|0,0,0|-0,0,0|a=1|c=1,0,0
+
+[Luxury Resort]
+ROOT|1018.15,7.80,-8.48
+bounds|Part|4,3.10,4|0,0,0|-0,0,0|a=1|c=1,0,0
+Yellow|MeshPart|0.95,0,0.95|0,-5.75,0.78|-0,180,0|m=rbxassetid://120517470674381|c=0.91,0.83,0.21
+Grey|MeshPart|10.59,3.24,6.52|0,-6.01,0|-0,180,0|m=rbxassetid://126537098454549|c=0.29,0.29,0.28
+Blue|MeshPart|6.28,1.75,3.95|0,-6.33,-0.05|-0,180,0|m=rbxassetid://79142390971876|c=0.30,0.38,0.41
+Base2|MeshPart|10.41,2.30,6.40|0,-6.31,0|-0,180,0|m=rbxassetid://93829398241990|c=0.55,0.52,0.47
+Black|MeshPart|2.80,1.34,4.51|0,-6.48,0|-0,180,0|m=rbxassetid://73559204276646|c=0,0,0
+Base|MeshPart|10.41,2.67,6.48|0,-6.47,0|-0,180,0|m=rbxassetid://78498255792106|c=0.73,0.70,0.63
+
+[Energy Node]
+ROOT|1007.65,2.62,-9.67
+bounds|Part|3.50,5.25,6|0,0,0|-0,0,0|a=1|c=1,0,0
+Black|MeshPart|5.45,4.68,2.29|0,-0.16,-0.01|-0,-90,0|m=rbxassetid://85698505702531|c=0,0,0
+Dark Grey|MeshPart|6.37,4.96,3.66|0,-0.15,0.12|-0,-90,0|m=rbxassetid://132329380286289|c=0.20,0.21,0.21
+Base|MeshPart|6.75,5.02,3.61|0,-0.12,0.53|-0,-90,0|m=rbxassetid://122772832957741|c=0.23,0.28,0.36
+Orange|MeshPart|6.86,5,3.82|0,-0.13,0.58|-0,-90,0|m=rbxassetid://83652019889636|c=0.63,0.47,0.32
+Neon Yellow|MeshPart|5,1.61,2.16|0,-1.06,-0.05|-0,-90,0|m=rbxassetid://90561523516648|c=0.86,0.88,0.53
+Neon Red|MeshPart|1.80,0.33,1.58|0,1.29,1|-0,-90,0|m=rbxassetid://131095425824756|c=1,0.68,0.58
+Light Grey|MeshPart|4.81,4.42,2.26|0,0.04,0.34|-0,-90,0|m=rbxassetid://129830564392201|c=0.46,0.47,0.47
+
+[Sentinel Training Center]
+ROOT|999.75,1.55,-12.40
+bounds|Part|5.20,3.10,10.40|0,0,0|-0,0,0|a=1|c=1,0,0
+Plane.039|MeshPart|10.58,2.70,5.59|0,-0.20,0|-0,-90,0|m=rbxassetid://90464318314871
+TraitPart.001|MeshPart|8.11,2.03,4.03|0,-0.38,0.04|-0,-90,0|m=rbxassetid://127652371391610|c=0.25,0.29,0.33
+
+[Hawk's Nest]
+ROOT|862.85,1.50,-83.75
+bounds|Part|7,3,7|0,0,0|-0,0,0|a=1|c=1,0,0
+MainTextured|MeshPart|7.38,1.20,7.38|0,-0.90,0|0,90,0|m=rbxassetid://120023180237986
+BuildingTraitCOLOR|MeshPart|5.20,1.06,5.14|0,-0.84,0.30|0,90,0|m=rbxassetid://74239053298846
+RadarRotating|MeshPart|0.42,0.52,0.30|0,-0.19,1.87|0,90,0|m=rbxassetid://126884778787569
+RadarRotator|MeshPart|0.01,1.59,0.02|0,-0.31,1.85|0,90,0|m=rbxassetid://104190725759322|a=1
+
+[Hillside Hangar]
+ROOT|872.68,1.02,-79.92
+Cube.365|MeshPart|2.33,1.91,5.92|0,0,0|-0,0,0|m=rbxassetid://107899572738189
+bounds|Part|6.70,3,5.80|3.68,0.53,-0.03|-0,90,0|a=1|c=1,0,0
+TraitColor.001|MeshPart|0,1.51,3.02|0.83,-0.15,0|-0,0,0|m=rbxassetid://125106614520092|c=0.27,0.40,0.27
+Plane.034|MeshPart|8.19,1.93,8.14|4.44,-0.05,-0.03|-0,-0,0|m=rbxassetid://122022868657601|c=0.20,0.56,0.25
+
+[Heavy Weapons Depot]
+ROOT|936.25,1.50,-77.10
+bounds|Part|7.90,3,6.10|0,0,0|-0,0,0|a=1|c=1,0,0
+Neon Yellow|MeshPart|6.54,1.23,3.50|0,-0.53,0.44|-0,0,0|m=rbxassetid://119699785638451|c=0.83,0.70,0.32
+Yellow|MeshPart|7.51,2.12,5.60|0,-0.37,0.10|-0,0,0|m=rbxassetid://110229055712170|c=0.60,0.48,0.33
+Base|MeshPart|7.33,2.34,4.14|0,-0.26,0.74|-0,0,0|m=rbxassetid://99340534927665|c=0.31,0.34,0.26
+Neon Red|MeshPart|3.27,0.05,0.03|0,1.25,1.67|-0,0,0|m=rbxassetid://75882828418656|c=1,0.40,0.31
+Grey|MeshPart|7.94,2.13,6.14|0,-0.44,0|-0,0,0|m=rbxassetid://111123804322930|c=0.44,0.41,0.38
+Black|MeshPart|7.67,1.39,5.86|0,-0.73,-0|-0,0,0|m=rbxassetid://120726431171914|c=0.20,0.20,0.20
+Red|MeshPart|0.31,0.30,0.08|0,0.59,-0.93|-0,0,0|m=rbxassetid://132497644629980|c=0.59,0,0
+Dark Grey|MeshPart|7.46,3.09,5.58|0,0.12,0.09|-0,0,0|m=rbxassetid://121712762885393|c=0.27,0.27,0.27
+
+[Deployment Site]
+ROOT|930.65,1.50,-86
+bounds|Part|7.80,3,5.90|0,0,0|-0,0,0|a=1|c=1,0,0
+Base|MeshPart|7.15,2.07,5.19|-0.01,-0.39,0.01|-0,0,0|m=rbxassetid://136276726152846|c=0.31,0.34,0.26
+Neon Yellow|MeshPart|1.87,0.17,0.08|-0.92,-0.32,-0.29|-0,0,0|m=rbxassetid://140171372166601|c=0.83,0.70,0.32
+Black|MeshPart|7.47,1.11,5.47|0,-0.85,0|-0,0,0|m=rbxassetid://116934247687173|c=0.20,0.20,0.20
+Dark Grey|MeshPart|7.09,2.46,5.13|-0.01,-0.22,0.01|-0,0,0|m=rbxassetid://87220061549019|c=0.27,0.27,0.27
+Grey|MeshPart|7.83,1.21,5.83|0,-0.90,0|-0,0,0|m=rbxassetid://104653440831114|c=0.44,0.41,0.38
+Yellow|MeshPart|7.02,2.09,5.06|-0.01,-0.36,0.01|-0,0,0|m=rbxassetid://80114485641404|c=0.60,0.48,0.33
+Red|MeshPart|0.33,0.33,0.01|-0.92,0.25,-0.33|-0,0,0|m=rbxassetid://91030098374909|c=0.59,0,0
+Neon Red|MeshPart|2.68,0.11,0.07|-0.92,1.06,0.04|-0,0,0|m=rbxassetid://98732105652934|c=1,0.40,0.31
+
+[Aviation Hub]
+ROOT|881.55,1.97,-86.02
+bounds|Part|8,3.95,12|0,0,0|-0,0,0|a=1|c=1,0,0
+Base2|MeshPart|8.26,3.64,12.48|0,-0.15,0|-0,180,0|m=rbxassetid://84957528637557|c=0.39,0.42,0.44
+Dark Grey|MeshPart|6.89,3.55,10.84|0,-0.09,0.03|-0,180,0|m=rbxassetid://132332630441507|c=0.30,0.30,0.30
+Yellow|MeshPart|7.40,3.55,11.63|0,-0.09,0|-0,180,0|m=rbxassetid://76880137839679|c=0.64,0.57,0.35
+Black|MeshPart|7.88,3.48,12.10|0,-0.12,0|-0,180,0|m=rbxassetid://71255840011233|c=0.31,0.31,0.32
+Base1|MeshPart|6.89,3.40,10.86|0,0.06,0.02|-0,180,0|m=rbxassetid://109018330660992|c=0.45,0.48,0.51
+
+[Assault Trooper HQ]
+ROOT|972.50,1.67,5.52
+bounds|Part|7,3.35,4|0,0,0|-0,0,0|a=1|c=1,0,0
+Cube.376|MeshPart|7.19,3.39,4.34|0,0.02,0|-0,0,0|m=rbxassetid://94697104139513
+
+[Orbital Solar Array]
+ROOT|978.60,1.80,-16.30
+bounds|Part|3,3.60,3|0,0,0|-0,0,0|a=1|c=1,0,0
+Blue|MeshPart|1.70,0.75,4.87|0,21.41,0|-0,-90,0|m=rbxassetid://131747722256623|c=0.43,0.60,0.79
+Dark Grey|MeshPart|3.03,1.37,4.93|0,21.19,0|-0,-90,0|m=rbxassetid://118548631345580|c=0.31,0.31,0.31
+Neon Yellow|MeshPart|0.52,0,0.52|0,20.63,0|-0,-90,0|m=rbxassetid://99093688951564|c=0.99,0.92,0.55
+White|MeshPart|2.93,1.18,2.93|0,21.27,0|-0,-90,0|m=rbxassetid://126531465190326
+rotationJoint|Part|2,1.55,2|0,21.42,0|-0,0,0|a=1|c=1,0,0
+
+[Northern Outpost]
+ROOT|895.05,2.50,-70.79
+bounds|Part|10,5,4.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Base1|MeshPart|5.19,4.03,9.94|0,-0.48,0|-0,-90,0|m=rbxassetid://121289288954233|c=0.91,0.91,0.93
+Blue|MeshPart|3.84,3.15,6.62|-0,-0.17,0|-0,-90,0|m=rbxassetid://125113563755579|c=0.31,0.47,0.59
+Dark Grey|MeshPart|4.41,3.07,7.63|0,-0.69,0|-0,-90,0|m=rbxassetid://136507514299311|c=0.31,0.31,0.31
+Base2|MeshPart|4.85,5.16,10.03|0,0.08,0|-0,-90,0|m=rbxassetid://129812910942350|c=0.33,0.33,0.36
+Light Grey|MeshPart|3.08,1.18,2.55|0,-0.05,0|-0,-90,0|m=rbxassetid://72955066340559|c=0.37,0.37,0.37
+Neon Red|MeshPart|1.21,2.20,7.60|0,1.23,0.22|-0,-90,0|m=rbxassetid://129566537118887|c=1,0.40,0.34
+Black|MeshPart|3.60,3.64,6.22|0,-0.68,0.17|-0,-90,0|m=rbxassetid://129073975302721|c=0.18,0.18,0.18
+
+[Objective Headquarters]
+ROOT|961.05,2.41,-42.46
+VeryDarkMetal.005|MeshPart|4.73,0.12,3.26|0,0,0|-0,0,0|m=rbxassetid://73166077378146|c=0.29,0.29,0.29
+VeryDarkMetal.003|MeshPart|8.67,1.31,7.51|5.55,-1.31,-1.67|-0,0,0|m=rbxassetid://91130157384270|c=0.49,0.49,0.49
+Cube.344|MeshPart|16.61,0.19,15.54|6.15,-2.31,-2.40|-0,0,0|m=rbxassetid://102813020892390|c=0.29,0.29,0.29
+Cube.346|MeshPart|16.44,0,15.39|6.15,-2.22,-2.40|-0,0,0|m=rbxassetid://126204550974268|c=0.49,0.46,0.38
+VeryDarkMetal.004|MeshPart|8.95,1.58,7.75|5.55,-1.31,-1.72|-0,0,0|m=rbxassetid://116055571242275|c=0.29,0.29,0.29
+Tower.002|MeshPart|8.40,5.89,5.40|5.37,0.64,2.62|-0,0,0|m=rbxassetid://119232599910284|c=0.60,0.56,0.46
+MainBaseDarkBeige.002|MeshPart|15.39,4.96,14.98|5.51,0.23,-2.31|-0,0,0|m=rbxassetid://79116479543050|c=0.29,0.29,0.29
+MetalLight.002|MeshPart|9.40,5.75,4.12|4.69,0.57,2.26|-0,0,0|m=rbxassetid://112271226350429|c=0.49,0.49,0.49
+PureDarkness.002|MeshPart|12.35,5.79,11.79|6.11,0.58,-2.65|-0,0,0|m=rbxassetid://126504274724287|c=0.08,0.08,0.08
+VeryDarkMetal.002|MeshPart|11.53,3.58,5.07|3.70,1.73,-0.69|-0,0,0|m=rbxassetid://88076816407191|c=0.29,0.29,0.29
+Silo.002|MeshPart|1.97,0.45,2.34|6.01,-0.91,-2.52|-0,0,0|m=rbxassetid://79620802430281|c=0.64,0.60,0.49
+NeonWhite.002|MeshPart|0.61,0.76,1.24|-1.27,0.40,0.61|-0,0,0|m=rbxassetid://135100552997087
+MainBasePlating1.002|MeshPart|15.12,4.48,14.46|5.73,-0.10,-2.78|-0,0,0|m=rbxassetid://138968670145593|c=0.42,0.39,0.32
+MainBaseBeigeLIGHT.002|MeshPart|8.35,4.29,5.57|5.37,1.31,-1.04|-0,0,0|m=rbxassetid://130421052842933|c=0.64,0.60,0.49
+NeonRed.005|MeshPart|0.69,0.27,1.39|-1.55,0.22,0.78|-0,0,0|m=rbxassetid://72425017006333|c=0.65,0,0.01
+MainBase1BEIGE.002|MeshPart|15.06,4.29,14.49|5.72,-0.16,-2.80|-0,0,0|m=rbxassetid://100962562403075|c=0.49,0.46,0.38
+bounds|Part|8.20,3,14.30|6.05,-0.91,-2.40|-0,0,0|a=1|c=1,0,0
+
+[Robotics Lab]
+ROOT|865.72,1.24,-198.73
+Darker Grey|MeshPart|7.90,2.20,5.84|0,0,0|-0,0,0|m=rbxassetid://95597014108724|c=0.18,0.19,0.22
+Black|MeshPart|8.87,3.16,7.41|0,0.37,-0.46|-0,0,0|m=rbxassetid://134820758263802|c=0.18,0.18,0.18
+Neon|MeshPart|6.36,1.34,2.13|0,-0.40,-1.85|-0,0,0|m=rbxassetid://75343840533099|c=0.65,0.25,0.25
+Red|MeshPart|7.49,3.19,6.14|0,0.46,-1.01|-0,0,0|m=rbxassetid://73392817577423|c=0.65,0.25,0.25
+Dark Grey|MeshPart|9.31,3.32,8.33|0,0.45,0|-0,0,0|m=rbxassetid://134334897961922|c=0.23,0.24,0.28
+Base|MeshPart|9.55,3.39,8.18|0,0.45,-0.01|-0,0,0|m=rbxassetid://104499111981705
+bounds|Part|9,3.55,7|0,0.53,0.63|-0,0,0|a=1|c=1,0,0
+
+[Reinforced Bunker]
+ROOT|885.95,1.26,-217.35
+Main|MeshPart|3.54,2.52,5.77|0,0,0|-0,0,0|m=rbxassetid://113737565575417
+TraitColor|MeshPart|1.29,0.83,0.37|0,-0.56,-0.34|-0,0,0|m=rbxassetid://137888394890471|c=0.29,0.29,0.29
+bounds|Part|3,3,3|0,0.24,1.10|-0,0,0|a=1|c=1,0,0
+
+[Mercenary Bureau]
+ROOT|1004.08,4.11,-81.06
+Neon White Rig|MeshPart|1.57,0.72,0|0,0,0|-0,0,0|m=rbxassetid://125109444391234
+Neon Blue Rig|MeshPart|1.49,0.62,0|0,-0.01,0|-0,0,0|m=rbxassetid://115860230532250|c=0.38,0.58,0.82
+rotationJoint|Part|0.25,1,0.25|0.06,-0.61,0.96|-0,-90,0
+bounds|Part|9,6,5|0.75,-1.11,1.45|-0,0,0|a=1|c=1,0,0
+Neon Blue|MeshPart|6.21,3.99,4.44|-0.13,-1.68,1.61|-0,0,0|m=rbxassetid://79870052163805|c=0.38,0.58,0.82
+Black|MeshPart|10.07,5.10,5.60|0.75,-1.56,1.45|-0,0,0|m=rbxassetid://74868652532916|c=0.16,0.16,0.16
+Neon Orange|MeshPart|6.06,1.19,2.11|0.18,-0.92,1.99|-0,0,0|m=rbxassetid://83969576312940|c=0.65,0.44,0.19
+Trait Base|MeshPart|9.66,6.39,5.23|0.73,-0.91,1.45|-0,0,0|m=rbxassetid://85975907647176|c=0.53,0.53,0.53
+White|MeshPart|6.83,3.22,3.56|0.27,-1.74,1.74|-0,0,0|m=rbxassetid://85100979677136|c=0.91,0.91,0.91
+Orange|MeshPart|7.23,3.26,4.32|0.17,-2.07,1.59|-0,0,0|m=rbxassetid://133504087943740|c=0.91,0.58,0.40
+Dark Grey|MeshPart|8.68,5.87,5.06|0.58,-1.17,1.55|-0,0,0|m=rbxassetid://83251002939171|c=0.26,0.26,0.26
+
+[Science Institute]
+ROOT|997.46,2,-96.12
+bounds|Part|9,4,9|0,0,0|-0,0,0|a=1|c=1,0,0
+Red|MeshPart|7.45,0.68,2.25|0,-1.57,-2.43|-0,0,0|m=rbxassetid://79529343628701|c=0.59,0.32,0.31
+TraitBase|MeshPart|8.42,3.36,7.91|0,-0.32,-0.01|-0,0,0|m=rbxassetid://92864897805765|c=0.73,0.73,0.73
+Orange|MeshPart|5.47,2.01,7.36|0,-0.87,0.27|-0,0,0|m=rbxassetid://139201679464544|c=0.76,0.45,0
+Grey|MeshPart|8.65,1.67,8.61|0,-1.17,0|-0,0,0|m=rbxassetid://113770027350798|c=0.30,0.30,0.30
+Black|MeshPart|3.65,2.72,7.12|0,-0.39,0.19|-0,0,0|m=rbxassetid://101204618298452|c=0,0,0
+Dark Grey|MeshPart|7.96,3.24,7.87|0,-0.38,-0.09|-0,0,0|m=rbxassetid://94290885694508|c=0.19,0.19,0.19
+Blue|MeshPart|4.70,1.40,1.28|0,0.06,1.17|-0,0,0|m=rbxassetid://109245156838789|c=0.35,0.46,0.65
+
+[Flamethrower Workshop]
+ROOT|889.05,1.50,-285.80
+bounds|Part|5,3,5.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Light Grey|MeshPart|5.06,3.45,5.84|-0.01,0.23,0.01|-0,0,0|m=rbxassetid://131740454465793|c=0.40,0.40,0.40
+Dark Grey|MeshPart|5.06,3.44,5.96|0.04,0.22,0|-0,0,0|m=rbxassetid://114918028051561|c=0.24,0.24,0.24
+Black|MeshPart|3.99,1.73,2.55|0.21,0.23,1.42|-0,0,0|m=rbxassetid://100048257808057|c=0.19,0.19,0.19
+Red|MeshPart|4.89,3.11,5.24|-0.13,0.05,0.05|-0,0,0|m=rbxassetid://113194905737279|c=0.40,0.17,0.18
+
+[Tribute to Honor]
+ROOT|902.39,3.30,-284
+bounds|Part|3.50,6.60,3.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Chest.082|MeshPart|5.15,5.22,5.76|-0.01,-0.69,-0.10|-0,180,0|m=rbxassetid://106474664797803|c=0.36,0.36,0.41
+Plane.013|MeshPart|6.64,5.82,5.25|0.60,0.52,-0.71|-0,180,0|m=rbxassetid://121982309372011|c=0.36,0.36,0.41
+
+[Ranger Outpost]
+ROOT|898.88,0.84,-315.63
+Cube.031|MeshPart|3.71,1.68,4.61|0,0,0|-0,0,0|m=rbxassetid://82977241030108|t=rbxassetid://103067155078949
+Cube.006|MeshPart|4.97,1.26,5.63|-0.08,-0.19,0.13|-0,0,0|m=rbxassetid://95235814479845|t=rbxassetid://103067155078949
+bounds|Part|4,1.80,4|-0.08,0.06,0.13|-0,180,0|a=1|c=1,0,0
+
+[Planetary Headquarters]
+ROOT|914.80,1.50,-316.35
+bounds|Part|13,3,6.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Black|MeshPart|12.39,2.32,6.08|0,-0.21,0|-0,180,0|m=rbxassetid://110803118973907|c=0.13,0.13,0.13
+Base|MeshPart|10.44,2.47,3.80|0,-0.14,-0.08|-0,180,0|m=rbxassetid://100247006603434|c=0.32,0.34,0.32
+Floor2|MeshPart|13.12,0.16,6.96|0,-1.42,0|-0,180,0|m=rbxassetid://140114037493579|c=0.47,0.44,0.40
+Floor1|MeshPart|12.93,0.08,6.67|0,-1.40,0|-0,180,0|m=rbxassetid://103670230721101|c=0.47,0.44,0.39
+Red|MeshPart|9.60,0.98,1|0,0.38,0|-0,180,0|m=rbxassetid://76235345800959|c=0.57,0.31,0.24
+Light Grey|MeshPart|10.26,2.17,6.17|0,-0.29,0|-0,180,0|m=rbxassetid://77616900957638|c=0.32,0.32,0.32
+Glass|MeshPart|5.66,0.29,1.77|0,0.36,0|-0,180,0|m=rbxassetid://111555970054952|c=0.24,0.44,0.68
+Dark Grey|MeshPart|10.57,2.35,6.17|0,-0.20,0|-0,180,0|m=rbxassetid://78219041754391|c=0.22,0.22,0.22
+Yellow|MeshPart|11.36,2.17,5.58|0,-0.29,0|-0,180,0|m=rbxassetid://79181516742456|c=0.53,0.50,0.28
+
+[Hazard Buoy]
+ROOT|912.30,9.57,-263.29
+bounds|Part|3,5.25,3|0,0,0|-0,0,0|a=1|c=1,0,0
+Cylinder.055|MeshPart|2.90,5.22,2.90|0,-6.97,0|-0,0,0|m=rbxassetid://97631234032035
+
+[Automated Factory]
+ROOT|921.09,1.36,-262.63
+Neon|MeshPart|5.52,2.21,3.35|0,0,0|-0,0,0|m=rbxassetid://127938127419040|c=1,0.75,0.25
+RootPart|Part|3.21,3.21,1.60|2.09,-1.31,-1.09|-0,0,0|a=1
+TraitBase|MeshPart|8.43,2.88,6.81|1.30,0.06,-0.57|-0,0,0|m=rbxassetid://125613548413241|t=rbxassetid://84441585487507|c=0.25,0.30,0.38
+bounds|Part|6,4.60,8|1.10,0.94,-0.57|-0,90,0|a=1|c=1,0,0
+
+[Sentinel Citadel]
+ROOT|920.67,16.82,-270.19
+bounds|Part|10,6.55,10|0,0,0|-0,0,0|a=1|c=1,0,0
+Foundation Base2|MeshPart|10.92,11.93,8.23|0,-15.06,1.17|-0,0,0|m=rbxassetid://140226930616637|c=0.22,0.24,0.30
+Base2|MeshPart|11.07,3.94,11.28|0,-7.12,0|-0,0,0|m=rbxassetid://130847613064071|c=0.22,0.24,0.30
+Foundation Base|MeshPart|1.92,3.18,0.34|0,-10.68,5.47|-0,0,0|m=rbxassetid://115563755233868|c=0.31,0.33,0.41
+Neon White|MeshPart|9.49,2.90,7.43|0,-6.92,1.50|-0,0,0|m=rbxassetid://123992357130757|c=0.69,0.68,0.69
+Orange|MeshPart|10.31,0.70,10.34|0,-8.37,-0.46|-0,0,0|m=rbxassetid://87628526029548|c=0.80,0.47,0.31
+Ocean Fortress|MeshPart|11.07,4.24,11.28|0,-7.04,0|-0,0,0|m=rbxassetid://125952439452271|c=0.31,0.33,0.41
+Dark Grey|MeshPart|10.71,3.98,7.81|0,-6.96,1.40|-0,0,0|m=rbxassetid://78732322951526|c=0.19,0.19,0.19
+
+[Offshore Crane]
+ROOT|881.06,4.85,-266.12
+TraitBase|MeshPart|4.77,4.75,5.32|0,0,0|-0,0,0|m=rbxassetid://138358585252143|c=0.77,0.69,0.64
+RootPart|Part|3,3,1.50|0,-1.35,0.27|-0,0,0|a=1
+Foundation|MeshPart|4.08,9.07,4.08|0,-6.91,0.27|-0,0,0|m=rbxassetid://89135742615093|c=0.31,0.31,0.32
+bounds|Part|5,3.95,5|0,3.01,0.27|-0,0,0|a=1|c=1,0,0
+
+[Marauder Staging Ground]
+ROOT|939.20,1.50,-248.64
+bounds|Part|8.50,3,7|0,0,0|-0,0,0|a=1|c=1,0,0
+Base|MeshPart|8.40,1.96,6.92|0,-0.52,0|-0,0,0|m=rbxassetid://96022883749135|c=0.29,0.31,0.28
+Neon Blue|MeshPart|7.03,1.86,4.36|0,-0.31,0|-0,0,0|m=rbxassetid://110857380782764|c=0.44,0.82,0.85
+Black|MeshPart|8.02,1.97,6.54|0,-0.44,0|-0,0,0|m=rbxassetid://73676492974450|c=0.16,0.16,0.16
+Neon Yellow|MeshPart|7.01,2.13,4.83|0,0.11,0.34|-0,0,0|m=rbxassetid://104947525806398|c=1,0.91,0.54
+Tan|MeshPart|7.89,2.22,6.41|0,-0.31,0|-0,0,0|m=rbxassetid://113456083303666|c=0.39,0.37,0.33
+Base2|MeshPart|7.22,2.44,4.63|0,-0.21,-0.18|-0,0,0|m=rbxassetid://79131378790962|c=0.35,0.37,0.33
+Dark Grey|MeshPart|7.40,3.23,5.65|0,0.19,0.26|-0,0,0|m=rbxassetid://78719002797003|c=0.24,0.24,0.24
+
+[Headhunter Barracks]
+ROOT|955.35,1.50,-251.74
+bounds|Part|5.50,3,5.50|0,0,0|-0,0,0|a=1|c=1,0,0
+Dark Grey|MeshPart|5.01,1.73,4.74|0,-0.60,0.17|-0,0,0|m=rbxassetid://78801992725590|c=0.19,0.19,0.19
+Black|MeshPart|5.39,1.68,5.58|0,-0.62,0|-0,0,0|m=rbxassetid://102989143838576|c=0.10,0.10,0.10
+Grey|MeshPart|4.32,1.54,3.25|0,-0.69,0.17|-0,0,0|m=rbxassetid://96291092069273|c=0.32,0.32,0.32
+Base1|MeshPart|4.46,1.69,3.70|0,-0.62,-0|-0,0,0|m=rbxassetid://122292874665937|c=0.30,0.32,0.30
+Base2|MeshPart|5.52,1.69,5.70|0,-0.65,0|-0,0,0|m=rbxassetid://104992879998146|c=0.25,0.27,0.25
+Tan|MeshPart|5.32,1.68,5.50|0,-0.62,0|-0,0,0|m=rbxassetid://85410104623749|c=0.50,0.47,0.42
+Neon Yellow|MeshPart|4.80,1.56,3.43|0,-0.64,0.49|-0,0,0|m=rbxassetid://139517664378691|c=1,0.91,0.54
+
+[Behehemoth Fortress]
+ROOT|960,2.90,-268.94
+T2Base|MeshPart|1.43,1.04,1.80|0,0,0|-0,0,0|m=rbxassetid://75610615562239|c=0.35,0.35,0.35
+2|MeshPart|0.99,0.89,1.57|-0.08,0.06,0|-0,0,0|m=rbxassetid://129827939987857|c=0.49,0.49,0.49
+Gun2|MeshPart|3.26,1,1.17|1.56,0.28,0|-0,0,0|m=rbxassetid://119995759488941|c=0.25,0.25,0.25
+rotationJoint2|Part|0.50,0.50,0.50|0.15,-0.30,0|-0,0,0|a=1
+Gun1|MeshPart|1.80,0.86,0.84|-0.39,2.19,0|-0,0,0|m=rbxassetid://89011836167138|c=0.25,0.25,0.25
+1|MeshPart|0.75,0.64,1.13|-1.27,1.95,0|-0,0,0|m=rbxassetid://73747542129602|c=0.49,0.49,0.49
+T1Base|MeshPart|1.02,0.75,1.29|-1.19,1.91,0|-0,0,0|m=rbxassetid://118754341240504|c=0.35,0.35,0.35
+rotationJoint1|Part|0.50,0.50,0.50|-1.10,1.75,0|-0,0,0|a=1
+bounds|Part|5.90,8.80,9.65|-2.59,1.50,-0|-0,-90,0|a=1|c=1,0,0
+Metal|MeshPart|3.58,5.28,6.42|-3.47,-0.18,0|-0,0,0|m=rbxassetid://125667796208057|c=0.27,0.27,0.27
+Main|MeshPart|9.44,6.53,6.49|-2.61,0.42,0|-0,0,0|m=rbxassetid://95781572277476|c=0.44,0.39,0.31
+Top|MeshPart|1.92,3.18,3.08|-3.32,4.13,0.21|-0,0,0|m=rbxassetid://83294057666761|c=0.36,0.36,0.41
+Circle|MeshPart|1.25,0.79,1.25|-2.62,4.30,0|-0,0,0|m=rbxassetid://78333141054570|c=0.91,0.91,0.93
+Plating|MeshPart|8.89,6.27,5.45|-2.57,0.31,0|-0,0,0|m=rbxassetid://100202093764524|c=0.35,0.32,0.26
+Trim|MeshPart|9.62,6.81,5.84|-2.61,0.50,0|-0,0,0|m=rbxassetid://97390409969616|c=0.30,0.27,0.21
+Hat|MeshPart|2.18,1.22,2.78|-1.71,2.60,2.24|-32.86,-80.09,-39.08|m=rbxassetid://134632594599751|c=0.14,0.14,0.14
+Hat2|MeshPart|3.60,1.74,4.21|-1.64,2.57,2.25|-32.86,-80.09,-39.08|m=rbxassetid://95037202695934
+
