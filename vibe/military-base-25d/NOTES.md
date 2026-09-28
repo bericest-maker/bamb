@@ -83,6 +83,15 @@
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
+### Stacking & crates (v8.4)
+- [x] **Buildings stack — unlimited height** (v8.4) — aim at a building you already own and the next one lands on top of it. `stackTopAt()` = the level a new building lands on, `fitsAt/findFreeSpot/ghostSlot/placeBuilding/placeBuildingRaw` take that `lvl`, `b.lvl` is saved, `STACK_UP` (24px) lifts each floor in the renderer (y-sort, then level). `buildingAt()` is lift aware so clicking picks the floor you aimed at. Every floor works on its own (4 barracks 4 high = 4 recruits).
+- [x] **Ground first** — `findFreeSpot()` only climbs a pile when there is no free ground left, so bot bases and admin fills still spread out across the island.
+- [x] **The ghost shows the floor** — dashed drop-legs + a LEVEL n label while you hold an item over a pile.
+- [x] **Backpack stacks** (v8.4) — one card per item with an ×N badge; `giveItem/takeItem/invCount/invFind` merge and split stacks, `mergeInventory()` folds old saves.
+- [x] **Bulk crate opening** (v8.4) — click a crate stack → choose 1 / 5 / 10 / ALL (`askOpenCount`); `openCrateModal(ct,n)` rolls them all and lists every win, rarest first, with ×counts and rarity colours.
+- [x] **The ROBUX SHOP works** (v8.4) — it called a `renderRobux()` that did not exist; it now sells Standard / Elite / Premium crates for cash (1 or 10 at a time).
+- [x] **Admin.pile(type,n)** — stack n buildings into a tower (quick way to see the feature).
+
 ---
 
 ## 📁 FOLDER LAYOUT (v7)

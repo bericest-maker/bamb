@@ -16,9 +16,9 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Check | Result |
 |---|---|
-| Top-level functions without description (234) | ✅ none |
+| Top-level functions without description (242) | ✅ none |
 | Nested helpers without description (11) | ✅ none |
-| Admin methods without description (28) | ✅ none |
+| Admin methods without description (29) | ✅ none |
 | Event bindings without description (35) | ✅ none |
 | Files without description (85) | ✅ none |
 | Buildings/units without a sprite (155) | ✅ none |
@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-27 | **v8.4: STACKS & CRATES.** 🧱 **BUILDINGS STACK — UNLIMITED HEIGHT.** Point at a building you already own and the next one lands ON TOP of it instead of being refused: `stackTopAt()` works out how high the pile under the footprint is, `fitsAt()/findFreeSpot()/ghostSlot()/placeBuilding()/placeBuildingRaw()` all take that `lvl`, and `b.lvl` is stored on the building. Level 0 is the ground, every floor above it is lifted `STACK_UP` (24px) and drawn on top of the one below (y-sort, then level); the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are about to build. `buildingAt()` is lift aware, so clicking a stack picks the crate you actually aimed at, and every floor works on its own (4 barracks 4 high = 4 recruits). Bots and mass fills still spread out first: `findFreeSpot()` only climbs a pile when there is no free ground left. Old saves whose footprints now overlap are stacked instead of being returned to the backpack. Admin: `Admin.pile(type,n)` builds a tower n high. 📦 **THE BACKPACK STACKS.** One card per item with an ×N badge: `giveItem/takeItem/invCount/invFind` merge and split stacks, `mergeInventory()` folds old per-item saves, and building cards place one at a time. 🎁 **BULK CRATE OPENING.** Clicking a crate stack asks "open how many?" (1 / 5 / 10 / ALL — `askOpenCount()`), then `openCrateModal(ct,n)` rolls them all and lists every win, rarest first, with ×counts and rarity colours. 💎 **THE ROBUX SHOP WORKS** — it used to call a `renderRobux()` that did not exist, so the tab threw; it now sells Standard / Elite / Premium crates for cash (1 or 10 at a time). 217 smoke assertions. |
 | 2026-09-27 | **v8.3: HARBOUR UPDATE.** ⚓ **YOUR WATER YARD** — a buildable 832×224px strip of open sea BEHIND your island (`WATER_YARD`, drawn as a blue grid + ⚓ label, on the minimap too). Every dock (7 naval docks), the Offshore Oil Rig and the Naval Beacon are `BUILD[].water` and can ONLY be placed there; land buildings are refused with a reason. Ships now launch straight into it. Placement is zone aware throughout: `plotOrigin/plotToWorld/worldToPlot/plotRectPath/fitsAt/findFreeSpot/ghostSlot/placeBuilding` take a `zone` (‘land’ or ‘water’) and `b.zone` is stored on the building. ⚓ **4 WATER CAPTURE POINTS** — RIG NW/NE/SE/SW at r 2100 in the ocean gaps; only ships can reach them, a held rig garrisons gunboats (`spawnGarrison`), and each one you hold gives +10% production like an outpost. They are drawn as offshore platforms on stilts. ⚓ **BUILD GRID TWICE AS FINE**: SLOT 16→8, PLOT 104×72 cells (island unchanged at 832×576px), GRID_K 8, and save migration now converts from ANY older cell size (`k = oldGrid/SLOT`). ⚓ **BUILDINGS 3× SMALLER**: `BLD_K` 1.3→1.3/3 — a Solar panel is 24px wide instead of 64px, so several times more of them fit on an island. ⚓ **HOVER A TROOP FOR ITS STATS**: `unitAt()` (spatial hash) + `unitTipHTML()` show hp, damage, DPS, range, speed, troop-cap size, armour, detect, splash, aura, bounty, damage modifiers and the current order; `hoverUnit()` re-tests ~12×/s and rebuilds the card ~2.5×/s so it stays free with 1000 units. ⚓ **HOLD Q TO PAUSE**: `holdQ` zeroes the game clock while the camera, hover cards and panels keep running, with a ⏸ PAUSED badge on screen. |
 | 2026-09-27 | **v8: PERFORMANCE & PEACE UPDATE.** ⚡ **POTATO MODE** — ⚙ SETTINGS gained two rows, UNIT GRAPHICS and BUILDING GRAPHICS, each `Normal` or `Potato`. Blocks (v8.2: the blobs became plain rectangles) replaces every troop with a rectangle EXACTLY its the size of its sprite and every building with its footprint rectangle — in the colour of its owner, no shadow/outline (js/render/05-blocks.js); the sprite blit is skipped entirely, the single biggest frame-time win in the game (smoke test: 216 sprite draws per 24 frames → 0). Old `Potato` saves migrate to `Blocks` in init(). ⚡ **TREES & DECOR** toggle — hides trees, rocks, grass patches and the floating crystals (350 tree draws/frame → 0). ⚡ **EFFECTS High/Low** (was GRAPHICS MODE) now also drops the ocean glints, the lane glow and halves the coastline detail (72 → 28 segments). ⚡ **BUILDINGS ARE PERMANENT** — `damageBuilding` returns early while ⚙ INDESTRUCTIBLE BUILDINGS is on (default), so nothing can destroy a building and right-click no longer sells your own; switching it off restores destructible bases and the 50% refund. ⚡ **THE WORLD IS TWICE AS BIG**: WORLD 4800→9600, RING 1700→2600, outposts 760→1150, crystals 900→1400, city r 330→460, lanes 955/2260→1580/3400. Islands sit far apart (1990px between neighbours) with wide ocean for ships. Map load stayed cheap: the land test rejects most of the 57 600 walk cells with a bounding box (PLOT_BB/CITY_BB/ILET_BB/BRIDGE_BB) before any trigonometry — verified identical to the un-optimised test over 319 225 samples. ⚡ **NO MORE DRIVE-BY SHOOTING**: units only engage what is CLOSE — `aggroReach()` gives marching units `min(range+60, AGGRO.march 210)` while holders (garrisons, base defenders, idle troops) keep `range+220`. Artillery used to shell your base from 430px away while walking past. ⚡ **IDLE TROOPS MARCH ON THE MIDDLE**: with no order your army heads for the CITY (then the nearest point you do not own) and fights what it meets en route, instead of beelining for somebody’s base. ⚡ **ENEMY BASES**: their build-grid pads, dashed outlines and name labels are hidden — you see their buildings and their troops. ⚙ ENEMY BASE GRIDS brings the labels back. ⚡ **ZOOM OUT TO THE WHOLE MAP**: the zoom-out limit is no longer a fixed 0.5× but `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))`, recomputed on resize, so at full zoom-out the entire 9600px world fits your window; `clampCam()` then locks the camera to the map centre so no corner is cut off. |
 | 2026-09-27 | **v7: NAVAL UPDATE + folder reorganisation + money capacity.** `js/` is no longer one flat list of 24 files — it is now **12 folders**: `core` (helpers/state/save/audio/camera/fx/loop/init), `data` (world, factions, classes, units, unit-helpers, buildings, unit-buildings, rarities + the two new unit/building tables), `maps` (island map + **02-sea.js**: the SEA grid, shipping lanes, ship navigation), `textures` (sprite library: base sprites, unit templates, naval ships, new units, buildings), `systems` (power, economy, waves, captures), `buildings` (placement, **production: money capacity + training + wave-defense garrison**, bots, turrets, support), `units` (spawn, movement, spatial grid, AI, combat), `rewards` (crate tables, codes, rewards data + UI), `achievements` (data, check loop, 🏆 panel), `render` (frame, units, ground, minimap), `ui` (core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes), `admin`. Load order is still index.html; nothing was lost, several 500-line files were split by concern. ⚡ **Naval line:** 7 ships (Speedboat → Carrier; Submarine + Zumwalt are STEALTH) with 7 dock buildings and a ⚓ NAVAL shop tab. ⚡ **Water lanes:** a ring of shipping lanes around the CITY (r 955, squeezed between the outpost islets and the plot lobes), 8 radial lanes out to the open sea and an outer loop (r 2260) — drawn as buoy lines, used by ship pathfinding (SEA grid + sea A*, coastal approach to shell land targets). ⚡ **Money Capacity:** every money building stores what it earns up to its Capacity (≈10 min of production) and pays out every 30s — or the instant you click it (new HUD row shows stored/cap). The **Bank now pays 5% of STORED cash**. 9 new production buildings (Advanced Solar → Automated Factory). ⚡ **Wave-defense garrisons:** while a raid is incoming (or hostiles are within 1300px of your plot) every unit building trains FREE defenders of its own type up to its MaxCap (24 slots base-wide); they stand down when the base is safe. ⚡ **StructurePower** split from army power (leaderboard shows both). ⚡ **Kill bounties** scale with the victim (wave HP buff × tier). ⚡ Unit **footprints** now matter when spawning (recruits look for a free spot their own size). ⚡ New units: Light Tank, Mantis, TIGR, Swarm Drone, PZH 2000, Leopard 2A5, ICBM Launcher, **Centurion (UNIQUE)**, F-15, F-35, SU-47, KA-52, **Officer** (support: +25% damage aura) + 20 new buildings incl. Submarine Cavern, Centurion Support Site and Airship Docks. ⚡ Your own stealth units (incl. submarines) are no longer invisible to you. ⚡ New 📜 PATCHES panel (left rail) + admin buttons (EMPTY ALL SAFES / MUSTER GARRISON / RAID ALERT). |
@@ -58,20 +59,20 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 151.4 KB | 1980 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 37.0 KB | 451 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 157.8 KB | 2026 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 38.5 KB | 460 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 64.3 KB | 666 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
-| `military-base-25d/index.html` | 18.1 KB | 377 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
+| `military-base-25d/gen_info.py` | 66.7 KB | 680 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/index.html` | 19.5 KB | 399 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
-| `military-base-25d/smoke.js` | 39.4 KB | 627 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
-| `military-base-25d/style.css` | 17.9 KB | 277 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
-| `military-base-25d/test-stubs.js` | 3.2 KB | 77 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
+| `military-base-25d/smoke.js` | 44.4 KB | 696 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
+| `military-base-25d/style.css` | 19.0 KB | 291 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
+| `military-base-25d/test-stubs.js` | 3.3 KB | 78 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
-| `military-base-25d/js/achievements/02-achievements.js` | 730 B | 17 | achievement check loop: unlock once → pay out + toast |
+| `military-base-25d/js/achievements/02-achievements.js` | 710 B | 17 | achievement check loop: unlock once → pay out + toast |
 | `military-base-25d/js/achievements/03-achievements-ui.js` | 1.1 KB | 20 | the 🏆 TROPHIES panel with progress bars |
-| `military-base-25d/js/admin/01-admin.js` | 14.0 KB | 279 | admin panel (window.Admin) |
-| `military-base-25d/js/buildings/01-placement.js` | 3.6 KB | 73 | build grid: fits / free spot / place / sell |
+| `military-base-25d/js/admin/01-admin.js` | 14.9 KB | 291 | admin panel (window.Admin) |
+| `military-base-25d/js/buildings/01-placement.js` | 5.1 KB | 95 | build grid: fits / free spot / place / sell |
 | `military-base-25d/js/buildings/02-production.js` | 5.2 KB | 113 | what buildings DO: money capacity, unit training, wave-defense garrisons |
 | `military-base-25d/js/buildings/03-bots.js` | 2.1 KB | 54 | bot bases: presets, production, army cap, rebuild |
 | `military-base-25d/js/buildings/04-turrets.js` | 1.6 KB | 35 | defence turrets (Pillbox / SAM Site / Fortress Cannon) |
@@ -82,9 +83,9 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/core/04-audio.js` | 3.2 KB | 76 | audio: WebAudio sfx + music |
 | `military-base-25d/js/core/05-camera.js` | 4.4 KB | 74 | canvas, camera, mouse, ground texture |
 | `military-base-25d/js/core/06-fx.js` | 1.2 KB | 16 | fx: tracers, floats, booms, particles |
-| `military-base-25d/js/core/07-loop.js` | 5.4 KB | 123 | main loop: frame + update + HUD, wheel zoom, test hook |
-| `military-base-25d/js/core/08-init.js` | 3.4 KB | 66 | init: load save → migrate → start |
-| `military-base-25d/js/data/01-world.js` | 7.8 KB | 84 | world size, radial map layout (like ref-map-original.png), bot bases, bot presets |
+| `military-base-25d/js/core/07-loop.js` | 5.5 KB | 124 | main loop: frame + update + HUD, wheel zoom, test hook |
+| `military-base-25d/js/core/08-init.js` | 3.7 KB | 70 | init: load save → migrate → start |
+| `military-base-25d/js/data/01-world.js` | 8.0 KB | 85 | world size, radial map layout (like ref-map-original.png), bot bases, bot presets |
 | `military-base-25d/js/data/02-factions.js` | 1.1 KB | 20 | factions: colors, names, palettes |
 | `military-base-25d/js/data/03-classes.js` | 1.4 KB | 23 | unit classes (light/armored/air/stealth) + their colours/labels |
 | `military-base-25d/js/data/04-units.js` | 6.8 KB | 45 | every unit: hp, dmg, rate, range, speed, size, power, reward, damage modifiers + boss |
@@ -98,7 +99,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/data/12-buildings-expansion.js` | 3.0 KB | 40 | one building per new unit (naval line + heavies/specialists/Centurion) |
 | `military-base-25d/js/maps/01-map.js` | 8.9 KB | 190 | island map: shapes, walkable test, A*, city flow field |
 | `military-base-25d/js/maps/02-sea.js` | 3.4 KB | 70 | water lanes: the SEA grid, shipping lanes, ship navigation |
-| `military-base-25d/js/render/01-render.js` | 6.8 KB | 155 | the frame: y-sorted drawables, fx, selection, placement ghost |
+| `military-base-25d/js/render/01-render.js` | 7.8 KB | 168 | the frame: y-sorted drawables, fx, selection, placement ghost |
 | `military-base-25d/js/render/02-render-units.js` | 4.3 KB | 98 | unit sprites, the boss worm, capture-point flags |
 | `military-base-25d/js/render/03-render-ground.js` | 11.8 KB | 203 | ocean, islands, bridges, trees, crystals, grids, capture pads |
 | `military-base-25d/js/render/04-minimap.js` | 2.8 KB | 58 | minimap: islands, plots, points, units, camera rect |
@@ -106,7 +107,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/rewards/01-crates-data.js` | 893 B | 12 | crate drop tables, prices, weekly featured item |
 | `military-base-25d/js/rewards/02-codes.js` | 1.0 KB | 22 | redeemable codes (building / crate / cash) |
 | `military-base-25d/js/rewards/03-rewards-data.js` | 1.1 KB | 10 | the checklist of one-time rewards (tutorial, kills, boss, playtime) |
-| `military-base-25d/js/rewards/04-crates.js` | 2.2 KB | 64 | crate rolls, pity (80), the crate-opening modal |
+| `military-base-25d/js/rewards/04-crates.js` | 5.9 KB | 130 | crate rolls, pity (80), BACKPACK STACKS + bulk opening (v8.4) |
 | `military-base-25d/js/rewards/05-rewards-ui.js` | 987 B | 29 | the REWARDS panel (claim buttons) |
 | `military-base-25d/js/systems/01-power.js` | 1.2 KB | 30 | military power: structure power + army power (leaderboard / unlocks) |
 | `military-base-25d/js/systems/02-economy.js` | 2.0 KB | 47 | income, bonuses, troop cap, bank interest |
@@ -118,15 +119,15 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/textures/04-sprites-new-units.js` | 3.4 KB | 52 | sprites for the expansion units (heavies, specialists, Centurion) |
 | `military-base-25d/js/textures/05-sprites-buildings.js` | 25.5 KB | 357 | sprites for new production/special/decor buildings + generated unit buildings |
 | `military-base-25d/js/ui/01-ui-core.js` | 2.3 KB | 54 | toasts + panel show/hide + the top-bar / rail / HUD buttons |
-| `military-base-25d/js/ui/02-shop.js` | 2.7 KB | 59 | the SHOP: tabs (production / units / special / decor) + class sub-tabs |
+| `military-base-25d/js/ui/02-shop.js` | 4.7 KB | 97 | the SHOP: tabs (production / units / special / decor) + class sub-tabs + the CRATE (robux) shop |
 | `military-base-25d/js/ui/03-tooltips.js` | 4.7 KB | 73 | hover stat tooltips (cost, size, damage modifiers, turrets…) |
-| `military-base-25d/js/ui/04-backpack.js` | 2.3 KB | 55 | the BACKPACK: place buildings, open crates |
+| `military-base-25d/js/ui/04-backpack.js` | 2.6 KB | 57 | the BACKPACK: place buildings, open crates |
 | `military-base-25d/js/ui/05-leaderboard.js` | 1.3 KB | 23 | the 📊 leaderboard: 8 factions by power, flags held |
 | `military-base-25d/js/ui/06-settings.js` | 1.9 KB | 49 | settings toggles, graphics modes, code redemption, hard reset |
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
-| `military-base-25d/js/ui/09-input.js` | 6.1 KB | 152 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 6.7 KB | 64 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/09-input.js` | 6.5 KB | 156 | input: minimap, keyboard, mouse |
+| `military-base-25d/js/ui/10-patch-notes.js` | 8.1 KB | 73 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.2 KB | 32 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 3.4 KB | 55 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
@@ -155,7 +156,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | # | File | Lines | Contains | Functions |
 |---|---|---|---|---|
 | 1 | `js/core/01-helpers.js` | 19 | helpers: $, clamp, dist, rnd, fmt… | 8 |
-| 2 | `js/data/01-world.js` | 83 | world size, radial map layout (like ref-map-original.png), bot bases, bot presets | 12 |
+| 2 | `js/data/01-world.js` | 84 | world size, radial map layout (like ref-map-original.png), bot bases, bot presets | 12 |
 | 3 | `js/data/02-factions.js` | 19 | factions: colors, names, palettes | 5 |
 | 4 | `js/core/02-state.js` | 56 | state: S + defaultState + POINTS_DEFS | 4 |
 | 5 | `js/data/03-classes.js` | 22 | unit classes (light/armored/air/stealth) + their colours/labels | 0 |
@@ -187,7 +188,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 31 | `js/systems/02-economy.js` | 46 | income, bonuses, troop cap, bank interest | 8 |
 | 32 | `js/systems/03-waves.js` | 69 | raid waves, the wave pool, the MECHA WORM boss | 6 |
 | 33 | `js/systems/04-captures.js` | 50 | capture points: faction majority, garrison respawns | 3 |
-| 34 | `js/buildings/01-placement.js` | 72 | build grid: fits / free spot / place / sell | 9 |
+| 34 | `js/buildings/01-placement.js` | 94 | build grid: fits / free spot / place / sell | 10 |
 | 35 | `js/buildings/02-production.js` | 112 | what buildings DO: money capacity, unit training, wave-defense garrisons | 11 |
 | 36 | `js/buildings/03-bots.js` | 53 | bot bases: presets, production, army cap, rebuild | 7 |
 | 37 | `js/buildings/04-turrets.js` | 34 | defence turrets (Pillbox / SAM Site / Fortress Cannon) | 1 |
@@ -197,28 +198,28 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 41 | `js/units/03-spatial-grid.js` | 54 | spatial hash + batched removals (v5 perf) and shared bot threat scans | 8 |
 | 42 | `js/units/04-ai.js` | 269 | unit AI: targets, stealth detection, target acquisition, combat, separation | 10 |
 | 43 | `js/units/05-combat.js` | 73 | damage (class modifiers + armor), kills, building damage, kill payouts | 5 |
-| 44 | `js/rewards/04-crates.js` | 63 | crate rolls, pity (80), the crate-opening modal | 5 |
+| 44 | `js/rewards/04-crates.js` | 129 | crate rolls, pity (80), BACKPACK STACKS + bulk opening (v8.4) | 10 |
 | 45 | `js/rewards/05-rewards-ui.js` | 28 | the REWARDS panel (claim buttons) | 1 |
 | 46 | `js/achievements/02-achievements.js` | 16 | achievement check loop: unlock once → pay out + toast | 1 |
 | 47 | `js/achievements/03-achievements-ui.js` | 19 | the 🏆 TROPHIES panel with progress bars | 1 |
-| 48 | `js/render/01-render.js` | 154 | the frame: y-sorted drawables, fx, selection, placement ghost | 3 |
+| 48 | `js/render/01-render.js` | 167 | the frame: y-sorted drawables, fx, selection, placement ghost | 3 |
 | 49 | `js/render/02-render-units.js` | 97 | unit sprites, the boss worm, capture-point flags | 3 |
 | 50 | `js/render/03-render-ground.js` | 202 | ocean, islands, bridges, trees, crystals, grids, capture pads | 8 |
 | 51 | `js/render/04-minimap.js` | 57 | minimap: islands, plots, points, units, camera rect | 2 |
 | 52 | `js/render/05-blocks.js` | 33 | BLOCK MODE: one plain rectangle per unit / building (for slow machines) | 4 |
 | 53 | `js/ui/01-ui-core.js` | 53 | toasts + panel show/hide + the top-bar / rail / HUD buttons | 3 |
-| 54 | `js/ui/02-shop.js` | 58 | the SHOP: tabs (production / units / special / decor) + class sub-tabs | 3 |
+| 54 | `js/ui/02-shop.js` | 96 | the SHOP: tabs (production / units / special / decor) + class sub-tabs + the CRATE (robux) shop | 5 |
 | 55 | `js/ui/03-tooltips.js` | 72 | hover stat tooltips (cost, size, damage modifiers, turrets…) | 7 |
-| 56 | `js/ui/04-backpack.js` | 54 | the BACKPACK: place buildings, open crates | 3 |
+| 56 | `js/ui/04-backpack.js` | 56 | the BACKPACK: place buildings, open crates | 3 |
 | 57 | `js/ui/05-leaderboard.js` | 22 | the 📊 leaderboard: 8 factions by power, flags held | 1 |
 | 58 | `js/ui/06-settings.js` | 48 | settings toggles, graphics modes, code redemption, hard reset | 2 |
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
-| 61 | `js/ui/09-input.js` | 151 | input: minimap, keyboard, mouse | 3 |
-| 62 | `js/ui/10-patch-notes.js` | 63 | the 📜 PATCHES panel (what changed in each build) | 1 |
-| 63 | `js/admin/01-admin.js` | 278 | admin panel (window.Admin) | 0 |
-| 64 | `js/core/07-loop.js` | 122 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
-| 65 | `js/core/08-init.js` | 65 | init: load save → migrate → start | 1 |
+| 61 | `js/ui/09-input.js` | 155 | input: minimap, keyboard, mouse | 3 |
+| 62 | `js/ui/10-patch-notes.js` | 72 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 63 | `js/admin/01-admin.js` | 290 | admin panel (window.Admin) | 0 |
+| 64 | `js/core/07-loop.js` | 123 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
+| 65 | `js/core/08-init.js` | 69 | init: load save → migrate → start | 1 |
 
 ## 📁 Folder map (v7)
 
@@ -226,18 +227,18 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 
 | Folder | Files | Lines | What lives there |
 |---|---|---|---|
-| `js/core/` | 8 | 453 | the engine: helpers, state, save, audio, camera+ground texture, fx, the main loop and boot |
-| `js/data/` | 12 | 434 | pure DATA tables: world/map layout, factions, classes, units, buildings, rarities (+ the two new unit/building tables) |
-| `js/rewards/` | 5 | 133 | crate tables, redeem codes, the REWARDS list + its panel |
+| `js/core/` | 8 | 458 | the engine: helpers, state, save, audio, camera+ground texture, fx, the main loop and boot |
+| `js/data/` | 12 | 435 | pure DATA tables: world/map layout, factions, classes, units, buildings, rarities (+ the two new unit/building tables) |
+| `js/rewards/` | 5 | 199 | crate tables, redeem codes, the REWARDS list + its panel |
 | `js/achievements/` | 3 | 54 | the achievement list, the unlock loop and the 🏆 panel |
 | `js/maps/` | 2 | 258 | the island map (shapes, walk grid, A*, city flow field) and the SEA: water lanes, sea grid, ship navigation |
 | `js/textures/` | 5 | 977 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
 | `js/systems/` | 4 | 194 | cross-cutting game systems: power, economy, waves/boss, capture points |
-| `js/buildings/` | 5 | 287 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
+| `js/buildings/` | 5 | 309 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 511 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
-| `js/render/` | 5 | 543 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 580 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
-| `js/admin/` | 1 | 278 | the F1 admin/debug drawer |
+| `js/render/` | 5 | 556 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
+| `js/ui/` | 10 | 633 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/admin/` | 1 | 290 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
 
@@ -642,18 +643,18 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 17 | `ringPos(angDeg, r)` | angle (deg, 0=east, 90=south) + radius → world point around MAP_C |
-| 18 | `plotTL(angDeg)` | angle → top-left of a 52×36-cell plot (unrotated box) centred on the ring (RING px from the city) |
-| 21 | `plotRot(angDeg)` | plot rotation from its ring angle: local up (−y) faces the city; player (south) = 0 |
-| 30 | `inYard(x,y)` | is this world point inside your WATER YARD? |
-| 60 | `plotAt(gx,gy)` | player grid (gx,gy) → world px |
-| 61 | `plotOrigin(owner,zone)` | owner ('p' | bot index) → plot top-left |
-| 62 | `plotRotOf(owner)` | rotation of a plot by owner ("p" = 0) |
-| 64 | `plotToWorld(owner,lx,ly,zone)` | plot-local px (grid top-left origin) → world, honouring rotation |
-| 70 | `worldToPlot(owner,x,y,zone)` | world → plot-local px (inverse of plotToWorld) — used for clicks on rotated bot plots |
-| 76 | `bPos(b)` | recompute + cache a building's world anchor (bottom-centre) from plot origin + gx/gy |
-| 82 | `botCenter(i)` | world centre of bot i's plot |
-| 83 | `plotCentre()` | world centre of YOUR plot (replaces the old buggy PLOT.w*50) |
+| 18 | `ringPos(angDeg, r)` | angle (deg, 0=east, 90=south) + radius → world point around MAP_C |
+| 19 | `plotTL(angDeg)` | angle → top-left of a 52×36-cell plot (unrotated box) centred on the ring (RING px from the city) |
+| 22 | `plotRot(angDeg)` | plot rotation from its ring angle: local up (−y) faces the city; player (south) = 0 |
+| 31 | `inYard(x,y)` | is this world point inside your WATER YARD? |
+| 61 | `plotAt(gx,gy)` | player grid (gx,gy) → world px |
+| 62 | `plotOrigin(owner,zone)` | owner ('p' | bot index) → plot top-left |
+| 63 | `plotRotOf(owner)` | rotation of a plot by owner ("p" = 0) |
+| 65 | `plotToWorld(owner,lx,ly,zone)` | plot-local px (grid top-left origin) → world, honouring rotation |
+| 71 | `worldToPlot(owner,x,y,zone)` | world → plot-local px (inverse of plotToWorld) — used for clicks on rotated bot plots |
+| 77 | `bPos(b)` | recompute + cache a building's world anchor (bottom-centre) from plot origin + gx/gy |
+| 83 | `botCenter(i)` | world centre of bot i's plot |
+| 84 | `plotCentre()` | world centre of YOUR plot (replaces the old buggy PLOT.w*50) |
 
 ### `js/data/02-factions.js` — factions: colors, names, palettes
 
@@ -840,15 +841,16 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 6 | `canPlaceAt(type,gx,gy,zone)` | slot free on YOUR plot (only your buildings block — fixed: bot buildings used to block) |
-| 8 | `fitsAt(type,gx,gy,owner,zone)` | does a building fit at (gx,gy) on an owner's plot (inside 52×36 + no overlap with that owner) |
-| 22 | `findFreeSpot(type,gx,gy,owner,zone)` | nearest free spot (square spiral) — bot presets slide here when the real footprint collides |
-| 33 | `buyBlock(type)` | shop rule check → reason string or null (power req, rebirth req, bank max 3) |
-| 41 | `ghostSlot()` | mouse → player grid slot for the ghost |
-| 51 | `startPlacing(type)` | hand a building to the cursor; water items also pan the camera to your water yard |
-| 56 | `placeBuilding(type,gx,gy,owner='p',zone)` | place + fx + sfx |
-| 62 | `placeBuildingRaw(type,gx,gy,owner,zone)` | place without fx (bots/admin); counts stats.placed for you |
-| 67 | `removeBuildingRefund(b)` | sell: 50% refund |
+| 9 | `stackTopAt(type,gx,gy,owner,zone)` | how high the pile under a footprint is — the level a new building lands on (0 = the ground) |
+| 19 | `canPlaceAt(type,gx,gy,zone)` | slot free on YOUR plot (only your buildings block — fixed: bot buildings used to block) |
+| 21 | `fitsAt(type,gx,gy,owner,zone,lvl)` | does a building fit at (gx,gy) on an owner's plot (inside 52×36 + no overlap with that owner) |
+| 39 | `findFreeSpot(type,gx,gy,owner,zone)` | nearest free spot (square spiral) — bot presets slide here when the real footprint collides |
+| 52 | `buyBlock(type)` | shop rule check → reason string or null (power req, rebirth req, bank max 3) |
+| 60 | `ghostSlot()` | mouse → player grid slot for the ghost |
+| 71 | `startPlacing(type)` | hand a building to the cursor; water items also pan the camera to your water yard |
+| 76 | `placeBuilding(type,gx,gy,owner='p',zone,lvl)` | place + fx + sfx |
+| 83 | `placeBuildingRaw(type,gx,gy,owner,zone,lvl)` | place without fx (bots/admin); counts stats.placed for you |
+| 89 | `removeBuildingRefund(b)` | sell: 50% refund |
 
 ### `js/buildings/02-production.js` — what buildings DO: money capacity, unit training, wave-defense garrisons
 
@@ -947,15 +949,20 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 | 49 | `indestructible()` | true while ⚙ INDESTRUCTIBLE BUILDINGS is on → buildings take no damage at all |
 | 50 | `damageBuilding(b,from,dmg)` | HP/flash/destroy + rewards; god mode protects only YOUR buildings (fixed) |
 
-### `js/rewards/04-crates.js` — crate rolls, pity (80), the crate-opening modal
+### `js/rewards/04-crates.js` — crate rolls, pity (80), BACKPACK STACKS + bulk opening (v8.4)
 
 | Line | Function | What it does |
 |---|---|---|
 | 3 | `weightedPick(entries)` | weighted random from [[id,w],…] |
 | 9 | `featuredPremium()` | daily-rotating featured item from WEEKLY (fixed WEEK.length crash) |
 | 10 | `rollCrate(ct)` | roll a crate (premium: 15% featured, pity 80) |
-| 19 | `giveItem(kind,type)` | push {kind,type} into the backpack |
-| 23 | `openCrateModal(ct)` | crate reveal panel |
+| 20 | `invFind(kind,type)` | the backpack entry (stack) for one kind+type |
+| 21 | `invCount(kind,type)` | how many of an item you hold |
+| 23 | `giveItem(kind,type,n=1)` | add n (default 1) of an item to the backpack, merging into the stack that is already there |
+| 31 | `takeItem(kind,type,n=1)` | take n out of a backpack stack (removes the card when the last one goes) → how many you really got |
+| 39 | `mergeInventory(list)` | fold an old per-item backpack into stacks (one card per kind+type with an n) |
+| 51 | `openCrateModal(ct,want)` | open n crates at once: suspense, then the rarest win on display + a list of everything you got |
+| 107 | `askOpenCount(ct)` | v8.4 "open how many?" chooser (1 / 5 / 10 / ALL) before a bulk crate opening |
 
 ### `js/rewards/05-rewards-ui.js` — the REWARDS panel (claim buttons)
 
@@ -1028,13 +1035,15 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 | 11 | `openPanel(name)` | show one panel (renders it), hide the rest |
 | 25 | `closePanel(name)` | hide a panel |
 
-### `js/ui/02-shop.js` — the SHOP: tabs (production / units / special / decor) + class sub-tabs
+### `js/ui/02-shop.js` — the SHOP: tabs (production / units / special / decor) + class sub-tabs + the CRATE (robux) shop
 
 | Line | Function | What it does |
 |---|---|---|
 | 3 | `rarCol(r)` | rarity → colour |
 | 4 | `rarBadge(r)` | rarity badge HTML (inline colours) |
 | 5 | `renderShop()` | tabs + UNITS sub-tabs (LIGHT/ARMORED/AIR/STEALTH) + cards with lock reasons + hover tooltips |
+| 62 | `buyCrates(ct,n)` | robux shop: pay cash for n crates, they stack in the backpack |
+| 71 | `renderRobux()` | premium crate offers (in-game cash) |
 
 ### `js/ui/03-tooltips.js` — hover stat tooltips (cost, size, damage modifiers, turrets…)
 
@@ -1053,8 +1062,8 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 | Line | Function | What it does |
 |---|---|---|
 | 3 | `drawItemIcon(g,type)` | building icon for cards |
-| 11 | `renderBackpack()` | backpack cards (place / open crate) |
-| 45 | `drawCrateIconMini(g,type)` | small crate icon |
+| 11 | `renderBackpack()` | backpack cards — identical items STACK (xN badge); place one building or open 1/5/10/ALL crates |
+| 47 | `drawCrateIconMini(g,type)` | small crate icon |
 
 ### `js/ui/05-leaderboard.js` — the 📊 leaderboard: 8 factions by power, flags held
 
@@ -1087,14 +1096,14 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 | Line | Function | What it does |
 |---|---|---|
 | 83 | `hoverUnit(e)` | throttled hover inspect: re-tests ~12×/s, rebuilds the card ~2.5×/s (free in a 1000-unit battle) |
-| 134 | `buildingAt(wx,wy,who)` | world point → building under it |
-| 146 | `cancelPlacement()` | drop placement ghost |
+| 136 | `buildingAt(wx,wy,who)` | world point → building under it (a stack: the floor you aimed at, lift-aware) |
+| 150 | `cancelPlacement()` | drop placement ghost (the item goes back into its backpack stack) |
 
 ### `js/ui/10-patch-notes.js` — the 📜 PATCHES panel (what changed in each build)
 
 | Line | Function | What it does |
 |---|---|---|
-| 48 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 57 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -1107,7 +1116,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 4 | `init()` | load → migrate (fill new fields, drop unknown types, return out-of-plot buildings to backpack) → bot bases → restore units → garrisons → start |
+| 4 | `init()` | load → migrate (fill new fields, drop unknown types, fold the backpack into stacks, stack buildings that now overlap instead of binning them) → bot bases → restore units → garrisons → start |
 
 ## 🧩 Nested helpers
 
@@ -1145,22 +1154,23 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/admin/01-admin.js:126 | `Admin.filter(txt)` | admin search: hide building/unit rows not matching the text, update n/total counters |
 | js/admin/01-admin.js:135 | `Admin.giveAllBuildings()` | one of every building → backpack |
 | js/admin/01-admin.js:141 | `Admin.spawnUnit(id,n=1,owner='p')` | spawn n (1…1000) units for you or a bot in a spiral block on walkable ground |
-| js/admin/01-admin.js:161 | `Admin.crate(t)` | give a crate |
-| js/admin/01-admin.js:163 | `Admin.collectAll()` | v7: empty every money building’s safe into your wallet |
-| js/admin/01-admin.js:169 | `Admin.garrison(mode)` | v7: muster the wave-defense garrison / stand it down |
-| js/admin/01-admin.js:175 | `Admin.raid()` | v7: raise the raid alert (60s) |
-| js/admin/01-admin.js:176 | `Admin.boss(mode)` | summon | hp1 | more | kill |
-| js/admin/01-admin.js:187 | `Admin.wave(mode)` | now | horde (×3) | reset timers |
-| js/admin/01-admin.js:193 | `Admin.points(mode)` | take all | release to neutral |
-| js/admin/01-admin.js:206 | `Admin.rebirth(n)` | add rebirths or force one |
-| js/admin/01-admin.js:211 | `Admin.claimRewards()` | claim all ready rewards |
-| js/admin/01-admin.js:223 | `Admin.go(where)` | camera teleport — coords derived from the map (base/city/n/ne/e/se/sw/w/nw/boss) |
-| js/admin/01-admin.js:237 | `Admin.exportSave()` | state JSON → #aSave |
-| js/admin/01-admin.js:238 | `Admin.importSave()` | #aSave JSON (v1–v4) → save → reload |
-| js/admin/01-admin.js:249 | `Admin.wipe()` | delete save → reload |
-| js/admin/01-admin.js:255 | `Admin.tickStats()` | live debug readout |
+| js/admin/01-admin.js:162 | `Admin.crate(t,n=1)` | give n crates (they stack) |
+| js/admin/01-admin.js:165 | `Admin.pile(id,n=5)` | v8.4: stack n of a building on top of each other on one spot (unlimited height) |
+| js/admin/01-admin.js:175 | `Admin.collectAll()` | v7: empty every money building’s safe into your wallet |
+| js/admin/01-admin.js:181 | `Admin.garrison(mode)` | v7: muster the wave-defense garrison / stand it down |
+| js/admin/01-admin.js:187 | `Admin.raid()` | v7: raise the raid alert (60s) |
+| js/admin/01-admin.js:188 | `Admin.boss(mode)` | summon | hp1 | more | kill |
+| js/admin/01-admin.js:199 | `Admin.wave(mode)` | now | horde (×3) | reset timers |
+| js/admin/01-admin.js:205 | `Admin.points(mode)` | take all | release to neutral |
+| js/admin/01-admin.js:218 | `Admin.rebirth(n)` | add rebirths or force one |
+| js/admin/01-admin.js:223 | `Admin.claimRewards()` | claim all ready rewards |
+| js/admin/01-admin.js:235 | `Admin.go(where)` | camera teleport — coords derived from the map (base/city/n/ne/e/se/sw/w/nw/boss) |
+| js/admin/01-admin.js:249 | `Admin.exportSave()` | state JSON → #aSave |
+| js/admin/01-admin.js:250 | `Admin.importSave()` | #aSave JSON (v1–v4) → save → reload |
+| js/admin/01-admin.js:261 | `Admin.wipe()` | delete save → reload |
+| js/admin/01-admin.js:267 | `Admin.tickStats()` | live debug readout |
 
-### Admin drawer buttons (inline onclick — 41)
+### Admin drawer buttons (inline onclick — 46)
 
 | Button | Calls |
 |---|---|
@@ -1173,6 +1183,11 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | ELITE | `Admin.crate('elite')` |
 | PREMIUM | `Admin.crate('premium')` |
 | GOLDEN | `Admin.crate('golden')` |
+| PREMIUM ×10 | `Admin.crate('premium',10)` |
+| GOLDEN ×10 | `Admin.crate('golden',10)` |
+| PILE 7 SOLAR | `Admin.pile('solar',7)` |
+| PILE 5 BARRACKS | `Admin.pile('barracks',5)` |
+| PILE 4 DRILLS | `Admin.pile('industrial',4)` |
 | SUMMON | `Admin.boss('summon')` |
 | KILL + REWARD | `Admin.boss('kill')` |
 | SET 1 HP | `Admin.boss('hp1')` |
@@ -1211,7 +1226,7 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | File:Line | Target | Event | What it does |
 |---|---|---|---|
 | js/core/05-camera.js:16 | `window` | resize | resize canvas (also recomputes MINZ — the zoom that fits the whole map) |
-| js/rewards/04-crates.js:59 | `#btnCrateDone` | onclick | close crate reveal |
+| js/rewards/04-crates.js:125 | `#btnCrateDone` | onclick | close crate reveal |
 | js/ui/01-ui-core.js:30 | `#btnShop` | onclick | open SHOP |
 | js/ui/01-ui-core.js:31 | `#btnHome` | onclick | cancel placement, close panels, pan to your plot centre |
 | js/ui/01-ui-core.js:37 | `.rail-btn` | forEach | left rail → openPanel(data-panel) |
@@ -1241,10 +1256,10 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/admin/01-admin.js:56 | `#aClose` | onclick | close admin |
 | js/admin/01-admin.js:57 | `#btnAdmin` | onclick | open admin |
 | js/admin/01-admin.js:95 | `#aSpeed .abtn` | forEach | admin time scale |
-| js/admin/01-admin.js:275 | `window` | keydown | keys map, Esc, F1/` admin |
+| js/admin/01-admin.js:287 | `window` | keydown | keys map, Esc, F1/` admin |
 | js/core/07-loop.js:93 | `cv` | wheel | zoom around cursor |
 | js/core/07-loop.js:104 | `document` | pointerdown | unlock WebAudio |
-| js/core/08-init.js:61 | `window` | beforeunload | save on close |
+| js/core/08-init.js:65 | `window` | beforeunload | save on close |
 
 ## 🌐 Global variables (top-level const/let, not functions)
 
@@ -1256,20 +1271,21 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/data/01-world.js:9 | const | `SLOT` | `8;                                             // px per build-grid cell (v8.…` |
 | js/data/01-world.js:10 | const | `GRID_K` | `8;                                             // old coarse slot = 8×8 fine …` |
 | js/data/01-world.js:11 | const | `PLOT_W` | `104, PLOT_H = 72;                              // every plot is 104×72 cells …` |
-| js/data/01-world.js:12 | const | `MAP_C` | `{x:WORLD.w/2, y:WORLD.h/2};                    // map centre = CITY` |
-| js/data/01-world.js:13 | const | `RING` | `2600;                                          // distance city → plot centre…` |
-| js/data/01-world.js:15 | const | `PLOT_MX` | `40, PLOT_MY = 168;   // v6: island is a 912×912 square in plot-local space (g…` |
-| js/data/01-world.js:16 | const | `DEG` | `Math.PI/180;` |
-| js/data/01-world.js:22 | const | `PLOT` | `{...plotTL(90), w:PLOT_W, h:PLOT_H, ang:90, rot:0};` |
-| js/data/01-world.js:27 | const | `YARD_W` | `104, YARD_H = 28;                     // cells — as wide as your island, 224p…` |
-| js/data/01-world.js:28 | const | `YARD_GAP` | `60;                                 // px of open water between the coast and…` |
-| js/data/01-world.js:29 | const | `WATER_YARD` | `{x:PLOT.x, y:Math.round(PLOT.y + PLOT_H*SLOT + PLOT_MY + YARD_GAP), w:YARD_W,…` |
-| js/data/01-world.js:33 | const | `BOT_DEFS` | `[` |
-| js/data/01-world.js:44 | const | `OUTPOST_ANGS` | `[-67.5, 22.5, -157.5, 112.5];   // N-ish, E-ish, W-ish, S-ish (order matches …` |
-| js/data/01-world.js:45 | const | `OUTPOST_R` | `1150;                                    // v8: 760 → 1150 (outposts stay bet…` |
-| js/data/01-world.js:46 | const | `CRYSTALS` | `[-112.5, -22.5, 67.5, 157.5].map(a=>({...ringPos(a,1400), ang:a}));   // v8: …` |
-| js/data/01-world.js:49 | const | `PRESETS` | `[` |
-| js/data/01-world.js:59 | const | `PRESET_MAP` | `Object.fromEntries(PRESETS.map(p=>[p.id,p]));` |
+| js/data/01-world.js:12 | const | `STACK_UP` | `24;                                          // v8.4: STACKING — world px a b…` |
+| js/data/01-world.js:13 | const | `MAP_C` | `{x:WORLD.w/2, y:WORLD.h/2};                    // map centre = CITY` |
+| js/data/01-world.js:14 | const | `RING` | `2600;                                          // distance city → plot centre…` |
+| js/data/01-world.js:16 | const | `PLOT_MX` | `40, PLOT_MY = 168;   // v6: island is a 912×912 square in plot-local space (g…` |
+| js/data/01-world.js:17 | const | `DEG` | `Math.PI/180;` |
+| js/data/01-world.js:23 | const | `PLOT` | `{...plotTL(90), w:PLOT_W, h:PLOT_H, ang:90, rot:0};` |
+| js/data/01-world.js:28 | const | `YARD_W` | `104, YARD_H = 28;                     // cells — as wide as your island, 224p…` |
+| js/data/01-world.js:29 | const | `YARD_GAP` | `60;                                 // px of open water between the coast and…` |
+| js/data/01-world.js:30 | const | `WATER_YARD` | `{x:PLOT.x, y:Math.round(PLOT.y + PLOT_H*SLOT + PLOT_MY + YARD_GAP), w:YARD_W,…` |
+| js/data/01-world.js:34 | const | `BOT_DEFS` | `[` |
+| js/data/01-world.js:45 | const | `OUTPOST_ANGS` | `[-67.5, 22.5, -157.5, 112.5];   // N-ish, E-ish, W-ish, S-ish (order matches …` |
+| js/data/01-world.js:46 | const | `OUTPOST_R` | `1150;                                    // v8: 760 → 1150 (outposts stay bet…` |
+| js/data/01-world.js:47 | const | `CRYSTALS` | `[-112.5, -22.5, 67.5, 157.5].map(a=>({...ringPos(a,1400), ang:a}));   // v8: …` |
+| js/data/01-world.js:50 | const | `PRESETS` | `[` |
+| js/data/01-world.js:60 | const | `PRESET_MAP` | `Object.fromEntries(PRESETS.map(p=>[p.id,p]));` |
 | js/data/02-factions.js:5 | const | `FACCOL` | `['#5bc24e','#4a90e2','#f5a53f','#a35ad6','#ec407a','#26c6da','#ffee58','#ef53…` |
 | js/data/02-factions.js:6 | const | `FACNAME` | `['YOU','ALPHA','BRAVO','CHARLIE','DELTA','ECHO','FOXTROT','GOLF'];` |
 | js/data/02-factions.js:15 | const | `FACPAL` | `FACCOL.map(c=>({body:c, dark:shade(c,.5), accent:shade(c,1.35), metal:shade(c…` |
@@ -1353,9 +1369,11 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/units/03-spatial-grid.js:44 | const | `BOT_THREAT` | `{};` |
 | js/units/04-ai.js:9 | const | `AGGRO` | `{march:210, hold:220, push:60};` |
 | js/units/04-ai.js:122 | let | `DETECT` | `{}, detT=0, AURA={};   // AURA = support buffs (Officer: +25% damage to allie…` |
+| js/rewards/04-crates.js:106 | let | `openQType` | `null;` |
 | js/render/01-render.js:4 | const | `mini` | `$('#mini'), mctx=mini.getContext('2d');` |
 | js/render/01-render.js:12 | let | `miniT` | `-1e9;` |
 | js/ui/01-ui-core.js:10 | const | `PANEL_IDS` | `['shop','backpack','rewards','achieve','leader','robux','settings','rebirth',…` |
+| js/ui/02-shop.js:61 | const | `CRATE_SHOP` | `[['standard',()=>CRATE_PRICES.standard],['elite',()=>CRATE_PRICES.elite],['pr…` |
 | js/ui/06-settings.js:4 | const | `SET_BOOL` | `[['#setMusic','music'],['#setSfx','sfx'],['#setDmg','dmg'],` |
 | js/ui/06-settings.js:7 | const | `SET_MODE` | `[['#setGfx','gfx','High'],['#setUnits','units','Normal'],['#setBlds','blds','…` |
 | js/ui/08-tutorial.js:4 | const | `TUT` | `[` |
@@ -1601,11 +1619,11 @@ function defaultSettings(){
 
 ## 🧪 Test hook (`window.__BMB`)
 
-`BOT_DEFS`, `BRIDGES`, `CELL`, `CITY_IDX`, `GH`, `GW`, `LOBES`, `MAP_PLOTS`, `PLOT`, `POINTS_DEFS`, `S`, `WALK`, `astar`, `bPos`, `bankTick`, `botBuildings`, `botPower`, `botUnits`, `buyBlock`, `canPlaceAt`, `canSee`, `capUsed`, `cellOf`, `checkAchievements`, `damageBuilding`, `damageUnit`, `facC`, `facN`, `flowStep`, `giveItem`, `hospitalTick`, `incomeBonus`, `incomeRate`, `isAir`, `isStealth`, `killUnit`, `mkUnit`, `modFor`, `modVs`, `placeBuilding`, `plotCentre`, `pointFaction`, `setBotPreset`, `spawnBoss`, `spawnWave`, `totalPower`, `unitCap`, `updateTurrets`, `walkableAt`
+`BOT_DEFS`, `BRIDGES`, `CELL`, `CITY_IDX`, `GH`, `GW`, `LOBES`, `MAP_PLOTS`, `PLOT`, `POINTS_DEFS`, `S`, `WALK`, `astar`, `bPos`, `bankTick`, `botBuildings`, `botPower`, `botUnits`, `buyBlock`, `canPlaceAt`, `canSee`, `capUsed`, `cellOf`, `checkAchievements`, `damageBuilding`, `damageUnit`, `facC`, `facN`, `flowStep`, `giveItem`, `hospitalTick`, `incomeBonus`, `incomeRate`, `invCount`, `isAir`, `isStealth`, `killUnit`, `mergeInventory`, `mkUnit`, `modFor`, `modVs`, `placeBuilding`, `plotCentre`, `pointFaction`, `setBotPreset`, `spawnBoss`, `spawnWave`, `stackTopAt`, `stacks`, `takeItem`, `totalPower`, `unitCap`, `updateTurrets`, `walkableAt`
 
-## 🧱 index.html elements (87 ids)
+## 🧱 index.html elements (92 ids)
 
-Panels: `admin`, `shop`, `backpack`, `rewards`, `achieve`, `leader`, `robux`, `settings`, `patch`, `rebirth`, `crate` · rail: `backpack`, `rewards`, `achieve`, `leader`, `robux`, `rebirth`, `patch`, `settings`
+Panels: `admin`, `shop`, `backpack`, `rewards`, `achieve`, `leader`, `robux`, `settings`, `patch`, `rebirth`, `openq`, `crate` · rail: `backpack`, `rewards`, `achieve`, `leader`, `robux`, `rebirth`, `patch`, `settings`
 
 | Line | Group | Tag | id | Text |
 |---|---|---|---|---|
@@ -1645,57 +1663,62 @@ Panels: `admin`, `shop`, `backpack`, `rewards`, `achieve`, `leader`, `robux`, `s
 | 89 | ADMIN DRAWER | div | `#aBuilds` |  |
 | 91 | ADMIN DRAWER | span | `#aUnitsN` | 🪖 SUMMON UNITS ×QTY, ignores cap |
 | 92 | ADMIN DRAWER | div | `#aUnits` |  |
-| 103 | ADMIN DRAWER | div | `#aBots` |  |
-| 134 | ADMIN DRAWER | div | `#aSpeed` |  |
-| 144 | ADMIN DRAWER | button | `#aGod` | GOD MODE |
-| 145 | ADMIN DRAWER | button | `#aFreeze` | FREEZE WAVES/BOSS |
-| 146 | ADMIN DRAWER | button | `#aNoResp` | NO GARRISON RESPAWN |
-| 175 | ADMIN DRAWER | div | `#aStats` | — |
-| 183 | ADMIN DRAWER | textarea | `#aSave` |  |
-| 188 | hover stat tooltip (shop cards) | div | `#tip` |  |
-| 191 | toasts | div | `#toasts` |  |
-| 194 | PANELS | div | `#p-shop` |  |
-| 197 | PANELS | div | `#shopTabs` |  |
-| 203 | PANELS | div | `#shopSubs` |  |
-| 204 | PANELS | div | `#shopGrid` |  |
-| 208 | PANELS | div | `#p-backpack` |  |
-| 212 | PANELS | div | `#bpGrid` |  |
-| 216 | PANELS | div | `#p-rewards` |  |
-| 218 | PANELS | div | `#rwList` |  |
-| 221 | PANELS | div | `#p-achieve` |  |
-| 223 | PANELS | p | `#achSummary` |  |
-| 223 | PANELS | div | `#achList` |  |
-| 226 | PANELS | div | `#p-leader` |  |
-| 228 | PANELS | div | `#lbList` | All 8 factions ranked by military power (buildings + army… |
-| 231 | PANELS | div | `#p-robux` |  |
-| 235 | PANELS | div | `#rxGrid` |  |
-| 239 | PANELS | div | `#p-settings` |  |
-| 242 | PANELS | button | `#setMusic` | MUSIC On |
-| 243 | PANELS | button | `#setSfx` | BUILDING SFX On |
-| 244 | PANELS | button | `#setDmg` | DAMAGE NUMBERS On |
-| 245 | PANELS | button | `#setGfx` | EFFECTS (FX) High |
-| 246 | PANELS | button | `#setUnits` | UNIT GRAPHICS Normal |
-| 247 | PANELS | button | `#setBlds` | BUILDING GRAPHICS Normal |
-| 248 | PANELS | button | `#setTrees` | TREES &amp; DECOR On |
-| 249 | PANELS | button | `#setBotGrid` | ENEMY BASE GRIDS Off |
-| 250 | PANELS | button | `#setIndestruct` | INDESTRUCTIBLE BUILDINGS On |
-| 252 | PANELS | input | `#codeBox` | CODE |
-| 254 | PANELS | button | `#btnWipe` | HARD RESET |
-| 258 | PANELS | div | `#p-patch` |  |
-| 260 | PANELS | div | `#patchList` | Latest build first. Every change below is live in this ve… |
-| 263 | PANELS | div | `#p-rebirth` |  |
-| 266 | PANELS | div | `#rbInfo` |  |
-| 268 | PANELS | button | `#btnRebirthYes` | REBIRTH |
-| 274 | PANELS | div | `#p-crate` |  |
-| 276 | PANELS | div | `#crateStage` |  |
-| 277 | PANELS | canvas | `#crateIcon` |  |
-| 279 | PANELS | div | `#crateName` | OPENING... |
-| 280 | PANELS | div | `#crateRar` |  |
-| 281 | PANELS | button | `#btnCrateDone` | NICE |
-| 286 | tutorial | div | `#tut` |  |
-| 288 | tutorial | div | `#tutStep` | 1 / 4 |
-| 289 | tutorial | div | `#tutText` |  |
-| 291 | tutorial | button | `#tutNext` | GOT IT |
+| 115 | ADMIN DRAWER | div | `#aBots` |  |
+| 146 | ADMIN DRAWER | div | `#aSpeed` |  |
+| 156 | ADMIN DRAWER | button | `#aGod` | GOD MODE |
+| 157 | ADMIN DRAWER | button | `#aFreeze` | FREEZE WAVES/BOSS |
+| 158 | ADMIN DRAWER | button | `#aNoResp` | NO GARRISON RESPAWN |
+| 187 | ADMIN DRAWER | div | `#aStats` | — |
+| 195 | ADMIN DRAWER | textarea | `#aSave` |  |
+| 200 | hover stat tooltip (shop cards) | div | `#tip` |  |
+| 203 | toasts | div | `#toasts` |  |
+| 206 | PANELS | div | `#p-shop` |  |
+| 209 | PANELS | div | `#shopTabs` |  |
+| 215 | PANELS | div | `#shopSubs` |  |
+| 216 | PANELS | div | `#shopGrid` |  |
+| 220 | PANELS | div | `#p-backpack` |  |
+| 224 | PANELS | div | `#bpGrid` |  |
+| 228 | PANELS | div | `#p-rewards` |  |
+| 230 | PANELS | div | `#rwList` |  |
+| 233 | PANELS | div | `#p-achieve` |  |
+| 235 | PANELS | p | `#achSummary` |  |
+| 235 | PANELS | div | `#achList` |  |
+| 238 | PANELS | div | `#p-leader` |  |
+| 240 | PANELS | div | `#lbList` | All 8 factions ranked by military power (buildings + army… |
+| 243 | PANELS | div | `#p-robux` |  |
+| 247 | PANELS | div | `#rxGrid` |  |
+| 251 | PANELS | div | `#p-settings` |  |
+| 254 | PANELS | button | `#setMusic` | MUSIC On |
+| 255 | PANELS | button | `#setSfx` | BUILDING SFX On |
+| 256 | PANELS | button | `#setDmg` | DAMAGE NUMBERS On |
+| 257 | PANELS | button | `#setGfx` | EFFECTS (FX) High |
+| 258 | PANELS | button | `#setUnits` | UNIT GRAPHICS Normal |
+| 259 | PANELS | button | `#setBlds` | BUILDING GRAPHICS Normal |
+| 260 | PANELS | button | `#setTrees` | TREES &amp; DECOR On |
+| 261 | PANELS | button | `#setBotGrid` | ENEMY BASE GRIDS Off |
+| 262 | PANELS | button | `#setIndestruct` | INDESTRUCTIBLE BUILDINGS On |
+| 264 | PANELS | input | `#codeBox` | CODE |
+| 266 | PANELS | button | `#btnWipe` | HARD RESET |
+| 270 | PANELS | div | `#p-patch` |  |
+| 272 | PANELS | div | `#patchList` | Latest build first. Every change below is live in this ve… |
+| 275 | PANELS | div | `#p-rebirth` |  |
+| 278 | PANELS | div | `#rbInfo` |  |
+| 280 | PANELS | button | `#btnRebirthYes` | REBIRTH |
+| 286 | PANELS | div | `#p-openq` |  |
+| 289 | PANELS | div | `#oqName` | CRATE |
+| 290 | PANELS | div | `#oqSub` | You have 1. Open how many? |
+| 291 | PANELS | div | `#oqBtns` |  |
+| 295 | PANELS | div | `#p-crate` |  |
+| 297 | PANELS | div | `#crateStage` |  |
+| 298 | PANELS | canvas | `#crateIcon` |  |
+| 300 | PANELS | div | `#crateName` | OPENING... |
+| 301 | PANELS | div | `#crateRar` |  |
+| 302 | PANELS | div | `#crateList` |  |
+| 303 | PANELS | button | `#btnCrateDone` | NICE |
+| 308 | tutorial | div | `#tut` |  |
+| 310 | tutorial | div | `#tutStep` | 1 / 4 |
+| 311 | tutorial | div | `#tutText` |  |
+| 313 | tutorial | button | `#tutNext` | GOT IT |
 
 ## 🎨 style.css
 
@@ -1737,16 +1760,18 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 103 | item grid | `.grid` · `.card` · `.card:hover` · `.card canvas` · `.card .c-name` · `.card .c-cost` · `.card .c-info` · `.card.locked` · `.card.locked .c-cost` · `.card.r-common` · `.card.r-rare` · `.card.r-epic` · `.card.r-legend` · `.card.r-myth` · `.card.r-gold` · `.c-rar` · `.c-rar.common` · `.c-rar.rare` · `.c-rar.epic` · `.c-rar.legendary` · `.c-rar.mythic` · `.c-rar.golden` |
 | 128 | rewards | `.rw-list` · `.rw-item` · `.rw-item .rw-ico` · `.rw-item .rw-mid` · `.rw-item .rw-name` · `.rw-item .rw-sub` · `.rw-item .rw-reward` · `.rw-claim` · `.rw-claim:disabled` · `.rw-claim:hover:not(:disabled)` |
 | 142 | settings rows | `.set-row` · `.set-row.small` · `.dim` · `.toggle` · `.toggle.on` · `.toggle.blue.on` · `.code-input` · `.code-input:focus` · `.danger` · `.danger:hover` |
-| 156 | crate modal | `.crate-stage` · `.crate-stage.opening canvas` · `#crateIcon` · `.crate-name` · `.crate-rar` · `.crate .pill.big` · `#p-crate.show .p-body` |
-| 167 | rebirth info | `#rbInfo` · `#rbInfo b` · `.rb-prog` · `.rb-prog i` |
-| 174 | admin drawer | `#btnAdmin` · `#btnAdmin:hover` · `#p-admin` · `#p-admin.open` · `.a-head` · `.a-body` · `.a-body::-webkit-scrollbar` · `.a-body::-webkit-scrollbar-thumb` · `.a-sec` · `.a-sec:first-child` · `.a-note` · `.a-row` · `.abtn` · `.abtn:hover` · `.abtn.on` · `.abtn.tog` · `.abtn.tog.on` · `.abtn.gold` · `.abtn.danger` · `.abtn.danger:hover` |
-| 202 | bot base presets | `.a-bots` · `.bot-row` · `.bot-row .bn` · `.aselect` · `.aselect:focus` · `.aselect option` · `.ain` · `.ain:focus` · `.bld-row` · `.bld-row .bn` · `.bld-row .abtn` · `.unit-row` · `.unit-row .un` · `.unit-row .abtn` · `.a-stats` · `.asave` |
-| 226 | tutorial | `#tut` · `#tut.show` · `.tut-card` · `.tut-step` · `.tut-text` · `.tut-text b` |
-| 235 | scrollbar | `.p-body::-webkit-scrollbar` · `.p-body::-webkit-scrollbar-thumb` · `.p-body::-webkit-scrollbar-track` |
-| 240 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
-| 263 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
+| 156 | crate modal | `.crate-stage` · `.crate-stage.opening canvas` · `#crateIcon` · `.crate-name` · `.crate-rar` · `.crate .pill.big` |
+| 164 | v8.4: bulk-open results + the "open how many?" chooser | `.crate-list` · `.cl-row` · `.cl-dot` · `.cl-name` · `.cl-n` · `.oq-name` · `.oq-sub` · `.oq-btns` |
+| 173 | v8.4: backpack stack badge (how many of this item you hold) | `.card` · `.c-stack` · `#p-crate.show .p-body` |
+| 181 | rebirth info | `#rbInfo` · `#rbInfo b` · `.rb-prog` · `.rb-prog i` |
+| 188 | admin drawer | `#btnAdmin` · `#btnAdmin:hover` · `#p-admin` · `#p-admin.open` · `.a-head` · `.a-body` · `.a-body::-webkit-scrollbar` · `.a-body::-webkit-scrollbar-thumb` · `.a-sec` · `.a-sec:first-child` · `.a-note` · `.a-row` · `.abtn` · `.abtn:hover` · `.abtn.on` · `.abtn.tog` · `.abtn.tog.on` · `.abtn.gold` · `.abtn.danger` · `.abtn.danger:hover` |
+| 216 | bot base presets | `.a-bots` · `.bot-row` · `.bot-row .bn` · `.aselect` · `.aselect:focus` · `.aselect option` · `.ain` · `.ain:focus` · `.bld-row` · `.bld-row .bn` · `.bld-row .abtn` · `.unit-row` · `.unit-row .un` · `.unit-row .abtn` · `.a-stats` · `.asave` |
+| 240 | tutorial | `#tut` · `#tut.show` · `.tut-card` · `.tut-step` · `.tut-text` · `.tut-text b` |
+| 249 | scrollbar | `.p-body::-webkit-scrollbar` · `.p-body::-webkit-scrollbar-thumb` · `.p-body::-webkit-scrollbar-track` |
+| 254 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
+| 277 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
 
-## ✔️ Smoke test assertions (189)
+## ✔️ Smoke test assertions (210)
 
 | Line | Group | Asserts |
 |---|---|---|
@@ -1939,6 +1964,27 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 613 | hover a troop → its stat card | the MECHA WORM has a hover card too |
 | 618 | hold Q = pause | holding Q freezes the battle (game time does not move) |
 | 621 | hold Q = pause | releasing Q resumes it |
+| 627 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | STACK_UP = …px of lift per floor of a stack |
+| 636 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p','land',0) && G('fitsAt')('barracks',px,py,'p','land',4),'the ground floor is taken, the top of the pile is free |
+| 637 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p')===4,'stackTopAt reports how high the pile is |
+| 639 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p','land').lvl===0,'findFreeSpot takes a free GROUND spot next to a pile before climbing it |
+| 644 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | every floor of the pile trains its own unit (4 barracks = 4 troops) |
+| 650 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | the ghost lands on LEVEL … of the pile |
+| 654 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | clicking a stack picks the floor you clicked, not the one underneath |
+| 658 | backpack STACKS | 3 solar panels = ONE backpack card (x…) |
+| 659 | backpack STACKS | solar')===3,'invCount reads the stack |
+| 660 | backpack STACKS | solar',2)===2 && G('invCount')('b','solar')===1,'takeItem pulls 2 out of the stack |
+| 662 | backpack STACKS | emptying a stack removes the card |
+| 663 | backpack STACKS | old saves (one entry per crate) fold into stacks |
+| 668 | open 5 crates at once | openCrateModal opens 5 crates in one go |
+| 669 | open 5 crates at once | premium')===0,'all 5 crates leave the backpack |
+| 670 | open 5 crates at once | cratesOpened counts every crate you opened |
+| 672 | open 5 crates at once | the 5 wins are stacked as cards (…) |
+| 673 | open 5 crates at once | the "open how many?" chooser exists (1 / 5 / 10 / ALL) |
+| 674 | open 5 crates at once | a crate row is [id,weight] — the opening shuffle reads the id (it used to read the row and throw, so crates never revealed) |
+| 679 | the ROBUX SHOP finally works (it called a function that did not exist) | premium')===10,'the ROBUX SHOP sells 10 premium crates at once → one stacked card |
+| 685 | Admin.pile: 7 solar panels, 7 high, unlimited stacking | Admin.pile stacks … solar panels … high |
+| 687 | Admin.pile: 7 solar panels, 7 high, unlimited stacking | a 7-high tower survives 400 frames of rendering |
 
 ## 🗒️ NOTES.md outline
 
@@ -1954,6 +2000,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
+  - Stacking & crates (v8.4)
 - 📁 FOLDER LAYOUT (v7)
 - 🖥️ UI (current state)
 - 🎮 Game (mechanics — what the original does that we don't)

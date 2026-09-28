@@ -14,7 +14,9 @@ function renderBackpack(){
     grid.innerHTML='<div style="color:var(--dim);font-size:12px;grid-column:1/-1;padding:20px;text-align:center">Empty. Hit the SHOP →</div>';
     return;
   }
-  S.inventory.forEach((it,idx)=>{
+  // v8.4: identical items STACK — one card per (kind,type) with an ×N badge
+  for(const it of S.inventory){
+    const n=it.n||1;
     const card=document.createElement('div');
     const d=BUILD[it.type]||{name:'?'};
     card.className=`card r-${it.kind==='c'?'legend':(d.rar||'common')}`;
@@ -24,23 +26,23 @@ function renderBackpack(){
     if(it.kind==='c') drawCrateIconMini(cvc.getContext('2d'),it.type);
     else drawItemIcon(cvc.getContext('2d'),it.type);
     card.appendChild(cvc);
+    if(n>1){ const bg=document.createElement('div'); bg.className='c-stack'; bg.textContent='\u00d7'+n; card.appendChild(bg); }
     const nm=document.createElement('div'); nm.className='c-name'; nm.textContent= it.kind==='c' ? it.type.toUpperCase()+' CRATE' : d.name;
     card.appendChild(nm);
     const sub=document.createElement('div'); sub.className='c-info';
-    sub.textContent= it.kind==='c' ? 'Click to open' : 'Click to place on your plot';
+    sub.textContent= it.kind==='c' ? (n>1?`${n} crates — click to open 1, 5, 10 or ALL`:'Click to open')
+                                   : (n>1?`${n} in stock — click to place one`:'Click to place on your plot');
     card.appendChild(sub);
     card.onclick=()=>{
-      if(it.kind==='c'){ openCrateModal(it.type); S.inventory.splice(idx,1); }
-      else {
-        S.inventory.splice(idx,1);
-        closePanel('backpack');
-        startPlacing(it.type);
-        toast(`Placing ${d.name} — click a free plot slot. RMB to cancel.`,'#4a90e2');
-      }
+      if(it.kind==='c'){ askOpenCount(it.type); renderBackpack(); return; }
+      takeItem('b',it.type,1);
+      closePanel('backpack');
+      startPlacing(it.type);
+      toast(`Placing ${d.name} — click a free plot slot (or on top of another building to STACK it). RMB to cancel.`,'#4a90e2');
       renderBackpack();
     };
     grid.appendChild(card);
-  });
+  }
 }
 function drawCrateIconMini(g,type){
   g.clearRect(0,0,130,64);

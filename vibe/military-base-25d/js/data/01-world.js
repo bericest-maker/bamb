@@ -9,6 +9,7 @@ const ISLAND = {x:60, y:60, w:WORLD.w-120, h:WORLD.h-120};   // camera clamp are
 const SLOT   = 8;                                             // px per build-grid cell (v8.3: 16 → 8 — twice as fine; footprints come from each sprite's real size)
 const GRID_K = 8;                                             // old coarse slot = 8×8 fine cells (presets + old saves are converted with this)
 const PLOT_W = 104, PLOT_H = 72;                              // every plot is 104×72 cells of 8px (= 832×576 px — the island is the same physical size)
+const STACK_UP = 24;                                          // v8.4: STACKING — world px a building is lifted for every level of the pile under it (unlimited height)
 const MAP_C  = {x:WORLD.w/2, y:WORLD.h/2};                    // map centre = CITY
 const RING   = 2600;                                          // distance city → plot centre (v8: 1700 → 2600 — islands pushed apart)
 // forest margin around each build grid; taller than wide because the view squashes y to 72% → plots LOOK square

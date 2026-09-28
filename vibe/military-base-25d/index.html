@@ -91,13 +91,25 @@
     <div class="a-sec">🪖 SUMMON UNITS <span class="a-note" id="aUnitsN"></span> <span class="a-note">×QTY, ignores cap</span></div>
     <div id="aUnits" class="a-list"></div>
 
-    <div class="a-sec">📦 CRATES (to backpack)</div>
+    <div class="a-sec">📦 CRATES (to backpack) <span class="a-note">stacks · open 1/5/10/ALL in the backpack</span></div>
     <div class="a-row">
       <button class="abtn" onclick="Admin.crate('standard')">STANDARD</button>
       <button class="abtn" onclick="Admin.crate('elite')">ELITE</button>
       <button class="abtn" onclick="Admin.crate('premium')">PREMIUM</button>
       <button class="abtn gold" onclick="Admin.crate('golden')">GOLDEN</button>
     </div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.crate('premium',10)">PREMIUM ×10</button>
+      <button class="abtn" onclick="Admin.crate('golden',10)">GOLDEN ×10</button>
+    </div>
+
+    <div class="a-sec">🧱 STACKING (v8.4) <span class="a-note">unlimited height</span></div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.pile('solar',7)">PILE 7 SOLAR</button>
+      <button class="abtn" onclick="Admin.pile('barracks',5)">PILE 5 BARRACKS</button>
+      <button class="abtn" onclick="Admin.pile('industrial',4)">PILE 4 DRILLS</button>
+    </div>
+    <div class="a-row"><span class="a-note">Or hold any building in your backpack and click one you already own — it stacks on top. PILE stacks ×QTY of whatever you searched for at the top of the list.</span></div>
 
     <div class="a-sec">🤖 BOT BASES (pick a preset — yours stays yours)</div>
     <div id="aBots" class="a-bots"></div>
@@ -208,7 +220,7 @@
 <div class="panel" id="p-backpack">
   <div class="p-head"><span class="p-title">BACKPACK</span><button class="x" data-close>✕</button></div>
   <div class="p-body">
-    <p class="p-note">Buy stuff in the SHOP, then place it on your plot. Click a crate to open it.</p>
+    <p class="p-note">Identical items STACK (the badge = how many you hold). Click a building to place one, click a crate to open 1 / 5 / 10 / ALL.</p>
     <div class="grid" id="bpGrid"></div>
   </div>
 </div>
@@ -231,7 +243,7 @@
 <div class="panel" id="p-robux">
   <div class="p-head"><span class="p-title">ROBUX SHOP</span><button class="x" data-close>✕</button></div>
   <div class="p-body">
-    <p class="p-note">This is a fan-made 2.5D remake — no real Robux. Premium items cost in-game cash instead. Premium crates only contain LEGENDARY / MYTHIC buildings. Weekly featured item + pity after 80.</p>
+    <p class="p-note">This is a fan-made 2.5D remake — no real Robux. Crates cost in-game cash instead. Premium crates only contain LEGENDARY / MYTHIC buildings. Weekly featured item + pity after 80. Crates stack in your backpack — open them 1, 5, 10 or ALL at a time.</p>
     <div class="grid" id="rxGrid"></div>
   </div>
 </div>
@@ -271,6 +283,15 @@
   </div>
 </div>
 
+<div class="panel modal" id="p-openq">
+  <div class="p-head"><span class="p-title">OPEN CRATES</span><button class="x" data-close>&#10005;</button></div>
+  <div class="p-body center">
+    <div class="oq-name" id="oqName">CRATE</div>
+    <div class="oq-sub" id="oqSub">You have 1. Open how many?</div>
+    <div class="btn-row" id="oqBtns"></div>
+  </div>
+</div>
+
 <div class="panel modal crate" id="p-crate">
   <div class="p-body center">
     <div class="crate-stage" id="crateStage">
@@ -278,6 +299,7 @@
     </div>
     <div class="crate-name" id="crateName">OPENING...</div>
     <div class="crate-rar" id="crateRar"></div>
+    <div class="crate-list" id="crateList"></div>
     <button class="pill big" id="btnCrateDone">NICE</button>
   </div>
 </div>

@@ -7,7 +7,7 @@ function toast(msg,col='#f5b53f'){
   $('#toasts').appendChild(t);
   setTimeout(()=>{ t.classList.add('out'); setTimeout(()=>t.remove(),450); },3800);
 }
-const PANEL_IDS=['shop','backpack','rewards','achieve','leader','robux','settings','rebirth','patch','crate'];
+const PANEL_IDS=['shop','backpack','rewards','achieve','leader','robux','settings','rebirth','patch','crate','openq'];
 function openPanel(name){
   if(name!=='crate') for(const id of PANEL_IDS) $('#p-'+id).classList.toggle('show',id===name);
   else $('#p-crate').classList.add('show');

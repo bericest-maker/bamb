@@ -620,6 +620,75 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   pump(1000);
   assert(S().time>tq,'releasing Q resumes it');
 }
+// ---- v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening ----
+{
+  const STACK_UP=G('STACK_UP'), SLOT8=G('SLOT');
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  assert(STACK_UP>0,`STACK_UP = ${STACK_UP}px of lift per floor of a stack`);
+  // 4 barracks clicked on the EXACT same spot — they stack instead of refusing to place
+  const bd=G('BUILD').barracks, cv=document.querySelector('#cv'), mouse=G('mouse');
+  const wc=G('plotToWorld')('p',(12+bd.w/2)*SLOT8,(12+bd.h/2)*SLOT8);
+  for(let i=0;i<4;i++){ mouse.wx=wc.x; mouse.wy=wc.y; S().placing='barracks'; cv._ls.mousedown({button:0}); }
+  const pile=S().buildings.filter(b=>(b.owner??'p')==='p');
+  assert(pile.length===4 && new Set(pile.map(b=>b.gx+','+b.gy)).size===1 && pile.every((b,i)=>(b.lvl|0)===i),
+    `4 barracks stack on one spot (floors ${pile.map(b=>b.lvl|0).join(' / ')})`);
+  const px=pile[0].gx, py=pile[0].gy;
+  assert(!G('fitsAt')('barracks',px,py,'p','land',0) && G('fitsAt')('barracks',px,py,'p','land',4),'the ground floor is taken, the top of the pile is free');
+  assert(G('stackTopAt')('barracks',px,py,'p')===4,'stackTopAt reports how high the pile is');
+  // bots / fills stay spread out on the ground and only stack when the island is full
+  assert(G('findFreeSpot')('barracks',px,py,'p','land').lvl===0,'findFreeSpot takes a free GROUND spot next to a pile before climbing it');
+  // every floor works on its own
+  S().units=[];
+  for(const b of pile) b.t=0;
+  G('productionTick')(0.02);
+  assert(S().units.filter(u=>u.side==='p').length===4,'every floor of the pile trains its own unit (4 barracks = 4 troops)');
+  S().units=[];
+  // the ghost tells you which floor it will land on
+  const w2=G('plotToWorld')('p',(px+bd.w/2)*SLOT8,(py+bd.h/2)*SLOT8);
+  mouse.wx=w2.x; mouse.wy=w2.y; S().placing='solar';
+  const gh=G('ghostSlot')();
+  assert((gh.lvl|0)===4 && gh.ok,`the ghost lands on LEVEL ${(gh.lvl|0)+1} of the pile`);
+  S().placing=null;
+  // clicking picks the building you aimed at (the one on top wins)
+  const pick=l=>G('buildingAt')(w2.x,w2.y-l*STACK_UP+4,'p');
+  assert(pick(0)===pile[0] && pick(3)===pile[3],'clicking a stack picks the floor you clicked, not the one underneath');
+  // ---- backpack STACKS ----
+  S().inventory=[];
+  B.giveItem('b','solar'); B.giveItem('b','solar'); B.giveItem('b','solar');
+  assert(S().inventory.length===1 && (S().inventory[0].n||1)===3,`3 solar panels = ONE backpack card (x${S().inventory[0].n})`);
+  assert(G('invCount')('b','solar')===3,'invCount reads the stack');
+  assert(G('takeItem')('b','solar',2)===2 && G('invCount')('b','solar')===1,'takeItem pulls 2 out of the stack');
+  G('takeItem')('b','solar',9);
+  assert(S().inventory.filter(i=>i.type==='solar').length===0,'emptying a stack removes the card');
+  assert(G('mergeInventory')([{kind:'c',type:'premium'},{kind:'c',type:'premium'},{kind:'c',type:'standard'}]).length===2,'old saves (one entry per crate) fold into stacks');
+  // ---- open 5 crates at once ----
+  S().inventory=[{kind:'c',type:'premium',n:5}];
+  const co=S().stats.cratesOpened;
+  const opened=G('openCrateModal')('premium',5);
+  assert(opened===5,'openCrateModal opens 5 crates in one go');
+  assert(G('invCount')('c','premium')===0,'all 5 crates leave the backpack');
+  assert(S().stats.cratesOpened===co+5,'cratesOpened counts every crate you opened');
+  const won=S().inventory.filter(i=>i.kind==='b');
+  assert(won.reduce((a,i)=>a+(i.n||1),0)===5,`the 5 wins are stacked as cards (${won.map(i=>i.type+' x'+(i.n||1)).join(', ')})`);
+  assert(typeof G('askOpenCount')==='function','the "open how many?" chooser exists (1 / 5 / 10 / ALL)');
+  assert(G('BUILD')[G('pick')(G('CRATE_TABLES').premium)[0]]!==undefined,'a crate row is [id,weight] — the opening shuffle reads the id (it used to read the row and throw, so crates never revealed)');
+  G('askOpenCount')('premium');   // no crates left: must not throw
+  // ---- the ROBUX SHOP finally works (it called a function that did not exist) ----
+  G('renderRobux')();
+  S().cash=1e9; G('buyCrates')('premium',10);
+  assert(G('invCount')('c','premium')===10,'the ROBUX SHOP sells 10 premium crates at once → one stacked card');
+  G('renderBackpack')();
+  // ---- Admin.pile: 7 solar panels, 7 high, unlimited stacking ----
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  const made=G('Admin').pile('solar',7);
+  const tower=S().buildings.filter(b=>(b.owner??'p')==='p');
+  assert(made===7 && tower.length===7 && tower.every((b,i)=>(b.lvl|0)===i),`Admin.pile stacks ${tower.length} solar panels ${tower.length} high`);
+  pump(400);
+  assert(tower.every(b=>b.hp===b.maxHp) && tower.every(b=>Number.isFinite(b.x??B.bPos(b).x)),'a 7-high tower survives 400 frames of rendering');
+  S().inventory=[{kind:'b',type:'solar',n:2}];
+  G('renderBackpack')();
+}
+
 S().admin.noRespawn=false;
 
 console.log(`\n${T.frames} frames simulated. ${process.exitCode?'SMOKE TEST FAILED':'ALL SMOKE TESTS PASSED'}`);

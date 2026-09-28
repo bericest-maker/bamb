@@ -23,7 +23,7 @@ function render(){
   for(const b of S.buildings){
     const c=bPos(b);
     if(c.x<vb.x0||c.x>vb.x1||c.y<vb.y0||c.y>vb.y1) continue;
-    items.push({y:c.y,kind:'b',b,x:c.x});
+    items.push({y:c.y,kind:'b',b,x:c.x,lvl:b.lvl|0});   // v8.4: its floor in the pile
   }
   for(const u of S.units){
     if(u.x<vb.x0||u.x>vb.x1||u.y<vb.y0||u.y>vb.y1) continue;
@@ -33,10 +33,12 @@ function render(){
     if(p.x<vb.x0||p.x>vb.x1||p.y<vb.y0||p.y>vb.y1) continue;
     items.push({y:p.y,kind:'flag',p});
   }
-  items.sort((a,b)=>a.y-b.y);
+  items.sort((a,b)=>(a.y-b.y)||((a.lvl|0)-(b.lvl|0)));   // v8.4: same ground spot → the higher floor draws last (on top)
 
   for(const it of items){
     if(it.kind==='b'){
+      const lift=(it.b.lvl|0)*STACK_UP;              // v8.4: stacked buildings float above the one below
+      ctx.save(); if(lift) ctx.translate(0,-lift);
       const d=BUILD[it.b.type], sp=SPR[it.b.type];
       const bs=bScale(it.b.type), s=depth(it.y)*bs;   // footprint scale × depth
       const isBot=typeof(it.b.owner??"p")==="number", fac=bFaction(it.b);
@@ -73,6 +75,7 @@ function render(){
           ctx.fillText('⚠',it.x,it.y-sp.h*s-24*s);
         }
       }
+      ctx.restore();
     } else if(it.kind==='u'){
       drawUnit(it.u,depth(it.u.y),false);
     } else if(it.kind==='flag'){
@@ -134,10 +137,20 @@ function render(){
     ctx.fillRect(q.x,q.y,d.w*SLOT,d.h*SLOT);
     ctx.strokeRect(q.x,q.y,d.w*SLOT,d.h*SLOT);
     // fixed: the ghost used d.w*50 / d.h*100 (old slot size) — now anchored exactly like a placed building
-    const gy=q.y+d.h*SLOT, gs=depth(gy)*bScale(S.placing);
+    const gy=q.y+d.h*SLOT, gs=depth(gy)*bScale(S.placing), glift=(g.lvl|0)*STACK_UP, gsp=SPR[S.placing];
     ctx.globalAlpha=.75;
-    drawSpr(ctx,S.placing,q.x+d.w*SLOT/2,gy-3,gs,'p',0,performance.now()/1000);
+    drawSpr(ctx,S.placing,q.x+d.w*SLOT/2,gy-3-glift,gs,'p',0,performance.now()/1000);
     ctx.globalAlpha=1;
+    // v8.4: it lands ON TOP of the pile it is touching — show the drop legs + the floor it will sit on
+    if(glift){
+      ctx.strokeStyle=g.ok?'rgba(255,213,79,.55)':'rgba(214,73,63,.55)'; ctx.lineWidth=1.5; ctx.setLineDash([4,4]);
+      ctx.beginPath();
+      for(const px of [q.x+3,q.x+d.w*SLOT-3]){ ctx.moveTo(px,q.y+d.h*SLOT); ctx.lineTo(px,q.y+d.h*SLOT-glift); }
+      ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='#ffd54f'; ctx.font='900 12px "Segoe UI"'; ctx.textAlign='center';
+      ctx.fillText(`LEVEL ${(g.lvl|0)+1}`,q.x+d.w*SLOT/2,gy-glift-(gsp?gsp.h*gs:24)-6);
+      ctx.textAlign='left';
+    }
   }
   // minimap (v5 perf: redrawn 10×/s instead of every frame)
   const nowMs=performance.now();

@@ -117,6 +117,7 @@ if (typeof window!=='undefined'){
     WALK, GW, GH, CELL,
     facC, facN, isAir, isStealth, modFor, modVs, capUsed, unitCap, incomeRate, incomeBonus,
     updateTurrets, hospitalTick, bankTick, checkAchievements, buyBlock, canPlaceAt, walkableAt,
+    stackTopAt, takeItem, invCount, mergeInventory,   // v8.4: stacking + backpack stacks
     POINTS_DEFS, BOT_DEFS, MAP_PLOTS, LOBES, BRIDGES, PLOT, CITY_IDX, plotCentre, botPower,
   };
 }

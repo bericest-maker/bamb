@@ -62,7 +62,7 @@ cv.addEventListener('mousedown',e=>{
   if(S.placing){
     const g=ghostSlot();
     if(g.ok){
-      placeBuilding(S.placing,g.gx,g.gy,'p',g.zone);
+      placeBuilding(S.placing,g.gx,g.gy,'p',g.zone,g.lvl);   // v8.4: lands on the level the ghost showed
       S.placing=null;
     } else { toast(g.why||'Can\'t place there','#ef5350'); sfx('error'); }
     return;
@@ -131,21 +131,25 @@ window.addEventListener('mouseup',e=>{
   mouse.dragging=false;
 });
 
+// v8.4: with STACKS the TOP building wins. A stacked building is drawn lvl*STACK_UP px higher, so the
+// click point is pushed back down by that lift before the footprint test = you click the crate you see.
 function buildingAt(wx,wy,who){
+  let best=null, bestLvl=-1;
   for(const b of S.buildings){
-    const d=BUILD[b.type], l=worldToPlot(b.owner??"p",wx,wy,b.zone);   // v6: plot-local test (bot plots are rotated)
+    const d=BUILD[b.type], lvl=b.lvl|0;
+    const l=worldToPlot(b.owner??"p",wx,wy+lvl*STACK_UP,b.zone);   // v6: plot-local test (bot plots are rotated)
     const x=b.gx*SLOT, y=b.gy*SLOT;
     if(l.x>=x&&l.x<=x+d.w*SLOT&&l.y>=y&&l.y<=y+d.h*SLOT){
       if(who==="p"&&(b.owner??"p")!=="p") continue;
       if(who==="bot"&&(b.owner??"p")==="p") continue;
-      return b;
+      if(lvl>=bestLvl){ bestLvl=lvl; best=b; }
     }
   }
-  return null;
+  return best;
 }
 function cancelPlacement(){
   if(!S.placing) return;
-  S.inventory.push({kind:'b',type:S.placing}); // give it back
+  giveItem('b',S.placing);                     // v8.4: give it back (merges into its backpack stack)
   S.placing=null;
   toast('Placement cancelled — item returned to backpack','#8f9aa8');
 }

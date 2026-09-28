@@ -1,4 +1,4 @@
-/* Military Base 2.5D — 02-shop.js · the SHOP: tabs (production / units / special / decor) + class sub-tabs */
+/* Military Base 2.5D — 02-shop.js · the SHOP: tabs (production / units / special / decor) + class sub-tabs + the CRATE (robux) shop */
 'use strict';
 const rarCol = r => (RAR[r]||RAR.common).c;
 const rarBadge = r => `<span class="c-rar" style="background:${rarCol(r)}33;color:${rarCol(r)}">${(RAR[r]||RAR.common).label}</span>`;
@@ -54,5 +54,43 @@ function renderShop(){
       renderShop();
     };
     grid.appendChild(card);
+  }
+}
+// v8.4: the ROBUX SHOP sells CRATES for cash (before this the tab called a function that did not exist).
+// Bought crates STACK in the backpack, so you can pile up 10 premium crates and open them all at once.
+const CRATE_SHOP = [['standard',()=>CRATE_PRICES.standard],['elite',()=>CRATE_PRICES.elite],['premium',()=>PREMIUM_PRICE]];
+function buyCrates(ct,n){
+  const price=CRATE_SHOP.find(r=>r[0]===ct)[1]();
+  if(S.cash<price*n){ toast('Not enough cash!','#ef5350'); sfx('error'); return; }
+  S.cash-=price*n;
+  giveItem('c',ct,n);
+  toast(`Bought ${n}\u00d7 ${ct.toUpperCase()} crate${n>1?'s':''} — check your BACKPACK`,'#5bc24e');
+  sfx('buy');
+  renderRobux();
+}
+function renderRobux(){
+  const grid=$('#rxGrid'); grid.innerHTML='';
+  for(const [ct,priceOf] of CRATE_SHOP){
+    const price=priceOf(), d=document.createElement('div');
+    d.className='card r-legend'; d.style.borderColor=rarCol('legend')+'aa';
+    const cvc=document.createElement('canvas'); cvc.width=130; cvc.height=64;
+    drawCrateIconMini(cvc.getContext('2d'),ct);
+    d.appendChild(cvc);
+    const nm=document.createElement('div'); nm.className='c-name'; nm.textContent=ct.toUpperCase()+' CRATE';
+    d.appendChild(nm);
+    const cost=document.createElement('div'); cost.className='c-cost'; cost.textContent=`${fmt(price)}$`;
+    d.appendChild(cost);
+    const info=document.createElement('div'); info.className='c-info';
+    info.textContent={standard:'Cheap rolls: money buildings + decor',elite:'Mid game: factories, depots, radars',premium:'LEGENDARY / MYTHIC only · pity 80'}[ct];
+    d.appendChild(info);
+    for(const n of [1,10]){
+      const b=document.createElement('button');
+      b.className='pill'+(n===1?'':' ghost');
+      b.style.cssText='width:100%;margin-top:4px;font-size:10px;padding:5px 6px';
+      b.textContent=n===1?'BUY 1':`BUY 10 (${fmt(price*n)}$)`;
+      b.onclick=e=>{ e.stopPropagation(); buyCrates(ct,n); };
+      d.appendChild(b);
+    }
+    grid.appendChild(d);
   }
 }

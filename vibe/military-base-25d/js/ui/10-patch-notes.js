@@ -2,6 +2,15 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.4 \u2014 STACKS & CRATES', date:'2026-09-27', items:[
+    '\uD83E\uDDF1 BUILDINGS STACK \u2014 AS HIGH AS YOU LIKE. Aim at a building you already own and the next one lands ON TOP of it instead of being refused. Each floor is lifted 24px and drawn above the one below; the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are building, and clicking a stack picks the crate you actually aimed at.',
+    'Every floor works on its own \u2014 4 barracks stacked 4 high train 4 recruits. Turrets, hospitals, depots and money buildings all stack too.',
+    'Bots and the admin mass-fill still spread out first: they only climb a pile when your island has no free ground left.',
+    '\uD83D\uDCE6 THE BACKPACK STACKS: identical items are now ONE card with an \u00d7N badge instead of forty separate cards. Placing a building takes one out of the stack.',
+    '\uD83C\uDF81 OPEN CRATES IN BULK: click a crate stack and choose 1 / 5 / 10 / ALL. It rolls them all and lists everything you got, rarest first, with \u00d7counts and rarity colours.',
+    '\uD83D\uDC8E THE ROBUX SHOP WORKS \u2014 the tab used to call a missing function and threw an error. It now sells Standard / Elite / Premium crates for cash, 1 or 10 at a time.',
+    'Old saves: overlapping buildings are stacked instead of being returned to the backpack, and your old per-item backpack is folded into stacks.',
+  ]},
   { v:'v8.3 \u2014 HARBOUR UPDATE', date:'2026-09-27', items:[
     '\u2693 YOUR WATER YARD: a buildable strip of sea BEHIND your island (832\u00d7224px, as wide as your base). Every dock, the Offshore Oil Rig and the Naval Beacon now go there \u2014 and your ships launch straight into it instead of walking to the coast.',
     '\u2693 4 NEW WATER CAPTURE POINTS \u2014 RIG NW / NE / SE / SW out in the ocean. Only ships can reach them and a held rig is garrisoned by gunboats. Like the outposts, each one you hold is +10% production.',

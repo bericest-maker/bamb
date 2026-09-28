@@ -16,17 +16,21 @@ function init(){
   // drop anything the current data no longer knows about
   S.buildings=(S.buildings||[]).filter(b=>BUILD[b.type]);
   S.inventory=S.inventory.filter(it=>it.kind==='c'||BUILD[it.type]);
+  S.inventory=mergeInventory(S.inventory);                     // v8.4: identical items stack into one card
   // v6+: converts a save from ANY older cell size (S.grid = the px per cell the saved gx/gy use).
   // v8.3 grid is 8px; v7 was 16px; v5 was 64px (coarse 13×9). k = oldCell / newCell.
   { const old=Number(S.grid)||64;
     if(old!==SLOT){ const k=old/SLOT; for(const b of S.buildings) if((b.owner??'p')==='p'){ b.gx=Math.round(b.gx*k); b.gy=Math.round(b.gy*k); } }
     S.grid=SLOT; }
   // player buildings outside the plot, or overlapping another one (footprints changed), are returned to the backpack
+  // v8.4: an old save whose footprints now overlap no longer loses the buildings — they STACK instead
   { const mine=S.buildings.filter(b=>(b.owner??'p')==='p');
     S.buildings=S.buildings.filter(b=>(b.owner??'p')!=='p');
     for(const b of mine){
-      if(BUILD[b.type]&&fitsAt(b.type,b.gx,b.gy,'p')) S.buildings.push(b);
-      else S.inventory.push({kind:'b',type:b.type});
+      if(!BUILD[b.type]) continue;
+      const zone=b.zone||'land', L=stackTopAt(b.type,b.gx,b.gy,'p',zone);
+      if(fitsAt(b.type,b.gx,b.gy,'p',zone,L)){ if(L) b.lvl=L; S.buildings.push(b); }
+      else giveItem('b',b.type);
     } }
   // points keep only dynamic fields — coords come from POINTS_DEFS
   S.points=POINTS_DEFS.map((d,i)=>{ const p=(S.points||[])[i]||{}; return {...d, owner:p.owner??'neutral', faction:p.faction??-1, cool:p.cool??0, respawnT:p.respawnT??8}; });

@@ -161,6 +161,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1219;font-family:
 .crate-name{font-size:19px;font-weight:900;letter-spacing:1px;margin-top:6px;min-height:26px}
 .crate-rar{font-size:11px;font-weight:900;letter-spacing:2px;margin-bottom:4px;min-height:16px}
 .crate .pill.big{margin-top:8px}
+/* v8.4: bulk-open results + the "open how many?" chooser */
+.crate-list{width:100%;max-height:170px;overflow-y:auto;margin:6px 0 2px;text-align:left}
+.cl-row{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:7px;background:#232c3d;margin-bottom:4px}
+.cl-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.cl-name{font-size:11.5px;font-weight:800;letter-spacing:.4px;flex:1}
+.cl-n{font-size:11px;font-weight:900;color:var(--txt)}
+.oq-name{font-size:20px;font-weight:900;letter-spacing:1.5px;margin:6px 0 2px}
+.oq-sub{font-size:11px;color:var(--dim);margin-bottom:10px}
+.oq-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+/* v8.4: backpack stack badge (how many of this item you hold) */
+.card{position:relative}
+.c-stack{position:absolute;top:-7px;right:-7px;min-width:24px;height:22px;padding:0 6px;border-radius:11px;
+  background:var(--gold);color:#20180a;font-size:11px;font-weight:900;line-height:22px;text-align:center;
+  border:2px solid #1b2230;box-shadow:0 2px 6px rgba(0,0,0,.45)}
 #p-crate.show .p-body{animation:glow 1.2s infinite}
 @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(245,181,63,0))}50%{filter:drop-shadow(0 0 18px rgba(245,181,63,.35))}}
 

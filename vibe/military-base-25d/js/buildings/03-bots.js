@@ -47,7 +47,7 @@ function setBotPreset(i,presetId,silent){
   bot.raidT=110-botTier(i)*6+rnd(0,50);
   for(const [t,cx,cy] of (PRESET_MAP[presetId]||PRESETS[0]).b){   // coarse layout → fine cells; slide to a free spot if the real footprint collides
     if(!BUILD[t]) continue;
-    const sp=findFreeSpot(t,cx*GRID_K,cy*GRID_K,i); if(sp) placeBuildingRaw(t,sp.gx,sp.gy,i);
+    const sp=findFreeSpot(t,cx*GRID_K,cy*GRID_K,i); if(sp) placeBuildingRaw(t,sp.gx,sp.gy,i,undefined,sp.lvl);
   }
   if(!silent) toast(`${BOT_DEFS[i].name} → ${(PRESET_MAP[presetId]||PRESETS[0]).label}`,'#4a90e2');
 }

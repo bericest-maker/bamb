@@ -30,7 +30,7 @@ function killUnit(u,from){
     if(u.boss){
       S.stats.bosses++;
       S.cash+=BOSS.reward;
-      S.inventory.push({kind:'c',type:'premium'});
+      giveItem('c','premium');
       toast(`🐳 MECHA WORM DESTROYED! +${fmt(BOSS.reward)}$ + Premium Crate`,'#ffd54f');
       addFloat(u.x,u.y-40,'+PREMIUM CRATE!','#ffd54f');
     } else {

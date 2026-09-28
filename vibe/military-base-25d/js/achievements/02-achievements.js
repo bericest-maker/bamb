@@ -9,7 +9,7 @@ function checkAchievements(){
     if(!ok) continue;
     S.achievements[a.id]=Math.floor(S.time);
     if(a.give.cash) S.cash+=a.give.cash;
-    if(a.give.crate) S.inventory.push({kind:'c',type:a.give.crate});
+    if(a.give.crate) giveItem('c',a.give.crate);
     toast(`🏆 ACHIEVEMENT: ${a.name} — ${a.give.cash?'$'+fmt(a.give.cash):a.give.crate[0].toUpperCase()+a.give.crate.slice(1)+' Crate'}`,'#ffd54f');
     sfx('capture');
   }

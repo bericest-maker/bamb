@@ -118,7 +118,7 @@ const Admin={
       if(!made){ toast(d.water?'No free space in your WATER YARD!':'No free plot space!','#ef5350'); sfx('error'); return 0; }
       toast(`${made}x ${d.name} placed`,'#5bc24e'); return made;
     }
-    for(let i=0;i<n;i++) giveItem('b',id);
+    giveItem('b',id,n);                                  // v8.4: one stacked backpack card instead of n cards
     toast(`${n}x ${d.name} → backpack`,'#5bc24e'); sfx('coin');
     return n;
   },
@@ -158,7 +158,19 @@ const Admin={
     toast(`${spots.length}x ${UNITS[id].name} summoned${bot==null?'':' for '+facN(bot+1)}`,'#4a90e2'); sfx('spawn');
     return spots.length;
   },
-  crate(t){ giveItem('c',t); toast(`${t.toUpperCase()} crate → backpack`,'#f5b53f'); sfx('coin'); },
+  // v8.4: n crates at once (they stack into one backpack card)
+  crate(t,n=1){ n=Math.max(1,Math.min(999,Math.round(Number(n))||1)); giveItem('c',t,n);
+    toast(`${n}x ${t.toUpperCase()} crate → backpack`,'#f5b53f'); sfx('coin'); return n; },
+  // v8.4: PILE — stack n of a building ON TOP of each other on one spot (unlimited stacking)
+  pile(id,n=5){
+    const d=BUILD[id]; if(!d) return 0;
+    n=Math.max(1,Math.min(200,Math.round(Number(n))||1));
+    const zone=d.water?'water':'land';
+    const sp=findFreeSpot(id,Math.round((d.water?WATER_YARD.w:PLOT_W)/2),Math.round((d.water?WATER_YARD.h:PLOT_H)/2),'p',zone);
+    if(!sp){ toast('No free space!','#ef5350'); sfx('error'); return 0; }
+    let made=0;
+    for(let i=0;i<n;i++){ const L=stackTopAt(id,sp.gx,sp.gy,'p',zone); if(!fitsAt(id,sp.gx,sp.gy,'p',zone,L)) break; placeBuildingRaw(id,sp.gx,sp.gy,'p',zone,L); made++; }
+    toast(`${made}x ${d.name} stacked ${made} high`,'#5bc24e'); sfx('place'); return made; },
   // v7: money stored inside buildings (Bank interest + click a building to collect)
   collectAll(){
     const pay=collectAllStored();

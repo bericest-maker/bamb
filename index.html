@@ -28,13 +28,27 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 .tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
 </style></head><body><div class="wrap">
 <h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
-<div class="sub">v8.3 · HARBOUR UPDATE · water yard + water capture points · finer grid · hover stats · <span class="dim">fan project, not affiliated with Roblox</span></div>
+<div class="sub">v8.4 · STACKS &amp; CRATES · buildings stack as high as you like · backpack stacks · bulk crate opening · <span class="dim">fan project, not affiliated with Roblox</span></div>
 
 <a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
 <a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
 <a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
 
-<div class="card"><h2>WHAT CHANGED (v8.3 — this round)</h2>
+<div class="card"><h2>WHAT CHANGED (v8.4 — this round)</h2>
+<div>
+<span class="tag new">stacking</span><span class="tag new">unlimited height</span><span class="tag new">backpack stacks</span>
+<span class="tag new">open 1 / 5 / 10 / ALL</span><span class="tag new">robux shop fixed</span><span class="tag">crate results list</span>
+</div>
+<ul>
+<li><b>🧱 BUILDINGS STACK — AS HIGH AS YOU LIKE.</b> Aim at a building you already own and the next one lands <b>on top of it</b> instead of being refused. Each floor is lifted 24px and drawn above the one below, and the ghost shows dashed drop-legs plus a <b>LEVEL n</b> label so you always know which floor you're building.</li>
+<li><b>Every floor works on its own</b> — 4 barracks stacked 4 high train 4 recruits. Turrets, hospitals, depots and money buildings all stack too. Clicking a stack picks the crate you actually aimed at (not the one underneath), and bots still spread out across the island first — they only climb a pile when your island is full.</li>
+<li><b>📦 THE BACKPACK STACKS.</b> Identical items are now <b>one card with an ×N badge</b> instead of forty separate cards. Placing a building takes one out of the stack; buying or winning more adds to it.</li>
+<li><b>🎁 OPEN CRATES IN BULK.</b> Click a crate stack and choose <b>1 / 5 / 10 / ALL</b>. It rolls them all at once and then lists everything you got — rarest first, with ×counts and rarity colours.</li>
+<li><b>💎 THE ROBUX SHOP WORKS</b> — the tab used to call a function that didn't exist and threw an error. It now sells Standard / Elite / Premium crates for cash, 1 or 10 at a time.</li>
+<li><b>Old saves are safe:</b> buildings that now overlap are stacked instead of being returned to the backpack, and your old per-item backpack is folded into stacks.</li>
+</ul></div>
+
+<div class="card"><h2>WHAT CHANGED (v8.3 — previous round)</h2>
 <div>
 <span class="tag sea">water yard</span><span class="tag sea">4 water points</span><span class="tag new">finer grid</span>
 <span class="tag new">buildings 3× smaller</span><span class="tag new">hover troop stats</span><span class="tag new">hold Q to pause</span>
@@ -109,6 +123,8 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 <li>Buy a <b>Bank</b> and some money buildings → watch the <b>🏦 stored</b> row fill up, then click a building to empty its safe.</li>
 <li><b>ADMIN → RAID ALERT</b> (or wait for a wave): your barracks/factories muster a free garrison.</li>
 <li><b>Left rail → 📜 PATCHES</b> shows this changelog inside the game.</li>
+<li><b>TRY STACKING:</b> F1 → ADMIN → BP any building twice, then place the second one <b>directly on top of the first</b>. Or press ADMIN → <b>PILE</b> to drop a 7-high tower in one click.</li>
+<li><b>TRY BULK CRATES:</b> 💎 ROBUX SHOP → BUY 10 premium crates → BACKPACK → click the crate card → <b>ALL (10)</b>.</li>
 </ul></div>
-<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (189 assertions, all green)</div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (217 assertions, all green)</div>
 </div></body></html>
