@@ -3,7 +3,8 @@
 **Reference data (uploaded by user — full raw files kept in `ref/`, not duplicated here):**
 - `ref/units-original.txt` — 116 units from the original game (stats, classes, damage modifiers)
 - `ref/buildings-original.txt` — 154 buildings from the original game (categories, production, power)
-- `ref/traits-original.txt` — 80 building traits + `TraitsConfig` roll pools/weights (dump 1/4; parsed index in 🧬 Traits below)
+- `ref/traits-original.txt` — 80 building traits + `TraitsConfig` roll pools/weights (parsed index in 🧬 Traits below)
+- `uploads/Buildings_01_of_04.txt` … `Buildings_04_of_04.txt` — 172 original buildings as 3D-model dumps (parts, meshes, `bounds` footprints; parsed index in 🏗️ Models below)
 - `ref-map-original.png` — screenshot of the original game's map (see MAPS)
 
 ---
@@ -60,8 +61,9 @@
 - [x] One unit building per new unit (depot / hangar / helipad / **dock** naming)
 - [x] Special: Supply Depot ✔, Pentagon ✔, **Airship Docks ✔ (v7)**, **Submarine Cavern ✔ (v7)**, **Centurion Support Site ✔ (v7)**
 
-### Traits & reroll (NEW — full spec in 🧬 Traits below; data: dump 1/4)
-- [ ] **Trait pools per building model** — Production pool → `tab:'production'` money buildings; Unit pool → `tab:'units'` trainers; Logistics pool → `special:'logistics'` collectors; MissileTurret pool → `turret:{}` defence buildings (defs NOT in dump 1/4 — stub: Weaponized / Supersonic / Accuracy)
+### Traits & reroll (NEW — full spec in 🧬 Traits below; models in 🏗️ Models below)
+- [ ] **Trait pools per building model** — Production pool → `tab:'production'` money buildings; Unit pool → `tab:'units'` trainers; Logistics pool → `special:'logistics'` collectors; MissileTurret pool → `turret:{}` defence buildings (trait defs NOT in the paste — stub: Weaponized / Supersonic / Accuracy)
+- [ ] **Model-grounded sizes** — `bounds` footprints from `uploads/Buildings_01..04_of_04.txt` are the canonical base size that Tiny (×0.5–0.9) / Titanic (×1.05–1.5) scale; 38/100 of our buildings match the dumps by exact name
 - [ ] **Rarity roll, then trait roll** — Unique 0.01 / Mythic 0.04 / Legendary 0.06 / Epic 5 / Rare 13 / Uncommon 27 / Common 54.89, then weighted pick inside the rarity (low tier ×2, high tier ×1; Logistics uses one flat table instead)
 - [ ] **10% double trait** — every roll has a 10% chance to grant 2 traits instead of 1 (never the same trait twice)
 - [ ] **Stat mapping onto our models** — ResourceProduction → income mult; IncomeSpeed → payout cycle ÷ (1+speed); size → building draw scale; unit UnitDamage/Health/Speed/AttackRate/SpawnCount/Size → trained-unit stats; bounty money → kill-reward pool (see mapping table)
@@ -469,9 +471,18 @@ Dev/test units (skip): Animated Unit Rig Test, Animated Unit Test, Artemis, Chon
 
 Dev/test buildings (skip): Blender, Farm, LARGE Farm, LARGE ProPyramids, Mitosis, Providence Station, Space Elevator, Test Mutation Vehicle Depot, Test Unit Building, Tribute to Honor
 
-## 🧬 Traits — original game (full stats in `ref/traits-original.txt`, dump 1/4)
+### Models (building 3D dumps 1–4/4 — `uploads/Buildings_01_of_04.txt` … `04`)
+172 buildings (50+50+50+22), 1884 parts (~11/building: 1841 MeshPart, 42 Part, 1 UnionOperation).
+Line format per building: `[Name]` → `ROOT|x,y,z` (world position, ignore) → `bounds|Part|w,h,d|…|a=1|c=1,0,0` (**red = canonical footprint box**) → one line per part: `name|type|sx,sy,sz|px,py,pz|rx,ry,rz|m=meshId|c=r,g,b`.
+Scale: footprints median 5.5×5.5 studs, true mesh extents median 6.9×6.1×3.5 (W×D×H).
+Caveats: 17 buildings have `bounds` ≪ model (anchor poles, e.g. Global Command Post); same for Missile Turret — its parts were dumped ~1210 studs from ROOT, so `bounds`/`extra` (4×3.8) is the footprint, never the raw extent. Only 1 `extra` (white) box exists (Missile Turret).
+Name match vs our 100: **38 exact** (all production ladder steps, Bank, Depot, Barracks, Pentagon, Airship Docks, Submarine Cavern, Centurion Support Site…) + 4 near (Field Hospital ~ Hospital, Tank Factory ~ Light Tank Factory, B-2 Hangar ~ Stealth Hangar, Heavy Barracks ~ Barracks). Most original unit buildings have different names than ours (Vehicle Depot, Drone Center…).
+Trait-relevant models (W×D footprint, H height): Logistics Warehouse 3.1×3.2 / Hub 4.5×3.3 / Center 6.3×4.5 (three growing tiers — the Logistics trait pool's buildings); Missile Turret 4×3.8 (the MissileTurret pool's building); Supply Depot 4×5; Bank 5.2×3.5; Centurion Support Site bounds 15×15 but model 25×28 (overhangs); Submarine Cavern model 12.4 tall vs 3.0 bounds (arch above the box).
+Size-trait grounding: `bounds` = base size; Tiny ×0.5–0.9 and Titanic ×1.05–1.5 multiply it (see 🧬 Traits mapping table).
 
-80 traits in 4 roll pools (`TraitsConfig`: Production / Unit / Logistics / MissileTurret + a flat `Test` table).
+## 🧬 Traits — original game (full stats in `ref/traits-original.txt`)
+
+80 traits in 4 roll pools (`TraitsConfig`: Production / Unit / Logistics / MissileTurret + a flat `Test` table). Building models/footprints: 🏗️ Models above (`uploads/Buildings_01..04_of_04.txt`).
 Trait rarity ladder: Common → Uncommon → Rare → Epic → Legendary → Mythic → **Unique** (no Limited/Rebirth traits).
 Every roll: 10% chance of **2 traits** instead of 1 (never duplicates).
 
@@ -492,7 +503,7 @@ Inside a rarity the low tier has ×2 weight, the high tier ×1 (e.g. Epic: Overc
 |---|---|---|
 | ResourceProduction | +fraction income (0.2 = +20%) | `BUILD.income` multiplier |
 | IncomeSpeed | payout cycle ÷ (1+speed): 0.25→−20% ✓, 2→−2/3 ✓, 3→−3/4 ✓, 4→−4/5 (Arctic desc says −3/4, ≈) | `BUILD.cycle` divisor |
-| size | structure draw scale (Tiny ×0.5–0.9, Titanic ×1.05–1.5) | `bScale()` / footprint |
+| size | structure draw scale (Tiny ×0.5–0.9, Titanic ×1.05–1.5) applied to the `bounds` footprint from 🏗️ Models | `bScale()` / footprint |
 | unit UnitDamage / UnitHealth / UnitSpeed / UnitAttackRate | +fraction on trained units (0.5 = +50%) | `UNITS` dmg/hp/speed/rate at spawn |
 | unit UnitSpawnCount | +N units per cycle (Rapid Response +1/+2, Void +3) | `spawnEvery` batch |
 | unit UnitSize | ±N troop-cap slots (Supply −1..−3, Gloom −2, Ghostly −1, Void +3) | `unitSize()` |
@@ -517,7 +528,7 @@ Inside a rarity the low tier has ×2 weight, the high tier ×1 (e.g. Epic: Overc
 | Uniques ×8 | Sandstorm · Lightning · Arctic · Gloom · Ghostly · Awakened · Unstable · Void (see ref) | — |
 
 Quirks in the dump: Titanic VIII says hp +40% but the value is 0.8 (+80%); Unstable hides ResourceProduction 10 with no mention in its desc; `Reference Trait` (Mythic, all-2s) is dev/test — skip.
-Missing from dump 1/4: MissileTurret trait definitions (Weaponized / Supersonic / Accuracy), reroll costs/rules, collector system stats.
+Missing from the trait paste: MissileTurret trait definitions (Weaponized / Supersonic / Accuracy), reroll costs/rules, collector system stats. (Missile Turret + Logistics *models* ARE in `uploads/Buildings_02_of_04.txt` / `01` — see 🏗️ Models.)
 
 ## 🗺️ Maps
 ### Reference screenshot (`ref-map-original.png`) — observations

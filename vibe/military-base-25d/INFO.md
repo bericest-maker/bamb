@@ -20,14 +20,14 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 | Nested helpers without description (11) | ✅ none |
 | Admin methods without description (30) | ✅ none |
 | Event bindings without description (35) | ✅ none |
-| Files without description (87) | ✅ none |
+| Files without description (91) | ✅ none |
 | Buildings/units without a sprite (155) | ✅ none |
 
 ## 📝 Changelog (newest first)
 
 | Date | Change |
 |---|---|
-| 2026-09-28 | **DOCS: TRAIT GOALS (dump 1/4).** No gameplay change. Saved the user's 80-trait dump + decompiled `TraitsConfig` as `ref/traits-original.txt` and added a roadmap spec: NOTES.md → new GOALS subsection `Traits & reroll` (pools per building model, rarity weights, 10% double trait, stat mapping, collector gap, reroll design, UI, save) + a `🧬 Traits` index (Production/Unit/Logistics/MissileTurret pools, field→model mapping table, family ladders). Missing from 1/4: MissileTurret trait defs, reroll costs/rules, collector stats. |
+| 2026-09-28 | **DOCS: TRAIT GOALS + BUILDING MODELS.** No gameplay change. Saved the user's 80-trait paste + decompiled `TraitsConfig` as `ref/traits-original.txt` and added a roadmap spec: NOTES.md → new GOALS subsection `Traits & reroll` (pools per building model, rarity weights, 10% double trait, stat mapping, collector gap, reroll design, UI, save) + a `🧬 Traits` index (Production/Unit/Logistics/MissileTurret pools, field→model mapping table, family ladders). Pulled the user's `uploads/Buildings_01..04_of_04.txt` (172 original buildings as 3D-model dumps, 1884 parts) and indexed them in NOTES.md → `🏗️ Models`: bounds = canonical footprint (median 5.5×5.5 studs), 38/100 exact name matches with our roster, Logistics 3-tier + Missile Turret footprints for the trait pools, Tiny/Titanic scale the bounds. Missing from the trait paste: MissileTurret trait defs, reroll costs/rules, collector stats. |
 | 2026-09-27 | **v8.10: BOSS SPAWN CENTER.** Bosses now spawn at the exact world/map centre (`MAP_C`, the CITY center) instead of a random offset within the city. This applies to the automatic timer and ADMIN summon; the worm still attacks after surfacing. Smoke verifies the default and custom-HP spawns are exact. |
 | 2026-09-27 | **v8.9: UNIT VISUAL POLISH.** The full roster gets a cohesive sprite pass: faction-colored infantry gain fitted vests, kit and clearer rifles; tanks and support vehicles get layered hulls, tracks, wheels, hatches and weapons; helicopters and aircraft gain cockpit glass, panel lines and rotor/engine detail; ships gain portholes, deck edges and sharper turrets. A cached, alpha-clipped sheen/shadow pass adds depth to unit sprites only. Sprite dimensions and gameplay are unchanged; buildings and exact-size Blocks mode are untouched. Smoke draws every registered unit through the cache. |
 | 2026-09-27 | **v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red. |
@@ -66,10 +66,10 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 168.9 KB | 2091 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 47.9 KB | 554 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 169.0 KB | 2091 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 50.2 KB | 565 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 73.4 KB | 701 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 74.2 KB | 705 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
 | `military-base-25d/smoke.js` | 55.5 KB | 852 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
@@ -141,9 +141,13 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/units/04-ai.js` | 13.5 KB | 313 | unit AI: targets, stealth detection, target acquisition, combat, separation |
 | `military-base-25d/js/units/05-combat.js` | 3.3 KB | 74 | damage (class modifiers + armor), kills, building damage, kill payouts |
 | `military-base-25d/ref/buildings-original.txt` | 29.2 KB | 155 | original game's buildings (raw upload) |
-| `military-base-25d/ref/traits-original.txt` | 20.1 KB | 755 | original game's building traits + TraitsConfig roll pools (raw upload, dump 1/4) |
+| `military-base-25d/ref/traits-original.txt` | 20.2 KB | 756 | original game's building traits + TraitsConfig roll pools (raw user paste) |
 | `military-base-25d/ref/units-original.txt` | 21.4 KB | 117 | original game's units (raw upload) |
 | `notes/build-a-military-base-research.md` | 10.1 KB | 140 | web research on the original Roblox game |
+| `uploads/Buildings_01_of_04.txt` | 88.5 KB | 971 | original game building 3D-model dump, part 1/4 (50 buildings: parts, meshes, bounds footprints) |
+| `uploads/Buildings_02_of_04.txt` | 70.1 KB | 822 | original game building 3D-model dump, part 2/4 (50 buildings) |
+| `uploads/Buildings_03_of_04.txt` | 37.3 KB | 521 | original game building 3D-model dump, part 3/4 (50 buildings) |
+| `uploads/Buildings_04_of_04.txt` | 18.6 KB | 263 | original game building 3D-model dump, part 4/4 (22 buildings) |
 | `uploads/Screenshot 2026-09-27 173841.png` | 151.9 KB |  | user upload — reference screenshot of the ORIGINAL game UI (mostly blank capture: shop/home pills, left rail, ATTACK button, quests panel) |
 | `uploads/Vehicle Depot Rarity=Legendary,Buil.txt` | 21.4 KB | 117 | user upload — copy of ref/units-original.txt |
 | `uploads/Vehicle Depot Rarity=Legendary,Buil2.txt` | 29.2 KB | 155 | user upload — copy of ref/buildings-original.txt |
@@ -2050,7 +2054,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Units
   - Textures (sprites)
   - Buildings
-  - Traits & reroll (NEW — full spec in 🧬 Traits below; data: dump 1/4)
+  - Traits & reroll (NEW — full spec in 🧬 Traits below; models in 🏗️ Models below)
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
@@ -2077,7 +2081,8 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Production (48 — sorted by $/s)
   - Units / production buildings (92 — sorted by power requirement)
   - Special
-- 🧬 Traits — original game (full stats in `ref/traits-original.txt`, dump 1/4)
+  - Models (building 3D dumps 1–4/4 — `uploads/Buildings_01_of_04.txt` … `04`)
+- 🧬 Traits — original game (full stats in `ref/traits-original.txt`)
   - Roll pools (pool = building model)
   - Stat fields → our models
   - Trait families (tiers → rarities C/U/R/E/L/M)

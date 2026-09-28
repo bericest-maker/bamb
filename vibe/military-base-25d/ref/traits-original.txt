@@ -1,6 +1,7 @@
-Building traits — original game (user paste, dump 1/4, 2026-09-28)
+Building traits — original game (user paste, 2026-09-28)
 80 traits + TraitsConfig roll pools/weights (Production / Unit / Logistics / MissileTurret + Test).
 Kept verbatim in the user's format; parsed index lives in NOTES.md → 🧬 Traits.
+(Building 3D-model dumps are the separate uploads/Buildings_01..04_of_04.txt files.)
 
 trait: Sandstorm
 rarity: Unique
