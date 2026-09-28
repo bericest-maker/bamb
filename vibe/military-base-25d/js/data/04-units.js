@@ -35,7 +35,7 @@ const UNITS = {
   b52:      {name:'B-52',           cls:['air'],    rar:'limited',  hp:450, dmg:95, rate:3.3, range:390, speed:115, size:5, power:9500, reward:1800, mods:{air:0,stealth:0,armored:2}, armor:4, splash:80},
   zeppelin: {name:'Zeppelin',       cls:['air'],    rar:'limited',  hp:1400,dmg:80, rate:2.6, range:520, speed:36,  size:5, power:15000,reward:3000, mods:{air:0}, armor:20},
   // ----- STEALTH (5) -----
-  spectre:  {name:'Spectre',        cls:['light','stealth'],  rar:'epic',    hp:95,  dmg:15, rate:1.1, range:150, speed:125, size:1, power:700,  reward:320,  mods:{}},
+  spectre:  {name:'Spectre',        cls:['light','stealth'],  rar:'myth',    hp:95,  dmg:15, rate:1.1, range:150, speed:125, size:1, power:700,  reward:320,  mods:{}},
   saboteur: {name:'Saboteur',       cls:['light','stealth'],  rar:'limited', hp:70,  dmg:45, rate:1.6, range:180, speed:115, size:2, power:2600, reward:500,  mods:{air:0,stealth:0}, bld:3},
   phantom:  {name:'Phantom',        cls:['armored','stealth'],rar:'myth',    hp:330, dmg:32, rate:2.5, range:260, speed:100, size:3, power:4600, reward:900,  mods:{air:.5,stealth:0}, armor:6},
   stealthheli:{name:'Stealth Helicopter',cls:['air','stealth'],rar:'limited',hp:210, dmg:21, rate:1.25,range:260, speed:170, size:3, power:5200, reward:1000, mods:{air:.7,light:1.1}},

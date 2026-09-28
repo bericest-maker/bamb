@@ -2,6 +2,11 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.7 \u2014 RARITY AUDIT', date:'2026-09-27', items:[
+    '\uD83D\uDCD6 ORIGINAL RARITIES CHECKED: entries that match the original unit/building lists now use their actual rarity. Fusion Reactor is LIMITED (pink), not MYTHIC (red).',
+    'Corrected the directly matched rarity mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC.',
+    'The rarity badge renders LIMITED as pink with the LIMITED label; new/remake-only items without an original source entry keep their existing rarity.',
+  ]},
   { v:'v8.6 \u2014 LAND ROUTING', date:'2026-09-27', items:[
     '\uD83D\uDEE3\uFE0F BRIDGES ARE REAL LAND: water rescue now checks the exact point at bridge/coast cell edges, so a diagonal road cell sampled as water no longer bounces a soldier back to shore.',
     '\u2693 LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY: ground armies no longer choose water-only RIG capture points as objectives; ships can still capture them as before.',

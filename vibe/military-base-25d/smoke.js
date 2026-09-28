@@ -735,6 +735,15 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   mouseUp();
   const run2=S().buildings.filter(b=>(b.owner??'p')==='p');
   assert(run2.length===5 && S().placing===null && G('invCount')('b','solar')===0,`a run stops at the last one you own (${run2.length} of 5 placed)`);
+  // ---- ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels ----
+  {
+    const expected={oil:'epic',ironmine:'common',data:'myth',research:'legend',fusion:'limited',depot:'rare',hydro:'uncommon',alloy:'legend',offshore:'epic',navalbeacon:'myth'};
+    const wrong=Object.entries(expected).filter(([id,rar])=>G('BUILD')[id]?.rar!==rar);
+    assert(!wrong.length&&G('UNITS').spectre.rar==='myth'&&G('rarRank')(G('BUILD').fusion.rar)>G('rarRank')(G('BUILD').campus.rar),
+      `source rarities corrected (Fusion Reactor LIMITED; Spectre MYTHIC)${wrong.length?': '+wrong.map(([id])=>id).join(', '):''}`);
+  }
+  { const badge=G('rarBadge')('limited');
+    assert(badge.includes('LIMITED')&&badge.includes('#ec407a')&&!badge.includes('#ef5350'),'LIMITED is shown with its pink LIMITED badge, not the red MYTHIC badge'); }
   // ---- AUTO SORT: best rarity first ----
   const order=G('bestFirst')(Object.keys(G('BUILD')),G('BUILD'));
   let mono=true; for(let i=1;i<order.length;i++) if(G('rarRank')(G('BUILD')[order[i-1]].rar)<G('rarRank')(G('BUILD')[order[i]].rar)) mono=false;

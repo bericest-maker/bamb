@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-27 | **v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED (pink), not MYTHIC (red).** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge color/label and Limited-over-Mythic sort order. 249 assertions. |
 | 2026-09-27 | **v8.6: LAND ROUTING FIX.** 🛣️ **BRIDGES ARE REAL LAND** — `WALK` samples 40px cell centres, so points on diagonal bridge/coast edges can be land even when their cell is marked water; water rescue now confirms the exact point near land before teleporting a soldier. ⚓ **LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY** — ground target selection skips water-only capture points, while ships still capture them. Regression tests verify a unit stays on a bridge cell mislabelled as water, a rifle reaches the NE island over the bridge, and land AI never targets a RIG. 247 smoke assertions. |
 | 2026-09-27 | **v8.5: BUILD FLOW UPDATE.** 🧱 **KEEP PLACING** — drop a building and the next one from your backpack stack is handed straight to the cursor, so a whole row goes down without reopening the backpack; when the stack empties it stops and says so (`keepPlacing/refillHand/placeLeft`). 🧱 **SHIFT + DRAG = PLACE A RUN** — hold SHIFT, press and drag out an area: every footprint-sized spot in the rectangle is previewed live (green where it fits, red where it is taken, lifted to the stack level, with a `N × name — let go to place` label) and placed on release (`placeSpots` + `placeRun`); it stops at the last one you own, and it spreads them side by side instead of stacking them. 🧱 **THE BACKPACK STAYS OPEN** while you place — click the next card to switch item. 📋 **AUTO-SORT**: the SHOP (rarity, then cheapest), the BACKPACK (crates first, then best rarity) and both ADMIN lists now run best-rarity-at-the-top automatically (`rarRank` + `bestFirst`). 🐍 **THE WORM**: it surfaces in the MIDDLE (the CITY island) instead of a random bot base, and it FIGHTS — every 4.5s it SLAMS every enemy unit within 210px for 45 and crushes enemy buildings within 260px for 130, with a shockwave and a SLAM! float (`BOSS_SLAM` + `bossSlam`). 🐍 **ADMIN → CUSTOM BOSS HP**: type `5000` / `250K` / `1.5M` and press SET HP — it sets the live worm and every boss that spawns later; empty + SET HP restores the default (`Admin.bossHp`). 🐜 **NO MORE UNIT COLLISION**: troops never block each other now — they only drift apart a little when they end up on top of each other (the don’t-touch nudge), soldiers and ships alike, and the nudge is far too weak to stall a march (it used to shove at ~100px/s and froze columns on bridges). 🐜 **NO MORE DROWNING**: a land unit that ends up in the water is put straight back on the nearest shore (`nearestLand`). 243 smoke assertions. |
 | 2026-09-27 | **v8.4: STACKS & CRATES.** 🧱 **BUILDINGS STACK — UNLIMITED HEIGHT.** Point at a building you already own and the next one lands ON TOP of it instead of being refused: `stackTopAt()` works out how high the pile under the footprint is, `fitsAt()/findFreeSpot()/ghostSlot()/placeBuilding()/placeBuildingRaw()` all take that `lvl`, and `b.lvl` is stored on the building. Level 0 is the ground, every floor above it is lifted `STACK_UP` (24px) and drawn on top of the one below (y-sort, then level); the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are about to build. `buildingAt()` is lift aware, so clicking a stack picks the crate you actually aimed at, and every floor works on its own (4 barracks 4 high = 4 recruits). Bots and mass fills still spread out first: `findFreeSpot()` only climbs a pile when there is no free ground left. Old saves whose footprints now overlap are stacked instead of being returned to the backpack. Admin: `Admin.pile(type,n)` builds a tower n high. 📦 **THE BACKPACK STACKS.** One card per item with an ×N badge: `giveItem/takeItem/invCount/invFind` merge and split stacks, `mergeInventory()` folds old per-item saves, and building cards place one at a time. 🎁 **BULK CRATE OPENING.** Clicking a crate stack asks "open how many?" (1 / 5 / 10 / ALL — `askOpenCount()`), then `openCrateModal(ct,n)` rolls them all and lists every win, rarest first, with ×counts and rarity colours. 💎 **THE ROBUX SHOP WORKS** — it used to call a `renderRobux()` that did not exist, so the tab threw; it now sells Standard / Elite / Premium crates for cash (1 or 10 at a time). 217 smoke assertions. |
@@ -62,12 +63,12 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
 | `military-base-25d/INFO.md` | 165.4 KB | 2073 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 40.5 KB | 475 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/NOTES.md` | 41.2 KB | 480 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 70.5 KB | 693 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 71.1 KB | 694 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
-| `military-base-25d/smoke.js` | 54.3 KB | 838 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
+| `military-base-25d/smoke.js` | 55.1 KB | 847 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
 | `military-base-25d/style.css` | 19.1 KB | 293 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
 | `military-base-25d/test-stubs.js` | 3.3 KB | 78 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
@@ -129,7 +130,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
 | `military-base-25d/js/ui/09-input.js` | 8.2 KB | 191 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 10.4 KB | 88 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/10-patch-notes.js` | 11.1 KB | 93 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.2 KB | 32 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 3.4 KB | 55 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
@@ -218,7 +219,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
 | 61 | `js/ui/09-input.js` | 190 | input: minimap, keyboard, mouse | 5 |
-| 62 | `js/ui/10-patch-notes.js` | 87 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 62 | `js/ui/10-patch-notes.js` | 92 | the 📜 PATCHES panel (what changed in each build) | 1 |
 | 63 | `js/admin/01-admin.js` | 305 | admin panel (window.Admin) | 0 |
 | 64 | `js/core/07-loop.js` | 123 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
 | 65 | `js/core/08-init.js` | 69 | init: load save → migrate → start | 1 |
@@ -239,7 +240,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/buildings/` | 5 | 331 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 554 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
 | `js/render/` | 5 | 572 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 689 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/ui/` | 10 | 694 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
 | `js/admin/` | 1 | 305 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
@@ -335,7 +336,7 @@ Classes (a unit can have several): 🪖 **LIGHT** · 🛡️ **ARMORED** · ✈�
 | `ac130` | AC-130 | air | limited | 420 | 17 | 1 | 17.0 | 390 | 80 | 4 | 4 | armored ×1.2, stealth ×0 | – | 8500 | 1600 | `pentagon` |
 | `b52` | B-52 | air | limited | 450 | 95 | 3.3 | 28.8 | 390 | 115 | 5 | 4 | air ×0, stealth ×0, armored ×2 | splash 80 | 9500 | 1800 | `bomberbase` |
 | `zeppelin` | Zeppelin | air | limited | 1400 | 80 | 2.6 | 30.8 | 520 | 36 | 5 | 20 | air ×0 | – | 15000 | 3000 | `zeppeldock` |
-| `spectre` | Spectre | light/stealth | epic | 95 | 15 | 1.1 | 13.6 | 150 | 125 | 1 | 0 | – | – | 700 | 320 | `stealthlab` |
+| `spectre` | Spectre | light/stealth | myth | 95 | 15 | 1.1 | 13.6 | 150 | 125 | 1 | 0 | – | – | 700 | 320 | `stealthlab` |
 | `saboteur` | Saboteur | light/stealth | limited | 70 | 45 | 1.6 | 28.1 | 180 | 115 | 2 | 0 | air ×0, stealth ×0 | bld ×3 | 2600 | 500 | `saboteurcamp` |
 | `phantom` | Phantom | armored/stealth | myth | 330 | 32 | 2.5 | 12.8 | 260 | 100 | 3 | 6 | air ×0.5, stealth ×0 | – | 4600 | 900 | `phantomgarage` |
 | `stealthheli` | Stealth Helicopter | air/stealth | limited | 210 | 21 | 1.25 | 16.8 | 260 | 170 | 3 | 0 | air ×0.7, light ×1.1 | – | 5200 | 1000 | `monitoring` |
@@ -372,24 +373,24 @@ Roster: light 15 · armored 22 · air 16 · stealth 7 · total 55
 |---|---|---|---|---|---|---|---|---|---|
 | `solar` | Solar Array | $300 | 3×2 | 1 | 3 | 150 | – | common | $1/s passive income |
 | `wind` | Wind Turbine | $650 | 3×2 | 2 | 6 | 160 | – | common | $2/s — spins in the sea breeze |
-| `oil` | Oil Drill | $1k | 3×2 | 4 | 10 | 250 | – | common | $4/s passive income |
-| `ironmine` | Iron Mines | $1.6k | 3×2 | 5 | 14 | 300 | – | uncommon | $5/s — dig dig dig |
+| `oil` | Oil Drill | $1k | 3×2 | 4 | 10 | 250 | – | epic | $4/s passive income |
+| `ironmine` | Iron Mines | $1.6k | 3×2 | 5 | 14 | 300 | – | common | $5/s — dig dig dig |
 | `steel` | Steel Factory | $3.5k | 4×2 | 10 | 30 | 420 | 100 PWR | uncommon | $10/s |
-| `data` | Data Center | $5k | 3×2 | 15 | 50 | 400 | – | rare | $15/s passive income |
+| `data` | Data Center | $5k | 3×2 | 15 | 50 | 400 | – | myth | $15/s passive income |
 | `cookie` | Cookie Stand | $8k | 3×2 | 6 | 20 | 200 | – | rare | $6/s • who needs a cookie stand in a military base? |
 | `refinery` | Refinery | $12k | 4×2 | 32 | 120 | 600 | 1000 PWR | rare | $32/s |
 | `powerplant` | Power Plant | $22k | 4×2 | 55 | 220 | 900 | 1250 PWR | rare | $55/s |
-| `research` | Research Lab | $25k | 3×2 | 45 | 250 | 800 | – | epic | $45/s • looks smart |
+| `research` | Research Lab | $25k | 3×2 | 45 | 250 | 800 | – | legend | $45/s • looks smart |
 | `industrial` | Industrial Drill | $60k | 4×2 | 120 | 600 | 1200 | 3000 PWR | legend | $120/s • legendary money machine |
 | `skyscraper` | Skyscraper | $180k | 3×2 | 320 | 2000 | 1600 | 20000 PWR | legend | $320/s • corporate HQ of war |
-| `fusion` | Fusion Reactor | $600k | 4×2 | 1000 | 8000 | 2400 | 100000 PWR | myth | $1,000/s • tiny sun, big money |
+| `fusion` | Fusion Reactor | $600k | 4×2 | 1000 | 8000 | 2400 | 100000 PWR | limited | $1,000/s • tiny sun, big money |
 | `goldenTurbine` | Golden Wind Turbine | crate only | 3×2 | 400 | 12000 | 2000 | – | gold | $400/s • survives rebirth • crate only |
 | `advsolar` | Advanced Solar Array | $6k | 4×2 | 14 | 90 | 320 | – | uncommon | $14/s • bigger panels, same sunshine |
-| `hydro` | Hydroponics Facility | $12k | 4×2 | 24 | 180 | 400 | 800 PWR | rare | $24/s • salads for the whole army |
+| `hydro` | Hydroponics Facility | $12k | 4×2 | 24 | 180 | 400 | 800 PWR | uncommon | $24/s • salads for the whole army |
 | `gastank` | Gas Storage Tank | $28k | 4×2 | 52 | 420 | 700 | 2000 PWR | rare | $52/s • big tank, big money |
-| `alloy` | Alloy Foundry | $90k | 4×2 | 150 | 1400 | 1400 | 8000 PWR | epic | $150/s • melts anything |
-| `offshore` | Offshore Oil Rig | $260k | 4×2 | 420 | 4500 | 1800 | 25000 PWR | legend | $420/s • drills under the lagoon |
-| `navalbeacon` | Naval Beacon | $600k | 3×2 | 900 | 12000 | 2000 | 60000 PWR | legend | $900/s • lights up the shipping lanes |
+| `alloy` | Alloy Foundry | $90k | 4×2 | 150 | 1400 | 1400 | 8000 PWR | legend | $150/s • melts anything |
+| `offshore` | Offshore Oil Rig | $260k | 4×2 | 420 | 4500 | 1800 | 25000 PWR | epic | $420/s • drills under the lagoon |
+| `navalbeacon` | Naval Beacon | $600k | 3×2 | 900 | 12000 | 2000 | 60000 PWR | myth | $900/s • lights up the shipping lanes |
 | `particle` | Particle Accelerator | $1.5M | 4×2 | 2200 | 32000 | 2600 | 150000 PWR | legend | $2,200/s • science that pays |
 | `campus` | Corporate Campus | $5M | 4×2 | 6500 | 95000 | 3200 | 500000 PWR | myth | $6,500/s • quarterly war profits |
 | `automated` | Automated Factory | $14M | 5×3 | 16000 | 280000 | 4000 | 1500000 PWR | myth | $16,000/s • no workers, no strikes |
@@ -441,7 +442,7 @@ Roster: light 15 · armored 22 · air 16 · stealth 7 · total 55
 | `pentagon` | Pentagon | air | AC-130 | 45 | $800k | 5×3 | 70000 | 2600 | 80000 | limited | pentagon |
 | `bomberbase` | Bomber Base | air | B-52 | 50 | $1M | 5×3 | 90000 | 2200 | 100000 | limited | hangar |
 | `zeppeldock` | Airship Docks | air | Zeppelin | 60 | $1.5M | 4×2 | 150000 | 2500 | 150000 | limited | hand-drawn |
-| `stealthlab` | Stealth Bay | stealth | Spectre | 22 | $15k | 4×2 | 3000 | 800 | 3000 | epic | hand-drawn |
+| `stealthlab` | Stealth Bay | stealth | Spectre | 22 | $15k | 4×2 | 3000 | 800 | 3000 | myth | hand-drawn |
 | `saboteurcamp` | Sentinel Training Center | stealth | Saboteur | 30 | $250k | 4×2 | 22000 | 1200 | 35000 | limited | lab |
 | `phantomgarage` | Phantom Garage | stealth | Phantom | 35 | $450k | 4×2 | 40000 | 1500 | 50000 | myth | garage |
 | `monitoring` | Monitoring Center | stealth | Stealth Helicopter | 35 | $600k | 4×2 | 50000 | 1500 | 70000 | limited | pad |
@@ -459,7 +460,7 @@ Roster: light 15 · armored 22 · air 16 · stealth 7 · total 55
 | id | Name | Cost | Size | $/s | Power | HP | Needs | Rarity | Info |
 |---|---|---|---|---|---|---|---|---|---|
 | `logistics` | Logistics Warehouse | $2.5k | 4×2 | 0 | 25 | 300 | – | common | +10% total income (max 5 count) |
-| `depot` | Supply Depot | $2k | 3×2 | 0 | 20 | 300 | – | common | +10 troop capacity (max 100) |
+| `depot` | Supply Depot | $2k | 3×2 | 0 | 20 | 300 | – | rare | +10 troop capacity (max 100) |
 | `pillbox` | Pillbox | $8k | 3×2 | 0 | 400 | 900 | – | uncommon | Defence turret • shoots ground units (not air) |
 | `radar` | Radar Station | $20k | 3×2 | 0 | 800 | 500 | – | rare | Reveals STEALTH enemies within 450px for your army |
 | `aaturret` | SAM Site | $30k | 3×2 | 0 | 1500 | 700 | 2000 PWR | epic | Anti-air turret • only shoots AIR |
@@ -1114,7 +1115,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 72 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 77 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -1788,7 +1789,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 256 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
 | 279 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
 
-## ✔️ Smoke test assertions (237)
+## ✔️ Smoke test assertions (238)
 
 | Line | Group | Asserts |
 |---|---|---|
@@ -2012,23 +2013,24 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 727 | SHIFT + DRAG = lay a whole run | +b.gy)).size===run.length,'a drag spreads them SIDE BY SIDE (nothing stacked by accident) |
 | 728 | SHIFT + DRAG = lay a whole run | solar')+run.length+(S().placing?1:0)===30,'every panel of the run came out of the backpack stack |
 | 737 | SHIFT + DRAG = lay a whole run | solar')===0,`a run stops at the last one you own (… of 5 placed) |
-| 748 | AUTO SORT: best rarity first | the SHOP shows the best first (…) |
-| 750 | AUTO SORT: best rarity first | the ADMIN building list starts with the golden items |
-| 755 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces in the MIDDLE (…px from the city centre) |
-| 760 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm SLAMS everything around it (hp … → …) |
-| 763 | admin custom boss HP | admin set a custom boss HP (…) |
-| 765 | admin custom boss HP | the NEXT boss spawns with that HP too |
-| 768 | admin custom boss HP | clearing the box puts the boss HP back to default |
-| 772 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
-| 774 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
-| 783 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
-| 787 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
-| 795 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
-| 805 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
-| 815 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
-| 816 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
-| 827 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
-| 829 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
+| 746 | ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels | LIMITED is shown with its pink LIMITED badge, not the red MYTHIC badge |
+| 757 | AUTO SORT: best rarity first | the SHOP shows the best first (…) |
+| 759 | AUTO SORT: best rarity first | the ADMIN building list starts with the golden items |
+| 764 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces in the MIDDLE (…px from the city centre) |
+| 769 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm SLAMS everything around it (hp … → …) |
+| 772 | admin custom boss HP | admin set a custom boss HP (…) |
+| 774 | admin custom boss HP | the NEXT boss spawns with that HP too |
+| 777 | admin custom boss HP | clearing the box puts the boss HP back to default |
+| 781 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
+| 783 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
+| 792 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
+| 796 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
+| 804 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
+| 814 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
+| 824 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
+| 825 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
+| 836 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
+| 838 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
 
 ## 🗒️ NOTES.md outline
 
@@ -2044,6 +2046,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
+  - Rarity audit (v8.7)
   - Land routing (v8.6)
   - Build flow, boss & movement (v8.5)
   - Stacking & crates (v8.4)

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Build a Military Base 2.5D — v8 PERFORMANCE &amp; PEACE UPDATE</title>
+<title>Build a Military Base 2.5D — v8.7 RARITY AUDIT</title>
 <style>
 :root{--panel:#232b3b;--panel2:#1b2230;--line:#3d4763;--line2:#4a5578;--txt:#eef2f8;--dim:#9aa7bd;--gold:#f5b53f;--green:#5bc24e;--blue:#4a90e2;--red:#d6493f}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -28,13 +28,23 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 .tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
 </style></head><body><div class="wrap">
 <h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
-<div class="sub">v8.6 · LAND ROUTING FIX · diagonal bridges no longer bounce soldiers into the sea · land armies leave offshore RIGs to ships · <span class="dim">fan project, not affiliated with Roblox</span></div>
+<div class="sub">v8.7 · RARITY AUDIT · Limiteds match the original game list · Fusion Reactor is pink LIMITED, not red Mythic · <span class="dim">fan project, not affiliated with Roblox</span></div>
 
 <a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
 <a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
 <a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
 
-<div class="card"><h2>WHAT CHANGED (v8.6 — this round)</h2>
+<div class="card"><h2>WHAT CHANGED (v8.7 — this round)</h2>
+<div>
+<span class="tag sea">Limiteds verified</span><span class="tag new">Fusion Reactor → LIMITED</span><span class="tag">249 smoke assertions</span>
+</div>
+<ul>
+<li><b>📖 RARITIES CHECKED AGAINST THE ORIGINAL LISTS.</b> Fusion Reactor is <b>LIMITED</b> (pink), not <b>MYTHIC</b> (red). Limited items use the LIMITED badge and sort above Mythic.</li>
+<li>Other source-matched labels corrected: Oil Drill Epic, Iron Mines Common, Data Center Mythic, Research Lab Legendary, Supply Depot Rare, Hydroponics Facility Uncommon, Alloy Foundry Legendary, Offshore Oil Rig Epic, Naval Beacon Mythic, and Spectre Mythic.</li>
+<li>New/remake-only items without an original-list match keep their current rarity.</li>
+</ul></div>
+
+<div class="card"><h2>WHAT CHANGED (v8.6 — previous round)</h2>
 <div>
 <span class="tag new">diagonal bridge fix</span><span class="tag sea">land AI skips sea-only RIGs</span><span class="tag">247 smoke assertions</span>
 </div>
@@ -155,5 +165,5 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 <li><b>TRY THE BUILD FLOW:</b> buy 10 solar panels → BACKPACK → click the card once → click, click, click (you keep placing). Or hold <b>SHIFT</b> and drag across your plot to lay a whole row at once.</li>
 <li><b>TRY THE WORM:</b> F1 → ADMIN → BOSS → SUMMON (it surfaces in the CITY now). Type a number in <b>CUSTOM HP</b> and press SET HP to make it as tanky as you like.</li>
 </ul></div>
-<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (247 assertions, all green)</div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (249 assertions, all green)</div>
 </div></body></html>
