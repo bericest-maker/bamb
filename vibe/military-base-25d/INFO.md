@@ -27,7 +27,8 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
-| 2026-09-27 | **v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED (pink), not MYTHIC (red).** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge color/label and Limited-over-Mythic sort order. 249 assertions. |
+| 2026-09-27 | **v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red. |
+| 2026-09-27 | **v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED, not MYTHIC (red); v8.8 corrects its color to cyan.** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge label and Limited-over-Mythic sort order; v8.8 sets its color to cyan. 249 assertions. |
 | 2026-09-27 | **v8.6: LAND ROUTING FIX.** 🛣️ **BRIDGES ARE REAL LAND** — `WALK` samples 40px cell centres, so points on diagonal bridge/coast edges can be land even when their cell is marked water; water rescue now confirms the exact point near land before teleporting a soldier. ⚓ **LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY** — ground target selection skips water-only capture points, while ships still capture them. Regression tests verify a unit stays on a bridge cell mislabelled as water, a rifle reaches the NE island over the bridge, and land AI never targets a RIG. 247 smoke assertions. |
 | 2026-09-27 | **v8.5: BUILD FLOW UPDATE.** 🧱 **KEEP PLACING** — drop a building and the next one from your backpack stack is handed straight to the cursor, so a whole row goes down without reopening the backpack; when the stack empties it stops and says so (`keepPlacing/refillHand/placeLeft`). 🧱 **SHIFT + DRAG = PLACE A RUN** — hold SHIFT, press and drag out an area: every footprint-sized spot in the rectangle is previewed live (green where it fits, red where it is taken, lifted to the stack level, with a `N × name — let go to place` label) and placed on release (`placeSpots` + `placeRun`); it stops at the last one you own, and it spreads them side by side instead of stacking them. 🧱 **THE BACKPACK STAYS OPEN** while you place — click the next card to switch item. 📋 **AUTO-SORT**: the SHOP (rarity, then cheapest), the BACKPACK (crates first, then best rarity) and both ADMIN lists now run best-rarity-at-the-top automatically (`rarRank` + `bestFirst`). 🐍 **THE WORM**: it surfaces in the MIDDLE (the CITY island) instead of a random bot base, and it FIGHTS — every 4.5s it SLAMS every enemy unit within 210px for 45 and crushes enemy buildings within 260px for 130, with a shockwave and a SLAM! float (`BOSS_SLAM` + `bossSlam`). 🐍 **ADMIN → CUSTOM BOSS HP**: type `5000` / `250K` / `1.5M` and press SET HP — it sets the live worm and every boss that spawns later; empty + SET HP restores the default (`Admin.bossHp`). 🐜 **NO MORE UNIT COLLISION**: troops never block each other now — they only drift apart a little when they end up on top of each other (the don’t-touch nudge), soldiers and ships alike, and the nudge is far too weak to stall a march (it used to shove at ~100px/s and froze columns on bridges). 🐜 **NO MORE DROWNING**: a land unit that ends up in the water is put straight back on the nearest shore (`nearestLand`). 243 smoke assertions. |
 | 2026-09-27 | **v8.4: STACKS & CRATES.** 🧱 **BUILDINGS STACK — UNLIMITED HEIGHT.** Point at a building you already own and the next one lands ON TOP of it instead of being refused: `stackTopAt()` works out how high the pile under the footprint is, `fitsAt()/findFreeSpot()/ghostSlot()/placeBuilding()/placeBuildingRaw()` all take that `lvl`, and `b.lvl` is stored on the building. Level 0 is the ground, every floor above it is lifted `STACK_UP` (24px) and drawn on top of the one below (y-sort, then level); the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are about to build. `buildingAt()` is lift aware, so clicking a stack picks the crate you actually aimed at, and every floor works on its own (4 barracks 4 high = 4 recruits). Bots and mass fills still spread out first: `findFreeSpot()` only climbs a pile when there is no free ground left. Old saves whose footprints now overlap are stacked instead of being returned to the backpack. Admin: `Admin.pile(type,n)` builds a tower n high. 📦 **THE BACKPACK STACKS.** One card per item with an ×N badge: `giveItem/takeItem/invCount/invFind` merge and split stacks, `mergeInventory()` folds old per-item saves, and building cards place one at a time. 🎁 **BULK CRATE OPENING.** Clicking a crate stack asks "open how many?" (1 / 5 / 10 / ALL — `askOpenCount()`), then `openCrateModal(ct,n)` rolls them all and lists every win, rarest first, with ×counts and rarity colours. 💎 **THE ROBUX SHOP WORKS** — it used to call a `renderRobux()` that did not exist, so the tab threw; it now sells Standard / Elite / Premium crates for cash (1 or 10 at a time). 217 smoke assertions. |
@@ -62,10 +63,10 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 165.4 KB | 2073 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 41.2 KB | 480 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 166.2 KB | 2076 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 41.5 KB | 484 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 71.1 KB | 694 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 71.5 KB | 695 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
 | `military-base-25d/smoke.js` | 55.1 KB | 847 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
@@ -130,7 +131,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
 | `military-base-25d/js/ui/09-input.js` | 8.2 KB | 191 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 11.1 KB | 93 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/10-patch-notes.js` | 11.6 KB | 98 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.2 KB | 32 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 3.4 KB | 55 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
@@ -219,7 +220,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
 | 61 | `js/ui/09-input.js` | 190 | input: minimap, keyboard, mouse | 5 |
-| 62 | `js/ui/10-patch-notes.js` | 92 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 62 | `js/ui/10-patch-notes.js` | 97 | the 📜 PATCHES panel (what changed in each build) | 1 |
 | 63 | `js/admin/01-admin.js` | 305 | admin panel (window.Admin) | 0 |
 | 64 | `js/core/07-loop.js` | 123 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
 | 65 | `js/core/08-init.js` | 69 | init: load save → migrate → start | 1 |
@@ -240,7 +241,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/buildings/` | 5 | 331 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 554 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
 | `js/render/` | 5 | 572 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 694 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/ui/` | 10 | 699 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
 | `js/admin/` | 1 | 305 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
@@ -594,7 +595,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 | `epic` | EPIC | `#a35ad6` |
 | `legend` | LEGENDARY | `#f5a53f` |
 | `myth` | MYTHIC | `#ef5350` |
-| `limited` | LIMITED | `#ec407a` |
+| `limited` | LIMITED | `#00e5ff` |
 | `unique` | UNIQUE | `#26c6da` |
 | `rebirth` | REBIRTH | `#ff7043` |
 | `gold` | GOLDEN | `#ffd54f` |
@@ -1115,7 +1116,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 77 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 82 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -2013,7 +2014,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 727 | SHIFT + DRAG = lay a whole run | +b.gy)).size===run.length,'a drag spreads them SIDE BY SIDE (nothing stacked by accident) |
 | 728 | SHIFT + DRAG = lay a whole run | solar')+run.length+(S().placing?1:0)===30,'every panel of the run came out of the backpack stack |
 | 737 | SHIFT + DRAG = lay a whole run | solar')===0,`a run stops at the last one you own (… of 5 placed) |
-| 746 | ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels | LIMITED is shown with its pink LIMITED badge, not the red MYTHIC badge |
+| 746 | ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels | LIMITED is shown in cyan, not pink or red MYTHIC |
 | 757 | AUTO SORT: best rarity first | the SHOP shows the best first (…) |
 | 759 | AUTO SORT: best rarity first | the ADMIN building list starts with the golden items |
 | 764 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces in the MIDDLE (…px from the city centre) |
@@ -2046,6 +2047,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
+  - Limited color (v8.8)
   - Rarity audit (v8.7)
   - Land routing (v8.6)
   - Build flow, boss & movement (v8.5)

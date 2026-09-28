@@ -743,7 +743,7 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
       `source rarities corrected (Fusion Reactor LIMITED; Spectre MYTHIC)${wrong.length?': '+wrong.map(([id])=>id).join(', '):''}`);
   }
   { const badge=G('rarBadge')('limited');
-    assert(badge.includes('LIMITED')&&badge.includes('#ec407a')&&!badge.includes('#ef5350'),'LIMITED is shown with its pink LIMITED badge, not the red MYTHIC badge'); }
+    assert(badge.includes('LIMITED')&&badge.includes('#00e5ff')&&!badge.includes('#ef5350')&&!badge.includes('#ec407a'),'LIMITED is shown in cyan, not pink or red MYTHIC'); }
   // ---- AUTO SORT: best rarity first ----
   const order=G('bestFirst')(Object.keys(G('BUILD')),G('BUILD'));
   let mono=true; for(let i=1;i<order.length;i++) if(G('rarRank')(G('BUILD')[order[i-1]].rar)<G('rarRank')(G('BUILD')[order[i]].rar)) mono=false;

@@ -83,10 +83,14 @@
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
+### Limited color (v8.8)
+- [x] **LIMITED is cyan** — the Limited badge, card border, tooltip name, and admin text use bright cyan (`#00e5ff`); Mythic stays red and Limited stays above Mythic in the sorted lists.
+- [x] **Smoke-verified** — Limited renders the `LIMITED` label in cyan, never the old pink or Mythic red.
+
 ### Rarity audit (v8.7)
-- [x] **Limiteds match the original list** — checked current units/buildings against `ref/units-original.txt` and `ref/buildings-original.txt`; Fusion Reactor is **LIMITED** (pink), not Mythic (red).
+- [x] **Limiteds match the original list** — checked current units/buildings against `ref/units-original.txt` and `ref/buildings-original.txt`; Fusion Reactor is **LIMITED**, not Mythic (red).
 - [x] **Other direct source mismatches corrected** — Oil Drill Epic, Iron Mines Common, Data Center Mythic, Research Lab Legendary, Supply Depot Rare, Hydroponics Facility Uncommon, Alloy Foundry Legendary, Offshore Oil Rig Epic, Naval Beacon Mythic, and Spectre Mythic. Added/remake-only items with no source match were left unchanged.
-- [x] **LIMITED badge & sort verified** — the badge says LIMITED in pink, and Limited ranks above Mythic in the auto-sorted lists; `node smoke.js` passes 249 assertions.
+- [x] **LIMITED badge & sort verified** — the badge says LIMITED, and Limited ranks above Mythic in the auto-sorted lists; `node smoke.js` passes 249 assertions.
 
 ### Land routing (v8.6)
 - [x] **Bridge water-rescue fix** — `WALK` samples 40px cell centres, so valid points near diagonal bridge edges can be in cells labelled water. The rescue check now confirms the exact point whenever land is nearby; smoke verifies a soldier is not bounced from the bridge.
