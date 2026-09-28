@@ -114,13 +114,18 @@
     <div class="a-sec">🤖 BOT BASES (pick a preset — yours stays yours)</div>
     <div id="aBots" class="a-bots"></div>
 
-    <div class="a-sec">🐍 BOSS</div>
+    <div class="a-sec">🐍 BOSS <span class="a-note">surfaces in the CITY (the middle) and SLAMS everything nearby</span></div>
     <div class="a-row">
       <button class="abtn" onclick="Admin.boss('summon')">SUMMON</button>
       <button class="abtn" onclick="Admin.boss('kill')">KILL + REWARD</button>
       <button class="abtn" onclick="Admin.boss('hp1')">SET 1 HP</button>
       <button class="abtn" onclick="Admin.boss('more')">+10K HP</button>
     </div>
+    <div class="a-row">
+      <input id="aBossHp" class="code-input a-hp" placeholder="CUSTOM HP (5000 / 250K / 2M)" autocomplete="off">
+      <button class="abtn" onclick="Admin.bossHp()">SET HP</button>
+    </div>
+    <div class="a-row"><span class="a-note">CUSTOM HP also applies to every worm that spawns later. Leave it empty and press SET HP to go back to the default.</span></div>
 
     <div class="a-sec">⚠️ WAVES</div>
     <div class="a-row">
@@ -220,7 +225,7 @@
 <div class="panel" id="p-backpack">
   <div class="p-head"><span class="p-title">BACKPACK</span><button class="x" data-close>✕</button></div>
   <div class="p-body">
-    <p class="p-note">Identical items STACK (the badge = how many you hold). Click a building to place one, click a crate to open 1 / 5 / 10 / ALL.</p>
+    <p class="p-note">Identical items STACK (the badge = how many you hold) and the best rarity sits at the top. Click a building to place one — the backpack STAYS OPEN so you can keep placing; <b>SHIFT + drag</b> lays down a whole row/block. Click a crate to open 1 / 5 / 10 / ALL.</p>
     <div class="grid" id="bpGrid"></div>
   </div>
 </div>

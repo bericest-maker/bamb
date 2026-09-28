@@ -53,17 +53,19 @@ function spawnWave(){
 // wave unit pool — unlocks tougher troops as waves go on
 const WAVE_POOL=[[1,['rifle']],[2,['scout','hinf']],[3,['atv']],[5,['humvee','rocket','heli']],[8,['apc','sniper','flak','spectre']],[12,['heavy','jet','cobra']],[18,['phantom','mech']]];
 function wavePool(w){ const out=[]; for(const [at,list] of WAVE_POOL) if(w>=at) out.push(...list); return out; }
+// v8.5: the worm surfaces in the MIDDLE (the CITY island) and slams everything around it (units/04-ai.js)
 function spawnBoss(){
-  const pc=plotCenter(pick(MAP_PLOTS));
-  const x=pc.x+rnd(-120,120), y=pc.y+rnd(-70,70);
+  const x=MAP_C.x+rnd(-110,110), y=MAP_C.y+rnd(-70,70);
   const hpM=1+S.wave*.1;
   const bf=1+Math.floor(Math.random()*7);
   const u=mkUnit('rifle','e',x,y,{boss:true,faction:bf});
   u.type='boss';
-  u.hp=u.maxHp=BOSS.hp*hpM;
+  u.hp=u.maxHp=(S.admin&&S.admin.bossHp>0?S.admin.bossHp:BOSS.hp)*hpM;   // v8.5: admin can set a custom HP
   u.hist=[];
+  u.slam=BOSS_SLAM.every;                       // first slam as soon as it finishes surfacing
   S.units.push(u);
   S.waveAlert=Math.max(S.waveAlert||0,60);
-  toast(`🐍 MECHA WORM emerges from ${BOT_DEFS[bf-1].dir}! KILL IT FOR A PREMIUM CRATE!`,'#ef5350');
+  toast(`🐍 MECHA WORM surfaces in the CITY (${fmt(Math.round(u.maxHp))} HP)! KILL IT FOR A PREMIUM CRATE!`,'#ef5350');
   sfx('horn');
+  addBoom(x,y,3);
 }

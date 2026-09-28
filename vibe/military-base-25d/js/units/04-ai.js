@@ -23,6 +23,7 @@ function targetFor(u){
       if(dd<bd){bd=dd;best={x:c.x,y:c.y,b};}
     }
     if(!best) best={x:CITY_ISL.x,y:CITY_ISL.y};
+    best.defend=true;                                  // v8.5: the worm fights everything it reaches
     return best;
   }
   if(u.side==='e'){
@@ -163,6 +164,27 @@ function findEnemyOf(u,range){
   });
   return best;
 }
+// v8.5: THE WORM FIGHTS — every few seconds it rears up and SLAMS the ground: every enemy unit in
+// range is hit, every enemy building in reach is crushed, with a shockwave + a float so you can see it.
+const BOSS_SLAM = {every:4.5, r:210, dmg:45, bld:130};
+function bossSlam(u,dt){
+  u.slam=(u.slam??BOSS_SLAM.every)-dt;
+  if(u.slam>0) return;
+  u.slam=BOSS_SLAM.every;
+  u.fightT=Math.max(u.fightT,2.5);
+  addBoom(u.x,u.y,3); addParts(u.x,u.y,26,'#c98a4b'); addFloat(u.x,u.y-60,'SLAM!','#ef5350');
+  sfx('boom');
+  forNearFoes(u.x,u.y,BOSS_SLAM.r,u.faction,e=>{
+    if(e.dead||Math.hypot(e.x-u.x,e.y-u.y)>BOSS_SLAM.r) return;
+    damageUnit(e,u,BOSS_SLAM.dmg);
+  });
+  for(const b of S.buildings){
+    if(b.faction!==undefined&&b.faction===u.faction) continue;
+    if(bFaction(b)===u.faction) continue;
+    const c=bPos(b);
+    if(Math.hypot(c.x-u.x,c.y-u.y)<=BOSS_SLAM.r+50) damageBuilding(b,u,BOSS_SLAM.bld);
+  }
+}
 // splash: everyone of other factions within r around (x,y) takes 50% (after mods/armor)
 function splashAt(x,y,r,from,dmg,skip){
   const hit=[];
@@ -188,8 +210,22 @@ function medicTick(u,d){
 function updateUnit(u,dt){
   u.cool-=dt; u.t+=dt;
   u.fightT=Math.max(0,u.fightT-dt);
+  // v8.5: a land unit that ends up in the water is put straight back on the nearest shore (no swimming).
+  // Cheap: the walk-grid cell decides. Only COAST cells (a water cell next door) get the exact walkableAt
+  // test, so an inland crowd costs nothing and nobody is left standing in the surf. Runs before every
+  // early return, so medics and other non-combat troops are rescued too.
+  if(!isAir(u)&&!isSea(u)){
+    const [cx,cy]=cellOf(u.x,u.y), i=cy*GW+cx;
+    let wet=!WALK[i];
+    if(!wet&&(cx<=0||cy<=0||cx>=GW-1||cy>=GH-1||!WALK[i-1]||!WALK[i+1]||!WALK[i-GW]||!WALK[i+GW])) wet=!walkableAt(u.x,u.y);
+    if(wet){
+      const p=nearestLand(u.x,u.y);
+      if(p){ u.x=p.x; u.y=p.y; u.path=null; u._seaExit=null; }
+    }
+  }
   const d = unitDef(u);
   if(d.heal) medicTick(u,d);
+  if(u.boss) bossSlam(u,dt);                           // v8.5: the worm's special attack
   // v5 perf: the strategic target is re-evaluated ~3×/s (instantly when the order changes or the target building dies)
   u._tgT=(u._tgT||0)-dt;
   let tg=u._tg;
@@ -237,11 +273,12 @@ function updateUnit(u,dt){
     const dd=dist(u,{x:tg.x,y:tg.y});
     if(dd>10) stepUnit(u,tg.x,tg.y,d.speed,dt);
   }
-  // v5: soft separation so crowds spread out instead of marching in single-file columns
-  // (grid cells only, stops after 5 neighbours, each unit every other frame → cheap even with 1000+ units)
+  // v8.5: NO COLLISION. Units never block each other any more — they only DRIFT apart a little when they
+  // end up on top of each other (the "don't touch" nudge), the same for soldiers and ships, and the nudge
+  // is far too weak to stop a march. (It used to shove at up to ~100px/s, which stalled columns on bridges.)
   if(UGRID_ON&&!u.boss&&((u.id+SEP_TICK)&1)){
-    if(u._air===undefined){ u._air=isAir(u); u._sz=unitSize(u); }
-    const air=u._air, R=9+5*u._sz, rr0=R+4;
+    if(u._air===undefined){ u._air=isAir(u); u._sz=unitSize(u); u._sea=isSea(u); }
+    const air=u._air, sea=u._sea, R=9+5*u._sz, rr0=R+2;
     let px=0,py=0,n=0;
     const cx0=Math.floor((u.x-R-24)/GRID_C), cx1=Math.floor((u.x+R+24)/GRID_C), cy0=Math.floor((u.y-R-24)/GRID_C), cy1=Math.floor((u.y+R+24)/GRID_C);
     outer: for(let cx=cx0;cx<=cx1;cx++) for(let cy=cy0;cy<=cy1;cy++){
@@ -249,18 +286,20 @@ function updateUnit(u,dt){
       for(let k=0;k<a.length;k++){
         const o=a[k]; if(o===u||o.dead||o.boss) continue;
         const dx=u.x-o.x, dy=u.y-o.y; if(dx>50||dx<-50||dy>50||dy<-50) continue;
-        if(o._air===undefined){ o._air=isAir(o); o._sz=unitSize(o); }
+        if(o._air===undefined){ o._air=isAir(o); o._sz=unitSize(o); o._sea=isSea(o); }
         if(o._air!==air) continue;
-        const rr=rr0+4*o._sz, d2=dx*dx+dy*dy; if(d2>=rr*rr) continue;
+        const rr=rr0+2*o._sz, d2=dx*dx+dy*dy; if(d2>=rr*rr) continue;
         const d=Math.sqrt(d2);
         if(d<.01){ px+=Math.random()-.5; py+=Math.random()-.5; }
         else { const f=(rr-d)/rr; px+=dx/d*f; py+=dy/d*f; }
         if(++n>=5) break outer;
       }
     }
-    if(n){ const k=Math.min(1,dt*12)*R*.5, nx=u.x+px*k, ny=u.y+py*k;
-      const [wx,wy]=cellOf(nx,ny); if(air||WALK[wy*GW+wx]){ u.x=nx; u.y=ny; } }
+    if(n){ const k=Math.min(1,dt*4)*R*.22, nx=u.x+px*k, ny=u.y+py*k;
+      const [wx,wy]=cellOf(nx,ny);
+      if(air||(sea?SEA[wy*GW+wx]:WALK[wy*GW+wx])){ u.x=nx; u.y=ny; } }
   }
+
   // boss history
   if(u.boss){
     u.hist.unshift({x:u.x,y:u.y});

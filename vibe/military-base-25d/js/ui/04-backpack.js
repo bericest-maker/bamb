@@ -15,7 +15,9 @@ function renderBackpack(){
     return;
   }
   // v8.4: identical items STACK — one card per (kind,type) with an ×N badge
-  for(const it of S.inventory){
+  // v8.5: crates first, then best rarity → worst (auto-sorted, no filter needed)
+  const invRank = it => it.kind==='c' ? 1e6 : rarRank((BUILD[it.type]||{}).rar);
+  for(const it of S.inventory.slice().sort((a,b)=>invRank(b)-invRank(a)||String((BUILD[a.type]||{}).name||a.type).localeCompare(String((BUILD[b.type]||{}).name||b.type)))){
     const n=it.n||1;
     const card=document.createElement('div');
     const d=BUILD[it.type]||{name:'?'};
@@ -34,11 +36,10 @@ function renderBackpack(){
                                    : (n>1?`${n} in stock — click to place one`:'Click to place on your plot');
     card.appendChild(sub);
     card.onclick=()=>{
-      if(it.kind==='c'){ askOpenCount(it.type); renderBackpack(); return; }
+      if(it.kind==='c'){ if(S.placing) cancelPlacement(); askOpenCount(it.type); renderBackpack(); return; }
       takeItem('b',it.type,1);
-      closePanel('backpack');
-      startPlacing(it.type);
-      toast(`Placing ${d.name} — click a free plot slot (or on top of another building to STACK it). RMB to cancel.`,'#4a90e2');
+      startPlacing(it.type);            // v8.5: the backpack STAYS OPEN — place it, then click the next card
+      toast(`Placing ${d.name} — click a slot, or another building to STACK on top. SHIFT+DRAG = lay a row. RMB / ESC to stop.`,'#4a90e2');
       renderBackpack();
     };
     grid.appendChild(card);

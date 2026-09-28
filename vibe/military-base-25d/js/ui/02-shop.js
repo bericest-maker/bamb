@@ -18,7 +18,12 @@ function renderShop(){
     }
   }
   const grid=$('#shopGrid'); grid.innerHTML='';
-  const ids=Object.keys(BUILD).filter(k=>BUILD[k].tab===S.shopTab && BUILD[k].cost!==null && (S.shopTab!=='units'||BUILD[k].sub===S.shopSub));
+  // v8.5: best rarity at the top, worst at the bottom (then cheapest first, then A→Z)
+  const ids=Object.keys(BUILD)
+    .filter(k=>BUILD[k].tab===S.shopTab && BUILD[k].cost!==null && (S.shopTab!=='units'||BUILD[k].sub===S.shopSub))
+    .sort((a,b)=> rarRank(BUILD[b].rar)-rarRank(BUILD[a].rar)
+                || (BUILD[a].cost??0)-(BUILD[b].cost??0)
+                || BUILD[a].name.localeCompare(BUILD[b].name));
   for(const id of ids){
     const d=BUILD[id];
     const card=document.createElement('div');

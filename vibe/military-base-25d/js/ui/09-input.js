@@ -31,6 +31,7 @@ window.addEventListener('keydown',e=>{ if(/^(INPUT|SELECT|TEXTAREA)$/.test(e.tar
 window.addEventListener('keyup',e=>{ const k=e.key.toLowerCase(); delete keys[k]; if(k==='q'){ holdQ=false; sfx('click'); } });
 window.addEventListener('blur',()=>{ holdQ=false; });
 
+let placeDrag=null;              // v8.5: SHIFT-drag placement: {gx,gy,zone} where the drag started
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 cv.addEventListener('mousedown',e=>{
   initAudio();
@@ -61,10 +62,11 @@ cv.addEventListener('mousedown',e=>{
   mouse.down=true; mouse.dragX=e.clientX; mouse.dragY=e.clientY; mouse.dragging=false;
   if(S.placing){
     const g=ghostSlot();
-    if(g.ok){
-      placeBuilding(S.placing,g.gx,g.gy,'p',g.zone,g.lvl);   // v8.4: lands on the level the ghost showed
-      S.placing=null;
-    } else { toast(g.why||'Can\'t place there','#ef5350'); sfx('error'); }
+    if(!g.ok){ toast(g.why||'Can\'t place there','#ef5350'); sfx('error'); return; }
+    // v8.5: SHIFT + hold + drag = lay down a whole row / block; it is placed when you let go (with a preview)
+    if(e.shiftKey){ placeDrag={gx:g.gx,gy:g.gy,zone:g.zone}; return; }
+    placeBuilding(S.placing,g.gx,g.gy,'p',g.zone,g.lvl);   // v8.4: lands on the level the ghost showed
+    keepPlacing(1);
     return;
   }
 });
@@ -95,6 +97,13 @@ window.addEventListener('mouseup',e=>{
   if(e.button!==0) return;
   if(!mouse.down) return;
   mouse.down=false;
+  if(placeDrag){                                   // v8.5: SHIFT-drag → place the whole run on release
+    const g=ghostSlot();
+    if(S.placing) placeRun(placeDrag,g);
+    placeDrag=null;
+    mouse.dragging=false;
+    return;
+  }
   if(mouse.dragging){
     if(!S.placing && dragBand){
       const a=s2w(Math.min(dragBand.x1,dragBand.x2),Math.min(dragBand.y1,dragBand.y2));
@@ -133,6 +142,31 @@ window.addEventListener('mouseup',e=>{
 
 // v8.4: with STACKS the TOP building wins. A stacked building is drawn lvl*STACK_UP px higher, so the
 // click point is pushed back down by that lift before the footprint test = you click the crate you see.
+// v8.5: KEEP PLACING — after dropping one, the next one from the stack is handed to the cursor, so you can
+// build a whole row without going back to the backpack. When the stack runs out you get a nudge and it stops.
+function keepPlacing(made){
+  const t=S.placing; if(!t) return;
+  if(refillHand()) return;                       // still holding one → keep going
+  const d=BUILD[t];
+  if(made>1) toast(`${made}\u00d7 ${d.name} placed — that was the last one`,'#5bc24e');
+  else toast(`${d.name} placed — that was the last one`,'#5bc24e');
+}
+// v8.5: SHIFT-DRAG — lay out every footprint in the rectangle you dragged, stacking where the ground is taken
+function placeRun(a,b){
+  const t=S.placing, d=BUILD[t]; if(!t||!d) return 0;
+  const spots=placeSpots(t,a,b,a.zone);
+  let made=0;
+  for(const sp of spots){
+    if(made>0 && !refillHand()) break;           // out of stock
+    if(!sp.ok) continue;
+    placeBuilding(t,sp.gx,sp.gy,'p',a.zone,sp.lvl);
+    made++;
+  }
+  if(made) toast(`${made}\u00d7 ${d.name} placed${made<spots.length?' (some spots were taken)':''}`,'#5bc24e');
+  else { toast('Nothing placed — those spots are taken','#ef5350'); sfx('error'); }
+  keepPlacing(made);
+  return made;
+}
 function buildingAt(wx,wy,who){
   let best=null, bestLvl=-1;
   for(const b of S.buildings){
@@ -148,6 +182,7 @@ function buildingAt(wx,wy,who){
   return best;
 }
 function cancelPlacement(){
+  placeDrag=null;
   if(!S.placing) return;
   giveItem('b',S.placing);                     // v8.4: give it back (merges into its backpack stack)
   S.placing=null;

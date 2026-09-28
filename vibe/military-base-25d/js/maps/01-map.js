@@ -90,6 +90,19 @@ const WALK=new Uint8Array(GW*GH);
 for(let gy=0;gy<GH;gy++) for(let gx=0;gx<GW;gx++)
   WALK[gy*GW+gx]=walkableAt(gx*CELL+CELL/2, gy*CELL+CELL/2)?1:0;
 const cellOf = (x,y)=> [clamp(Math.floor(x/CELL),0,GW-1), clamp(Math.floor(y/CELL),0,GH-1)];
+// v8.5: closest walkable ground to a point — a soldier that ends up in the water is put back on the shore
+// (spiral out over the walk grid; the mirror of nearestSea() in maps/02-sea.js)
+function nearestLand(x,y,maxR=40){
+  const [cx0,cy0]=cellOf(x,y);
+  if(WALK[cy0*GW+cx0]&&walkableAt(x,y)) return {x,y};   // the grid is sampled at cell centres → confirm the exact point
+  for(let r=1;r<=maxR;r++) for(let dy=-r;dy<=r;dy++) for(let dx=-r;dx<=r;dx++){
+    if(Math.max(Math.abs(dx),Math.abs(dy))!==r) continue;
+    const nx=cx0+dx, ny=cy0+dy;
+    if(nx<0||ny<0||nx>=GW||ny>=GH) continue;
+    if(WALK[ny*GW+nx]) return {x:nx*CELL+CELL/2, y:ny*CELL+CELL/2};
+  }
+  return null;
+}
 
 // ---------- A* over the walk grid (8-dir, no corner cutting) ----------
 function astar(sx,sy,tx,ty,grid){

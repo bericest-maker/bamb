@@ -83,6 +83,16 @@
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
+### Build flow, boss & movement (v8.5)
+- [x] **Keep placing** (v8.5) — after you drop a building the next one from the backpack stack is handed to the cursor (`keepPlacing` / `refillHand` / `placeLeft`); it stops when the stack is empty.
+- [x] **SHIFT + drag = place a run** (v8.5) — press and drag: `placeSpots()` previews every footprint in the rectangle (green / red, lifted to its stack level) and `placeRun()` places them on release, capped by what you own.
+- [x] **The backpack stays open while placing** (v8.5) — click the next card to switch item.
+- [x] **Auto-sort: best rarity first** (v8.5) — shop (then cheapest), backpack (crates first, then rarity) and both admin lists, via `rarRank()` + `bestFirst()`.
+- [x] **The worm surfaces in the MIDDLE** (v8.5) — `spawnBoss()` uses the CITY island, and it SLAMS every 4.5s: 45 damage to enemy units within 210px, 130 to enemy buildings within 260px (`BOSS_SLAM`, `bossSlam`).
+- [x] **Admin custom boss HP** (v8.5) — `#aBossHp` + SET HP (K/M/B), applies to the live worm and every later spawn; empty = default.
+- [x] **No unit collision** (v8.5) — separation is now a weak don-touch drift (soldiers and ships alike) instead of a shove that stalled columns.
+- [x] **No drowning** (v8.5) — `nearestLand()` puts any land unit that ends up in the water back on the nearest shore.
+
 ### Stacking & crates (v8.4)
 - [x] **Buildings stack — unlimited height** (v8.4) — aim at a building you already own and the next one lands on top of it. `stackTopAt()` = the level a new building lands on, `fitsAt/findFreeSpot/ghostSlot/placeBuilding/placeBuildingRaw` take that `lvl`, `b.lvl` is saved, `STACK_UP` (24px) lifts each floor in the renderer (y-sort, then level). `buildingAt()` is lift aware so clicking picks the floor you aimed at. Every floor works on its own (4 barracks 4 high = 4 recruits).
 - [x] **Ground first** — `findFreeSpot()` only climbs a pile when there is no free ground left, so bot bases and admin fills still spread out across the island.

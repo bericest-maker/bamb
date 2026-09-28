@@ -7,6 +7,13 @@ const clamp01 = v => clamp(v,0,1);
 const dist = (a,b)=> Math.hypot(a.x-b.x, a.y-b.y);
 const rnd = (a=1,b)=> b===undefined ? Math.random()*a : a+Math.random()*(b-a);
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+// v8.5: how good a rarity is (higher = better) — every list shows the best stuff first
+const rarRank = r => { const i=RAR_ORDER.indexOf(r); return i<0?-1:i; };
+// v8.5: sort an id list best-rarity-first (ties broken by name) — shop, backpack and admin all use it
+const bestFirst = (ids,table) => ids.slice().sort((a,b)=>{
+  const d=table[a]||{}, e=table[b]||{};
+  return rarRank(e.rar)-rarRank(d.rar) || String(d.name||a).localeCompare(String(e.name||b));
+});
 const fmt = n => {
   n = Math.floor(n);
   if (n>=1e9) return (n/1e9).toFixed(2)+'B';

@@ -18,7 +18,7 @@ const Admin={
   owner(){ const el=$('#aOwner'); const v=el?el.value:'p'; return v==='p'||v==null||v===''?'p':+v; },
   renderLists(){
     const b=$('#aBuilds'); b.innerHTML='';
-    for(const id of Object.keys(BUILD)){
+    for(const id of bestFirst(Object.keys(BUILD),BUILD)){   // v8.5: best rarity at the top
       const d=BUILD[id];
       const row=document.createElement('div'); row.className='bld-row';
       row.dataset.find=(d.name+' '+id+' '+d.tab+' '+(d.sub||'')).toLowerCase();
@@ -28,7 +28,7 @@ const Admin={
       b.appendChild(row);
     }
     const u=$('#aUnits'); u.innerHTML='';
-    for(const id of Object.keys(UNITS)){
+    for(const id of bestFirst(Object.keys(UNITS),UNITS)){   // v8.5: best rarity at the top
       const ud=UNITS[id];
       const row=document.createElement('div'); row.className='unit-row';
       row.dataset.find=(ud.name+' '+id+' '+ud.cls.join(' ')).toLowerCase();
@@ -194,6 +194,21 @@ const Admin={
     }
     else if(mode==='hp1'){ if(!b){ toast('No boss active','#ef5350'); return; } b.hp=1; toast('Boss HP set to 1','#ef5350'); }
     else if(mode==='more'){ if(!b){ toast('No boss active','#ef5350'); return; } b.hp+=10000; b.maxHp+=10000; toast('Boss +10,000 HP','#ef5350'); }
+    sfx('click');
+  },
+  // v8.5: custom boss HP — sets the live worm's HP AND every boss that spawns after it (empty = default again).
+  // Accepts 5000 / 250K / 1.5M / 2B like the cash box.
+  bossHp(){
+    const el=$('#aBossHp'), v=el?String(el.value||'').trim().toUpperCase():'';
+    if(!v){ S.admin.bossHp=0; toast(`Boss HP back to default (${fmt(BOSS.hp)})`,'#8f9aa8'); sfx('click'); return; }
+    let n=parseFloat(v);
+    if(!isFinite(n)||n<=0){ toast('Enter a number (K/M/B allowed)','#ef5350'); sfx('error'); return; }
+    if(v.endsWith('B')) n*=1e9; else if(v.endsWith('M')) n*=1e6; else if(v.endsWith('K')) n*=1e3;
+    n=Math.max(1,Math.round(n));
+    S.admin.bossHp=n;
+    const b=S.units.find(u=>u.boss);
+    if(b){ b.maxHp=n; b.hp=n; toast(`Boss HP set to ${fmt(n)}`,'#ef5350'); }
+    else toast(`The next worm surfaces with ${fmt(n)} HP`,'#ffd54f');
     sfx('click');
   },
   wave(mode){

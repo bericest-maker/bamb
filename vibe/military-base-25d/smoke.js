@@ -689,6 +689,116 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   G('renderBackpack')();
 }
 
+// ---- v8.5: keep placing, SHIFT-drag runs, auto rarity sort, boss in the middle, no unit collision ----
+{
+  const SLOT8=G('SLOT'), mouse=G('mouse'), cvEl=document.querySelector('#cv');
+  const click=(gx,gy,opt)=>{ const w=G('plotToWorld')('p',(gx+3)*SLOT8,(gy+2)*SLOT8); mouse.wx=w.x; mouse.wy=w.y; cvEl._ls.mousedown(Object.assign({button:0},opt)); };
+  const mouseUp=()=>window._ls.mouseup[0]({button:0});
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  // ---- KEEP PLACING: one click per building, the next one is handed straight to the cursor ----
+  S().inventory=[]; B.giveItem('b','solar',3); G('renderBackpack')();
+  document.querySelector('#bpGrid').children[0].onclick();
+  assert(S().placing==='solar','the backpack hands you the first solar panel');
+  click(10,10); click(16,10);
+  assert(S().placing==='solar','after 2 of 3 you are STILL placing (the stack refills your hand)');
+  click(22,10);
+  assert(S().placing===null && S().buildings.filter(b=>(b.owner??'p')==='p').length===3,
+    `3 placed in a row without reopening the backpack, then it stops (${S().buildings.filter(b=>(b.owner??'p')==='p').length} buildings)`);
+  assert(G('invCount')('b','solar')===0,'the stack is empty at the end');
+  // the backpack stays open while you place
+  S().inventory=[{kind:'b',type:'solar',n:2}];
+  G('openPanel')('backpack');                          // (in the game you opened it to click the card)
+  document.querySelector('#bpGrid').children[0].onclick();
+  assert(document.querySelector('#p-backpack').classList.contains('show'),'the BACKPACK STAYS OPEN while you are placing');
+  click(30,10); S().placing=null; G('closePanel')('backpack');
+  // ---- SHIFT + DRAG = lay a whole run ----
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p');
+  S().inventory=[]; B.giveItem('b','solar',30); G('renderBackpack')();
+  document.querySelector('#bpGrid').children[0].onclick();
+  click(20,20,{shiftKey:true});
+  assert(!!G('placeDrag'),'SHIFT+mousedown starts a drag-place instead of dropping one');
+  { const w=G('plotToWorld')('p',48*SLOT8,26*SLOT8); mouse.wx=w.x; mouse.wy=w.y; }   // drag out the area
+  { const g=G('ghostSlot')(), sp=G('placeSpots')('solar',G('placeDrag'),g,'land');
+    assert(sp.length>5 && sp.every(s=>s.gx>=0&&s.gy>=0&&s.gx<G('PLOT_W')&&s.gy<G('PLOT_H')),`the preview lays out ${sp.length} footprints inside the grid`); }
+  pump(30);                                   // renders the drag preview
+  mouseUp();
+  const run=S().buildings.filter(b=>(b.owner??'p')==='p');
+  assert(run.length>5,`letting go places the whole run (${run.length} solar panels)`);
+  assert(new Set(run.map(b=>b.gx+','+b.gy)).size===run.length,'a drag spreads them SIDE BY SIDE (nothing stacked by accident)');
+  assert(G('invCount')('b','solar')+run.length+(S().placing?1:0)===30,'every panel of the run came out of the backpack stack');
+  // a run bigger than your stack: it stops at the last one you own
+  S().buildings=S().buildings.filter(b=>(b.owner??'p')!=='p'); S().placing=null;
+  S().inventory=[]; B.giveItem('b','solar',5); G('renderBackpack')();
+  document.querySelector('#bpGrid').children[0].onclick();
+  click(20,20,{shiftKey:true});
+  { const w=G('plotToWorld')('p',90*SLOT8,60*SLOT8); mouse.wx=w.x; mouse.wy=w.y; }
+  mouseUp();
+  const run2=S().buildings.filter(b=>(b.owner??'p')==='p');
+  assert(run2.length===5 && S().placing===null && G('invCount')('b','solar')===0,`a run stops at the last one you own (${run2.length} of 5 placed)`);
+  // ---- AUTO SORT: best rarity first ----
+  const order=G('bestFirst')(Object.keys(G('BUILD')),G('BUILD'));
+  let mono=true; for(let i=1;i<order.length;i++) if(G('rarRank')(G('BUILD')[order[i-1]].rar)<G('rarRank')(G('BUILD')[order[i]].rar)) mono=false;
+  assert(mono && G('rarRank')(G('BUILD')[order[0]].rar)>G('rarRank')(G('BUILD')[order[order.length-1]].rar),
+    `every list is auto-sorted: ${G('BUILD')[order[0]].rar} at the top, ${G('BUILD')[order[order.length-1]].rar} at the bottom`);
+  S().shopTab='production'; G('renderShop')();
+  { const names=document.querySelector('#shopGrid').children.map(c=>c.children[2].textContent);
+    const byName=Object.fromEntries(Object.keys(G('BUILD')).map(k=>[G('BUILD')[k].name,k]));
+    let ok=names.length>2;
+    for(let i=1;i<names.length;i++) if(G('rarRank')(G('BUILD')[byName[names[i-1]]].rar)<G('rarRank')(G('BUILD')[byName[names[i]]].rar)) ok=false;
+    assert(ok,`the SHOP shows the best first (${names.slice(0,3).join(' / ')})`); }
+  G('Admin').renderLists();
+  assert(/golden/.test(document.querySelector('#aBuilds').children[0].dataset.find),'the ADMIN building list starts with the golden items');
+  // ---- BOSS: surfaces in the CITY (the middle) and SLAMS ----
+  S().units=[]; S().nextWave=9999; S().nextBoss=9999;
+  G('spawnBoss')();
+  const boss=S().units.find(u=>u.boss), MCc=G('MAP_C');
+  assert(!!boss && Math.hypot(boss.x-MCc.x,boss.y-MCc.y)<250,`the worm surfaces in the MIDDLE (${Math.round(Math.hypot(boss.x-MCc.x,boss.y-MCc.y))}px from the city centre)`);
+  const bait=[];
+  for(let i=0;i<4;i++){ const u=B.mkUnit('rifle','p',boss.x+50+i*30,boss.y+30); u.hp=u.maxHp=200; bait.push(u); S().units.push(u); }
+  const hp0=bait.map(u=>u.hp);
+  pump(5200);
+  assert(bait.some((u,i)=>u.hp<hp0[i]),`the worm SLAMS everything around it (hp ${hp0.map(h=>Math.round(h)).join(',')} → ${bait.map(u=>Math.round(u.hp)).join(',')})`);
+  // ---- admin custom boss HP ----
+  document.querySelector('#aBossHp').value='250K'; G('Admin').bossHp();
+  assert(Math.round(boss.maxHp)===250000,`admin set a custom boss HP (${fmtN(boss.maxHp)})`);
+  S().units=S().units.filter(u=>!u.boss); G('spawnBoss')();
+  assert(Math.round(S().units.find(u=>u.boss).maxHp)===250000,'the NEXT boss spawns with that HP too');
+  document.querySelector('#aBossHp').value=''; G('Admin').bossHp();
+  S().units=S().units.filter(u=>!u.boss); G('spawnBoss')();
+  assert(Math.round(S().units.find(u=>u.boss).maxHp)===G('BOSS').hp,'clearing the box puts the boss HP back to default');
+  S().units=[];
+  // ---- a land unit that ends up in the water is put back on the shore ----
+  const swim=B.mkUnit('rifle','p',PC.x-900,PC.y);
+  assert(!B.walkableAt(swim.x,swim.y),'the test soldier really is in open water');
+  S().units.push(swim); pump(100);
+  assert(B.walkableAt(swim.x,swim.y),`it is teleported back onto the nearest ground (${Math.round(swim.x)},${Math.round(swim.y)})`);
+  // ---- NO COLLISION: units never block each other, they just drift apart ----
+  S().units=[];
+  const m1=B.mkUnit('rifle','p',PC.x,PC.y), m2=B.mkUnit('rifle','p',PC.x+4,PC.y);
+  m1.hp=m1.maxHp=m2.hp=m2.maxHp=99999;
+  m1.order={x:PC.x+600,y:PC.y}; m2.order={x:PC.x+600,y:PC.y};
+  S().units.push(m1,m2);
+  pump(4000);
+  const left=Math.hypot(m1.x-(PC.x+600),m1.y-PC.y), gap=Math.hypot(m1.x-m2.x,m1.y-m2.y);
+  assert(left<400 && Math.hypot(m2.x-(PC.x+600),m2.y-PC.y)<400,`two troops on the same spot still march (${Math.round(left)}px left to go)`);
+  assert(gap>6,`they keep a little distance instead of overlapping (${Math.round(gap)}px apart)`);
+  // ---- nobody is left swimming: 25s of war with waves, bots and a crowded base ----
+  S().units=[]; S().nextWave=2; S().nextBoss=9999;
+  for(const id of ['rifle','tank','sniper','heavy']) G('Admin').spawnUnit(id,15,'p');
+  for(let i=0;i<7;i++) for(const id of ['rifle','tank']) G('Admin').spawnUnit(id,5,String(i));
+  pump(25000);
+  { const wet=S().units.filter(u=>{
+      if(G('isAir')(u)||G('isSea')(u)||B.walkableAt(u.x,u.y)) return false;
+      for(const d of [[14,0],[-14,0],[0,14],[0,-14]]) if(B.walkableAt(u.x+d[0],u.y+d[1])) return false;  // at the waterline is fine
+      return true;
+    });
+    assert(wet.length===0,`25s of war (${S().units.length} troops, wave ${S().wave}): nobody is left swimming (${wet.length})`);
+    const stranded=S().units.filter(u=>G('isSea')(u)&&!G('isSeaAt')(u.x,u.y));
+    assert(stranded.length===0,`no ship is stranded on land either (${stranded.length})`); }
+  S().units=[]; S().nextWave=9999; S().inventory=[];
+}
+function fmtN(n){ return Math.round(n).toLocaleString('en-US'); }
+
 S().admin.noRespawn=false;
 
 console.log(`\n${T.frames} frames simulated. ${process.exitCode?'SMOKE TEST FAILED':'ALL SMOKE TESTS PASSED'}`);

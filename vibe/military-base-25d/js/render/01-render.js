@@ -151,6 +151,22 @@ function render(){
       ctx.fillText(`LEVEL ${(g.lvl|0)+1}`,q.x+d.w*SLOT/2,gy-glift-(gsp?gsp.h*gs:24)-6);
       ctx.textAlign='left';
     }
+    // v8.5: SHIFT-DRAG preview — every footprint of the run, green where it fits, red where it is taken
+    if(placeDrag){
+      const spots=placeSpots(S.placing,placeDrag,g,g.zone);
+      let fit=0; for(const sp of spots) if(sp.ok) fit++;
+      ctx.lineWidth=1.5;
+      for(const sp of spots.slice(0,600)){
+        const p={x:go.x+sp.gx*SLOT, y:go.y+sp.gy*SLOT-sp.lvl*STACK_UP};
+        ctx.fillStyle=sp.ok?(d.water?'rgba(88,200,232,.20)':'rgba(91,194,78,.18)'):'rgba(214,73,63,.20)';
+        ctx.strokeStyle=sp.ok?(d.water?'#58c8e8':'#5bc24e'):'#d6493f';
+        ctx.fillRect(p.x,p.y,d.w*SLOT,d.h*SLOT); ctx.strokeRect(p.x,p.y,d.w*SLOT,d.h*SLOT);
+      }
+      const can=Math.min(fit,placeLeft());
+      ctx.fillStyle='#ffd54f'; ctx.font='900 13px "Segoe UI"'; ctx.textAlign='center';
+      ctx.fillText(`${can} \u00d7 ${d.name} \u2014 let go to place`,q.x+d.w*SLOT/2,q.y-16);
+      ctx.textAlign='left';
+    }
   }
   // minimap (v5 perf: redrawn 10×/s instead of every frame)
   const nowMs=performance.now();

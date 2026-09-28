@@ -73,6 +73,28 @@ function startPlacing(type){
   if(BUILD[type]&&BUILD[type].water){ const Y=WATER_YARD; cam.tx=Y.x+Y.w*SLOT/2; cam.ty=Y.y+Y.h*SLOT/2; }
   else { const pc=plotCentre(); cam.tx=pc.x; cam.ty=pc.y; }
 }
+// v8.5: SHIFT-DRAG — every footprint-sized spot in the rectangle from cell `a` to cell `b`.
+// Used twice: the live preview in the renderer and the actual placement on mouse-up.
+function placeSpots(type,a,b,zone){
+  const d=BUILD[type], o=plotOrigin('p',zone);
+  if(!d||!o||!a||!b) return [];
+  const out=[];
+  const x0=Math.min(a.gx,b.gx), x1=Math.max(a.gx,b.gx), y0=Math.min(a.gy,b.gy), y1=Math.max(a.gy,b.gy);
+  for(let y=y0;y<=y1;y+=d.h) for(let x=x0;x<=x1;x+=d.w){
+    if(x<0||y<0||x+d.w>o.w||y+d.h>o.h) continue;          // off the grid → skip (no clamping: that would stack them)
+    const lvl=stackTopAt(type,x,y,'p',zone);
+    out.push({gx:x,gy:y,lvl,ok:fitsAt(type,x,y,'p',zone,lvl)});
+  }
+  return out;
+}
+// v8.5: KEEP PLACING — the item in your hand plus the rest of the stack is how many you can still put down
+const placeLeft = () => S.placing ? 1+invCount('b',S.placing) : 0;
+// v8.5: hand the next one over from the backpack (false = that was the last one, stop placing)
+function refillHand(){
+  const t=S.placing; if(!t) return false;
+  if(invCount('b',t)>0){ takeItem('b',t,1); return true; }
+  S.placing=null; return false;
+}
 function placeBuilding(type,gx,gy,owner='p',zone,lvl){
   placeBuildingRaw(type,gx,gy,owner,zone,lvl);
   const c=bPos(S.buildings[S.buildings.length-1]);

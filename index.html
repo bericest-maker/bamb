@@ -28,13 +28,30 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 .tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
 </style></head><body><div class="wrap">
 <h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
-<div class="sub">v8.4 · STACKS &amp; CRATES · buildings stack as high as you like · backpack stacks · bulk crate opening · <span class="dim">fan project, not affiliated with Roblox</span></div>
+<div class="sub">v8.5 · BUILD FLOW · keep placing · SHIFT-drag runs · auto rarity sort · worm spawns mid-map and slams · <span class="dim">fan project, not affiliated with Roblox</span></div>
 
 <a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
 <a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
 <a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
 
-<div class="card"><h2>WHAT CHANGED (v8.4 — this round)</h2>
+<div class="card"><h2>WHAT CHANGED (v8.5 — this round)</h2>
+<div>
+<span class="tag new">keep placing</span><span class="tag new">SHIFT-drag run</span><span class="tag new">backpack stays open</span>
+<span class="tag new">auto rarity sort</span><span class="tag new">worm spawns mid</span><span class="tag new">boss slam</span>
+<span class="tag new">custom boss HP</span><span class="tag new">no unit collision</span><span class="tag new">no drowning</span>
+</div>
+<ul>
+<li><b>🧱 KEEP PLACING.</b> Drop a building and the next one from your backpack stack is handed straight to the cursor — build a whole row without reopening the backpack. It stops (and tells you) when the stack is empty.</li>
+<li><b>🧱 SHIFT + DRAG = PLACE A RUN.</b> Hold <b>SHIFT</b>, press and drag out an area: every footprint is previewed live (green where it fits, red where it's taken, floating at the stack level it would land on) with a <b>N × item</b> label — and they all go down when you release. It stops at the last one you own, and it spreads them side by side instead of stacking them.</li>
+<li><b>📦 THE BACKPACK STAYS OPEN</b> while you place — click the next card to switch building.</li>
+<li><b>📋 AUTO-SORT.</b> The SHOP, the BACKPACK and both ADMIN lists are sorted automatically: <b>best rarity at the top, worst at the bottom</b> (crates first in the backpack).</li>
+<li><b>🐍 THE WORM SURFACES IN THE MIDDLE</b> (the CITY island) instead of a random base — and it <b>fights</b>: every 4.5s it <b>SLAMS</b> every enemy unit within 210px (45 damage) and crushes enemy buildings within 260px (130 damage), with a shockwave you can see.</li>
+<li><b>🐍 ADMIN → CUSTOM BOSS HP.</b> Type <code>5000</code> / <code>250K</code> / <code>1.5M</code> and press <b>SET HP</b> — it sets the live worm <i>and</i> every boss that spawns later. Leave it empty and press SET HP to go back to the default.</li>
+<li><b>🐜 NO MORE UNIT COLLISION.</b> Troops never block each other now — they only drift apart a little when they end up on top of each other (the "don't touch" nudge), soldiers and ships alike. Columns no longer freeze on bridges.</li>
+<li><b>🐜 NO MORE DROWNING.</b> A soldier that ends up in the water is put straight back on the nearest shore.</li>
+</ul></div>
+
+<div class="card"><h2>WHAT CHANGED (v8.4 — previous round)</h2>
 <div>
 <span class="tag new">stacking</span><span class="tag new">unlimited height</span><span class="tag new">backpack stacks</span>
 <span class="tag new">open 1 / 5 / 10 / ALL</span><span class="tag new">robux shop fixed</span><span class="tag">crate results list</span>
@@ -125,6 +142,8 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 <li><b>Left rail → 📜 PATCHES</b> shows this changelog inside the game.</li>
 <li><b>TRY STACKING:</b> F1 → ADMIN → BP any building twice, then place the second one <b>directly on top of the first</b>. Or press ADMIN → <b>PILE</b> to drop a 7-high tower in one click.</li>
 <li><b>TRY BULK CRATES:</b> 💎 ROBUX SHOP → BUY 10 premium crates → BACKPACK → click the crate card → <b>ALL (10)</b>.</li>
+<li><b>TRY THE BUILD FLOW:</b> buy 10 solar panels → BACKPACK → click the card once → click, click, click (you keep placing). Or hold <b>SHIFT</b> and drag across your plot to lay a whole row at once.</li>
+<li><b>TRY THE WORM:</b> F1 → ADMIN → BOSS → SUMMON (it surfaces in the CITY now). Type a number in <b>CUSTOM HP</b> and press SET HP to make it as tanky as you like.</li>
 </ul></div>
-<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (217 assertions, all green)</div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (243 assertions, all green)</div>
 </div></body></html>

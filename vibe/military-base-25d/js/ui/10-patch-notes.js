@@ -2,6 +2,16 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.5 \u2014 BUILD FLOW', date:'2026-09-27', items:[
+    '\uD83E\uDDF1 KEEP PLACING: drop a building and the next one from your backpack stack is handed straight to the cursor \u2014 build a whole row without reopening the backpack. It stops (and tells you) when the stack is empty.',
+    '\uD83E\uDDF1 SHIFT + DRAG = PLACE A RUN: hold SHIFT, press and drag out an area. Every footprint is previewed live (green where it fits, red where it is taken, floating at the stack level it would land on) with a \u201CN \u00d7 item \u2014 let go to place\u201D label, and they are all placed when you release. It stops at the last one you own.',
+    '\uD83D\uDCE6 THE BACKPACK STAYS OPEN while you place \u2014 click the next card to switch building.',
+    '\uD83D\uDCCB AUTO-SORT: the SHOP, the BACKPACK and both ADMIN lists are sorted automatically \u2014 best rarity at the top, worst at the bottom (crates first in the backpack).',
+    '\uD83D\uDC0D THE WORM SURFACES IN THE MIDDLE (the CITY island) instead of a random base \u2014 and it FIGHTS: every 4.5s it SLAMS every enemy unit within 210px (45 damage) and crushes enemy buildings within 260px (130 damage), with a shockwave you can see.',
+    '\uD83D\uDC0D ADMIN \u2192 CUSTOM BOSS HP: type 5000 / 250K / 1.5M and press SET HP. It sets the live worm AND every boss that spawns later. Leave it empty and press SET HP to go back to the default.',
+    '\uD83D\uDC1C NO MORE UNIT COLLISION: troops never block each other \u2014 they only drift apart a little when they end up on top of each other (the don\u2019t-touch nudge), soldiers and ships alike. Columns no longer freeze on bridges.',
+    '\uD83D\uDC1C NO MORE DROWNING: a soldier that ends up in the water is put straight back on the nearest shore.',
+  ]},
   { v:'v8.4 \u2014 STACKS & CRATES', date:'2026-09-27', items:[
     '\uD83E\uDDF1 BUILDINGS STACK \u2014 AS HIGH AS YOU LIKE. Aim at a building you already own and the next one lands ON TOP of it instead of being refused. Each floor is lifted 24px and drawn above the one below; the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are building, and clicking a stack picks the crate you actually aimed at.',
     'Every floor works on its own \u2014 4 barracks stacked 4 high train 4 recruits. Turrets, hospitals, depots and money buildings all stack too.',
