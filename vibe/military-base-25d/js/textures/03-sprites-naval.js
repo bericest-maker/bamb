@@ -20,14 +20,27 @@ function ship(o={}){
     g.moveTo(-hl,0); g.lineTo(hl*.86,0); g.lineTo(hl*.98,-H*.45); g.lineTo(hl*.74,-H); g.lineTo(-hl*.86,-H);
     g.closePath(); g.fill(); O(g,1.6); g.stroke();
     g.fillStyle=P.dark; g.fillRect(-hl*.9,-3.2,L*.95,3.2);                 // waterline stripe
+    g.fillStyle='rgba(255,255,255,.16)'; g.fillRect(-hl*.68,-H+1,L*.62,1);
+    g.fillStyle='rgba(8,12,18,.52)';
+    const portN=Math.max(3,Math.floor(L/8));
+    for(let i=0;i<portN;i++){
+      const x=-hl*.68+i*(L*1.36/Math.max(1,portN-1));
+      g.beginPath(); g.arc(x,-H*.48,.75,0,pi2); g.fill();
+    }
     g.fillStyle=P.accent; g.fillRect(-hl*.86,-H-1.5,L*.8,1.6);             // deck rim
+    g.fillStyle=P.metal; g.fillRect(-hl*.7,-H-2.5,L*.56,.8);                // raised deck edge
     // ---- superstructure ----
     if(o.tower!==false){
       const tw=o.towerW||L*.28, th=o.towerH||9;
       g.fillStyle=P.body; g.fillRect(-tw*.2,-H-th,tw,th); O(g,1.5); g.strokeRect(-tw*.2,-H-th,tw,th);
+      g.fillStyle='rgba(255,255,255,.18)'; g.fillRect(-tw*.2+1,-H-th+1,tw-2,1);
       g.fillStyle='#9fd0ff'; g.fillRect(-tw*.2+2,-H-th+3,tw-4,3);
+      g.fillStyle='rgba(20,28,38,.6)'; for(let i=1;i<Math.max(2,Math.floor(tw/5));i++) g.fillRect(-tw*.2+2+i*4,-H-th+3,1,3);
+      g.fillStyle=P.dark; g.fillRect(-tw*.2+1,-H-2,tw-2,2);
       if(o.mast!==false){ g.fillStyle=P.metal; g.fillRect(tw*.05,-H-th-16,2,16);
-        g.fillStyle=P.accent; g.fillRect(tw*.05+2,-H-th-16,9,4.5); }
+        g.fillStyle=P.accent; g.fillRect(tw*.05+2,-H-th-16,9,4.5);
+        g.fillStyle='rgba(255,255,255,.5)'; g.fillRect(tw*.05+3,-H-th-15,5,.8);
+        g.fillStyle=P.metal; g.beginPath(); g.ellipse(tw*.05+5,-H-th-18,4,1.1,0,0,pi2); g.fill(); }
     }
     // ---- flight deck (carrier) ----
     if(o.flightdeck){
@@ -44,9 +57,13 @@ function ship(o={}){
       const [n,ts]=o.tur;
       for(let i=0;i<n;i++){
         const x=-hl*.45+i*(L*.34/Math.max(1,n-1||1)) - (n>1?0:L*.05);
+        g.fillStyle=P.dark; g.beginPath(); g.arc(x,-H-ts*.45,ts*.72,Math.PI,0); g.fill();
         g.fillStyle=P.metal; g.beginPath(); g.arc(x,-H-ts*.45,ts*.62,Math.PI,0); g.fill();
         g.fillRect(x-ts*.62,-H-ts*.45,ts*1.24,ts*.45); O(g,1.3); g.stroke();
+        g.fillStyle='rgba(255,255,255,.22)'; g.fillRect(x-ts*.45,-H-ts*.55,ts*.7,1);
         g.fillStyle=P.dark; g.fillRect(x+ts*.4,-H-ts*.62,ts*1.5,Math.max(2,ts*.28));
+        g.fillStyle=P.metal; g.fillRect(x+ts*.48,-H-ts*.62,ts*.98,.65);
+        g.fillStyle='#1b2027'; g.fillRect(x+ts*1.72,-H-ts*.67,1.3,Math.max(2,ts*.38));
       }
     }
     if(o.vls){    // vertical launch cells (frigate)

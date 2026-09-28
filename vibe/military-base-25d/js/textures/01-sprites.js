@@ -26,6 +26,7 @@ function sprCanvas(type,side,faction,t,res){
   const g=c.getContext('2d');
   g.scale(res,res); g.translate(lw/2,sp.h+top);
   sp.draw(g,f/SPR_FPS,{side,faction});
+  if(UNITS[type]) unitPolish(g,sp.w,sp.h);       // v8.9: shared lighting pass for units only
   c._ax=lw/2; c._ay=sp.h+top; c._lw=lw; c._lh=lh;
   SPR_CACHE.set(key,c);
   return c;
@@ -36,6 +37,24 @@ function drawSpr(g,type,x,y,sc,side,faction,t){
   const res=z<1.2?1.5:z<2.2?2.5:z<3.5?3.5:5;
   const c=sprCanvas(type,side,faction,t,res);
   g.drawImage(c,x-c._ax*sc,y-c._ay*sc,c._lw*sc,c._lh*sc);
+}
+// v8.9: a restrained top sheen + lower shadow, clipped to unit pixels; footprints and buildings stay untouched.
+function unitPolish(g,w,h){
+  g.save();
+  g.globalCompositeOperation='source-atop';
+  for(let i=0;i<4;i++){
+    g.globalAlpha=.12*(1-i/4);
+    g.fillStyle='#fff';
+    g.fillRect(-w/2+1,-h+1+i*h*.035,w-2,Math.max(1,h*.035));
+  }
+  g.globalAlpha=.075;
+  g.fillStyle='#fff'; g.fillRect(-w*.39,-h*.76,Math.max(1,w*.08),h*.4);
+  for(let i=0;i<3;i++){
+    g.globalAlpha=.045*(i+1);
+    g.fillStyle='#090d13';
+    g.fillRect(-w/2+1,-h*.13+i*h*.035,w-2,Math.max(1,h*.035));
+  }
+  g.restore();
 }
 function O(g,w=2){ g.lineWidth=w; g.strokeStyle='rgba(18,24,32,.5)'; }
 
@@ -235,83 +254,134 @@ reg('goldenMechStat',48,58,(g,t)=>{
 
 reg('rifle',20,22,(g,t,u)=>{
   const P=unitPal(u);
-  g.fillStyle=P.dark; g.fillRect(-4.5,-6,3.5,6); g.fillRect(1,-6,3.5,6);
+  // Boots, knees and a fitted field vest keep the silhouette readable at game zoom.
+  g.fillStyle='#222831'; g.fillRect(-4.8,-2,4.1,2); g.fillRect(.7,-2,4.1,2);
+  g.fillStyle=P.dark; g.fillRect(-4.4,-7,3.2,5.5); g.fillRect(1,-7,3.2,5.5);
+  g.fillStyle='rgba(255,255,255,.18)'; g.fillRect(-4,-6,1,3); g.fillRect(1.5,-6,1,3);
   g.fillStyle=P.body; g.fillRect(-5.5,-15,11,9.5); O(g,1.5); g.strokeRect(-5.5,-15,11,9.5);
-  g.fillStyle=P.dark; g.fillRect(-8,-14,3,6);
-  g.fillStyle=P.skin; g.beginPath(); g.arc(1,-18,3.6,0,pi2); g.fill();
+  g.fillStyle=P.metal; g.fillRect(-3.5,-13.5,7,5.5);
+  g.fillStyle=P.dark; g.fillRect(-3.5,-8,7,1.3); g.fillRect(-8,-14,3,6); g.fillRect(5,-14,2.5,5);
+  g.fillStyle=P.accent; g.fillRect(-2.5,-13,5,1.3);
+  g.strokeStyle='rgba(18,24,32,.42)'; g.lineWidth=.8;
+  g.beginPath(); g.moveTo(0,-13.5); g.lineTo(0,-9); g.moveTo(-3,-11); g.lineTo(-1,-11); g.moveTo(1,-11); g.lineTo(3,-11); g.stroke();
+  g.fillStyle=P.skin; g.fillRect(-1,-16.5,4,3); g.beginPath(); g.arc(1,-18,3.6,0,pi2); g.fill();
   g.fillStyle=P.accent; g.beginPath(); g.arc(1,-19,3.8,Math.PI,0); g.closePath(); g.fill(); g.fillRect(-3.5,-19,9,2);
-  g.fillStyle='#2b3138'; g.fillRect(2,-12,10,2.2);
+  g.fillStyle='rgba(255,255,255,.22)'; g.fillRect(-.5,-21.8,3.5,1);
+  // Receiver, stock, top rail and muzzle are distinct, but stay inside the original sprite box.
+  g.fillStyle='#242a32'; g.fillRect(-1,-12,3,2.5); g.fillRect(2,-12,10,2.2); g.fillRect(11,-12.4,1.5,3);
+  g.fillStyle='#8e9aa8'; g.fillRect(3,-12,7,.65); g.fillRect(4,-13,3,.8);
 });
 reg('tank',40,22,(g,t,u)=>{
   const P=unitPal(u);
-  g.fillStyle='#2b3138'; g.fillRect(-17,-8,34,8);
+  g.fillStyle='#20262e'; g.fillRect(-18,-8,36,8); O(g,1.2); g.strokeRect(-18,-8,36,8);
+  g.fillStyle='#3b444e'; g.fillRect(-16,-7,32,1.4);
+  for(let i=0;i<8;i++){ g.fillStyle=i%2?'#171c22':'#525c67'; g.fillRect(-16+i*4,-1.8,2,1.1); }
+  g.fillStyle='#353d47';
+  for(let i=0;i<4;i++){ g.beginPath(); g.arc(-12+i*8,-4,2.9,0,pi2); g.fill(); }
   g.fillStyle=P.metal;
-  for(let i=0;i<4;i++){ g.beginPath(); g.arc(-12+i*8,-4,2.6,0,pi2); g.fill(); }
-  g.fillStyle=P.body; g.fillRect(-15,-14,30,7); O(g,1.5); g.strokeRect(-15,-14,30,7);
-  g.fillStyle=P.body; g.fillRect(-8,-20,15,7); O(g,1.5); g.strokeRect(-8,-20,15,7);
-  g.fillStyle=P.dark; g.fillRect(7,-18,13,3);
-  g.fillStyle=P.accent; g.fillRect(-13,-12,3,3);
+  for(let i=0;i<4;i++){ g.beginPath(); g.arc(-12+i*8,-4,1.45,0,pi2); g.fill(); }
+  g.fillStyle=P.body; g.beginPath(); g.moveTo(-15,-7); g.lineTo(-14,-13); g.lineTo(-10,-14); g.lineTo(12,-14); g.lineTo(15,-11); g.lineTo(15,-7); g.closePath(); g.fill(); O(g,1.5); g.stroke();
+  g.fillStyle='rgba(255,255,255,.18)'; g.fillRect(-10,-13,19,1.2);
+  g.fillStyle='rgba(9,13,19,.2)'; g.fillRect(-14,-9,28,1.5);
+  g.fillStyle=P.accent; g.fillRect(-13,-12,2,3);
+  g.strokeStyle='rgba(18,24,32,.4)'; g.lineWidth=.8; g.beginPath(); g.moveTo(-5,-13); g.lineTo(-5,-8); g.moveTo(4,-13); g.lineTo(4,-9); g.stroke();
+  g.fillStyle=P.body; g.beginPath(); g.moveTo(-8,-14); g.lineTo(-6,-19); g.lineTo(5,-20); g.lineTo(8,-17); g.lineTo(8,-14); g.closePath(); g.fill(); O(g,1.5); g.stroke();
+  g.fillStyle='rgba(255,255,255,.17)'; g.fillRect(-5,-18.7,9,1.1);
+  g.fillStyle=P.metal; g.beginPath(); g.ellipse(-1,-19.2,3,1.2,0,Math.PI,pi2); g.fill();
+  g.fillStyle=P.dark; g.fillRect(7,-18,13,2.6); g.fillRect(18,-18.4,2,3.4);
+  g.fillStyle='#97a4b3'; g.fillRect(9,-18,9,.6);
 });
 reg('heli',38,22,(g,t,u)=>{
   const P=unitPal(u);
+  // Skids and struts sit below a tapered cabin; glass faces left, tail faces right.
   g.strokeStyle=P.dark; g.lineWidth=2;
-  g.beginPath(); g.moveTo(-13,0); g.lineTo(9,0); g.moveTo(-9,-3); g.lineTo(-9,0); g.moveTo(5,-3); g.lineTo(5,0); g.stroke();
+  g.beginPath(); g.moveTo(-13,0); g.lineTo(10,0); g.moveTo(-9,-3); g.lineTo(-9,0); g.moveTo(5,-3); g.lineTo(5,0); g.stroke();
   g.fillStyle=P.body; g.beginPath(); g.ellipse(-3,-9,11,6,0,0,pi2); g.fill(); O(g,1.5); g.stroke();
-  g.fillRect(8,-11,13,3.5); g.fillRect(18,-15,3.5,6);
-  g.fillStyle='#9fd0ff'; g.fillRect(-12,-11,5,4);
-  g.fillStyle=P.dark; g.fillRect(-4,-17,2.5,3);
-  g.save(); g.translate(-3,-17); g.rotate(t*14);
-  g.fillStyle='rgba(35,42,52,.8)'; g.fillRect(-13,-1.2,26,2.4); g.restore();
+  g.fillStyle='rgba(255,255,255,.13)'; g.beginPath(); g.ellipse(-4,-11.4,6,2,0,Math.PI,pi2); g.fill();
+  g.fillStyle='rgba(8,13,20,.2)'; g.fillRect(-8,-6,14,2);
+  g.fillStyle='#9fd0ff'; g.beginPath(); g.moveTo(-13,-10); g.lineTo(-9,-13); g.lineTo(-6,-12); g.lineTo(-6,-7); g.lineTo(-11,-7); g.closePath(); g.fill();
+  g.strokeStyle='rgba(20,28,38,.5)'; g.lineWidth=.8; g.beginPath(); g.moveTo(-9,-12); g.lineTo(-8,-7); g.stroke();
+  g.fillStyle=P.metal; g.fillRect(-3,-12,4,3); g.fillRect(3,-11,3,2.5);
+  g.fillStyle='#20262e'; g.fillRect(8,-11,13,3.5); g.fillStyle=P.body; g.fillRect(8,-12,13,2.2);
+  g.fillStyle=P.dark; g.fillRect(18,-15,3.5,6); g.fillStyle=P.accent; g.fillRect(19,-14,1.4,3);
+  g.fillStyle='#ff6b5e'; g.fillRect(19,-8,1.5,1.2);
+  // Rotor mast, blurred blades and a bright hub make the aircraft read clearly from above.
+  g.fillStyle=P.dark; g.fillRect(-4,-18,2.5,4);
+  g.save(); g.translate(-3,-18); g.rotate(t*14);
+  g.fillStyle='rgba(35,42,52,.78)'; g.fillRect(-14,-1.2,28,2.4); g.fillRect(-1.1,-7,2.2,14);
+  g.restore();
+  g.fillStyle=P.metal; g.beginPath(); g.arc(-3,-18,1.8,0,pi2); g.fill();
+  g.save(); g.translate(20,-13); g.rotate(-t*18);
+  g.fillStyle='rgba(35,42,52,.8)'; g.fillRect(-.8,-4.5,1.6,9); g.fillRect(-4.5,-.8,9,1.6); g.restore();
 });
 reg('jet',36,18,(g,t,u)=>{
   const P=unitPal(u);
-  g.fillStyle='#f5b53f';
-  g.beginPath(); g.moveTo(-12,-7); g.lineTo(-19-Math.random()*4,-5.5); g.lineTo(-12,-4); g.closePath(); g.fill();
+  g.fillStyle='rgba(255,170,65,.82)'; g.beginPath(); g.moveTo(-12,-7); g.lineTo(-20,-5.5); g.lineTo(-12,-4); g.closePath(); g.fill();
+  g.fillStyle='#ffdc91'; g.beginPath(); g.moveTo(-12,-6.1); g.lineTo(-17,-5.5); g.lineTo(-12,-4.9); g.closePath(); g.fill();
+  // Fuselage and wings, with a glass canopy, intake and restrained squadron markings.
   g.fillStyle=P.body;
   g.beginPath(); g.moveTo(15,-6); g.lineTo(2,-10.5); g.lineTo(-12,-8); g.lineTo(-12,-3.5); g.lineTo(2,-2); g.closePath(); g.fill(); O(g,1.5); g.stroke();
   g.fillStyle=P.dark;
-  g.beginPath(); g.moveTo(0,-8); g.lineTo(-7,-1.5); g.lineTo(-2,-8); g.closePath(); g.fill();
-  g.beginPath(); g.moveTo(-12,-8); g.lineTo(-17,-13.5); g.lineTo(-9,-8); g.closePath(); g.fill();
-  g.fillStyle='#9fd0ff'; g.fillRect(6,-8.5,5,2.2);
+  g.beginPath(); g.moveTo(2,-7.8); g.lineTo(-5,-1.2); g.lineTo(-1,-7.8); g.closePath(); g.fill();
+  g.beginPath(); g.moveTo(-10,-7.8); g.lineTo(-16,-13.5); g.lineTo(-7,-8); g.closePath(); g.fill();
+  g.beginPath(); g.moveTo(-12,-4); g.lineTo(-17,-.6); g.lineTo(-7,-3.4); g.closePath(); g.fill();
+  g.fillStyle=P.metal; g.fillRect(-11,-6.8,2,2.8);
+  g.fillStyle='#9fd0ff'; g.beginPath(); g.moveTo(5,-8.8); g.lineTo(10,-7.2); g.lineTo(8,-5.9); g.lineTo(4,-6.7); g.closePath(); g.fill();
+  g.strokeStyle='rgba(255,255,255,.34)'; g.lineWidth=.8; g.beginPath(); g.moveTo(-8,-7.3); g.lineTo(1,-8.2); g.lineTo(12,-6.4); g.stroke();
+  g.fillStyle=P.accent; g.fillRect(-2,-8.3,2.2,1.2); g.fillRect(-8,-5.2,2.3,.9);
+  g.fillStyle='#2b3138'; g.fillRect(12,-6.7,2,1.2);
 });
 reg('mech',28,42,(g,t,u)=>{
   const P=unitPal(u);
-  g.fillStyle=P.dark; g.fillRect(-8,-15,6,15); g.fillRect(2,-15,6,15); g.fillRect(-10,-3,9,3); g.fillRect(1,-3,9,3);
+  // Split greaves, knee joints and broad feet give the walker weight without enlarging it.
+  g.fillStyle=P.dark; g.fillRect(-8,-15,6,13); g.fillRect(2,-15,6,13);
+  g.fillStyle=P.metal; g.beginPath(); g.arc(-5,-13,2.1,0,pi2); g.arc(5,-13,2.1,0,pi2); g.fill();
+  g.fillStyle='#252b34'; g.fillRect(-10,-3,9,3); g.fillRect(1,-3,9,3);
+  g.fillStyle=P.accent; g.fillRect(-9,-2.8,4,1); g.fillRect(4,-2.8,4,1);
   g.fillStyle=P.body; g.fillRect(-9,-29,18,15); O(g,1.5); g.strokeRect(-9,-29,18,15);
-  g.fillStyle=P.accent; g.fillRect(-3,-25,6,6);
+  g.fillStyle=P.metal; g.fillRect(-6,-27,12,7);
+  g.fillStyle=P.dark; g.fillRect(-1,-27,2,7); g.fillRect(-5,-22,10,2);
+  g.fillStyle=P.accent; g.fillRect(-3,-25,6,4);
+  g.fillStyle='rgba(255,255,255,.18)'; g.fillRect(-7,-28,6,1.2);
   g.fillStyle=P.dark; g.fillRect(-15,-29,6,9); g.fillRect(9,-29,6,9);
-  g.fillStyle=P.metal; g.fillRect(9,-23,13,4);
+  g.fillStyle=P.body; g.fillRect(-16,-30,7,7); g.fillRect(9,-30,7,7); O(g,1.2); g.strokeRect(-16,-30,7,7); g.strokeRect(9,-30,7,7);
+  g.fillStyle=P.accent; g.fillRect(-15,-29,2,2); g.fillRect(14,-29,2,2);
+  g.fillStyle=P.metal; g.fillRect(9,-23,13,4); g.fillStyle=P.dark; g.fillRect(19,-24,3,6);
   g.fillStyle=P.body; g.fillRect(-5,-36,10,8); O(g,1.5); g.strokeRect(-5,-36,10,8);
-  g.fillStyle='#ff5a4e'; g.fillRect(-4,-33,8,3);
+  g.fillStyle=P.dark; g.fillRect(-3.5,-34,7,3.2);
+  g.fillStyle='#ff6257'; g.fillRect(-3,-33.3,6,1.3);
+  g.fillStyle='rgba(255,255,255,.17)'; g.fillRect(-3,-35.5,6,1);
 });
 reg('zeppelin',54,28,(g,t,u)=>{
   const P=unitPal(u);
   g.fillStyle=P.body; g.beginPath(); g.ellipse(0,-15,25,9.5,0,0,pi2); g.fill(); O(g,1.5); g.stroke();
+  g.fillStyle='rgba(255,255,255,.16)'; g.beginPath(); g.ellipse(-2,-18.6,17,3.2,-.04,Math.PI,pi2); g.fill();
+  g.strokeStyle='rgba(18,24,32,.34)'; g.lineWidth=.8;
+  g.beginPath(); g.moveTo(-16,-21); g.quadraticCurveTo(-11,-15,-16,-9); g.moveTo(-7,-23); g.quadraticCurveTo(-3,-15,-7,-7); g.moveTo(4,-23); g.quadraticCurveTo(8,-15,4,-7); g.stroke();
   g.fillStyle=P.accent; g.fillRect(-23,-17,46,2.6);
-  g.fillStyle=P.dark;
-  g.beginPath(); g.moveTo(22,-15); g.lineTo(29,-21); g.lineTo(27,-14); g.closePath(); g.fill();
+  g.fillStyle=P.dark; g.beginPath(); g.moveTo(22,-15); g.lineTo(29,-21); g.lineTo(27,-14); g.closePath(); g.fill();
   g.beginPath(); g.moveTo(22,-13); g.lineTo(29,-8); g.lineTo(27,-13); g.closePath(); g.fill();
+  g.fillStyle=P.accent; g.fillRect(24,-18,3,2); g.fillRect(24,-12,3,2);
   g.fillStyle=P.metal; g.fillRect(-8,-8,16,5); O(g,1); g.strokeRect(-8,-8,16,5);
+  g.fillStyle='#9fd0ff'; for(let i=0;i<4;i++) g.fillRect(-6+i*4,-7,2,1.5);
+  g.fillStyle=P.dark; g.fillRect(-5,-3,10,1.2);
   g.save(); g.translate(-25,-15); g.rotate(t*20);
-  g.fillStyle='rgba(120,128,140,.85)'; g.fillRect(-1.5,-7,3,14); g.restore();
+  g.fillStyle='rgba(120,128,140,.85)'; g.fillRect(-1.5,-7,3,14); g.fillRect(-6,-1,12,2); g.restore();
 });
 reg('spectre',20,26,(g,t,u)=>{
   const P=unitPal(u);
-  // hooded cloak
+  // Faceted cloak, shadowed face and a crisp energy blade keep this elite silhouette distinct.
   g.fillStyle=P.dark;
-  g.beginPath(); g.moveTo(-7,0); g.lineTo(-6,-14); g.quadraticCurveTo(0,-25,6,-14); g.lineTo(7,0); g.closePath(); g.fill(); O(g,1.5); g.stroke();
-  // hood opening (face in shadow)
+  g.beginPath(); g.moveTo(-7,0); g.lineTo(-6,-14); g.quadraticCurveTo(0,-25,6,-14); g.lineTo(7,0); g.quadraticCurveTo(0,-3,-7,0); g.closePath(); g.fill(); O(g,1.5); g.stroke();
+  g.fillStyle=P.body; g.beginPath(); g.moveTo(-5,-13); g.lineTo(-2,-20); g.lineTo(2,-20); g.lineTo(5,-13); g.lineTo(4,-6); g.lineTo(-4,-6); g.closePath(); g.fill();
   g.fillStyle='#10151d'; g.beginPath(); g.ellipse(0,-15,3.6,4.4,0,0,pi2); g.fill();
-  // glowing eyes
-  g.fillStyle=P.accent; g.fillRect(-2.4,-16,1.7,1.7); g.fillRect(0.7,-16,1.7,1.7);
-  // cloak rim
-  g.strokeStyle=P.accent; g.lineWidth=1.4;
-  g.beginPath(); g.moveTo(-7,0); g.quadraticCurveTo(0,-4,7,0); g.stroke();
-  // dagger
-  g.fillStyle=P.metal;
-  g.save(); g.translate(7,-8); g.rotate(-.5); g.fillRect(-1.2,-7,2.4,9); g.restore();
+  g.fillStyle=P.accent; g.fillRect(-2.4,-16,1.8,1.7); g.fillRect(.6,-16,1.8,1.7);
+  g.fillStyle='rgba(255,72,95,.28)'; g.beginPath(); g.ellipse(0,-15.2,4.5,5.4,0,0,pi2); g.fill();
+  g.fillStyle=P.metal; g.fillRect(-8,-13,3,5); g.fillRect(5,-13,3,5);
+  g.strokeStyle=P.accent; g.lineWidth=1.2; g.beginPath(); g.moveTo(-7,0); g.quadraticCurveTo(0,-4,7,0); g.moveTo(-4,-5); g.lineTo(-2,-10); g.moveTo(4,-5); g.lineTo(2,-10); g.stroke();
+  g.fillStyle='#242a32'; g.save(); g.translate(7,-8); g.rotate(-.5); g.fillRect(-1.5,-7,3,9); g.restore();
+  g.fillStyle='#c9f8ff'; g.save(); g.translate(7,-8); g.rotate(-.5); g.fillRect(-.5,-7,1,6); g.restore();
 });
-
 function drawCrateIcon(g,type,opened,t=0){
   // wooden crate, rarity stripe, label
   g.clearRect(0,0,150,110);

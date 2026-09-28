@@ -16,7 +16,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Check | Result |
 |---|---|
-| Top-level functions without description (251) | ✅ none |
+| Top-level functions without description (252) | ✅ none |
 | Nested helpers without description (11) | ✅ none |
 | Admin methods without description (30) | ✅ none |
 | Event bindings without description (35) | ✅ none |
@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-27 | **v8.9: UNIT VISUAL POLISH.** The full roster gets a cohesive sprite pass: faction-colored infantry gain fitted vests, kit and clearer rifles; tanks and support vehicles get layered hulls, tracks, wheels, hatches and weapons; helicopters and aircraft gain cockpit glass, panel lines and rotor/engine detail; ships gain portholes, deck edges and sharper turrets. A cached, alpha-clipped sheen/shadow pass adds depth to unit sprites only. Sprite dimensions and gameplay are unchanged; buildings and exact-size Blocks mode are untouched. Smoke draws every registered unit through the cache. |
 | 2026-09-27 | **v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red. |
 | 2026-09-27 | **v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED, not MYTHIC (red); v8.8 corrects its color to cyan.** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge label and Limited-over-Mythic sort order; v8.8 sets its color to cyan. 249 assertions. |
 | 2026-09-27 | **v8.6: LAND ROUTING FIX.** 🛣️ **BRIDGES ARE REAL LAND** — `WALK` samples 40px cell centres, so points on diagonal bridge/coast edges can be land even when their cell is marked water; water rescue now confirms the exact point near land before teleporting a soldier. ⚓ **LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY** — ground target selection skips water-only capture points, while ships still capture them. Regression tests verify a unit stays on a bridge cell mislabelled as water, a rifle reaches the NE island over the bridge, and land AI never targets a RIG. 247 smoke assertions. |
@@ -63,13 +64,13 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 166.2 KB | 2076 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 41.5 KB | 484 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 167.4 KB | 2081 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 42.2 KB | 489 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 71.5 KB | 695 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 72.3 KB | 697 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
-| `military-base-25d/smoke.js` | 55.1 KB | 847 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
+| `military-base-25d/smoke.js` | 55.3 KB | 850 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
 | `military-base-25d/style.css` | 19.1 KB | 293 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
 | `military-base-25d/test-stubs.js` | 3.3 KB | 78 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
@@ -117,10 +118,10 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/systems/02-economy.js` | 2.0 KB | 47 | income, bonuses, troop cap, bank interest |
 | `military-base-25d/js/systems/03-waves.js` | 2.9 KB | 72 | raid waves, the wave pool, the MECHA WORM boss |
 | `military-base-25d/js/systems/04-captures.js` | 1.8 KB | 51 | capture points: faction majority, garrison respawns |
-| `military-base-25d/js/textures/01-sprites.js` | 17.3 KB | 328 | sprites: flat 2D canvas drawings |
-| `military-base-25d/js/textures/02-sprites-units.js` | 10.5 KB | 147 | sprites for the new units (built from 4 templates) |
-| `military-base-25d/js/textures/03-sprites-naval.js` | 5.3 KB | 98 | the NAVAL line: ship sprite template + the 7 ships |
-| `military-base-25d/js/textures/04-sprites-new-units.js` | 3.4 KB | 52 | sprites for the expansion units (heavies, specialists, Centurion) |
+| `military-base-25d/js/textures/01-sprites.js` | 23.6 KB | 398 | sprites: flat 2D canvas drawings |
+| `military-base-25d/js/textures/02-sprites-units.js` | 17.2 KB | 234 | sprites for the new units (built from 4 templates) |
+| `military-base-25d/js/textures/03-sprites-naval.js` | 6.5 KB | 115 | the NAVAL line: ship sprite template + the 7 ships |
+| `military-base-25d/js/textures/04-sprites-new-units.js` | 4.6 KB | 64 | sprites for the expansion units (heavies, specialists, Centurion) |
 | `military-base-25d/js/textures/05-sprites-buildings.js` | 25.5 KB | 357 | sprites for new production/special/decor buildings + generated unit buildings |
 | `military-base-25d/js/ui/01-ui-core.js` | 2.3 KB | 54 | toasts + panel show/hide + the top-bar / rail / HUD buttons |
 | `military-base-25d/js/ui/02-shop.js` | 5.0 KB | 102 | the SHOP: tabs (production / units / special / decor) + class sub-tabs + the CRATE (robux) shop |
@@ -131,7 +132,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
 | `military-base-25d/js/ui/09-input.js` | 8.2 KB | 191 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 11.6 KB | 98 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/10-patch-notes.js` | 12.2 KB | 103 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.2 KB | 32 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 3.4 KB | 55 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
@@ -179,10 +180,10 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 18 | `js/achievements/01-achievements-data.js` | 19 | the achievement list: ico, desc, progress fn, payout | 0 |
 | 19 | `js/maps/01-map.js` | 202 | island map: shapes, walkable test, A*, city flow field | 14 |
 | 20 | `js/maps/02-sea.js` | 69 | water lanes: the SEA grid, shipping lanes, ship navigation | 5 |
-| 21 | `js/textures/01-sprites.js` | 327 | sprites: flat 2D canvas drawings | 6 |
-| 22 | `js/textures/02-sprites-units.js` | 146 | sprites for the new units (built from 4 templates) | 4 |
-| 23 | `js/textures/03-sprites-naval.js` | 97 | the NAVAL line: ship sprite template + the 7 ships | 1 |
-| 24 | `js/textures/04-sprites-new-units.js` | 51 | sprites for the expansion units (heavies, specialists, Centurion) | 0 |
+| 21 | `js/textures/01-sprites.js` | 397 | sprites: flat 2D canvas drawings | 7 |
+| 22 | `js/textures/02-sprites-units.js` | 233 | sprites for the new units (built from 4 templates) | 4 |
+| 23 | `js/textures/03-sprites-naval.js` | 114 | the NAVAL line: ship sprite template + the 7 ships | 1 |
+| 24 | `js/textures/04-sprites-new-units.js` | 63 | sprites for the expansion units (heavies, specialists, Centurion) | 0 |
 | 25 | `js/textures/05-sprites-buildings.js` | 356 | sprites for new production/special/decor buildings + generated unit buildings | 3 |
 | 26 | `js/core/03-save.js` | 28 | save / load (localStorage) | 2 |
 | 27 | `js/core/04-audio.js` | 75 | audio: WebAudio sfx + music | 5 |
@@ -220,7 +221,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
 | 61 | `js/ui/09-input.js` | 190 | input: minimap, keyboard, mouse | 5 |
-| 62 | `js/ui/10-patch-notes.js` | 97 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 62 | `js/ui/10-patch-notes.js` | 102 | the 📜 PATCHES panel (what changed in each build) | 1 |
 | 63 | `js/admin/01-admin.js` | 305 | admin panel (window.Admin) | 0 |
 | 64 | `js/core/07-loop.js` | 123 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
 | 65 | `js/core/08-init.js` | 69 | init: load save → migrate → start | 1 |
@@ -236,12 +237,12 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/rewards/` | 5 | 199 | crate tables, redeem codes, the REWARDS list + its panel |
 | `js/achievements/` | 3 | 54 | the achievement list, the unlock loop and the 🏆 panel |
 | `js/maps/` | 2 | 271 | the island map (shapes, walk grid, A*, city flow field) and the SEA: water lanes, sea grid, ship navigation |
-| `js/textures/` | 5 | 977 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
+| `js/textures/` | 5 | 1163 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
 | `js/systems/` | 4 | 196 | cross-cutting game systems: power, economy, waves/boss, capture points |
 | `js/buildings/` | 5 | 331 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 554 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
 | `js/render/` | 5 | 572 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 699 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/ui/` | 10 | 704 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
 | `js/admin/` | 1 | 305 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
@@ -736,19 +737,20 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 |---|---|---|
 | 6 | `reg(type,w,h,draw)` | register a sprite {w,h,draw(g,t,u)} into SPR |
 | 8 | `sprUsesTime(fn)` | true if a sprite draw fn uses its time arg → animated (gets SPR_FRAMES cached frames) |
-| 16 | `sprCanvas(type,side,faction,t,res)` | sprite cache: paints (type,side,faction,frame,res) once into an offscreen canvas; cleared above 1200 entries |
-| 34 | `drawSpr(g,type,x,y,sc,side,faction,t)` | blit a cached sprite with its ground anchor at (x,y) — replaces per-frame path drawing (perf) |
-| 40 | `O(g,w=2)` | shared dark outline style |
-| 315 | `drawCrateIcon(g,type,opened,t=0)` | crate box + rarity colour + label |
+| 16 | `sprCanvas(type,side,faction,t,res)` | sprite cache: paints (type,side,faction,frame,res) once into an offscreen canvas; applies unit-only lighting; cleared above 1200 entries |
+| 35 | `drawSpr(g,type,x,y,sc,side,faction,t)` | blit a cached sprite with its ground anchor at (x,y) — replaces per-frame path drawing (perf) |
+| 42 | `unitPolish(g,w,h)` | v8.9: cached sprite-only top sheen + lower shade, clipped to unit pixels; buildings and Blocks stay unchanged |
+| 59 | `O(g,w=2)` | shared dark outline style |
+| 385 | `drawCrateIcon(g,type,opened,t=0)` | crate box + rarity colour + label |
 
 ### `js/textures/02-sprites-units.js` — sprites for the new units (built from 4 templates)
 
 | Line | Function | What it does |
 |---|---|---|
 | 8 | `infantry(o={})` | TEMPLATE → soldier sprite (helmet type, gun length, scope, rocket tube, medic cross, bulk) |
-| 33 | `vehicle(o={})` | TEMPLATE → ground vehicle (tracks/wheels, hull, turret, twin gun, flak, rocket rack, artillery barrel, radar dish, rail glow) |
-| 68 | `heliT(o={})` | TEMPLATE → helicopter (size, door gunner, guns, twin tail, angular stealth body) |
-| 88 | `plane(o={})` | TEMPLATE → aircraft (length, wings, props, twin tail, guns, flying-wing B-2) |
+| 52 | `vehicle(o={})` | TEMPLATE → ground vehicle (tracks/wheels, hull, turret, twin gun, flak, rocket rack, artillery barrel, radar dish, rail glow) |
+| 125 | `heliT(o={})` | TEMPLATE → helicopter (size, door gunner, guns, twin tail, angular stealth body) |
+| 161 | `plane(o={})` | TEMPLATE → aircraft (length, wings, props, twin tail, guns, flying-wing B-2) |
 
 ### `js/textures/03-sprites-naval.js` — the NAVAL line: ship sprite template + the 7 ships
 
@@ -1116,7 +1118,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 82 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 87 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -1454,71 +1456,71 @@ function defaultSettings(){
 
 | Sprite | w×h | Kind | Where |
 |---|---|---|---|
-| `solar` | 44×38 | building | js/textures/01-sprites.js:43 |
-| `oil` | 44×46 | building | js/textures/01-sprites.js:51 |
-| `data` | 48×48 | building | js/textures/01-sprites.js:60 |
-| `cookie` | 48×42 | building | js/textures/01-sprites.js:68 |
-| `research` | 54×52 | building | js/textures/01-sprites.js:76 |
-| `industrial` | 60×62 | building | js/textures/01-sprites.js:83 |
-| `logistics` | 68×36 | building | js/textures/01-sprites.js:94 |
-| `depot` | 44×32 | building | js/textures/01-sprites.js:103 |
-| `barracks` | 56×40 | building | js/textures/01-sprites.js:111 |
-| `tankfac` | 60×42 | building | js/textures/01-sprites.js:119 |
-| `heliport` | 66×56 | building | js/textures/01-sprites.js:127 |
-| `afbase` | 76×42 | building | js/textures/01-sprites.js:134 |
-| `mechi` | 84×52 | building | js/textures/01-sprites.js:147 |
-| `stealthlab` | 64×60 | building | js/textures/01-sprites.js:155 |
-| `zeppeldock` | 70×64 | building | js/textures/01-sprites.js:169 |
-| `goldenTurbine` | 50×56 | building | js/textures/01-sprites.js:176 |
-| `tree` | 38×48 | building | js/textures/01-sprites.js:185 |
-| `rock` | 34×22 | building | js/textures/01-sprites.js:190 |
-| `flag` | 30×50 | building | js/textures/01-sprites.js:194 |
-| `wall` | 48×16 | building | js/textures/01-sprites.js:202 |
-| `goldenCrane` | 56×56 | building | js/textures/01-sprites.js:210 |
-| `goldenBomb` | 40×42 | building | js/textures/01-sprites.js:217 |
-| `goldenMechStat` | 48×58 | building | js/textures/01-sprites.js:224 |
-| `rifle` | 20×22 | unit | js/textures/01-sprites.js:236 |
-| `tank` | 40×22 | unit | js/textures/01-sprites.js:245 |
-| `heli` | 38×22 | unit | js/textures/01-sprites.js:255 |
-| `jet` | 36×18 | unit | js/textures/01-sprites.js:266 |
-| `mech` | 28×42 | unit | js/textures/01-sprites.js:277 |
-| `zeppelin` | 54×28 | unit | js/textures/01-sprites.js:287 |
-| `spectre` | 20×26 | unit | js/textures/01-sprites.js:298 |
-| `scout` | 20×24 | unit | js/textures/02-sprites-units.js:111 |
-| `atv` | 30×20 | unit | js/textures/02-sprites-units.js:112 |
-| `sniper` | 24×22 | unit | js/textures/02-sprites-units.js:113 |
-| `commando` | 20×24 | unit | js/textures/02-sprites-units.js:114 |
-| `humvee` | 36×24 | unit | js/textures/02-sprites-units.js:115 |
-| `rocket` | 24×24 | unit | js/textures/02-sprites-units.js:116 |
-| `medic` | 20×24 | unit | js/textures/02-sprites-units.js:117 |
-| `ranger` | 20×24 | unit | js/textures/02-sprites-units.js:118 |
-| `drone` | 26×20 | unit | js/textures/02-sprites-units.js:119 |
-| `hinf` | 24×26 | unit | js/textures/02-sprites-units.js:126 |
-| `apc` | 40×24 | unit | js/textures/02-sprites-units.js:127 |
-| `flak` | 38×26 | unit | js/textures/02-sprites-units.js:128 |
-| `aav` | 40×28 | unit | js/textures/02-sprites-units.js:129 |
-| `arty` | 44×26 | unit | js/textures/02-sprites-units.js:130 |
-| `heavy` | 48×28 | unit | js/textures/02-sprites-units.js:131 |
-| `mammoth` | 56×32 | unit | js/textures/02-sprites-units.js:132 |
-| `railgun` | 50×28 | unit | js/textures/02-sprites-units.js:133 |
-| `huey` | 40×24 | unit | js/textures/02-sprites-units.js:135 |
-| `cobra` | 40×20 | unit | js/textures/02-sprites-units.js:136 |
-| `blackhawk` | 44×24 | unit | js/textures/02-sprites-units.js:137 |
-| `a10` | 40×20 | unit | js/textures/02-sprites-units.js:138 |
-| `f22` | 40×18 | unit | js/textures/02-sprites-units.js:139 |
-| `ac130` | 56×24 | unit | js/textures/02-sprites-units.js:140 |
-| `b52` | 62×26 | unit | js/textures/02-sprites-units.js:141 |
-| `saboteur` | 20×24 | unit | js/textures/02-sprites-units.js:143 |
-| `phantom` | 44×24 | unit | js/textures/02-sprites-units.js:144 |
-| `stealthheli` | 44×22 | unit | js/textures/02-sprites-units.js:145 |
-| `b2` | 56×20 | unit | js/textures/02-sprites-units.js:146 |
-| `speedboat` | 30×20 | unit | js/textures/03-sprites-naval.js:66 |
-| `gunboat` | 38×22 | unit | js/textures/03-sprites-naval.js:68 |
-| `frigate` | 50×30 | unit | js/textures/03-sprites-naval.js:69 |
-| `battleship` | 72×36 | unit | js/textures/03-sprites-naval.js:70 |
-| `carrier` | 78×32 | unit | js/textures/03-sprites-naval.js:71 |
-| `zumwalt` | 56×26 | unit | js/textures/03-sprites-naval.js:73 |
-| `submarine` | 54×24 | unit | js/textures/03-sprites-naval.js:84 |
+| `solar` | 44×38 | building | js/textures/01-sprites.js:62 |
+| `oil` | 44×46 | building | js/textures/01-sprites.js:70 |
+| `data` | 48×48 | building | js/textures/01-sprites.js:79 |
+| `cookie` | 48×42 | building | js/textures/01-sprites.js:87 |
+| `research` | 54×52 | building | js/textures/01-sprites.js:95 |
+| `industrial` | 60×62 | building | js/textures/01-sprites.js:102 |
+| `logistics` | 68×36 | building | js/textures/01-sprites.js:113 |
+| `depot` | 44×32 | building | js/textures/01-sprites.js:122 |
+| `barracks` | 56×40 | building | js/textures/01-sprites.js:130 |
+| `tankfac` | 60×42 | building | js/textures/01-sprites.js:138 |
+| `heliport` | 66×56 | building | js/textures/01-sprites.js:146 |
+| `afbase` | 76×42 | building | js/textures/01-sprites.js:153 |
+| `mechi` | 84×52 | building | js/textures/01-sprites.js:166 |
+| `stealthlab` | 64×60 | building | js/textures/01-sprites.js:174 |
+| `zeppeldock` | 70×64 | building | js/textures/01-sprites.js:188 |
+| `goldenTurbine` | 50×56 | building | js/textures/01-sprites.js:195 |
+| `tree` | 38×48 | building | js/textures/01-sprites.js:204 |
+| `rock` | 34×22 | building | js/textures/01-sprites.js:209 |
+| `flag` | 30×50 | building | js/textures/01-sprites.js:213 |
+| `wall` | 48×16 | building | js/textures/01-sprites.js:221 |
+| `goldenCrane` | 56×56 | building | js/textures/01-sprites.js:229 |
+| `goldenBomb` | 40×42 | building | js/textures/01-sprites.js:236 |
+| `goldenMechStat` | 48×58 | building | js/textures/01-sprites.js:243 |
+| `rifle` | 20×22 | unit | js/textures/01-sprites.js:255 |
+| `tank` | 40×22 | unit | js/textures/01-sprites.js:274 |
+| `heli` | 38×22 | unit | js/textures/01-sprites.js:294 |
+| `jet` | 36×18 | unit | js/textures/01-sprites.js:317 |
+| `mech` | 28×42 | unit | js/textures/01-sprites.js:334 |
+| `zeppelin` | 54×28 | unit | js/textures/01-sprites.js:355 |
+| `spectre` | 20×26 | unit | js/textures/01-sprites.js:371 |
+| `scout` | 20×24 | unit | js/textures/02-sprites-units.js:198 |
+| `atv` | 30×20 | unit | js/textures/02-sprites-units.js:199 |
+| `sniper` | 24×22 | unit | js/textures/02-sprites-units.js:200 |
+| `commando` | 20×24 | unit | js/textures/02-sprites-units.js:201 |
+| `humvee` | 36×24 | unit | js/textures/02-sprites-units.js:202 |
+| `rocket` | 24×24 | unit | js/textures/02-sprites-units.js:203 |
+| `medic` | 20×24 | unit | js/textures/02-sprites-units.js:204 |
+| `ranger` | 20×24 | unit | js/textures/02-sprites-units.js:205 |
+| `drone` | 26×20 | unit | js/textures/02-sprites-units.js:206 |
+| `hinf` | 24×26 | unit | js/textures/02-sprites-units.js:213 |
+| `apc` | 40×24 | unit | js/textures/02-sprites-units.js:214 |
+| `flak` | 38×26 | unit | js/textures/02-sprites-units.js:215 |
+| `aav` | 40×28 | unit | js/textures/02-sprites-units.js:216 |
+| `arty` | 44×26 | unit | js/textures/02-sprites-units.js:217 |
+| `heavy` | 48×28 | unit | js/textures/02-sprites-units.js:218 |
+| `mammoth` | 56×32 | unit | js/textures/02-sprites-units.js:219 |
+| `railgun` | 50×28 | unit | js/textures/02-sprites-units.js:220 |
+| `huey` | 40×24 | unit | js/textures/02-sprites-units.js:222 |
+| `cobra` | 40×20 | unit | js/textures/02-sprites-units.js:223 |
+| `blackhawk` | 44×24 | unit | js/textures/02-sprites-units.js:224 |
+| `a10` | 40×20 | unit | js/textures/02-sprites-units.js:225 |
+| `f22` | 40×18 | unit | js/textures/02-sprites-units.js:226 |
+| `ac130` | 56×24 | unit | js/textures/02-sprites-units.js:227 |
+| `b52` | 62×26 | unit | js/textures/02-sprites-units.js:228 |
+| `saboteur` | 20×24 | unit | js/textures/02-sprites-units.js:230 |
+| `phantom` | 44×24 | unit | js/textures/02-sprites-units.js:231 |
+| `stealthheli` | 44×22 | unit | js/textures/02-sprites-units.js:232 |
+| `b2` | 56×20 | unit | js/textures/02-sprites-units.js:233 |
+| `speedboat` | 30×20 | unit | js/textures/03-sprites-naval.js:83 |
+| `gunboat` | 38×22 | unit | js/textures/03-sprites-naval.js:85 |
+| `frigate` | 50×30 | unit | js/textures/03-sprites-naval.js:86 |
+| `battleship` | 72×36 | unit | js/textures/03-sprites-naval.js:87 |
+| `carrier` | 78×32 | unit | js/textures/03-sprites-naval.js:88 |
+| `zumwalt` | 56×26 | unit | js/textures/03-sprites-naval.js:90 |
+| `submarine` | 54×24 | unit | js/textures/03-sprites-naval.js:101 |
 | `swarmdrone` | 22×16 | unit | js/textures/04-sprites-new-units.js:8 |
 | `officer` | 20×26 | unit | js/textures/04-sprites-new-units.js:16 |
 | `lighttank` | 40×24 | unit | js/textures/04-sprites-new-units.js:18 |
@@ -1528,10 +1530,10 @@ function defaultSettings(){
 | `leopard` | 50×28 | unit | js/textures/04-sprites-new-units.js:22 |
 | `icbm` | 50×36 | unit | js/textures/04-sprites-new-units.js:23 |
 | `centurion` | 64×64 | unit | js/textures/04-sprites-new-units.js:32 |
-| `f15` | 40×18 | unit | js/textures/04-sprites-new-units.js:48 |
-| `f35` | 38×18 | unit | js/textures/04-sprites-new-units.js:49 |
-| `su47` | 42×18 | unit | js/textures/04-sprites-new-units.js:50 |
-| `ka52` | 42×24 | unit | js/textures/04-sprites-new-units.js:51 |
+| `f15` | 40×18 | unit | js/textures/04-sprites-new-units.js:60 |
+| `f35` | 38×18 | unit | js/textures/04-sprites-new-units.js:61 |
+| `su47` | 42×18 | unit | js/textures/04-sprites-new-units.js:62 |
+| `ka52` | 42×24 | unit | js/textures/04-sprites-new-units.js:63 |
 | `scouttower` | 40×36 | building | generated: `tower` template (08c) |
 | `atvtent` | 46×41 | building | generated: `tent` template (08c) |
 | `snipernest` | 40×36 | building | generated: `tower` template (08c) |
@@ -1906,132 +1908,132 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 363 | v5: real sizes, admin quantity spawns, performance structures | NE plot is rotated to face the city |
 | 364 | v5: real sizes, admin quantity spawns, performance structures | p',0,0))>unitScale(B.mkUnit('rifle','p',0,0)),'bigger units are drawn bigger (mammoth > rifleman) |
 | 365 | v5: real sizes, admin quantity spawns, performance structures | sprite cache: animated sprites get frames, static ones one image |
-| 367 | v5: real sizes, admin quantity spawns, performance structures | sprite cache paints + blits |
-| 371 | v5: real sizes, admin quantity spawns, performance structures | admin spawns 1000 units on walkable ground (…, onLand=…) |
-| 372 | v5: real sizes, admin quantity spawns, performance structures | admin quantity is capped at 1000 |
-| 373 | v5: real sizes, admin quantity spawns, performance structures | admin can spawn for a bot faction |
-| 374 | v5: real sizes, admin quantity spawns, performance structures | admin search filter runs |
-| 379 | v5: real sizes, admin quantity spawns, performance structures | spatial grid finds exactly the same targets as a full scan |
-| 382 | v5: real sizes, admin quantity spawns, performance structures | dead units are compacted out after the frame |
-| 392 | money capacity: buildings store what they earn, up to their cap, and pay out | solar has a money capacity ($…) |
-| 394 | money capacity: buildings store what they earn, up to their cap, and pay out | money is STORED inside the building ($…) |
-| 397 | money capacity: buildings store what they earn, up to their cap, and pay out | clicking a building empties its safe (+$…) |
-| 398 | money capacity: buildings store what they earn, up to their cap, and pay out | storage never exceeds the cap (… <= …) |
-| 405 | structure power vs army power | totalPower = structure (…) + army (…) |
-| 406 | structure power vs army power | a tank counts as army power |
-| 412 | kill bounty scales with the victim | rifleman bounty >= base (…) |
-| 413 | kill bounty scales with the victim | heavy bounty scales with tier (… > …) |
-| 415 | kill bounty scales with the victim | a wave-buffed unit pays more |
-| 421 | officer aura | officer gives +25% damage to allies nearby (×…) |
-| 422 | officer aura | allies out of range get nothing |
-| 431 | wave-defense garrison | unit buildings train a free garrison while a raid is incoming (… defenders) |
-| 433 | wave-defense garrison | garrison units are FREE (they do not eat the troop cap) |
-| 436 | wave-defense garrison | each building respects its MaxCap (…) |
-| 438 | wave-defense garrison | the garrison stands down when the base is safe |
-| 443 | naval: the sea grid, water lanes and ships | shipping lanes exist (… segments, … buoys) |
-| 445 | naval: the sea grid, water lanes and ships | open water is sea, not land |
-| 446 | naval: the sea grid, water lanes and ships | your plot is not sea |
-| 448 | naval: the sea grid, water lanes and ships | every shipping lane runs through water |
-| 457 | naval: the sea grid, water lanes and ships | a frigate sailed across the water toward its target (… -> … px) |
-| 458 | naval: the sea grid, water lanes and ships | the ship stayed in the water |
-| 465 | naval: the sea grid, water lanes and ships | the Gunboat Pier launches its boat toward the water |
-| 470 | new content is wired up: shop tabs, sprites, buildings | gunboat','frigate','submarine','zumwalt','battleship','carrier'].every(k=>U[k]&&U[k].sea),'7 ships in the naval line |
-| 471 | new content is wired up: shop tabs, sprites, buildings | icbm','leopard','pzh','mantis','tigr','swarmdrone','f15','f35','su47','ka52','officer','centurion'].every(k=>U[k]),'P2/P3 expansion units present |
-| 472 | new content is wired up: shop tabs, sprites, buildings | Submarine Cavern trains the Submarine |
-| 473 | new content is wired up: shop tabs, sprites, buildings | Centurion Support Site trains the Centurion |
-| 474 | new content is wired up: shop tabs, sprites, buildings | Airship Docks (Zeppelin) is in |
-| 475 | new content is wired up: shop tabs, sprites, buildings | … money buildings have a Capacity |
-| 478 | new content is wired up: shop tabs, sprites, buildings | the NAVAL shop tab renders |
-| 481 | new content is wired up: shop tabs, sprites, buildings | every tooltip still renders (incl. capacity + bounty rows) |
-| 503 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | BLOCK MODE blits no sprites at all (… draws → …) |
-| 504 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | TREES & DECOR off draws no trees (… → … per 12 frames) |
-| 509 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | block mode draws all 55 unit types as a rectangle (no sprite) |
-| 512 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | block mode draws all 100 building types as their footprint rectangle |
-| 515 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | a block is EXACTLY its model's box: rifle …px < carrier …px, industrial bld …px |
-| 527 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | right-click no longer demolishes (buildings are permanent) |
-| 530 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | INDESTRUCTIBLE off → right-click sells again (+50% refund) |
-| 540 | "march on the middle": no more drive-by shooting | v8: an enemy 520px away is IGNORED (AGGRO.march 210 — no drive-by shooting) |
-| 542 | "march on the middle": no more drive-by shooting | v8: idle troops march on the MIDDLE (… → … px from the CITY) |
-| 545 | "march on the middle": no more drive-by shooting | v8: once the enemy is CLOSE the march stops and they fight |
-| 548 | the world is twice as big | world is …px wide, bases sit on a …px ring |
-| 550 | the world is twice as big | neighbouring bases are far apart (…px between BOT 1 and BOT 2) |
-| 551 | the world is twice as big | every shipping lane still runs through water on the bigger map |
-| 554 | zoom out until the WHOLE map fits | zoom-out limit now fits the map (MINZ …, was 0.5) |
-| 557 | zoom out until the WHOLE map fits | at MINZ the whole …px map is on screen |
-| 560 | zoom out until the WHOLE map fits | fully zoomed out the camera locks to the map centre (nothing cut off) |
-| 562 | zoom out until the WHOLE map fits | at normal zoom the camera still pans freely |
-| 570 | v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q | build grid is twice as fine (…x… cells of …px) |
-| 571 | v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q | buildings are drawn 3x smaller (BLD_K … = 1.3/3) |
-| 572 | v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q | a Solar panel went from 64px wide to …px |
-| 575 | your WATER YARD behind the island | the water yard is …x…px — as wide as your island, behind it |
-| 576 | your WATER YARD behind the island | the whole yard is water, not land |
-| 577 | your WATER YARD behind the island | the yard counts as SEA (ships can sail into it) |
-| 578 | your WATER YARD behind the island | docks + the offshore rig are WATER buildings, the barracks is not |
-| 579 | your WATER YARD behind the island | p','land') && G('fitsAt')('gunboatpier',2,2,'p','water'),'a dock fits in the yard and nowhere else |
-| 580 | your WATER YARD behind the island | p','water') && G('fitsAt')('barracks',2,2,'p','land'),'a barracks fits on the island and not in the water |
-| 583 | your WATER YARD behind the island | the placement ghost snaps into the water yard (zone …) |
-| 585 | your WATER YARD behind the island | a land building over the yard is refused with a reason |
-| 587 | your WATER YARD behind the island | over your island the ghost goes back to the land grid |
-| 592 | your WATER YARD behind the island | the pier stands in the yard (…,…) |
-| 595 | your WATER YARD behind the island | the pier launched its gunboat straight into the sea |
-| 598 | WATER POINTS: 4 rigs, held by boats | 4 water capture points (…) |
-| 602 | WATER POINTS: 4 rigs, held by boats | a held rig is garrisoned by BOATS (…) |
-| 606 | hover a troop → its stat card | unitAt finds the troop under the cursor (spatial hash, not a full scan) |
-| 607 | hover a troop → its stat card | unitAt finds nothing when the cursor is over empty ground |
-| 610 | hover a troop → its stat card | every one of the 55 unit types has a hover stat card |
-| 611 | hover a troop → its stat card | the card shows troop-cap size, DPS and HP |
-| 613 | hover a troop → its stat card | the MECHA WORM has a hover card too |
-| 618 | hold Q = pause | holding Q freezes the battle (game time does not move) |
-| 621 | hold Q = pause | releasing Q resumes it |
-| 627 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | STACK_UP = …px of lift per floor of a stack |
-| 636 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p','land',0) && G('fitsAt')('barracks',px,py,'p','land',4),'the ground floor is taken, the top of the pile is free |
-| 637 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p')===4,'stackTopAt reports how high the pile is |
-| 639 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p','land').lvl===0,'findFreeSpot takes a free GROUND spot next to a pile before climbing it |
-| 644 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | every floor of the pile trains its own unit (4 barracks = 4 troops) |
-| 650 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | the ghost lands on LEVEL … of the pile |
-| 654 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | clicking a stack picks the floor you clicked, not the one underneath |
-| 658 | backpack STACKS | 3 solar panels = ONE backpack card (x…) |
-| 659 | backpack STACKS | solar')===3,'invCount reads the stack |
-| 660 | backpack STACKS | solar',2)===2 && G('invCount')('b','solar')===1,'takeItem pulls 2 out of the stack |
-| 662 | backpack STACKS | emptying a stack removes the card |
-| 663 | backpack STACKS | old saves (one entry per crate) fold into stacks |
-| 668 | open 5 crates at once | openCrateModal opens 5 crates in one go |
-| 669 | open 5 crates at once | premium')===0,'all 5 crates leave the backpack |
-| 670 | open 5 crates at once | cratesOpened counts every crate you opened |
-| 672 | open 5 crates at once | the 5 wins are stacked as cards (…) |
-| 673 | open 5 crates at once | the "open how many?" chooser exists (1 / 5 / 10 / ALL) |
-| 674 | open 5 crates at once | a crate row is [id,weight] — the opening shuffle reads the id (it used to read the row and throw, so crates never revealed) |
-| 679 | the ROBUX SHOP finally works (it called a function that did not exist) | premium')===10,'the ROBUX SHOP sells 10 premium crates at once → one stacked card |
-| 685 | Admin.pile: 7 solar panels, 7 high, unlimited stacking | Admin.pile stacks … solar panels … high |
-| 687 | Admin.pile: 7 solar panels, 7 high, unlimited stacking | a 7-high tower survives 400 frames of rendering |
-| 701 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | the backpack hands you the first solar panel |
-| 703 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | after 2 of 3 you are STILL placing (the stack refills your hand) |
-| 707 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | solar')===0,'the stack is empty at the end |
-| 712 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | the BACKPACK STAYS OPEN while you are placing |
-| 719 | SHIFT + DRAG = lay a whole run | SHIFT+mousedown starts a drag-place instead of dropping one |
-| 722 | SHIFT + DRAG = lay a whole run | the preview lays out … footprints inside the grid |
-| 726 | SHIFT + DRAG = lay a whole run | letting go places the whole run (… solar panels) |
-| 727 | SHIFT + DRAG = lay a whole run | +b.gy)).size===run.length,'a drag spreads them SIDE BY SIDE (nothing stacked by accident) |
-| 728 | SHIFT + DRAG = lay a whole run | solar')+run.length+(S().placing?1:0)===30,'every panel of the run came out of the backpack stack |
-| 737 | SHIFT + DRAG = lay a whole run | solar')===0,`a run stops at the last one you own (… of 5 placed) |
-| 746 | ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels | LIMITED is shown in cyan, not pink or red MYTHIC |
-| 757 | AUTO SORT: best rarity first | the SHOP shows the best first (…) |
-| 759 | AUTO SORT: best rarity first | the ADMIN building list starts with the golden items |
-| 764 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces in the MIDDLE (…px from the city centre) |
-| 769 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm SLAMS everything around it (hp … → …) |
-| 772 | admin custom boss HP | admin set a custom boss HP (…) |
-| 774 | admin custom boss HP | the NEXT boss spawns with that HP too |
-| 777 | admin custom boss HP | clearing the box puts the boss HP back to default |
-| 781 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
-| 783 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
-| 792 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
-| 796 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
-| 804 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
-| 814 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
-| 824 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
-| 825 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
-| 836 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
-| 838 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
+| 370 | v5: real sizes, admin quantity spawns, performance structures | sprite cache paints + blits all … unit sprites with shared lighting |
+| 374 | v5: real sizes, admin quantity spawns, performance structures | admin spawns 1000 units on walkable ground (…, onLand=…) |
+| 375 | v5: real sizes, admin quantity spawns, performance structures | admin quantity is capped at 1000 |
+| 376 | v5: real sizes, admin quantity spawns, performance structures | admin can spawn for a bot faction |
+| 377 | v5: real sizes, admin quantity spawns, performance structures | admin search filter runs |
+| 382 | v5: real sizes, admin quantity spawns, performance structures | spatial grid finds exactly the same targets as a full scan |
+| 385 | v5: real sizes, admin quantity spawns, performance structures | dead units are compacted out after the frame |
+| 395 | money capacity: buildings store what they earn, up to their cap, and pay out | solar has a money capacity ($…) |
+| 397 | money capacity: buildings store what they earn, up to their cap, and pay out | money is STORED inside the building ($…) |
+| 400 | money capacity: buildings store what they earn, up to their cap, and pay out | clicking a building empties its safe (+$…) |
+| 401 | money capacity: buildings store what they earn, up to their cap, and pay out | storage never exceeds the cap (… <= …) |
+| 408 | structure power vs army power | totalPower = structure (…) + army (…) |
+| 409 | structure power vs army power | a tank counts as army power |
+| 415 | kill bounty scales with the victim | rifleman bounty >= base (…) |
+| 416 | kill bounty scales with the victim | heavy bounty scales with tier (… > …) |
+| 418 | kill bounty scales with the victim | a wave-buffed unit pays more |
+| 424 | officer aura | officer gives +25% damage to allies nearby (×…) |
+| 425 | officer aura | allies out of range get nothing |
+| 434 | wave-defense garrison | unit buildings train a free garrison while a raid is incoming (… defenders) |
+| 436 | wave-defense garrison | garrison units are FREE (they do not eat the troop cap) |
+| 439 | wave-defense garrison | each building respects its MaxCap (…) |
+| 441 | wave-defense garrison | the garrison stands down when the base is safe |
+| 446 | naval: the sea grid, water lanes and ships | shipping lanes exist (… segments, … buoys) |
+| 448 | naval: the sea grid, water lanes and ships | open water is sea, not land |
+| 449 | naval: the sea grid, water lanes and ships | your plot is not sea |
+| 451 | naval: the sea grid, water lanes and ships | every shipping lane runs through water |
+| 460 | naval: the sea grid, water lanes and ships | a frigate sailed across the water toward its target (… -> … px) |
+| 461 | naval: the sea grid, water lanes and ships | the ship stayed in the water |
+| 468 | naval: the sea grid, water lanes and ships | the Gunboat Pier launches its boat toward the water |
+| 473 | new content is wired up: shop tabs, sprites, buildings | gunboat','frigate','submarine','zumwalt','battleship','carrier'].every(k=>U[k]&&U[k].sea),'7 ships in the naval line |
+| 474 | new content is wired up: shop tabs, sprites, buildings | icbm','leopard','pzh','mantis','tigr','swarmdrone','f15','f35','su47','ka52','officer','centurion'].every(k=>U[k]),'P2/P3 expansion units present |
+| 475 | new content is wired up: shop tabs, sprites, buildings | Submarine Cavern trains the Submarine |
+| 476 | new content is wired up: shop tabs, sprites, buildings | Centurion Support Site trains the Centurion |
+| 477 | new content is wired up: shop tabs, sprites, buildings | Airship Docks (Zeppelin) is in |
+| 478 | new content is wired up: shop tabs, sprites, buildings | … money buildings have a Capacity |
+| 481 | new content is wired up: shop tabs, sprites, buildings | the NAVAL shop tab renders |
+| 484 | new content is wired up: shop tabs, sprites, buildings | every tooltip still renders (incl. capacity + bounty rows) |
+| 506 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | BLOCK MODE blits no sprites at all (… draws → …) |
+| 507 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | TREES & DECOR off draws no trees (… → … per 12 frames) |
+| 512 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | block mode draws all 55 unit types as a rectangle (no sprite) |
+| 515 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | block mode draws all 100 building types as their footprint rectangle |
+| 518 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | a block is EXACTLY its model's box: rifle …px < carrier …px, industrial bld …px |
+| 530 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | right-click no longer demolishes (buildings are permanent) |
+| 533 | v8: POTATO MODE, trees toggle, permanent buildings, bigger world, "march on the middle" | INDESTRUCTIBLE off → right-click sells again (+50% refund) |
+| 543 | "march on the middle": no more drive-by shooting | v8: an enemy 520px away is IGNORED (AGGRO.march 210 — no drive-by shooting) |
+| 545 | "march on the middle": no more drive-by shooting | v8: idle troops march on the MIDDLE (… → … px from the CITY) |
+| 548 | "march on the middle": no more drive-by shooting | v8: once the enemy is CLOSE the march stops and they fight |
+| 551 | the world is twice as big | world is …px wide, bases sit on a …px ring |
+| 553 | the world is twice as big | neighbouring bases are far apart (…px between BOT 1 and BOT 2) |
+| 554 | the world is twice as big | every shipping lane still runs through water on the bigger map |
+| 557 | zoom out until the WHOLE map fits | zoom-out limit now fits the map (MINZ …, was 0.5) |
+| 560 | zoom out until the WHOLE map fits | at MINZ the whole …px map is on screen |
+| 563 | zoom out until the WHOLE map fits | fully zoomed out the camera locks to the map centre (nothing cut off) |
+| 565 | zoom out until the WHOLE map fits | at normal zoom the camera still pans freely |
+| 573 | v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q | build grid is twice as fine (…x… cells of …px) |
+| 574 | v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q | buildings are drawn 3x smaller (BLD_K … = 1.3/3) |
+| 575 | v8.3: finer grid, 3x smaller buildings, the water yard, water points, hover inspect, hold Q | a Solar panel went from 64px wide to …px |
+| 578 | your WATER YARD behind the island | the water yard is …x…px — as wide as your island, behind it |
+| 579 | your WATER YARD behind the island | the whole yard is water, not land |
+| 580 | your WATER YARD behind the island | the yard counts as SEA (ships can sail into it) |
+| 581 | your WATER YARD behind the island | docks + the offshore rig are WATER buildings, the barracks is not |
+| 582 | your WATER YARD behind the island | p','land') && G('fitsAt')('gunboatpier',2,2,'p','water'),'a dock fits in the yard and nowhere else |
+| 583 | your WATER YARD behind the island | p','water') && G('fitsAt')('barracks',2,2,'p','land'),'a barracks fits on the island and not in the water |
+| 586 | your WATER YARD behind the island | the placement ghost snaps into the water yard (zone …) |
+| 588 | your WATER YARD behind the island | a land building over the yard is refused with a reason |
+| 590 | your WATER YARD behind the island | over your island the ghost goes back to the land grid |
+| 595 | your WATER YARD behind the island | the pier stands in the yard (…,…) |
+| 598 | your WATER YARD behind the island | the pier launched its gunboat straight into the sea |
+| 601 | WATER POINTS: 4 rigs, held by boats | 4 water capture points (…) |
+| 605 | WATER POINTS: 4 rigs, held by boats | a held rig is garrisoned by BOATS (…) |
+| 609 | hover a troop → its stat card | unitAt finds the troop under the cursor (spatial hash, not a full scan) |
+| 610 | hover a troop → its stat card | unitAt finds nothing when the cursor is over empty ground |
+| 613 | hover a troop → its stat card | every one of the 55 unit types has a hover stat card |
+| 614 | hover a troop → its stat card | the card shows troop-cap size, DPS and HP |
+| 616 | hover a troop → its stat card | the MECHA WORM has a hover card too |
+| 621 | hold Q = pause | holding Q freezes the battle (game time does not move) |
+| 624 | hold Q = pause | releasing Q resumes it |
+| 630 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | STACK_UP = …px of lift per floor of a stack |
+| 639 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p','land',0) && G('fitsAt')('barracks',px,py,'p','land',4),'the ground floor is taken, the top of the pile is free |
+| 640 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p')===4,'stackTopAt reports how high the pile is |
+| 642 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | p','land').lvl===0,'findFreeSpot takes a free GROUND spot next to a pile before climbing it |
+| 647 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | every floor of the pile trains its own unit (4 barracks = 4 troops) |
+| 653 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | the ghost lands on LEVEL … of the pile |
+| 657 | v8.4: STACK buildings on top of each other, backpack stacks, bulk crate opening | clicking a stack picks the floor you clicked, not the one underneath |
+| 661 | backpack STACKS | 3 solar panels = ONE backpack card (x…) |
+| 662 | backpack STACKS | solar')===3,'invCount reads the stack |
+| 663 | backpack STACKS | solar',2)===2 && G('invCount')('b','solar')===1,'takeItem pulls 2 out of the stack |
+| 665 | backpack STACKS | emptying a stack removes the card |
+| 666 | backpack STACKS | old saves (one entry per crate) fold into stacks |
+| 671 | open 5 crates at once | openCrateModal opens 5 crates in one go |
+| 672 | open 5 crates at once | premium')===0,'all 5 crates leave the backpack |
+| 673 | open 5 crates at once | cratesOpened counts every crate you opened |
+| 675 | open 5 crates at once | the 5 wins are stacked as cards (…) |
+| 676 | open 5 crates at once | the "open how many?" chooser exists (1 / 5 / 10 / ALL) |
+| 677 | open 5 crates at once | a crate row is [id,weight] — the opening shuffle reads the id (it used to read the row and throw, so crates never revealed) |
+| 682 | the ROBUX SHOP finally works (it called a function that did not exist) | premium')===10,'the ROBUX SHOP sells 10 premium crates at once → one stacked card |
+| 688 | Admin.pile: 7 solar panels, 7 high, unlimited stacking | Admin.pile stacks … solar panels … high |
+| 690 | Admin.pile: 7 solar panels, 7 high, unlimited stacking | a 7-high tower survives 400 frames of rendering |
+| 704 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | the backpack hands you the first solar panel |
+| 706 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | after 2 of 3 you are STILL placing (the stack refills your hand) |
+| 710 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | solar')===0,'the stack is empty at the end |
+| 715 | KEEP PLACING: one click per building, the next one is handed straight to the cursor | the BACKPACK STAYS OPEN while you are placing |
+| 722 | SHIFT + DRAG = lay a whole run | SHIFT+mousedown starts a drag-place instead of dropping one |
+| 725 | SHIFT + DRAG = lay a whole run | the preview lays out … footprints inside the grid |
+| 729 | SHIFT + DRAG = lay a whole run | letting go places the whole run (… solar panels) |
+| 730 | SHIFT + DRAG = lay a whole run | +b.gy)).size===run.length,'a drag spreads them SIDE BY SIDE (nothing stacked by accident) |
+| 731 | SHIFT + DRAG = lay a whole run | solar')+run.length+(S().placing?1:0)===30,'every panel of the run came out of the backpack stack |
+| 740 | SHIFT + DRAG = lay a whole run | solar')===0,`a run stops at the last one you own (… of 5 placed) |
+| 749 | ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels | LIMITED is shown in cyan, not pink or red MYTHIC |
+| 760 | AUTO SORT: best rarity first | the SHOP shows the best first (…) |
+| 762 | AUTO SORT: best rarity first | the ADMIN building list starts with the golden items |
+| 767 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces in the MIDDLE (…px from the city centre) |
+| 772 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm SLAMS everything around it (hp … → …) |
+| 775 | admin custom boss HP | admin set a custom boss HP (…) |
+| 777 | admin custom boss HP | the NEXT boss spawns with that HP too |
+| 780 | admin custom boss HP | clearing the box puts the boss HP back to default |
+| 784 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
+| 786 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
+| 795 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
+| 799 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
+| 807 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
+| 817 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
+| 827 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
+| 828 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
+| 839 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
+| 841 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
 
 ## 🗒️ NOTES.md outline
 
@@ -2047,6 +2049,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
+  - Unit visual polish (v8.9)
   - Limited color (v8.8)
   - Rarity audit (v8.7)
   - Land routing (v8.6)

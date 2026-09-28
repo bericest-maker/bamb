@@ -32,16 +32,28 @@ reg('icbm',       50,36, (g,t,u)=>{ const P=unitPal(u);
 reg('centurion',  64,64, (g,t,u)=>{ const P=unitPal(u);
   const step=Math.sin(t*2.2);
   g.fillStyle=P.dark; g.fillRect(-16,-18+step*2,7,18); g.fillRect(9,-18-step*2,7,18);      // legs
+  g.fillStyle=P.metal; g.beginPath(); g.arc(-12,-13+step*2,3,0,pi2); g.arc(12,-13-step*2,3,0,pi2); g.fill();
   g.fillStyle=P.metal; g.fillRect(-19,-2+step*2,11,3); g.fillRect(8,-2-step*2,11,3);
-  g.fillStyle=P.body; g.fillRect(-16,-40,32,23); O(g,1.8); g.strokeRect(-16,-40,32,23);    // torso
-  g.fillStyle=P.accent; g.fillRect(-9,-36,18,5);
+  g.fillStyle=P.accent; g.fillRect(-18,-1.5+step*2,5,1); g.fillRect(12,-1.5-step*2,5,1);
+  g.fillStyle=P.body; g.beginPath(); g.moveTo(-16,-18); g.lineTo(-16,-37); g.lineTo(-10,-40); g.lineTo(10,-40); g.lineTo(16,-36); g.lineTo(16,-18); g.closePath();
+  g.fill(); O(g,1.8); g.stroke();                                                        // torso
+  g.fillStyle=P.metal; g.fillRect(-12,-37,24,16);
+  g.fillStyle=P.dark; g.fillRect(-2,-37,4,16); g.fillRect(-11,-25,22,2);
+  g.fillStyle=P.accent; g.fillRect(-9,-36,18,5); g.fillRect(-13,-31,3,6); g.fillRect(10,-31,3,6);
+  g.strokeStyle='rgba(18,24,32,.42)'; g.lineWidth=1; g.beginPath(); g.moveTo(-14,-20); g.lineTo(-9,-18); g.moveTo(14,-20); g.lineTo(9,-18); g.stroke();
   g.fillStyle=P.dark; g.fillRect(-25,-42,9,16); g.fillRect(16,-42,9,16);                    // shoulder pods
+  g.fillStyle=P.body; g.fillRect(-27,-43,11,13); g.fillRect(16,-43,11,13); O(g,1.4); g.strokeRect(-27,-43,11,13); g.strokeRect(16,-43,11,13);
+  g.fillStyle=P.accent; g.fillRect(-26,-41,3,3); g.fillRect(23,-41,3,3);
   g.fillStyle=P.metal; g.fillRect(18,-38,20,6); g.fillRect(-30,-30,12,6);
+  g.fillStyle=P.dark; g.fillRect(35,-39,3,8); g.fillRect(-29,-29,2,4);
   g.fillStyle=P.body; g.fillRect(-10,-52,20,12); O(g,1.6); g.strokeRect(-10,-52,20,12);     // head
+  g.fillStyle='rgba(255,255,255,.16)'; g.fillRect(-8,-51,15,1.4);
+  g.fillStyle=P.dark; g.fillRect(-8,-49,16,5);
   g.fillStyle=`rgba(255,90,78,${.6+.4*Math.sin(t*4)})`; g.fillRect(-7,-48,14,3.4);
   g.save(); g.translate(6,-30); g.rotate(-.12);                                             // main gun
   g.fillStyle=P.metal; g.fillRect(0,-5,34,9); O(g,1.5); g.strokeRect(0,-5,34,9);
-  g.fillStyle=P.dark; g.fillRect(32,-6,6,11); g.restore();
+  g.fillStyle='rgba(255,255,255,.2)'; g.fillRect(2,-4.5,25,1);
+  g.fillStyle=P.dark; g.fillRect(32,-6,6,11); g.fillStyle='#252b33'; g.fillRect(35,-5,3,9); g.restore();
   g.fillStyle=`rgba(120,220,255,${.45+.35*Math.sin(t*3)})`; g.beginPath(); g.arc(0,-30,7,0,pi2); g.fill();   // core
 });
 // ----- AIR -----

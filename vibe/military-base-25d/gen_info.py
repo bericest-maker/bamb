@@ -177,8 +177,9 @@ D = {
  'unitScale':'draw scale by troop size (size 1 ×1.15 … size 5 ×1.75) — bigger units look bigger',
  'bScale':'building draw scale = BLD_K (1.3) for every model; the footprint is sized from the model instead',
  'sprUsesTime':'true if a sprite draw fn uses its time arg → animated (gets SPR_FRAMES cached frames)',
- 'sprCanvas':'sprite cache: paints (type,side,faction,frame,res) once into an offscreen canvas; cleared above 1200 entries',
+ 'sprCanvas':'sprite cache: paints (type,side,faction,frame,res) once into an offscreen canvas; applies unit-only lighting; cleared above 1200 entries',
  'drawSpr':'blit a cached sprite with its ground anchor at (x,y) — replaces per-frame path drawing (perf)',
+ 'unitPolish':'v8.9: cached sprite-only top sheen + lower shade, clipped to unit pixels; buildings and Blocks stay unchanged',
  'buildUnitGrid':'spatial hash of live units (160px cells + per-cell faction bitmask), rebuilt once per update',
  'forNear':'visit units in grid cells overlapping radius r (full scan outside update → exact in tests)',
  'forNearFoes':'like forNear but skips cells holding only faction fac (friendly crowds cost nothing)',
@@ -378,6 +379,7 @@ for i in range(1, 6):
 
 # ---------- CHANGELOG (newest first) — ⚠️ one line per change ----------
 CHANGELOG = [
+ ('2026-09-27', '**v8.9: UNIT VISUAL POLISH.** The full roster gets a cohesive sprite pass: faction-colored infantry gain fitted vests, kit and clearer rifles; tanks and support vehicles get layered hulls, tracks, wheels, hatches and weapons; helicopters and aircraft gain cockpit glass, panel lines and rotor/engine detail; ships gain portholes, deck edges and sharper turrets. A cached, alpha-clipped sheen/shadow pass adds depth to unit sprites only. Sprite dimensions and gameplay are unchanged; buildings and exact-size Blocks mode are untouched. Smoke draws every registered unit through the cache.'),
  ('2026-09-27', '**v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red.'),
  ('2026-09-27', '**v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED, not MYTHIC (red); v8.8 corrects its color to cyan.** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge label and Limited-over-Mythic sort order; v8.8 sets its color to cyan. 249 assertions.'),
  ('2026-09-27', '**v8.6: LAND ROUTING FIX.** \U0001F6E3\uFE0F **BRIDGES ARE REAL LAND** — `WALK` samples 40px cell centres, so points on diagonal bridge/coast edges can be land even when their cell is marked water; water rescue now confirms the exact point near land before teleporting a soldier. \u2693 **LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY** — ground target selection skips water-only capture points, while ships still capture them. Regression tests verify a unit stays on a bridge cell mislabelled as water, a rifle reaches the NE island over the bridge, and land AI never targets a RIG. 247 smoke assertions.'),

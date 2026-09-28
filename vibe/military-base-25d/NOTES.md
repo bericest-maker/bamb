@@ -83,6 +83,11 @@
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
+### Unit visual polish (v8.9)
+- [x] **Cohesive tactical unit art** — infantry gain layered field kit and more readable rifles; ground vehicles gain shaped armor, track/wheel hardware, hatches and weapon fittings; aircraft gain cockpit glass, panel marks and rotor/engine detail; naval sprites gain portholes, deck edges and turret detail.
+- [x] **Cached lighting pass** — `unitPolish()` adds a restrained top sheen and lower shadow clipped to unit pixels only. Faction colors and all sprite dimensions stay unchanged.
+- [x] **Buildings and Blocks are untouched** — no building sprite changes; Blocks mode remains one plain faction-colored rectangle at the unit sprite's exact `w×h`. Smoke blits every registered unit through the normal sprite cache.
+
 ### Limited color (v8.8)
 - [x] **LIMITED is cyan** — the Limited badge, card border, tooltip name, and admin text use bright cyan (`#00e5ff`); Mythic stays red and Limited stays above Mythic in the sorted lists.
 - [x] **Smoke-verified** — Limited renders the `LIMITED` label in cyan, never the old pink or Mythic red.

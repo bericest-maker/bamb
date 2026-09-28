@@ -2,7 +2,12 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
-  { v:'v8.8 \u2014 LIMITED CYAN', date:'2026-09-27', items:[
+  { v:'v8.9 \u2014 UNIT VISUAL POLISH', date:'2026-09-27', items:[
+    '\uD83E\uDDAD THE WHOLE UNIT ROSTER GETS A COHESIVE ART PASS: infantry have clearer field kit and rifles; armour gets layered hulls, tread/wheel detail, hatches and weapon fittings; aircraft have cockpit glass, panel marks and richer rotors/engines; ships gain portholes, deck edges and sharper turrets.',
+    'A cached, alpha-clipped sheen and lower shadow add depth to unit sprites only. Faction colors stay intact; sprite dimensions and gameplay are unchanged.',
+    'BUILDINGS ARE UNTOUCHED. Blocks mode remains one plain, exact-size rectangle per unit; the new detail runs only in Normal sprite mode.',
+  ]},
+  { v:'v8.8 \\u2014 LIMITED CYAN', date:'2026-09-27', items:[
     '\u2693 LIMITED IS CYAN: the Limited badge, card border, tooltip and admin text now use bright cyan (#00e5ff), not the old pink. MYTHIC remains red.',
     'The rarity category, item classifications and sort order are unchanged; this is only the correct Limited color.',
     'Smoke verifies LIMITED text + cyan color, and rejects both the old pink and Mythic red colors.',

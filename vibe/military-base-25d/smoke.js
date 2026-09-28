@@ -363,8 +363,11 @@ assert(G('load')().v===4,'v3 save migrates to v4 on load');
   assert(Math.abs(G('MAP_PLOTS')[2].rot-(-135*Math.PI/180))<1e-9,'NE plot is rotated to face the city');
   assert(unitScale(B.mkUnit('mammoth','p',0,0))>unitScale(B.mkUnit('rifle','p',0,0)),'bigger units are drawn bigger (mammoth > rifleman)');
   assert(SPR.wind.anim&&!SPR.sandbags.anim,'sprite cache: animated sprites get frames, static ones one image');
-  let ok=true; try{ G('drawSpr')(G('ctx'),'wind',100,100,1.3,'p',0,.5); G('drawSpr')(G('ctx'),'tank',100,100,1.3,'e',3,.5); }catch(e){ ok=false; console.error(e); }
-  assert(ok&&G('SPR_CACHE').size>=2,'sprite cache paints + blits'); }
+  const sprCtx=G('ctx'), unitIds=Object.keys(G('UNITS'));
+  let ok=true; try{ G('drawSpr')(sprCtx,'wind',100,100,1.3,'p',0,.5); G('drawSpr')(sprCtx,'tank',100,100,1.3,'e',3,.5);
+    for(const id of unitIds) G('drawSpr')(sprCtx,id,100,100,1.3,'p',0,.5);
+  }catch(e){ ok=false; console.error(e); }
+  assert(ok&&G('SPR_CACHE').size>=unitIds.length+1,`sprite cache paints + blits all ${unitIds.length} unit sprites with shared lighting`); }
 { S().units=[]; S().admin.noRespawn=true;
   const n=window.Admin.spawnUnit('rifle',1000);
   const onLand=S().units.every(u=>B.walkableAt(u.x,u.y));
