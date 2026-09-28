@@ -55,7 +55,8 @@ const WAVE_POOL=[[1,['rifle']],[2,['scout','hinf']],[3,['atv']],[5,['humvee','ro
 function wavePool(w){ const out=[]; for(const [at,list] of WAVE_POOL) if(w>=at) out.push(...list); return out; }
 // v8.5: the worm surfaces in the MIDDLE (the CITY island) and slams everything around it (units/04-ai.js)
 function spawnBoss(){
-  const x=MAP_C.x+rnd(-110,110), y=MAP_C.y+rnd(-70,70);
+  // Every boss surfaces on the exact map/CITY centre; the fight begins at the middle, not around it.
+  const x=MAP_C.x, y=MAP_C.y;
   const hpM=1+S.wave*.1;
   const bf=1+Math.floor(Math.random()*7);
   const u=mkUnit('rifle','e',x,y,{boss:true,faction:bf});

@@ -764,7 +764,7 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   S().units=[]; S().nextWave=9999; S().nextBoss=9999;
   G('spawnBoss')();
   const boss=S().units.find(u=>u.boss), MCc=G('MAP_C');
-  assert(!!boss && Math.hypot(boss.x-MCc.x,boss.y-MCc.y)<250,`the worm surfaces in the MIDDLE (${Math.round(Math.hypot(boss.x-MCc.x,boss.y-MCc.y))}px from the city centre)`);
+  assert(!!boss && boss.x===MCc.x && boss.y===MCc.y,`the worm surfaces at the exact MIDDLE (${Math.round(Math.hypot(boss.x-MCc.x,boss.y-MCc.y))}px from the city centre)`);
   const bait=[];
   for(let i=0;i<4;i++){ const u=B.mkUnit('rifle','p',boss.x+50+i*30,boss.y+30); u.hp=u.maxHp=200; bait.push(u); S().units.push(u); }
   const hp0=bait.map(u=>u.hp);
@@ -774,10 +774,12 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   document.querySelector('#aBossHp').value='250K'; G('Admin').bossHp();
   assert(Math.round(boss.maxHp)===250000,`admin set a custom boss HP (${fmtN(boss.maxHp)})`);
   S().units=S().units.filter(u=>!u.boss); G('spawnBoss')();
-  assert(Math.round(S().units.find(u=>u.boss).maxHp)===250000,'the NEXT boss spawns with that HP too');
+  const nextBoss=S().units.find(u=>u.boss);
+  assert(Math.round(nextBoss.maxHp)===250000&&nextBoss.x===MCc.x&&nextBoss.y===MCc.y,'the NEXT boss keeps custom HP and spawns at the exact center');
   document.querySelector('#aBossHp').value=''; G('Admin').bossHp();
   S().units=S().units.filter(u=>!u.boss); G('spawnBoss')();
-  assert(Math.round(S().units.find(u=>u.boss).maxHp)===G('BOSS').hp,'clearing the box puts the boss HP back to default');
+  const defaultBoss=S().units.find(u=>u.boss);
+  assert(Math.round(defaultBoss.maxHp)===G('BOSS').hp&&defaultBoss.x===MCc.x&&defaultBoss.y===MCc.y,'default HP is restored and every boss still spawns at the exact center');
   S().units=[];
   // ---- a land unit that ends up in the water is put back on the shore ----
   const swim=B.mkUnit('rifle','p',PC.x-900,PC.y);

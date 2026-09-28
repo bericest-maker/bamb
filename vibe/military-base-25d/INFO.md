@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-27 | **v8.10: BOSS SPAWN CENTER.** Bosses now spawn at the exact world/map centre (`MAP_C`, the CITY center) instead of a random offset within the city. This applies to the automatic timer and ADMIN summon; the worm still attacks after surfacing. Smoke verifies the default and custom-HP spawns are exact. |
 | 2026-09-27 | **v8.9: UNIT VISUAL POLISH.** The full roster gets a cohesive sprite pass: faction-colored infantry gain fitted vests, kit and clearer rifles; tanks and support vehicles get layered hulls, tracks, wheels, hatches and weapons; helicopters and aircraft gain cockpit glass, panel lines and rotor/engine detail; ships gain portholes, deck edges and sharper turrets. A cached, alpha-clipped sheen/shadow pass adds depth to unit sprites only. Sprite dimensions and gameplay are unchanged; buildings and exact-size Blocks mode are untouched. Smoke draws every registered unit through the cache. |
 | 2026-09-27 | **v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red. |
 | 2026-09-27 | **v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED, not MYTHIC (red); v8.8 corrects its color to cyan.** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge label and Limited-over-Mythic sort order; v8.8 sets its color to cyan. 249 assertions. |
@@ -65,12 +66,12 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
 | `military-base-25d/INFO.md` | 167.4 KB | 2081 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 42.2 KB | 489 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/NOTES.md` | 42.6 KB | 493 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 72.3 KB | 697 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 72.6 KB | 698 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
-| `military-base-25d/smoke.js` | 55.3 KB | 850 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
+| `military-base-25d/smoke.js` | 55.5 KB | 852 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
 | `military-base-25d/style.css` | 19.1 KB | 293 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
 | `military-base-25d/test-stubs.js` | 3.3 KB | 78 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
@@ -116,7 +117,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/rewards/05-rewards-ui.js` | 987 B | 29 | the REWARDS panel (claim buttons) |
 | `military-base-25d/js/systems/01-power.js` | 1.2 KB | 30 | military power: structure power + army power (leaderboard / unlocks) |
 | `military-base-25d/js/systems/02-economy.js` | 2.0 KB | 47 | income, bonuses, troop cap, bank interest |
-| `military-base-25d/js/systems/03-waves.js` | 2.9 KB | 72 | raid waves, the wave pool, the MECHA WORM boss |
+| `military-base-25d/js/systems/03-waves.js` | 3.0 KB | 73 | raid waves, the wave pool, the MECHA WORM boss |
 | `military-base-25d/js/systems/04-captures.js` | 1.8 KB | 51 | capture points: faction majority, garrison respawns |
 | `military-base-25d/js/textures/01-sprites.js` | 23.6 KB | 398 | sprites: flat 2D canvas drawings |
 | `military-base-25d/js/textures/02-sprites-units.js` | 17.2 KB | 234 | sprites for the new units (built from 4 templates) |
@@ -132,7 +133,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
 | `military-base-25d/js/ui/09-input.js` | 8.2 KB | 191 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 12.2 KB | 103 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/10-patch-notes.js` | 12.6 KB | 107 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.2 KB | 32 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 3.4 KB | 55 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
@@ -191,7 +192,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 29 | `js/core/06-fx.js` | 15 | fx: tracers, floats, booms, particles | 5 |
 | 30 | `js/systems/01-power.js` | 29 | military power: structure power + army power (leaderboard / unlocks) | 6 |
 | 31 | `js/systems/02-economy.js` | 46 | income, bonuses, troop cap, bank interest | 8 |
-| 32 | `js/systems/03-waves.js` | 71 | raid waves, the wave pool, the MECHA WORM boss | 6 |
+| 32 | `js/systems/03-waves.js` | 72 | raid waves, the wave pool, the MECHA WORM boss | 6 |
 | 33 | `js/systems/04-captures.js` | 50 | capture points: faction majority, garrison respawns | 3 |
 | 34 | `js/buildings/01-placement.js` | 116 | build grid: fits / free spot / place / sell | 13 |
 | 35 | `js/buildings/02-production.js` | 112 | what buildings DO: money capacity, unit training, wave-defense garrisons | 11 |
@@ -221,7 +222,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
 | 61 | `js/ui/09-input.js` | 190 | input: minimap, keyboard, mouse | 5 |
-| 62 | `js/ui/10-patch-notes.js` | 102 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 62 | `js/ui/10-patch-notes.js` | 106 | the 📜 PATCHES panel (what changed in each build) | 1 |
 | 63 | `js/admin/01-admin.js` | 305 | admin panel (window.Admin) | 0 |
 | 64 | `js/core/07-loop.js` | 123 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
 | 65 | `js/core/08-init.js` | 69 | init: load save → migrate → start | 1 |
@@ -238,11 +239,11 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/achievements/` | 3 | 54 | the achievement list, the unlock loop and the 🏆 panel |
 | `js/maps/` | 2 | 271 | the island map (shapes, walk grid, A*, city flow field) and the SEA: water lanes, sea grid, ship navigation |
 | `js/textures/` | 5 | 1163 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
-| `js/systems/` | 4 | 196 | cross-cutting game systems: power, economy, waves/boss, capture points |
+| `js/systems/` | 4 | 197 | cross-cutting game systems: power, economy, waves/boss, capture points |
 | `js/buildings/` | 5 | 331 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 554 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
 | `js/render/` | 5 | 572 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 704 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/ui/` | 10 | 708 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
 | `js/admin/` | 1 | 305 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
@@ -1118,7 +1119,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 87 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 91 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -2019,21 +2020,21 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 749 | ORIGINAL RARITY AUDIT: exact reference matches use the source game's labels | LIMITED is shown in cyan, not pink or red MYTHIC |
 | 760 | AUTO SORT: best rarity first | the SHOP shows the best first (…) |
 | 762 | AUTO SORT: best rarity first | the ADMIN building list starts with the golden items |
-| 767 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces in the MIDDLE (…px from the city centre) |
+| 767 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm surfaces at the exact MIDDLE (…px from the city centre) |
 | 772 | BOSS: surfaces in the CITY (the middle) and SLAMS | the worm SLAMS everything around it (hp … → …) |
 | 775 | admin custom boss HP | admin set a custom boss HP (…) |
-| 777 | admin custom boss HP | the NEXT boss spawns with that HP too |
-| 780 | admin custom boss HP | clearing the box puts the boss HP back to default |
-| 784 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
-| 786 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
-| 795 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
-| 799 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
-| 807 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
-| 817 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
-| 827 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
-| 828 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
-| 839 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
-| 841 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
+| 778 | admin custom boss HP | the NEXT boss keeps custom HP and spawns at the exact center |
+| 782 | admin custom boss HP | default HP is restored and every boss still spawns at the exact center |
+| 786 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
+| 788 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
+| 797 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
+| 801 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
+| 809 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
+| 819 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
+| 829 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
+| 830 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
+| 841 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
+| 843 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
 
 ## 🗒️ NOTES.md outline
 
@@ -2049,6 +2050,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
+  - Boss spawn center (v8.10)
   - Unit visual polish (v8.9)
   - Limited color (v8.8)
   - Rarity audit (v8.7)

@@ -83,6 +83,10 @@
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
+### Boss spawn center (v8.10)
+- [x] **Bosses surface at the exact map/CITY center** — `spawnBoss()` now uses `MAP_C.x, MAP_C.y` directly, with no random offset. Both the timer and ADMIN → SUMMON share this path; the boss still attacks after surfacing.
+- [x] **Exact-position regression coverage** — smoke checks the initial worm plus later custom-HP and default-HP spawns are exactly at the center.
+
 ### Unit visual polish (v8.9)
 - [x] **Cohesive tactical unit art** — infantry gain layered field kit and more readable rifles; ground vehicles gain shaped armor, track/wheel hardware, hatches and weapon fittings; aircraft gain cockpit glass, panel marks and rotor/engine detail; naval sprites gain portholes, deck edges and turret detail.
 - [x] **Cached lighting pass** — `unitPolish()` adds a restrained top sheen and lower shadow clipped to unit pixels only. Faction colors and all sprite dimensions stay unchanged.

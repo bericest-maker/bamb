@@ -2,6 +2,10 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.10 \u2014 BOSS SPAWN CENTER', date:'2026-09-27', items:[
+    '\uD83D\uDC0D BOSSES NOW SURFACE AT THE EXACT CENTER OF THE CITY: automatic spawns and ADMIN → SUMMON both use MAP_C with no random offset. They still attack after surfacing.',
+    'Smoke verifies the normal, custom-HP and default-HP bosses all start at the exact center.',
+  ]},
   { v:'v8.9 \u2014 UNIT VISUAL POLISH', date:'2026-09-27', items:[
     '\uD83E\uDDAD THE WHOLE UNIT ROSTER GETS A COHESIVE ART PASS: infantry have clearer field kit and rifles; armour gets layered hulls, tread/wheel detail, hatches and weapon fittings; aircraft have cockpit glass, panel marks and richer rotors/engines; ships gain portholes, deck edges and sharper turrets.',
     'A cached, alpha-clipped sheen and lower shadow add depth to unit sprites only. Faction colors stay intact; sprite dimensions and gameplay are unchanged.',
