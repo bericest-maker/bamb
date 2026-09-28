@@ -1,0 +1,15 @@
+/* Military Base 2.5D — 10-fx.js · fx: tracers, floats, booms, particles */
+'use strict';
+// ================= fx =================
+let fx={tracers:[],floats:[],parts:[],booms:[]};
+function addFloat(x,y,txt,col){ if(S.settings.gfx!=='High'&&!col) return; if(fx.floats.length>=150) return; fx.floats.push({x,y,txt,col:col||'#fff',life:1.1}); }
+function addBoom(x,y,r=1){ if(S.settings.gfx==='Low') return; if(fx.booms.length>=80) return; fx.booms.push({x,y,r:6,max:r*26,life:.45}); }
+function addParts(x,y,n,col){ if(S.settings.gfx==='Low') return; n=Math.min(n,400-fx.parts.length); for(let i=0;i<n;i++) fx.parts.push({x,y,vx:rnd(-90,90),vy:rnd(-130,10),life:rnd(.3,.7),col,sz:rnd(2,4.5)}); }
+function tracer(x1,y1,x2,y2,col){ if(fx.tracers.length>=300) return; fx.tracers.push({x1,y1,x2,y2,life:.07,col}); }
+// advance every effect one frame (called from the main loop)
+function fxTick(dt){
+  fx.tracers=fx.tracers.filter(f=>(f.life-=dt)>0);
+  fx.floats=fx.floats.filter(f=>{ f.y-=26*dt; return (f.life-=dt)>0; });
+  fx.booms=fx.booms.filter(f=>(f.life-=dt)>0);
+  fx.parts=fx.parts.filter(f=>{ f.x+=f.vx*dt; f.y+=f.vy*dt; f.vy+=200*dt; return (f.life-=dt)>0; });
+}

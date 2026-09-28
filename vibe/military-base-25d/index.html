@@ -23,6 +23,7 @@
   <button class="rail-btn" data-panel="leader"><span class="r-ico">📊</span><span class="r-lbl">RANKS</span></button>
   <button class="rail-btn" data-panel="robux"><span class="r-ico">💎</span><span class="r-lbl">ROBUX SHOP</span></button>
   <button class="rail-btn" data-panel="rebirth" id="railRebirth"><span class="r-ico">🔥</span><span class="r-lbl">REBIRTH</span><span class="badge" id="rbBadge" hidden>!</span></button>
+  <button class="rail-btn" data-panel="patch"><span class="r-ico">📜</span><span class="r-lbl">PATCHES</span></button>
   <button class="rail-btn" data-panel="settings"><span class="r-ico">⚙️</span><span class="r-lbl">SETTINGS</span></button>
 </div>
 
@@ -44,6 +45,7 @@
   <div class="statbar"><span class="s-ico">⭐</span><span id="stPower">0</span><span class="s-cap">PWR</span></div>
   <div class="statbar"><span class="s-ico">🪖</span><span id="stUnits">0/10</span></div>
   <div class="statbar cash"><span class="s-ico">💵</span><span id="stCash">$500</span><span class="s-cap" id="stIncome">$0/s</span></div>
+  <div class="statbar bank" id="stStoredRow" hidden><span class="s-ico">🏦</span><span id="stStored">$0</span><span class="s-cap" id="stCap">/ $0 cap</span></div>
 </div>
 
 <!-- control hint -->
@@ -89,24 +91,41 @@
     <div class="a-sec">🪖 SUMMON UNITS <span class="a-note" id="aUnitsN"></span> <span class="a-note">×QTY, ignores cap</span></div>
     <div id="aUnits" class="a-list"></div>
 
-    <div class="a-sec">📦 CRATES (to backpack)</div>
+    <div class="a-sec">📦 CRATES (to backpack) <span class="a-note">stacks · open 1/5/10/ALL in the backpack</span></div>
     <div class="a-row">
       <button class="abtn" onclick="Admin.crate('standard')">STANDARD</button>
       <button class="abtn" onclick="Admin.crate('elite')">ELITE</button>
       <button class="abtn" onclick="Admin.crate('premium')">PREMIUM</button>
       <button class="abtn gold" onclick="Admin.crate('golden')">GOLDEN</button>
     </div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.crate('premium',10)">PREMIUM ×10</button>
+      <button class="abtn" onclick="Admin.crate('golden',10)">GOLDEN ×10</button>
+    </div>
+
+    <div class="a-sec">🧱 STACKING (v8.4) <span class="a-note">unlimited height</span></div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.pile('solar',7)">PILE 7 SOLAR</button>
+      <button class="abtn" onclick="Admin.pile('barracks',5)">PILE 5 BARRACKS</button>
+      <button class="abtn" onclick="Admin.pile('industrial',4)">PILE 4 DRILLS</button>
+    </div>
+    <div class="a-row"><span class="a-note">Or hold any building in your backpack and click one you already own — it stacks on top. PILE stacks ×QTY of whatever you searched for at the top of the list.</span></div>
 
     <div class="a-sec">🤖 BOT BASES (pick a preset — yours stays yours)</div>
     <div id="aBots" class="a-bots"></div>
 
-    <div class="a-sec">🐍 BOSS</div>
+    <div class="a-sec">🐍 BOSS <span class="a-note">surfaces in the CITY (the middle) and SLAMS everything nearby</span></div>
     <div class="a-row">
       <button class="abtn" onclick="Admin.boss('summon')">SUMMON</button>
       <button class="abtn" onclick="Admin.boss('kill')">KILL + REWARD</button>
       <button class="abtn" onclick="Admin.boss('hp1')">SET 1 HP</button>
       <button class="abtn" onclick="Admin.boss('more')">+10K HP</button>
     </div>
+    <div class="a-row">
+      <input id="aBossHp" class="code-input a-hp" placeholder="CUSTOM HP (5000 / 250K / 2M)" autocomplete="off">
+      <button class="abtn" onclick="Admin.bossHp()">SET HP</button>
+    </div>
+    <div class="a-row"><span class="a-note">CUSTOM HP also applies to every worm that spawns later. Leave it empty and press SET HP to go back to the default.</span></div>
 
     <div class="a-sec">⚠️ WAVES</div>
     <div class="a-row">
@@ -146,6 +165,12 @@
     <div class="a-row">
       <button class="abtn" onclick="Admin.claimRewards()">CLAIM ALL REWARDS</button>
       <button class="abtn" onclick="Admin.giveAllBuildings()">GIVE ALL BUILDINGS</button>
+    </div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.collectAll()">EMPTY ALL SAFES</button>
+      <button class="abtn" onclick="Admin.garrison('train')">MUSTER GARRISON</button>
+      <button class="abtn" onclick="Admin.garrison('standdown')">STAND DOWN</button>
+      <button class="abtn" onclick="Admin.raid()">RAID ALERT</button>
     </div>
 
     <div class="a-sec">📍 TELEPORT CAMERA</div>
@@ -200,7 +225,7 @@
 <div class="panel" id="p-backpack">
   <div class="p-head"><span class="p-title">BACKPACK</span><button class="x" data-close>✕</button></div>
   <div class="p-body">
-    <p class="p-note">Buy stuff in the SHOP, then place it on your plot. Click a crate to open it.</p>
+    <p class="p-note">Identical items STACK (the badge = how many you hold) and the best rarity sits at the top. Click a building to place one — the backpack STAYS OPEN so you can keep placing; <b>SHIFT + drag</b> lays down a whole row/block. Click a crate to open 1 / 5 / 10 / ALL.</p>
     <div class="grid" id="bpGrid"></div>
   </div>
 </div>
@@ -223,7 +248,7 @@
 <div class="panel" id="p-robux">
   <div class="p-head"><span class="p-title">ROBUX SHOP</span><button class="x" data-close>✕</button></div>
   <div class="p-body">
-    <p class="p-note">This is a fan-made 2.5D remake — no real Robux. Premium items cost in-game cash instead. Premium crates only contain LEGENDARY / MYTHIC buildings. Weekly featured item + pity after 80.</p>
+    <p class="p-note">This is a fan-made 2.5D remake — no real Robux. Crates cost in-game cash instead. Premium crates only contain LEGENDARY / MYTHIC buildings. Weekly featured item + pity after 80. Crates stack in your backpack — open them 1, 5, 10 or ALL at a time.</p>
     <div class="grid" id="rxGrid"></div>
   </div>
 </div>
@@ -234,11 +259,22 @@
     <div class="set-row"><span>MUSIC</span><button class="toggle on" id="setMusic">On</button></div>
     <div class="set-row"><span>BUILDING SFX</span><button class="toggle on" id="setSfx">On</button></div>
     <div class="set-row"><span>DAMAGE NUMBERS</span><button class="toggle on" id="setDmg">On</button></div>
-    <div class="set-row"><span>GRAPHICS MODE</span><button class="toggle blue on" id="setGfx">High</button></div>
+    <div class="set-row"><span>EFFECTS (FX)</span><button class="toggle blue on" id="setGfx">High</button></div>
+    <div class="set-row"><span>UNIT GRAPHICS</span><button class="toggle blue on" id="setUnits">Normal</button></div>
+    <div class="set-row"><span>BUILDING GRAPHICS</span><button class="toggle blue on" id="setBlds">Normal</button></div>
+    <div class="set-row"><span>TREES &amp; DECOR</span><button class="toggle on" id="setTrees">On</button></div>
+    <div class="set-row"><span>ENEMY BASE GRIDS</span><button class="toggle" id="setBotGrid">Off</button></div>
+    <div class="set-row"><span>INDESTRUCTIBLE BUILDINGS</span><button class="toggle on" id="setIndestruct">On</button></div>
+    <div class="set-row small"><span class="dim">LAGGING? Set EFFECTS → Low, both GRAPHICS rows → Blocks and TREES &amp; DECOR → Off.</span></div>
     <div class="set-row"><span>CODE</span><input id="codeBox" class="code-input" placeholder="Insert Codes Here" autocomplete="off"></div>
     <div class="set-row small"><span class="dim">Try: LOGI • WOWPREMIUM • SORRY • DUELS • 200K</span></div>
     <div class="set-row"><span></span><button class="danger" id="btnWipe">HARD RESET</button></div>
   </div>
+</div>
+
+<div class="panel" id="p-patch">
+  <div class="p-head"><span class="p-title">📜 PATCH NOTES</span><button class="x" data-close>✕</button></div>
+  <div class="p-body"><p class="p-note">Latest build first. Every change below is live in this version.</p><div class="rw-list" id="patchList"></div></div>
 </div>
 
 <div class="panel modal" id="p-rebirth">
@@ -252,6 +288,15 @@
   </div>
 </div>
 
+<div class="panel modal" id="p-openq">
+  <div class="p-head"><span class="p-title">OPEN CRATES</span><button class="x" data-close>&#10005;</button></div>
+  <div class="p-body center">
+    <div class="oq-name" id="oqName">CRATE</div>
+    <div class="oq-sub" id="oqSub">You have 1. Open how many?</div>
+    <div class="btn-row" id="oqBtns"></div>
+  </div>
+</div>
+
 <div class="panel modal crate" id="p-crate">
   <div class="p-body center">
     <div class="crate-stage" id="crateStage">
@@ -259,6 +304,7 @@
     </div>
     <div class="crate-name" id="crateName">OPENING...</div>
     <div class="crate-rar" id="crateRar"></div>
+    <div class="crate-list" id="crateList"></div>
     <button class="pill big" id="btnCrateDone">NICE</button>
   </div>
 </div>
@@ -275,29 +321,83 @@
 </div>
 
 <!-- game code: loaded in order; smoke.js + gen_info.py read this list -->
-<script src="js/01-helpers.js"></script>
-<script src="js/02-data-world.js"></script>
-<script src="js/02b-data-units.js"></script>
-<script src="js/02c-data-buildings.js"></script>
-<script src="js/02d-data-economy.js"></script>
-<script src="js/03-state.js"></script>
-<script src="js/04-factions.js"></script>
-<script src="js/05-map.js"></script>
-<script src="js/06-save.js"></script>
-<script src="js/07-audio.js"></script>
-<script src="js/08-sprites.js"></script>
-<script src="js/08b-sprites-units.js"></script>
-<script src="js/08c-sprites-buildings.js"></script>
-<script src="js/09-camera.js"></script>
-<script src="js/10-fx.js"></script>
-<script src="js/11-economy.js"></script>
-<script src="js/12-units.js"></script>
-<script src="js/13-render.js"></script>
-<script src="js/14-ui.js"></script>
-<script src="js/15-input.js"></script>
-<script src="js/16-tutorial.js"></script>
-<script src="js/17-loop.js"></script>
-<script src="js/18-admin.js"></script>
-<script src="js/19-init.js"></script>
+<!-- ============ core: helpers + state ============ -->
+<script src="js/core/01-helpers.js"></script>
+<!-- ============ data ============ -->
+<script src="js/data/01-world.js"></script>
+<script src="js/data/02-factions.js"></script>
+<script src="js/core/02-state.js"></script>
+<script src="js/data/03-classes.js"></script>
+<script src="js/data/04-units.js"></script>
+<script src="js/data/05-unit-helpers.js"></script>
+<script src="js/data/06-buildings.js"></script>
+<script src="js/data/07-unit-buildings.js"></script>
+<script src="js/data/08-rarities.js"></script>
+<script src="js/data/09-units-naval.js"></script>
+<script src="js/data/10-units-expansion.js"></script>
+<script src="js/data/11-buildings-production.js"></script>
+<script src="js/data/12-buildings-expansion.js"></script>
+<!-- ============ rewards + achievements (data) ============ -->
+<script src="js/rewards/01-crates-data.js"></script>
+<script src="js/rewards/02-codes.js"></script>
+<script src="js/rewards/03-rewards-data.js"></script>
+<script src="js/achievements/01-achievements-data.js"></script>
+<!-- ============ maps ============ -->
+<script src="js/maps/01-map.js"></script>
+<script src="js/maps/02-sea.js"></script>
+<!-- ============ textures (sprites) ============ -->
+<script src="js/textures/01-sprites.js"></script>
+<script src="js/textures/02-sprites-units.js"></script>
+<script src="js/textures/03-sprites-naval.js"></script>
+<script src="js/textures/04-sprites-new-units.js"></script>
+<script src="js/textures/05-sprites-buildings.js"></script>
+<!-- ============ core: audio, camera (ground texture), fx ============ -->
+<script src="js/core/03-save.js"></script>
+<script src="js/core/04-audio.js"></script>
+<script src="js/core/05-camera.js"></script>
+<script src="js/core/06-fx.js"></script>
+<!-- ============ systems ============ -->
+<script src="js/systems/01-power.js"></script>
+<script src="js/systems/02-economy.js"></script>
+<script src="js/systems/03-waves.js"></script>
+<script src="js/systems/04-captures.js"></script>
+<!-- ============ buildings ============ -->
+<script src="js/buildings/01-placement.js"></script>
+<script src="js/buildings/02-production.js"></script>
+<script src="js/buildings/03-bots.js"></script>
+<script src="js/buildings/04-turrets.js"></script>
+<script src="js/buildings/05-support.js"></script>
+<!-- ============ units ============ -->
+<script src="js/units/01-spawn.js"></script>
+<script src="js/units/02-movement.js"></script>
+<script src="js/units/03-spatial-grid.js"></script>
+<script src="js/units/04-ai.js"></script>
+<script src="js/units/05-combat.js"></script>
+<!-- ============ rewards + achievements (logic + UI) ============ -->
+<script src="js/rewards/04-crates.js"></script>
+<script src="js/rewards/05-rewards-ui.js"></script>
+<script src="js/achievements/02-achievements.js"></script>
+<script src="js/achievements/03-achievements-ui.js"></script>
+<!-- ============ render ============ -->
+<script src="js/render/01-render.js"></script>
+<script src="js/render/02-render-units.js"></script>
+<script src="js/render/03-render-ground.js"></script>
+<script src="js/render/04-minimap.js"></script>
+<script src="js/render/05-blocks.js"></script>
+<!-- ============ ui ============ -->
+<script src="js/ui/01-ui-core.js"></script>
+<script src="js/ui/02-shop.js"></script>
+<script src="js/ui/03-tooltips.js"></script>
+<script src="js/ui/04-backpack.js"></script>
+<script src="js/ui/05-leaderboard.js"></script>
+<script src="js/ui/06-settings.js"></script>
+<script src="js/ui/07-rebirth.js"></script>
+<script src="js/ui/08-tutorial.js"></script>
+<script src="js/ui/09-input.js"></script>
+<script src="js/ui/10-patch-notes.js"></script>
+<!-- ============ admin + boot ============ -->
+<script src="js/admin/01-admin.js"></script>
+<script src="js/core/07-loop.js"></script>
+<script src="js/core/08-init.js"></script>
 </body>
 </html>

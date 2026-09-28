@@ -33,6 +33,7 @@ function makeEl(id){
 const cache=new Map();
 const document={
   querySelector(sel){ if(!cache.has(sel)) cache.set(sel,makeEl(sel)); return cache.get(sel); },
+  getElementById(id){ return document.querySelector('#'+String(id).replace(/^#/,'')); },   // v8.4: hideTip() uses it
   querySelectorAll(){ return []; },
   createElement(t){ return makeEl('el_'+t); },
   _ls:{},

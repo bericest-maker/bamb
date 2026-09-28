@@ -16,6 +16,12 @@ const out={
   RAR:G('RAR'), RAR_ORDER:G('RAR_ORDER'), CRATE_TABLES:G('CRATE_TABLES'), CRATE_PRICES:G('CRATE_PRICES'),
   PREMIUM_PRICE:G('PREMIUM_PRICE'), WEEKLY:G('WEEKLY'), CODES:G('CODES'),
   REWARDS:noFn(G('REWARDS')), ACHIEVEMENTS:noFn(G('ACHIEVEMENTS')), WAVE_POOL:G('WAVE_POOL'),
+  NAVAL_UNITS:G('NAVAL_UNITS'), MONEY_CYCLE:G('MONEY_CYCLE'), WAVE_DEF_SLOTS:G('WAVE_DEF_SLOTS'),
+  UNIT_BUILDINGS_NAVAL:G('UNIT_BUILDINGS_NAVAL'), UNIT_BUILDINGS_EXPANSION:G('UNIT_BUILDINGS_EXPANSION'),
+  PATCH_NOTES:G('PATCH_NOTES'), SEA_LANES:G('SEA_LANES').length, SEA_BUOYS:G('SEA_BUOYS').length,
+  LANE_RING:G('LANE_RING'), LANE_OUT:G('LANE_OUT'), LANE_OUTER:G('LANE_OUTER'), LANE_SPOKES:G('LANE_SPOKES'),
+  SEA_CELLS:Array.from(G('SEA')).reduce((a,b)=>a+b,0),
+  AGGRO:G('AGGRO'),                                        // v8: how close an enemy must be before a unit fights
   SPRITES:Object.fromEntries(Object.entries(G('SPR')).map(([k,v])=>[k,{w:v.w,h:v.h}])),
   TUT:G('TUT'), defaultState:noFn(G('defaultState')()),
 };

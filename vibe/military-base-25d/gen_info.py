@@ -11,7 +11,7 @@ Code facts (functions, handlers, globals, ids, css, asserts) are parsed from the
 Data tables (units, buildings, presets, points, crates, codes, …) come LIVE from the running
 game via `node dump_data.js`, so INFO.md can never drift from the code.
 """
-import os, re, json, datetime, subprocess
+import os, re, json, datetime, subprocess, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WS = os.path.dirname(HERE)  # the workspace folder that contains military-base-25d/
@@ -30,8 +30,14 @@ SRC = {f: rd(os.path.join(HERE, f)).splitlines() for f in JS_FILES}
 ALL_JS = '\n'.join('\n'.join(v) for v in SRC.values())
 
 # ---------- live data ----------
+# v8.4: dump_data.js prints ~66 KB of JSON — pipes cap at 64 KB here, so it writes to a temp FILE
+# (capturing stdout silently truncated the dump and broke every generated table).
+DUMP_PATH = os.path.join(tempfile.gettempdir(), 'bmb_dump_data.json')
 try:
-    DATA = json.loads(subprocess.run(['node', os.path.join(HERE, 'dump_data.js')], capture_output=True, text=True, check=True, cwd=HERE).stdout)
+    with open(DUMP_PATH, 'w', encoding='utf-8') as _dump:
+        subprocess.run(['node', os.path.join(HERE, 'dump_data.js')], stdout=_dump,
+                       stderr=subprocess.PIPE, text=True, check=True, cwd=HERE)
+    DATA = json.loads(open(DUMP_PATH, encoding='utf-8').read())
 except Exception as e:
     raise SystemExit(f"dump_data.js failed — is node installed / does the game load? ({e})")
 
@@ -127,6 +133,39 @@ bmb_keys = sorted(set(re.findall(r'\b([A-Za-z_]\w*)\b(?=\s*[,}\n(])', re.sub(r'g
 
 # ---------- hand-written function descriptions ----------
 D = {
+ # ---- v8.5 ----
+ 'rarRank':'how good a rarity is (higher = better) — the sort key for every auto-sorted list',
+ 'bestFirst':'sort an id list best-rarity-first, ties by name (shop / admin lists)',
+ 'placeSpots':'SHIFT-DRAG: every footprint-sized spot in the rectangle from cell a to cell b, each with its stack level',
+ 'placeLeft':'how many of the held item you can still put down (the one in your hand + the rest of the stack)',
+ 'refillHand':'hand the next item of the stack to the cursor — false = that was the last one',
+ 'keepPlacing':'v8.5: after placing one, keep the item in hand so you can build a row without reopening the backpack',
+ 'placeRun':'v8.5: place every footprint of a SHIFT-drag when the mouse is released',
+ 'nearestLand':'closest walkable ground to a point — a land unit that ends up in the water is put back on the shore',
+ 'bossSlam':'v8.5: the worm\u2019s special attack — every few seconds it slams every enemy unit and building around it',
+ # ---- v8.4 ----
+ 'stackTopAt':'how high the pile under a footprint is — the level a new building lands on (0 = the ground)',
+ 'invFind':'the backpack entry (stack) for one kind+type', 'invCount':'how many of an item you hold',
+ 'takeItem':'take n out of a backpack stack (removes the card when the last one goes) → how many you really got',
+ 'mergeInventory':'fold an old per-item backpack into stacks (one card per kind+type with an n)',
+ 'askOpenCount':'v8.4 "open how many?" chooser (1 / 5 / 10 / ALL) before a bulk crate opening',
+ 'buyCrates':'robux shop: pay cash for n crates, they stack in the backpack',
+ # ---- v8.3 ----
+ 'inYard':'is this world point inside your WATER YARD?',
+ 'startPlacing':'hand a building to the cursor; water items also pan the camera to your water yard',
+ 'unitAt':'the unit under a world point, via the spatial hash (O(cells) not O(units)) — powers the hover card',
+ 'unitTipHTML':'hover card for a troop: hp, damage, DPS, range, speed, troop-cap size, armour, detect, splash, aura, bounty, modifiers, current order',
+ 'showUnitTip':'fill #tip with a troop card and place it by the cursor',
+ 'hoverUnit':'throttled hover inspect: re-tests ~12\u00d7/s, rebuilds the card ~2.5\u00d7/s (free in a 1000-unit battle)',
+ # ---- v8 ----
+ 'defaultSettings':'⚙ SETTINGS defaults: gfx High, units/blds Normal, decor on, enemy grids off, buildings permanent',
+ 'aggroReach':'how far a unit looks for a fight: holders get range+AGGRO.hold, marching units min(range+push, AGGRO.march)',
+ 'indestructible':'true while ⚙ INDESTRUCTIBLE BUILDINGS is on → buildings take no damage at all',
+ 'blockUnits':'is UNIT GRAPHICS = Blocks? (read fresh every frame — the setting can be flipped live)',
+ 'blockBlds':'is BUILDING GRAPHICS = Blocks?',
+ 'drawBlockUnit':'BLOCK MODE troop: one plain faction-coloured rectangle, EXACTLY its sprite\'s w×h, feet on the ground — no sprite',
+ 'clampCam':'camera limits: keeps you over the island, or — once the view covers the world (MINZ) — locks to the map centre',
+ 'drawBlockBuilding':'BLOCK MODE building: its footprint rectangle (w×h cells) filled with the owner\'s colour — nothing else',
  # ---- v6 ----
  'plotRot':'plot rotation from its ring angle: local up (−y) faces the city; player (south) = 0',
  'plotRotOf':'rotation of a plot by owner ("p" = 0)', 'plotToWorld':'plot-local px (grid top-left origin) → world, honouring rotation',
@@ -138,8 +177,9 @@ D = {
  'unitScale':'draw scale by troop size (size 1 ×1.15 … size 5 ×1.75) — bigger units look bigger',
  'bScale':'building draw scale = BLD_K (1.3) for every model; the footprint is sized from the model instead',
  'sprUsesTime':'true if a sprite draw fn uses its time arg → animated (gets SPR_FRAMES cached frames)',
- 'sprCanvas':'sprite cache: paints (type,side,faction,frame,res) once into an offscreen canvas; cleared above 1200 entries',
+ 'sprCanvas':'sprite cache: paints (type,side,faction,frame,res) once into an offscreen canvas; applies unit-only lighting; cleared above 1200 entries',
  'drawSpr':'blit a cached sprite with its ground anchor at (x,y) — replaces per-frame path drawing (perf)',
+ 'unitPolish':'v8.9: cached sprite-only top sheen + lower shade, clipped to unit pixels; buildings and Blocks stay unchanged',
  'buildUnitGrid':'spatial hash of live units (160px cells + per-cell faction bitmask), rebuilt once per update',
  'forNear':'visit units in grid cells overlapping radius r (full scan outside update → exact in tests)',
  'forNearFoes':'like forNear but skips cells holding only faction fac (friendly crowds cost nothing)',
@@ -185,6 +225,7 @@ D = {
  'initAudio':'lazy WebAudio on first gesture', 'tone':'one oscillator note (optional slide)', 'noise':'filtered noise burst', 'sfx':'named one-shots (see Sound effects)', 'musicTick':'soft 4-chord chiptune loop',
  # 08 sprites
  'reg':'register a sprite {w,h,draw(g,t,u)} into SPR', 'O':'shared dark outline style', 'drawCrateIcon':'crate box + rarity colour + label',
+ 'ship':'TEMPLATE → ship sprite (wake, hull, waterline, superstructure, mast, turrets, flight deck, VLS, missile rack)',
  'infantry':'TEMPLATE → soldier sprite (helmet type, gun length, scope, rocket tube, medic cross, bulk)',
  'vehicle':'TEMPLATE → ground vehicle (tracks/wheels, hull, turret, twin gun, flak, rocket rack, artillery barrel, radar dish, rail glow)',
  'heliT':'TEMPLATE → helicopter (size, door gunner, guns, twin tail, angular stealth body)',
@@ -206,14 +247,14 @@ D = {
  'botBuildings':'buildings of bot i', 'botUnits':'units of bot i', 'botTier':'tier of bot i\'s preset', 'botCap':'bot unit cap = 8 + 2·tier',
  'setBotPreset':'(re)build a bot base from a preset; clears its units', 'removeBuildingRefund':'sell: 50% refund',
  'weightedPick':'weighted random from [[id,w],…]', 'featuredPremium':'daily-rotating featured item from WEEKLY (fixed WEEK.length crash)',
- 'rollCrate':'roll a crate (premium: 15% featured, pity 80)', 'giveItem':'push {kind,type} into the backpack', 'openCrateModal':'crate reveal panel',
+ 'rollCrate':'roll a crate (premium: 15% featured, pity 80)', 'giveItem':'add n (default 1) of an item to the backpack, merging into the stack that is already there', 'openCrateModal':'open n crates at once: suspense, then the rarest win on display + a list of everything you got',
  'checkAchievements':'unlock + pay any ACHIEVEMENTS whose progress reached its goal (runs every 0.5s)',
  # 12 units
  'garrisonCount':'units with home===point', 'pointFaction':'point → faction (0 you, 1-7 bots, -1 neutral)',
  'spawnGarrison':'spawn garrison troops (rifle; city also tanks) for the owner', 'mkUnit':'create a unit (stealth flag from its classes)',
  'spawnWave':'wave from a random surviving bot, mixed troops from wavePool, ordered to the CITY', 'wavePool':'unit types allowed at wave w (WAVE_POOL unlocks)',
- 'spawnBoss':'MECHA WORM on a random plot, random faction 1-7', 'checkCaptures':'strict faction plurality inside a pad captures it (6s cooldown)',
- 'bFaction':'building → faction index', 'targetFor':'THE unit brain: bots march CITY / hold base; player: order → ATTACK flag → nearest enemy point → nearest enemy building → plot centre',
+ 'spawnBoss':'v8.5: MECHA WORM — it surfaces in the CITY (the middle) with the admin\u2019s custom HP if one is set, then slams everything in reach', 'checkCaptures':'strict faction plurality inside a pad captures it (6s cooldown)',
+ 'bFaction':'building → faction index', 'targetFor':'THE unit brain: ground troops skip water-only RIG points; bots march CITY / hold base; player orders and land-point selection → enemy buildings → plot centre',
  'refreshDetectors':'4×/s rebuild each faction\'s sensor list (detect units + Radar Stations) + stealth reveal flags',
  'factionSees':'is a point inside any sensor of faction f', 'canSee':'stealth visible if fighting, <70px, own detect, or any friendly sensor/radar',
  'findEnemyOf':'nearest enemy the unit can SEE and HURT (×0 targets skipped)', 'splashAt':'50% damage to all other-faction units in radius',
@@ -236,13 +277,46 @@ D = {
  'modTxt':'damage modifiers → coloured HTML', 'tipHTML':'full stat tooltip for a building (+ its unit\'s stats/mods, turret, detect, heal…)',
  'showTip':'show the #tip tooltip', 'moveTip':'keep the tooltip next to the cursor, inside the window', 'hideTip':'hide the tooltip',
  'renderAchievements':'🏆 panel: progress bars + rewards', 'renderLeaderboard':'📊 panel: 8 factions ranked by power, flags held',
- 'drawItemIcon':'building icon for cards', 'renderBackpack':'backpack cards (place / open crate)', 'drawCrateIconMini':'small crate icon',
+ 'drawItemIcon':'building icon for cards', 'renderBackpack':'backpack cards — identical items STACK (xN badge); place one building or open 1/5/10/ALL crates', 'drawCrateIconMini':'small crate icon',
  'renderRewards':'REWARDS claim list', 'renderRobux':'premium crate offers (in-game cash)', 'renderSettings':'settings toggles',
  'renderRebirth':'rebirth preview', 'doRebirth':'rebirth: reset base except golden + Monument, points neutral, cash 500', 'bindToggle':'wire a settings toggle',
+ # ---- v7: money capacity, garrisons, naval line ----
+ 'isSea':'unit is a SHIP (UNITS.sea) — it sails the water grid, not the land grid',
+ 'unitRadius':'footprint radius of a unit (9 + 5·size) — spawn spacing + crowd separation',
+ 'killReward':'BOUNTY for a kill = base reward × wave HP buff × tier (1 + power/40000, capped at ×3)',
+ 'isSeaAt':'is this world point open water? (SEA grid)', 'seaCell':'world point → SEA grid index',
+ 'nearestSea':'closest water cell to a point (spawning ships / getting un-beached)',
+ 'coastGoal':'where a ship should stand to shell a LAND target (cached per target cell)',
+ 'seaAstar':'A* on the SEA grid (same code as land A*, different grid)',
+ 'seaAstarShared':'sea A* with a 2s per-cell-pair cache (perf, like astarShared)',
+ 'stepSeaUnit':'ship movement: straight to the water if beached, then sea A* / coastal approach',
+ 'storedTotal':'cash sitting inside all your buildings (what the Bank pays interest on)',
+ 'storedCap':'total money capacity of all your buildings',
+ 'collectStored':'empty one building’s safe into your wallet (click a building to do this)',
+ 'collectAllStored':'empty every safe (admin button)',
+ 'spawnSpotFor':'pick a spawn point for a trained unit: water for ships, else the closest spot where its FOOTPRINT fits',
+ 'wdCapOf':'wave-defense MaxCap of a unit building (cheap buildings field a squad, the top-end one vehicle)',
+ 'wdCount':'defenders currently fielded by one building', 'wdSlots':'troop slots used by your whole garrison',
+ 'standDownDefenders':'dismiss the garrison when the raid is over',
+ 'updateWaveDefense':'while waveAlert > 0 every unit building trains FREE defenders up to its MaxCap',
+ 'productionTick':'per-building tick: earn → store (capped) → pay out every cycle; train units; garrison upkeep',
+ 'structurePower':'StructurePower = Σ power of YOUR buildings', 'armyPower':'Σ power of YOUR units',
+ 'powerSplit':'{structure, army, total} — shown in the leaderboard',
+ 'incomeMult':'the combined income multiplier (rebirth × outposts+city × logistics)',
+ 'updateWaveAlert':'keeps the "raid incoming" timer alive while a wave is fresh or hostiles are near your plot',
+ 'waveAlert':'seconds of raid alert left (>0 → garrisons muster)',
+ 'waveTick':'wave + boss countdown (skipped when the admin freezes them)',
+ 'pointRespawnTick':'capture-point garrison upkeep (one replacement troop per timer)',
+ 'botRaidTick':'bots dispatch idle troops to march on the CITY',
+ 'botRebuildTick':'destroyed bot bases rebuild after 25s',
+ 'fxTick':'advance tracers / floats / booms / particles one frame',
+ 'auraFor':'support aura multiplier of an attacker (Officer: ×1.25 to allies in 280px)',
+ 'drawSeaLanes':'the water lanes: dashed route + bobbing buoys (drawn under the islands)',
+ 'renderPatchNotes':'the 📜 PATCHES panel',
  # 15/16/17/19
- 'buildingAt':'world point → building under it', 'cancelPlacement':'drop placement ghost', 'showTut':'first-launch tutorial',
+ 'buildingAt':'world point → building under it (a stack: the floor you aimed at, lift-aware)', 'cancelPlacement':'drop placement ghost (the item goes back into its backpack stack)', 'showTut':'first-launch tutorial',
  'frame':'RAF wrapper → update + render', 'update':'THE tick: camera, income, production (cap by size), bot raids, detectors, turrets, hospitals, banks, bot rebuilds, units, garrisons, waves/boss, captures, fx, power+achievements, HUD, autosave',
- 'init':'load → migrate (fill new fields, drop unknown types, return out-of-plot buildings to backpack) → bot bases → restore units → garrisons → start',
+ 'init':'load → migrate (fill new fields, drop unknown types, fold the backpack into stacks, stack buildings that now overlap instead of binning them) → bot bases → restore units → garrisons → start',
 }
 ADMIN_D = {
  'qty':'admin QTY box value clamped to 1…1000', 'owner':'admin FOR select: "p" (you) or bot index',
@@ -252,7 +326,10 @@ ADMIN_D = {
  'boss':'summon | hp1 | more | kill', 'wave':'now | horde (×3) | reset timers', 'points':'take all | release to neutral', 'setBot':'preset for one bot',
  'go':'camera teleport — coords derived from the map (base/city/n/ne/e/se/sw/w/nw/boss)', 'tickStats':'live debug readout',
  'setBotAll':'one preset for all bots', 'cashCustom':'cash from #aCash (K/M/B)', 'giveAllBuildings':'one of every building → backpack',
- 'crate':'give a crate', 'rebirth':'add rebirths or force one', 'claimRewards':'claim all ready rewards', 'exportSave':'state JSON → #aSave',
+ 'crate':'give n crates (they stack)', 'pile':'v8.4: stack n of a building on top of each other on one spot (unlimited height)',
+ 'bossHp':'v8.5: custom boss HP (K/M/B allowed) — sets the live worm\u2019s HP and every boss that spawns later; empty = default', 'rebirth':'add rebirths or force one', 'claimRewards':'claim all ready rewards', 'exportSave':'state JSON → #aSave',
+ 'collectAll':'v7: empty every money building’s safe into your wallet',
+ 'garrison':'v7: muster the wave-defense garrison / stand it down', 'raid':'v7: raise the raid alert (60s)',
  'importSave':'#aSave JSON (v1–v4) → save → reload', 'wipe':'delete save → reload',
 }
 NESTED_D = {
@@ -266,11 +343,16 @@ HANDLER_D = {
  "#btnHome|onclick":'cancel placement, close panels, pan to your plot centre', ".rail-btn|forEach":'left rail → openPanel(data-panel)',
  "[data-close]|forEach":'✕ closes its panel', "#shopTabs button|forEach":'shop tab → S.shopTab', "#btnAttack|onclick":'ATTACK: non-garrison units march the CITY',
  "mini|mousedown":'minimap click → pan (uses the real rendered size)', "window|keydown":'keys map, Esc, F1/` admin', "window|keyup":'release key',
- "cv|contextmenu":'no browser menu', "cv|mousedown":'RMB cancel/assault/sell/deselect · LMB place or drag', "cv|mousemove":'mouse pos + drag band',
+ "cv|contextmenu":'no browser menu', "cv|mousedown":'RMB cancel/assault/deselect (v8: selling is blocked while buildings are permanent) · LMB place or drag',
+ "#setTrees|toggle":'v8: TREES & DECOR — trees, rocks, grass patches, crystals', "#setBotGrid|toggle":'v8: ENEMY BASE GRIDS — dashed pad + name label over each bot base',
+ "#setIndestruct|toggle":'v8: INDESTRUCTIBLE BUILDINGS — no damage, no selling', "#setUnits|toggle":'v8: UNIT GRAPHICS Normal|Potato', "#setBlds|toggle":'v8: BUILDING GRAPHICS Normal|Potato',"cv|mousemove":'mouse pos + drag band',
  "window|mouseup":'finish drag select / click / Ctrl-move', "#tutNext|onclick":'advance tutorial', "cv|wheel":'zoom around cursor',
  "document|pointerdown":'unlock WebAudio', "window|beforeunload":'save on close', "#btnAdmin|onclick":'open admin', "#aClose|onclick":'close admin',
- "window|resize":'resize canvas', "#btnCrateDone|onclick":'close crate reveal', "#btnRebirthYes|onclick":'confirm rebirth',
- "#aSpeed .abtn|forEach":'admin time scale', "#aGod|onclick":'GOD MODE: your units + YOUR buildings take no damage',
+ "window|resize":'resize canvas (also recomputes MINZ — the zoom that fits the whole map)',
+ "window|blur":'v8.3: releases Q (and every held key) when the tab loses focus', "#btnCrateDone|onclick":'close crate reveal', "#btnRebirthYes|onclick":'confirm rebirth',
+ "#aSpeed .abtn|forEach":'admin time scale',
+ "#stStoredRow|n/a":'v7 HUD: cash stored inside your buildings (click a building to empty it)',
+ "#p-patch|rail":'v7: 📜 PATCHES panel — what changed in every build', "#aGod|onclick":'GOD MODE: your units + YOUR buildings take no damage',
  "#aFreeze|onclick":'freeze wave/boss timers', "#aNoResp|onclick":'stop garrison respawn',
 }
 FILE_D = {
@@ -297,6 +379,16 @@ for i in range(1, 6):
 
 # ---------- CHANGELOG (newest first) — ⚠️ one line per change ----------
 CHANGELOG = [
+ ('2026-09-27', '**v8.10: BOSS SPAWN CENTER.** Bosses now spawn at the exact world/map centre (`MAP_C`, the CITY center) instead of a random offset within the city. This applies to the automatic timer and ADMIN summon; the worm still attacks after surfacing. Smoke verifies the default and custom-HP spawns are exact.'),
+ ('2026-09-27', '**v8.9: UNIT VISUAL POLISH.** The full roster gets a cohesive sprite pass: faction-colored infantry gain fitted vests, kit and clearer rifles; tanks and support vehicles get layered hulls, tracks, wheels, hatches and weapons; helicopters and aircraft gain cockpit glass, panel lines and rotor/engine detail; ships gain portholes, deck edges and sharper turrets. A cached, alpha-clipped sheen/shadow pass adds depth to unit sprites only. Sprite dimensions and gameplay are unchanged; buildings and exact-size Blocks mode are untouched. Smoke draws every registered unit through the cache.'),
+ ('2026-09-27', '**v8.8: LIMITED CYAN.** The user-facing LIMITED rarity color is now bright cyan (`#00e5ff`) across badges, card borders, tooltips and admin lists; it was incorrectly pink. MYTHIC remains red, the Limited category and item classifications are unchanged, and Limited still sorts above Mythic. Smoke verifies the label/color and rejects both pink and red.'),
+ ('2026-09-27', '**v8.7: RARITY AUDIT.** Checked current unit/building rarity against the source lists in `ref/units-original.txt` and `ref/buildings-original.txt`. **Fusion Reactor is LIMITED, not MYTHIC (red); v8.8 corrects its color to cyan.** Corrected exact-source mismatches: Oil Drill EPIC; Iron Mines COMMON; Data Center MYTHIC; Research Lab LEGENDARY; Supply Depot RARE; Hydroponics Facility UNCOMMON; Alloy Foundry LEGENDARY; Offshore Oil Rig EPIC; Naval Beacon MYTHIC; Spectre MYTHIC. New/remake-only entries without a source match keep their current rarity. Smoke verifies the Limited badge label and Limited-over-Mythic sort order; v8.8 sets its color to cyan. 249 assertions.'),
+ ('2026-09-27', '**v8.6: LAND ROUTING FIX.** \U0001F6E3\uFE0F **BRIDGES ARE REAL LAND** — `WALK` samples 40px cell centres, so points on diagonal bridge/coast edges can be land even when their cell is marked water; water rescue now confirms the exact point near land before teleporting a soldier. \u2693 **LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY** — ground target selection skips water-only capture points, while ships still capture them. Regression tests verify a unit stays on a bridge cell mislabelled as water, a rifle reaches the NE island over the bridge, and land AI never targets a RIG. 247 smoke assertions.'),
+ ('2026-09-27', '**v8.5: BUILD FLOW UPDATE.** \U0001F9F1 **KEEP PLACING** \u2014 drop a building and the next one from your backpack stack is handed straight to the cursor, so a whole row goes down without reopening the backpack; when the stack empties it stops and says so (`keepPlacing/refillHand/placeLeft`). \U0001F9F1 **SHIFT + DRAG = PLACE A RUN** \u2014 hold SHIFT, press and drag out an area: every footprint-sized spot in the rectangle is previewed live (green where it fits, red where it is taken, lifted to the stack level, with a `N \u00d7 name \u2014 let go to place` label) and placed on release (`placeSpots` + `placeRun`); it stops at the last one you own, and it spreads them side by side instead of stacking them. \U0001F9F1 **THE BACKPACK STAYS OPEN** while you place \u2014 click the next card to switch item. \U0001F4CB **AUTO-SORT**: the SHOP (rarity, then cheapest), the BACKPACK (crates first, then best rarity) and both ADMIN lists now run best-rarity-at-the-top automatically (`rarRank` + `bestFirst`). \U0001F40D **THE WORM**: it surfaces in the MIDDLE (the CITY island) instead of a random bot base, and it FIGHTS \u2014 every 4.5s it SLAMS every enemy unit within 210px for 45 and crushes enemy buildings within 260px for 130, with a shockwave and a SLAM! float (`BOSS_SLAM` + `bossSlam`). \U0001F40D **ADMIN \u2192 CUSTOM BOSS HP**: type `5000` / `250K` / `1.5M` and press SET HP \u2014 it sets the live worm and every boss that spawns later; empty + SET HP restores the default (`Admin.bossHp`). \U0001F41C **NO MORE UNIT COLLISION**: troops never block each other now \u2014 they only drift apart a little when they end up on top of each other (the don\u2019t-touch nudge), soldiers and ships alike, and the nudge is far too weak to stall a march (it used to shove at ~100px/s and froze columns on bridges). \U0001F41C **NO MORE DROWNING**: a land unit that ends up in the water is put straight back on the nearest shore (`nearestLand`). 243 smoke assertions.'),
+ ('2026-09-27', '**v8.4: STACKS & CRATES.** \U0001F9F1 **BUILDINGS STACK \u2014 UNLIMITED HEIGHT.** Point at a building you already own and the next one lands ON TOP of it instead of being refused: `stackTopAt()` works out how high the pile under the footprint is, `fitsAt()/findFreeSpot()/ghostSlot()/placeBuilding()/placeBuildingRaw()` all take that `lvl`, and `b.lvl` is stored on the building. Level 0 is the ground, every floor above it is lifted `STACK_UP` (24px) and drawn on top of the one below (y-sort, then level); the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are about to build. `buildingAt()` is lift aware, so clicking a stack picks the crate you actually aimed at, and every floor works on its own (4 barracks 4 high = 4 recruits). Bots and mass fills still spread out first: `findFreeSpot()` only climbs a pile when there is no free ground left. Old saves whose footprints now overlap are stacked instead of being returned to the backpack. Admin: `Admin.pile(type,n)` builds a tower n high. \U0001F4E6 **THE BACKPACK STACKS.** One card per item with an \u00d7N badge: `giveItem/takeItem/invCount/invFind` merge and split stacks, `mergeInventory()` folds old per-item saves, and building cards place one at a time. \U0001F381 **BULK CRATE OPENING.** Clicking a crate stack asks "open how many?" (1 / 5 / 10 / ALL \u2014 `askOpenCount()`), then `openCrateModal(ct,n)` rolls them all and lists every win, rarest first, with \u00d7counts and rarity colours. \U0001F48E **THE ROBUX SHOP WORKS** \u2014 it used to call a `renderRobux()` that did not exist, so the tab threw; it now sells Standard / Elite / Premium crates for cash (1 or 10 at a time). 217 smoke assertions.'),
+ ('2026-09-27', '**v8.3: HARBOUR UPDATE.** ⚓ **YOUR WATER YARD** \u2014 a buildable 832\u00d7224px strip of open sea BEHIND your island (`WATER_YARD`, drawn as a blue grid + \u2693 label, on the minimap too). Every dock (7 naval docks), the Offshore Oil Rig and the Naval Beacon are `BUILD[].water` and can ONLY be placed there; land buildings are refused with a reason. Ships now launch straight into it. Placement is zone aware throughout: `plotOrigin/plotToWorld/worldToPlot/plotRectPath/fitsAt/findFreeSpot/ghostSlot/placeBuilding` take a `zone` (\u2018land\u2019 or \u2018water\u2019) and `b.zone` is stored on the building. ⚓ **4 WATER CAPTURE POINTS** \u2014 RIG NW/NE/SE/SW at r 2100 in the ocean gaps; only ships can reach them, a held rig garrisons gunboats (`spawnGarrison`), and each one you hold gives +10% production like an outpost. They are drawn as offshore platforms on stilts. ⚓ **BUILD GRID TWICE AS FINE**: SLOT 16\u21928, PLOT 104\u00d772 cells (island unchanged at 832\u00d7576px), GRID_K 8, and save migration now converts from ANY older cell size (`k = oldGrid/SLOT`). ⚓ **BUILDINGS 3\u00d7 SMALLER**: `BLD_K` 1.3\u21921.3/3 \u2014 a Solar panel is 24px wide instead of 64px, so several times more of them fit on an island. ⚓ **HOVER A TROOP FOR ITS STATS**: `unitAt()` (spatial hash) + `unitTipHTML()` show hp, damage, DPS, range, speed, troop-cap size, armour, detect, splash, aura, bounty, damage modifiers and the current order; `hoverUnit()` re-tests ~12\u00d7/s and rebuilds the card ~2.5\u00d7/s so it stays free with 1000 units. ⚓ **HOLD Q TO PAUSE**: `holdQ` zeroes the game clock while the camera, hover cards and panels keep running, with a \u23f8 PAUSED badge on screen.'),
+ ('2026-09-27', '**v8: PERFORMANCE & PEACE UPDATE.** ⚡ **POTATO MODE** — ⚙ SETTINGS gained two rows, UNIT GRAPHICS and BUILDING GRAPHICS, each `Normal` or `Potato`. Blocks (v8.2: the blobs became plain rectangles) replaces every troop with a rectangle EXACTLY its the size of its sprite and every building with its footprint rectangle — in the colour of its owner, no shadow/outline (js/render/05-blocks.js); the sprite blit is skipped entirely, the single biggest frame-time win in the game (smoke test: 216 sprite draws per 24 frames → 0). Old `Potato` saves migrate to `Blocks` in init(). ⚡ **TREES & DECOR** toggle — hides trees, rocks, grass patches and the floating crystals (350 tree draws/frame → 0). ⚡ **EFFECTS High/Low** (was GRAPHICS MODE) now also drops the ocean glints, the lane glow and halves the coastline detail (72 → 28 segments). ⚡ **BUILDINGS ARE PERMANENT** — `damageBuilding` returns early while ⚙ INDESTRUCTIBLE BUILDINGS is on (default), so nothing can destroy a building and right-click no longer sells your own; switching it off restores destructible bases and the 50% refund. ⚡ **THE WORLD IS TWICE AS BIG**: WORLD 4800→9600, RING 1700→2600, outposts 760→1150, crystals 900→1400, city r 330→460, lanes 955/2260→1580/3400. Islands sit far apart (1990px between neighbours) with wide ocean for ships. Map load stayed cheap: the land test rejects most of the 57 600 walk cells with a bounding box (PLOT_BB/CITY_BB/ILET_BB/BRIDGE_BB) before any trigonometry — verified identical to the un-optimised test over 319 225 samples. ⚡ **NO MORE DRIVE-BY SHOOTING**: units only engage what is CLOSE — `aggroReach()` gives marching units `min(range+60, AGGRO.march 210)` while holders (garrisons, base defenders, idle troops) keep `range+220`. Artillery used to shell your base from 430px away while walking past. ⚡ **IDLE TROOPS MARCH ON THE MIDDLE**: with no order your army heads for the CITY (then the nearest point you do not own) and fights what it meets en route, instead of beelining for somebody’s base. ⚡ **ENEMY BASES**: their build-grid pads, dashed outlines and name labels are hidden — you see their buildings and their troops. ⚙ ENEMY BASE GRIDS brings the labels back. ⚡ **ZOOM OUT TO THE WHOLE MAP**: the zoom-out limit is no longer a fixed 0.5× but `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))`, recomputed on resize, so at full zoom-out the entire 9600px world fits your window; `clampCam()` then locks the camera to the map centre so no corner is cut off.'),
+ ('2026-09-27', '**v7: NAVAL UPDATE + folder reorganisation + money capacity.** `js/` is no longer one flat list of 24 files — it is now **12 folders**: `core` (helpers/state/save/audio/camera/fx/loop/init), `data` (world, factions, classes, units, unit-helpers, buildings, unit-buildings, rarities + the two new unit/building tables), `maps` (island map + **02-sea.js**: the SEA grid, shipping lanes, ship navigation), `textures` (sprite library: base sprites, unit templates, naval ships, new units, buildings), `systems` (power, economy, waves, captures), `buildings` (placement, **production: money capacity + training + wave-defense garrison**, bots, turrets, support), `units` (spawn, movement, spatial grid, AI, combat), `rewards` (crate tables, codes, rewards data + UI), `achievements` (data, check loop, 🏆 panel), `render` (frame, units, ground, minimap), `ui` (core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes), `admin`. Load order is still index.html; nothing was lost, several 500-line files were split by concern. \u26a1 **Naval line:** 7 ships (Speedboat → Carrier; Submarine + Zumwalt are STEALTH) with 7 dock buildings and a ⚓ NAVAL shop tab. \u26a1 **Water lanes:** a ring of shipping lanes around the CITY (r 955, squeezed between the outpost islets and the plot lobes), 8 radial lanes out to the open sea and an outer loop (r 2260) — drawn as buoy lines, used by ship pathfinding (SEA grid + sea A*, coastal approach to shell land targets). \u26a1 **Money Capacity:** every money building stores what it earns up to its Capacity (≈10 min of production) and pays out every 30s — or the instant you click it (new HUD row shows stored/cap). The **Bank now pays 5% of STORED cash**. 9 new production buildings (Advanced Solar → Automated Factory). \u26a1 **Wave-defense garrisons:** while a raid is incoming (or hostiles are within 1300px of your plot) every unit building trains FREE defenders of its own type up to its MaxCap (24 slots base-wide); they stand down when the base is safe. \u26a1 **StructurePower** split from army power (leaderboard shows both). \u26a1 **Kill bounties** scale with the victim (wave HP buff × tier). \u26a1 Unit **footprints** now matter when spawning (recruits look for a free spot their own size). \u26a1 New units: Light Tank, Mantis, TIGR, Swarm Drone, PZH 2000, Leopard 2A5, ICBM Launcher, **Centurion (UNIQUE)**, F-15, F-35, SU-47, KA-52, **Officer** (support: +25% damage aura) + 20 new buildings incl. Submarine Cavern, Centurion Support Site and Airship Docks. \u26a1 Your own stealth units (incl. submarines) are no longer invisible to you. \u26a1 New 📜 PATCHES panel (left rail) + admin buttons (EMPTY ALL SAFES / MUSTER GARRISON / RAID ALERT).'),
  ('2026-09-26', '**v6: fine grid + rotated plots.** Build grid 13×9 slots of 64px → 52×36 cells of 16px; every footprint is computed from its sprite (width = model × 1.3 rounded up to cells, depth ≈ half) so the pad hugs the model. Bot presets keep their coarse layout (×4) and slide to the nearest free spot; old saves convert (grid field) and overlapping buildings go to the backpack. Bot plots are rotated to face the city like the original (diagonals are diamonds): pads, grids, outlines, trees, minimap, walkable shape and click hit-tests follow the rotation. Square 912px islands, RING 1450→1700, WORLD 4800, city r 330, bigger lobes, outposts r 760 turned to face the city. Max zoom 1.6× → 3×. Stronger grid lines.'),
  ('2026-09-26', '**v5: compact map + real sizes + performance.** Map shrunk like the original (WORLD 5600→4000, SLOT 85→64, RING 2000→1450, city r 400→300, shorter bridges, outposts r 610, crystals r 860). Buildings are drawn at their real footprint size on a faction-edged concrete pad; units scale with troop size. Admin: scrollable + searchable building/unit lists, QTY 1–1000 (BP/PL/SPAWN), FOR (you or any bot), spiral spawn on walkable land. Perf (1400 units: 40→9 ms/frame sim): spatial hash with faction bitmask, cached targets (~3×/s) and foe scans (~5×/s), A* budget 24/frame + shared paths, deferred unit removal, sprite cache (offscreen canvases), minimap 10×/s, fx caps, crowd separation. Fixes: selection rings never drew (selUnits holds objects), placement ghost used old 50/100px slot, typing in inputs panned the camera, splash could kill a unit twice (double reward), dead building could still be hit.'),
  ('2026-09-26', '**v4 big update.** Split game.js into 24 files in js/ (load order = index.html). New radial map copied from ref-map-original.png: 8 square forest plots on a ring, a lobe island each, octagon CITY, 8 long bridges, 4 outpost islets with bridges, 4 floating crystals. 35 units in 4 classes (10 light / 10 armored / 10 air / 5 stealth) with the original damage-modifier system (×0 = can\'t target), splash, medic heal, saboteur ×3 vs buildings, drone = flying light. One building per unit (generated sprites with a unit signboard) + shop sub-tabs. New production (wind, iron mines, steel, refinery, power plant, skyscraper, fusion), special (pillbox, radar, SAM site, field hospital, fortress cannon, bank, Monument [rebirth]) and decor. Hover stat tooltips, 🏆 15 achievements, 📊 leaderboard, troop cap by unit size, rarity colours fixed, faction-coloured building flags. Save v4 (v1–v3 migrate). Tests: 104 checks; gen_info v3 reads live data.'),
@@ -306,7 +398,10 @@ CHANGELOG = [
 ]
 # ---------- KNOWN ISSUES (remove when fixed) ----------
 KNOWN_ISSUES = [
- ('balance', '35 new units / 45 new buildings use first-pass numbers adapted from the original — expect tuning.'),
+ ('buildings', 'v8: buildings are PERMANENT by default (the user asked for it), so bot bases can never be knocked down — the "base destroyed → rebuilding" loop only runs when ⚙ INDESTRUCTIBLE BUILDINGS is off.'),
+ ('naval', 'Ships sail the open sea but have no water-lane patrol AI yet: with no orders they head for the nearest enemy building and shell it from the coast.'),
+ ('balance', '55 units / 100 buildings use first-pass numbers adapted from the original — expect tuning (especially the naval line and the new production ladder).'),
+ ('naval', 'Ships sail the open sea but have no water-lane patrol AI yet: with no orders they head for the nearest enemy building and shell it from the coast.'),
  ('visual check', 'The map/sprites were checked in headless renders only; small overlaps of signboards on 1×1 buildings are possible.'),
 ]
 
@@ -401,6 +496,30 @@ for i, f in enumerate(JS_FILES):
     fn = [n for ff, _, n, _ in funcs if ff == f]
     A(f"| {i+1} | `{f}` | {len(SRC[f])} | {file_head.get(f,'')} | {len(fn)} |")
 A("")
+FOLDER_D = {
+ 'core':'the engine: helpers, state, save, audio, camera+ground texture, fx, the main loop and boot',
+ 'data':'pure DATA tables: world/map layout, factions, classes, units, buildings, rarities (+ the two new unit/building tables)',
+ 'maps':'the island map (shapes, walk grid, A*, city flow field) and the SEA: water lanes, sea grid, ship navigation',
+ 'textures':'the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation)',
+ 'systems':'cross-cutting game systems: power, economy, waves/boss, capture points',
+ 'buildings':'everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support',
+ 'units':'units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties',
+ 'rewards':'crate tables, redeem codes, the REWARDS list + its panel',
+ 'achievements':'the achievement list, the unlock loop and the 🏆 panel',
+ 'render':'drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap',
+ 'ui':'panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes',
+ 'admin':'the F1 admin/debug drawer',
+}
+flds = {}
+for f in JS_FILES:
+    d = f.split('/')[1] if '/' in f else '.'
+    flds.setdefault(d, []).append(f)
+A("## 📁 Folder map (v7)\n")
+A("`js/` is grouped by concern — each folder is a layer, and files inside it load in numeric order.\n")
+A("| Folder | Files | Lines | What lives there |\n|---|---|---|---|")
+for d, fs in flds.items():
+    A(f"| `js/{d}/` | {len(fs)} | {sum(len(SRC[f]) for f in fs)} | {FOLDER_D.get(d,'⚠️ undocumented — add to FOLDER_D')} |")
+A("")
 W_, P_ = DATA['WORLD'], DATA['PLOT']
 A("## 🧮 Core constants\n\n| Const | Value | Meaning |\n|---|---|---|")
 A(f"| `WORLD` | {W_['w']}×{W_['h']} | world px (water outside islands) |")
@@ -456,7 +575,7 @@ for tab, label in DATA['SHOP_TABS']:
     A(f"### {label} ({len(rows)})\n")
     if tab == 'units':
         A("| id | Name | Sub-tab | Trains | Every s | Cost | Size | Power | HP | Needs PWR | Rarity | Sprite style |\n|---|---|---|---|---|---|---|---|---|---|---|---|")
-        for k, b in sorted(rows, key=lambda r: (DATA['CLASSES'].index(r[1]['sub']), r[1]['cost'])):
+        for k, b in sorted(rows, key=lambda r: ((DATA['CLASSES']+['sea']).index(r[1]['sub']), r[1]['cost'])):
             A(f"| `{k}` | {b['name']} | {b['sub']} | {U[b['unit']]['name']} | {b['spawnEvery']} | {fmt_money(b['cost'])} | {b['w']}×{b['h']} | {b['power']} | {b['hp']} | {b.get('req','–')} | {b['rar']} | {b.get('style') or 'hand-drawn'} |")
     else:
         A("| id | Name | Cost | Size | $/s | Power | HP | Needs | Rarity | Info |\n|---|---|---|---|---|---|---|---|---|---|")
@@ -533,7 +652,18 @@ for f, ln, t, e in handlers:
     A(f"| {f}:{ln} | `{t}` | {e} | {'settings toggle' if e.startswith('toggle') else HANDLER_D.get(f'{t}|{e}', '⚠️ undocumented — add to HANDLER_D')} |")
 A("\n## 🌐 Global variables (top-level const/let, not functions)\n\n| File:Line | Kind | Name | Value (truncated) |\n|---|---|---|---|")
 for f, ln, k, n, v in globals_: A(f"| {f}:{ln} | {k} | `{n}` | `{v}` |")
-A("\n## 💾 State object (`S`) — `defaultState()`\n\nRuntime extras: `S.admin` {speed,god,freeze,noRespawn}, `S._power`, `S._fps`, `S._prevPanel`. Units: id, type, side, faction, x, y, hp, maxHp, cool, order, home, bot, raid, boss, stealth, revealed, fightT, cityGoal, path, wp, repath, tx, ty, hist. Buildings: id, type, gx, gy, owner, hp, maxHp, t, flash, cool, x, y.\n\n```js\n" + state_src + "\n```\n")
+_, settings_src = block_in(r'^function defaultSettings\(\)\{', r'^\}')
+SETTINGS_D = {
+ 'music':'chiptune loop', 'sfx':'place/shot/boom/coin clicks', 'dmg':'floating damage numbers',
+ 'gfx':'EFFECTS High = particles, booms, ocean glints, lane glow, detailed coastline \xb7 Low = none of that',
+ 'units':'UNIT GRAPHICS Normal = sprites \xb7 Blocks = one rectangle per troop (its sprite\'s exact size)',
+ 'blds':'BUILDING GRAPHICS Normal = sprites \xb7 Blocks = the footprint rectangle in the owner\'s colour',
+ 'trees':'TREES & DECOR: trees, rocks, grass patches, floating crystals',
+ 'botGrid':'ENEMY BASE GRIDS: dashed pad + name label over each bot base (off = buildings + troops only)',
+ 'indestruct':'INDESTRUCTIBLE BUILDINGS: nothing can damage or sell a building',
+}
+A("\n## 💾 State object (`S`) — `defaultState()`\n\nRuntime extras: `S.admin` {speed,god,freeze,noRespawn}, `S._power`, `S._fps`, `S._prevPanel`. Units: id, type, side, faction, x, y, hp, maxHp, cool, order, home, bot, raid, boss, stealth, revealed, fightT, cityGoal, path, wp, repath, tx, ty, hist. Buildings: id, type, gx, gy, owner, hp, maxHp, t, flash, cool, x, y.\n\n```js\n" + state_src + "\n\n// ⚙ SETTINGS (see the table below)\n" + settings_src + "\n```\n\n"
++ f"**\u2699 SETTINGS rows**\n\n| Setting | Default | What it does |\n|---|---|---|\n" + "".join(f"| `{k}` | `{v}` | {SETTINGS_D.get(k,'⚠️ undocumented')} |\n" for k, v in DATA['defaultState']['settings'].items()))
 A(f"## 🎨 Sprites ({len(DATA['SPRITES'])} registered)\n\n| Sprite | w×h | Kind | Where |\n|---|---|---|---|")
 for k, v in DATA['SPRITES'].items():
     kind = 'unit' if k in U else ('building' if k in BLD else 'other')
