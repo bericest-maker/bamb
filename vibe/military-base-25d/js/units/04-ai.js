@@ -99,7 +99,7 @@ function targetFor(u){
     if(pointFaction(city)!==0) return {x:city.x,y:city.y,point:city,mid:true};
     let best=null,bd=1e9,nbest=null,nbd=1e9;         // city held → nearest point you don't own (enemy first)
     for(const p of S.points){
-      if(pointFaction(p)===0) continue;
+      if(p.water||pointFaction(p)===0) continue; // land troops cannot capture offshore RIGs; ships handle those
       const dd=Math.hypot(p.x-u.x,p.y-u.y);
       if(pointFaction(p)<0){ if(dd<nbd){nbd=dd;nbest=p;} continue; }
       if(dd<bd){bd=dd;best=p;}
@@ -211,13 +211,17 @@ function updateUnit(u,dt){
   u.cool-=dt; u.t+=dt;
   u.fightT=Math.max(0,u.fightT-dt);
   // v8.5: a land unit that ends up in the water is put straight back on the nearest shore (no swimming).
-  // Cheap: the walk-grid cell decides. Only COAST cells (a water cell next door) get the exact walkableAt
-  // test, so an inland crowd costs nothing and nobody is left standing in the surf. Runs before every
-  // early return, so medics and other non-combat troops are rescued too.
+  // The grid samples cell centres, so check exact terrain only in/next to land; inland crowds stay cheap,
+  // while a valid point on a diagonal bridge is not mistaken for water. Runs before every early return.
   if(!isAir(u)&&!isSea(u)){
     const [cx,cy]=cellOf(u.x,u.y), i=cy*GW+cx;
+    const edge=cx<=0||cy<=0||cx>=GW-1||cy>=GH-1;
+    const nearLand=edge||WALK[i-1]||WALK[i+1]||WALK[i-GW]||WALK[i+GW]||WALK[i-GW-1]||WALK[i-GW+1]||WALK[i+GW-1]||WALK[i+GW+1];
+    const nearWater=edge||!WALK[i-1]||!WALK[i+1]||!WALK[i-GW]||!WALK[i+GW]||!WALK[i-GW-1]||!WALK[i-GW+1]||!WALK[i+GW-1]||!WALK[i+GW+1];
     let wet=!WALK[i];
-    if(!wet&&(cx<=0||cy<=0||cx>=GW-1||cy>=GH-1||!WALK[i-1]||!WALK[i+1]||!WALK[i-GW]||!WALK[i+GW])) wet=!walkableAt(u.x,u.y);
+    // The grid samples cell centres: a valid point on a narrow/diagonal bridge can lie inside a cell marked water.
+    // Check the exact terrain at land/water edges so the rescue does not reject the bridge itself.
+    if((wet&&nearLand)||(!wet&&nearWater)) wet=!walkableAt(u.x,u.y);
     if(wet){
       const p=nearestLand(u.x,u.y);
       if(p){ u.x=p.x; u.y=p.y; u.path=null; u._seaExit=null; }

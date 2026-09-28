@@ -2,6 +2,11 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.6 \u2014 LAND ROUTING', date:'2026-09-27', items:[
+    '\uD83D\uDEE3\uFE0F BRIDGES ARE REAL LAND: water rescue now checks the exact point at bridge/coast cell edges, so a diagonal road cell sampled as water no longer bounces a soldier back to shore.',
+    '\u2693 LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY: ground armies no longer choose water-only RIG capture points as objectives; ships can still capture them as before.',
+    'TESTED: a rifle crosses from the player island to the NE island over the bridge, a soldier stays put on a valid bridge cell, and ground AI ignores offshore RIGs.',
+  ]},
   { v:'v8.5 \u2014 BUILD FLOW', date:'2026-09-27', items:[
     '\uD83E\uDDF1 KEEP PLACING: drop a building and the next one from your backpack stack is handed straight to the cursor \u2014 build a whole row without reopening the backpack. It stops (and tells you) when the stack is empty.',
     '\uD83E\uDDF1 SHIFT + DRAG = PLACE A RUN: hold SHIFT, press and drag out an area. Every footprint is previewed live (green where it fits, red where it is taken, floating at the stack level it would land on) with a \u201CN \u00d7 item \u2014 let go to place\u201D label, and they are all placed when you release. It stops at the last one you own.',

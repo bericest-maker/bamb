@@ -28,13 +28,23 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 .tag.sea{background:rgba(88,200,232,.15);color:#58c8e8;border-color:rgba(88,200,232,.45)}
 </style></head><body><div class="wrap">
 <h1>BUILD A MILITARY BASE — 2.5D REMAKE</h1>
-<div class="sub">v8.5 · BUILD FLOW · keep placing · SHIFT-drag runs · auto rarity sort · worm spawns mid-map and slams · <span class="dim">fan project, not affiliated with Roblox</span></div>
+<div class="sub">v8.6 · LAND ROUTING FIX · diagonal bridges no longer bounce soldiers into the sea · land armies leave offshore RIGs to ships · <span class="dim">fan project, not affiliated with Roblox</span></div>
 
 <a class="play" href="vibe/military-base-25d/index.html">▶ PLAY THE GAME</a>
 <a class="play ghost" href="vibe/military-base-25d/INFO.md">📄 INFO.md (generated docs)</a>
 <a class="play ghost" href="vibe/military-base-25d/NOTES.md">🗒️ NOTES.md (roadmap)</a>
 
-<div class="card"><h2>WHAT CHANGED (v8.5 — this round)</h2>
+<div class="card"><h2>WHAT CHANGED (v8.6 — this round)</h2>
+<div>
+<span class="tag new">diagonal bridge fix</span><span class="tag sea">land AI skips sea-only RIGs</span><span class="tag">247 smoke assertions</span>
+</div>
+<ul>
+<li><b>🛣️ THE BRIDGES ACTUALLY COUNT AS LAND.</b> The walking grid samples cell centres; exact ground along a diagonal bridge can fall in a cell marked water. The rescue check now confirms the unit’s actual position before sending it back to shore.</li>
+<li><b>⚓ LAND ARMIES LEAVE OFFSHORE RIGS TO SHIPS.</b> Ground troops no longer pick water-only capture points as objectives; ships still capture them. With no land points left, troops turn to enemy buildings.</li>
+<li><b>TESTED:</b> a rifle crosses from the player island to the NE island, a soldier stays on a valid bridge point, and land AI ignores offshore RIGs.</li>
+</ul></div>
+
+<div class="card"><h2>WHAT CHANGED (v8.5 — previous round)</h2>
 <div>
 <span class="tag new">keep placing</span><span class="tag new">SHIFT-drag run</span><span class="tag new">backpack stays open</span>
 <span class="tag new">auto rarity sort</span><span class="tag new">worm spawns mid</span><span class="tag new">boss slam</span>
@@ -145,5 +155,5 @@ code.file{background:transparent;border:0;padding:0;color:var(--dim)}
 <li><b>TRY THE BUILD FLOW:</b> buy 10 solar panels → BACKPACK → click the card once → click, click, click (you keep placing). Or hold <b>SHIFT</b> and drag across your plot to lay a whole row at once.</li>
 <li><b>TRY THE WORM:</b> F1 → ADMIN → BOSS → SUMMON (it surfaces in the CITY now). Type a number in <b>CUSTOM HP</b> and press SET HP to make it as tanky as you like.</li>
 </ul></div>
-<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (243 assertions, all green)</div>
+<div class="sub dim">Static site · <code>python3 -m http.server 8000 --bind 0.0.0.0</code> · tests: <code>node smoke.js</code> (247 assertions, all green)</div>
 </div></body></html>

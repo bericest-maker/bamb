@@ -772,6 +772,38 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
   assert(!B.walkableAt(swim.x,swim.y),'the test soldier really is in open water');
   S().units.push(swim); pump(100);
   assert(B.walkableAt(swim.x,swim.y),`it is teleported back onto the nearest ground (${Math.round(swim.x)},${Math.round(swim.y)})`);
+  // ---- the bridge is land even when its 40px grid cell was sampled as water ----
+  {
+    const b=B.BRIDGES[2], len=Math.hypot(b.bx-b.ax,b.by-b.ay), ux=(b.bx-b.ax)/len, uy=(b.by-b.ay)/len, nx=-uy, ny=ux;
+    let deck=null;
+    outer: for(let d=80;d<len-80;d+=5) for(let off=-40;off<=40;off+=5){
+      const x=b.ax+ux*d+nx*off, y=b.ay+uy*d+ny*off, [cx,cy]=B.cellOf(x,y);
+      if(!B.WALK[cy*B.GW+cx]&&B.walkableAt(x,y)){ deck={x,y}; break outer; }
+    }
+    assert(!!deck,'the diagonal bridge has valid land points inside some cells sampled as water');
+    if(deck){
+      const walker=B.mkUnit('rifle','p',deck.x,deck.y); walker.order={x:deck.x,y:deck.y}; S().units=[walker];
+      G('updateUnit')(walker,.001);
+      assert(Math.hypot(walker.x-deck.x,walker.y-deck.y)<1,'a land unit stays on the bridge instead of being bounced to shore');
+    }
+  }
+  // ---- land armies leave water-only RIG captures to the navy ----
+  {
+    const before=S().points.map(p=>({owner:p.owner,faction:p.faction})), attackCity=S().attackCity;
+    for(const p of S().points){ if(p.water){p.owner='enemy';p.faction=1;} else {p.owner='player';p.faction=0;} }
+    const scout=B.mkUnit('rifle','p',PC.x,PC.y), target=G('targetFor')(scout);
+    assert(!target.point||!target.point.water,`a land soldier does not choose an offshore RIG (${target.point?.name||'other target'})`);
+    S().points.forEach((p,i)=>{p.owner=before[i].owner;p.faction=before[i].faction;}); S().attackCity=attackCity;
+  }
+  // ---- land can follow the diagonal bridge all the way to another island ----
+  {
+    S().units=[];
+    const dest=G('plotCenter')(G('MAP_PLOTS')[2]), walker=B.mkUnit('rifle','p',PC.x,PC.y);
+    walker.order={x:dest.x,y:dest.y}; S().units.push(walker);
+    for(let i=0;i<2000;i++) G('updateUnit')(walker,.05);
+    const left=Math.hypot(walker.x-dest.x,walker.y-dest.y);
+    assert(left<100&&B.walkableAt(walker.x,walker.y),`a rifle crosses the bridge to the NE island (${Math.round(left)}px left)`);
+  }
   // ---- NO COLLISION: units never block each other, they just drift apart ----
   S().units=[];
   const m1=B.mkUnit('rifle','p',PC.x,PC.y), m2=B.mkUnit('rifle','p',PC.x+4,PC.y);

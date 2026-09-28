@@ -83,6 +83,11 @@
 - [x] **Zoom out to the whole map** — the zoom-out limit is `MINZ = min(W/WORLD.w, H/(WORLD.h·0.72))` (recomputed on resize) instead of a fixed 0.5×; fully zoomed out the camera locks to the map centre (`clampCam()`).
 - [x] **Enemy bases show their buildings + troops only** — grid pads, dashed outlines and name labels are hidden (⚙ ENEMY BASE GRIDS brings them back).
 
+### Land routing (v8.6)
+- [x] **Bridge water-rescue fix** — `WALK` samples 40px cell centres, so valid points near diagonal bridge edges can be in cells labelled water. The rescue check now confirms the exact point whenever land is nearby; smoke verifies a soldier is not bounced from the bridge.
+- [x] **Land armies ignore water-only capture rigs** — ground target selection skips offshore RIGs; ships still reach and capture them. When there are no land points left, ground units move on to enemy buildings instead.
+- [x] **End-to-end route regression** — a rifle follows the bridge from the player island to the NE island; `node smoke.js` passes 247 assertions.
+
 ### Build flow, boss & movement (v8.5)
 - [x] **Keep placing** (v8.5) — after you drop a building the next one from the backpack stack is handed to the cursor (`keepPlacing` / `refillHand` / `placeLeft`); it stops when the stack is empty.
 - [x] **SHIFT + drag = place a run** (v8.5) — press and drag: `placeSpots()` previews every footprint in the rectangle (green / red, lifted to its stack level) and `placeRun()` places them on release, capped by what you own.

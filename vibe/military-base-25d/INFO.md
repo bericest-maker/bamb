@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-27 | **v8.6: LAND ROUTING FIX.** 🛣️ **BRIDGES ARE REAL LAND** — `WALK` samples 40px cell centres, so points on diagonal bridge/coast edges can be land even when their cell is marked water; water rescue now confirms the exact point near land before teleporting a soldier. ⚓ **LAND TROOPS LEAVE THE OFFSHORE RIGS TO THE NAVY** — ground target selection skips water-only capture points, while ships still capture them. Regression tests verify a unit stays on a bridge cell mislabelled as water, a rifle reaches the NE island over the bridge, and land AI never targets a RIG. 247 smoke assertions. |
 | 2026-09-27 | **v8.5: BUILD FLOW UPDATE.** 🧱 **KEEP PLACING** — drop a building and the next one from your backpack stack is handed straight to the cursor, so a whole row goes down without reopening the backpack; when the stack empties it stops and says so (`keepPlacing/refillHand/placeLeft`). 🧱 **SHIFT + DRAG = PLACE A RUN** — hold SHIFT, press and drag out an area: every footprint-sized spot in the rectangle is previewed live (green where it fits, red where it is taken, lifted to the stack level, with a `N × name — let go to place` label) and placed on release (`placeSpots` + `placeRun`); it stops at the last one you own, and it spreads them side by side instead of stacking them. 🧱 **THE BACKPACK STAYS OPEN** while you place — click the next card to switch item. 📋 **AUTO-SORT**: the SHOP (rarity, then cheapest), the BACKPACK (crates first, then best rarity) and both ADMIN lists now run best-rarity-at-the-top automatically (`rarRank` + `bestFirst`). 🐍 **THE WORM**: it surfaces in the MIDDLE (the CITY island) instead of a random bot base, and it FIGHTS — every 4.5s it SLAMS every enemy unit within 210px for 45 and crushes enemy buildings within 260px for 130, with a shockwave and a SLAM! float (`BOSS_SLAM` + `bossSlam`). 🐍 **ADMIN → CUSTOM BOSS HP**: type `5000` / `250K` / `1.5M` and press SET HP — it sets the live worm and every boss that spawns later; empty + SET HP restores the default (`Admin.bossHp`). 🐜 **NO MORE UNIT COLLISION**: troops never block each other now — they only drift apart a little when they end up on top of each other (the don’t-touch nudge), soldiers and ships alike, and the nudge is far too weak to stall a march (it used to shove at ~100px/s and froze columns on bridges). 🐜 **NO MORE DROWNING**: a land unit that ends up in the water is put straight back on the nearest shore (`nearestLand`). 243 smoke assertions. |
 | 2026-09-27 | **v8.4: STACKS & CRATES.** 🧱 **BUILDINGS STACK — UNLIMITED HEIGHT.** Point at a building you already own and the next one lands ON TOP of it instead of being refused: `stackTopAt()` works out how high the pile under the footprint is, `fitsAt()/findFreeSpot()/ghostSlot()/placeBuilding()/placeBuildingRaw()` all take that `lvl`, and `b.lvl` is stored on the building. Level 0 is the ground, every floor above it is lifted `STACK_UP` (24px) and drawn on top of the one below (y-sort, then level); the ghost shows dashed drop-legs and a LEVEL n label so you can see which floor you are about to build. `buildingAt()` is lift aware, so clicking a stack picks the crate you actually aimed at, and every floor works on its own (4 barracks 4 high = 4 recruits). Bots and mass fills still spread out first: `findFreeSpot()` only climbs a pile when there is no free ground left. Old saves whose footprints now overlap are stacked instead of being returned to the backpack. Admin: `Admin.pile(type,n)` builds a tower n high. 📦 **THE BACKPACK STACKS.** One card per item with an ×N badge: `giveItem/takeItem/invCount/invFind` merge and split stacks, `mergeInventory()` folds old per-item saves, and building cards place one at a time. 🎁 **BULK CRATE OPENING.** Clicking a crate stack asks "open how many?" (1 / 5 / 10 / ALL — `askOpenCount()`), then `openCrateModal(ct,n)` rolls them all and lists every win, rarest first, with ×counts and rarity colours. 💎 **THE ROBUX SHOP WORKS** — it used to call a `renderRobux()` that did not exist, so the tab threw; it now sells Standard / Elite / Premium crates for cash (1 or 10 at a time). 217 smoke assertions. |
 | 2026-09-27 | **v8.3: HARBOUR UPDATE.** ⚓ **YOUR WATER YARD** — a buildable 832×224px strip of open sea BEHIND your island (`WATER_YARD`, drawn as a blue grid + ⚓ label, on the minimap too). Every dock (7 naval docks), the Offshore Oil Rig and the Naval Beacon are `BUILD[].water` and can ONLY be placed there; land buildings are refused with a reason. Ships now launch straight into it. Placement is zone aware throughout: `plotOrigin/plotToWorld/worldToPlot/plotRectPath/fitsAt/findFreeSpot/ghostSlot/placeBuilding` take a `zone` (‘land’ or ‘water’) and `b.zone` is stored on the building. ⚓ **4 WATER CAPTURE POINTS** — RIG NW/NE/SE/SW at r 2100 in the ocean gaps; only ships can reach them, a held rig garrisons gunboats (`spawnGarrison`), and each one you hold gives +10% production like an outpost. They are drawn as offshore platforms on stilts. ⚓ **BUILD GRID TWICE AS FINE**: SLOT 16→8, PLOT 104×72 cells (island unchanged at 832×576px), GRID_K 8, and save migration now converts from ANY older cell size (`k = oldGrid/SLOT`). ⚓ **BUILDINGS 3× SMALLER**: `BLD_K` 1.3→1.3/3 — a Solar panel is 24px wide instead of 64px, so several times more of them fit on an island. ⚓ **HOVER A TROOP FOR ITS STATS**: `unitAt()` (spatial hash) + `unitTipHTML()` show hp, damage, DPS, range, speed, troop-cap size, armour, detect, splash, aura, bounty, damage modifiers and the current order; `hoverUnit()` re-tests ~12×/s and rebuilds the card ~2.5×/s so it stays free with 1000 units. ⚓ **HOLD Q TO PAUSE**: `holdQ` zeroes the game clock while the camera, hover cards and panels keep running, with a ⏸ PAUSED badge on screen. |
@@ -60,13 +61,13 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 163.9 KB | 2065 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 39.8 KB | 470 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 165.4 KB | 2073 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 40.5 KB | 475 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 69.9 KB | 692 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 70.5 KB | 693 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
-| `military-base-25d/smoke.js` | 52.3 KB | 806 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
+| `military-base-25d/smoke.js` | 54.3 KB | 838 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
 | `military-base-25d/style.css` | 19.1 KB | 293 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
 | `military-base-25d/test-stubs.js` | 3.3 KB | 78 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
@@ -128,11 +129,11 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/ui/07-rebirth.js` | 1.6 KB | 32 | rebirth: power threshold, reset, permanent income bonus |
 | `military-base-25d/js/ui/08-tutorial.js` | 1.9 KB | 29 | tutorial |
 | `military-base-25d/js/ui/09-input.js` | 8.2 KB | 191 | input: minimap, keyboard, mouse |
-| `military-base-25d/js/ui/10-patch-notes.js` | 9.8 KB | 83 | the 📜 PATCHES panel (what changed in each build) |
+| `military-base-25d/js/ui/10-patch-notes.js` | 10.4 KB | 88 | the 📜 PATCHES panel (what changed in each build) |
 | `military-base-25d/js/units/01-spawn.js` | 1.2 KB | 32 | unit factory (mkUnit) + capture-point garrisons |
 | `military-base-25d/js/units/02-movement.js` | 3.8 KB | 85 | movement: A* (cached per cell), the city flow field, straight-line steering |
 | `military-base-25d/js/units/03-spatial-grid.js` | 3.4 KB | 55 | spatial hash + batched removals (v5 perf) and shared bot threat scans |
-| `military-base-25d/js/units/04-ai.js` | 13.1 KB | 309 | unit AI: targets, stealth detection, target acquisition, combat, separation |
+| `military-base-25d/js/units/04-ai.js` | 13.5 KB | 313 | unit AI: targets, stealth detection, target acquisition, combat, separation |
 | `military-base-25d/js/units/05-combat.js` | 3.3 KB | 74 | damage (class modifiers + armor), kills, building damage, kill payouts |
 | `military-base-25d/ref/buildings-original.txt` | 29.2 KB | 155 | original game's buildings (raw upload) |
 | `military-base-25d/ref/units-original.txt` | 21.4 KB | 117 | original game's units (raw upload) |
@@ -197,7 +198,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 39 | `js/units/01-spawn.js` | 31 | unit factory (mkUnit) + capture-point garrisons | 3 |
 | 40 | `js/units/02-movement.js` | 84 | movement: A* (cached per cell), the city flow field, straight-line steering | 6 |
 | 41 | `js/units/03-spatial-grid.js` | 54 | spatial hash + batched removals (v5 perf) and shared bot threat scans | 8 |
-| 42 | `js/units/04-ai.js` | 308 | unit AI: targets, stealth detection, target acquisition, combat, separation | 11 |
+| 42 | `js/units/04-ai.js` | 312 | unit AI: targets, stealth detection, target acquisition, combat, separation | 11 |
 | 43 | `js/units/05-combat.js` | 73 | damage (class modifiers + armor), kills, building damage, kill payouts | 5 |
 | 44 | `js/rewards/04-crates.js` | 129 | crate rolls, pity (80), BACKPACK STACKS + bulk opening (v8.4) | 10 |
 | 45 | `js/rewards/05-rewards-ui.js` | 28 | the REWARDS panel (claim buttons) | 1 |
@@ -217,7 +218,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 59 | `js/ui/07-rebirth.js` | 31 | rebirth: power threshold, reset, permanent income bonus | 2 |
 | 60 | `js/ui/08-tutorial.js` | 28 | tutorial | 1 |
 | 61 | `js/ui/09-input.js` | 190 | input: minimap, keyboard, mouse | 5 |
-| 62 | `js/ui/10-patch-notes.js` | 82 | the 📜 PATCHES panel (what changed in each build) | 1 |
+| 62 | `js/ui/10-patch-notes.js` | 87 | the 📜 PATCHES panel (what changed in each build) | 1 |
 | 63 | `js/admin/01-admin.js` | 305 | admin panel (window.Admin) | 0 |
 | 64 | `js/core/07-loop.js` | 123 | main loop: frame + update + HUD, wheel zoom, test hook | 2 |
 | 65 | `js/core/08-init.js` | 69 | init: load save → migrate → start | 1 |
@@ -236,9 +237,9 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/textures/` | 5 | 977 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
 | `js/systems/` | 4 | 196 | cross-cutting game systems: power, economy, waves/boss, capture points |
 | `js/buildings/` | 5 | 331 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
-| `js/units/` | 5 | 550 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
+| `js/units/` | 5 | 554 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
 | `js/render/` | 5 | 572 | drawing: the frame, unit/boss/flag sprites, the ground (islands, lanes, trees…) and the minimap |
-| `js/ui/` | 10 | 684 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
+| `js/ui/` | 10 | 689 | panels & input: core, shop, tooltips, backpack, leaderboard, settings, rebirth, tutorial, input, patch notes |
 | `js/admin/` | 1 | 305 | the F1 admin/debug drawer |
 
 ## 🧮 Core constants
@@ -937,7 +938,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 |---|---|---|
 | 3 | `bFaction(b)` | building → faction index |
 | 11 | `aggroReach(d,tg)` | how far a unit looks for a fight: holders get range+AGGRO.hold, marching units min(range+push, AGGRO.march) |
-| 15 | `targetFor(u)` | THE unit brain: bots march CITY / hold base; player: order → ATTACK flag → nearest enemy point → nearest enemy building → plot centre |
+| 15 | `targetFor(u)` | THE unit brain: ground troops skip water-only RIG points; bots march CITY / hold base; player orders and land-point selection → enemy buildings → plot centre |
 | 124 | `refreshDetectors(dt)` | 4×/s rebuild each faction's sensor list (detect units + Radar Stations) + stealth reveal flags |
 | 140 | `factionSees(f,b)` | is a point inside any sensor of faction f |
 | 145 | `canSee(a,b)` | stealth visible if fighting, <70px, own detect, or any friendly sensor/radar |
@@ -1113,7 +1114,7 @@ Capture = strict faction plurality inside the pad (6s cooldown). Income: CITY +2
 
 | Line | Function | What it does |
 |---|---|---|
-| 67 | `renderPatchNotes()` | the 📜 PATCHES panel |
+| 72 | `renderPatchNotes()` | the 📜 PATCHES panel |
 
 ### `js/core/07-loop.js` — main loop: frame + update + HUD, wheel zoom, test hook
 
@@ -1787,7 +1788,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 256 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
 | 279 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
 
-## ✔️ Smoke test assertions (233)
+## ✔️ Smoke test assertions (237)
 
 | Line | Group | Asserts |
 |---|---|---|
@@ -2020,10 +2021,14 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 768 | admin custom boss HP | clearing the box puts the boss HP back to default |
 | 772 | a land unit that ends up in the water is put back on the shore | the test soldier really is in open water |
 | 774 | a land unit that ends up in the water is put back on the shore | it is teleported back onto the nearest ground (…,…) |
-| 783 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
-| 784 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
-| 795 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
-| 797 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
+| 783 | the bridge is land even when its 40px grid cell was sampled as water | the diagonal bridge has valid land points inside some cells sampled as water |
+| 787 | the bridge is land even when its 40px grid cell was sampled as water | a land unit stays on the bridge instead of being bounced to shore |
+| 795 | land armies leave water-only RIG captures to the navy | a land soldier does not choose an offshore RIG (…) |
+| 805 | land can follow the diagonal bridge all the way to another island | a rifle crosses the bridge to the NE island (…px left) |
+| 815 | NO COLLISION: units never block each other, they just drift apart | two troops on the same spot still march (…px left to go) |
+| 816 | NO COLLISION: units never block each other, they just drift apart | they keep a little distance instead of overlapping (…px apart) |
+| 827 | nobody is left swimming: 25s of war with waves, bots and a crowded base | 25s of war (… troops, wave …): nobody is left swimming (…) |
+| 829 | nobody is left swimming: 25s of war with waves, bots and a crowded base | no ship is stranded on land either (…) |
 
 ## 🗒️ NOTES.md outline
 
@@ -2039,6 +2044,7 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
   - Maps
   - Performance & quality of life (v8)
   - Harbour & inspection (v8.3)
+  - Land routing (v8.6)
   - Build flow, boss & movement (v8.5)
   - Stacking & crates (v8.4)
 - 📁 FOLDER LAYOUT (v7)
