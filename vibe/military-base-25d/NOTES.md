@@ -18,6 +18,10 @@
 - [x] Leaderboard stub — v4 📊 (8 factions by power + flags held + v7 structure/army split)
 - [x] Crate UI for the full rarity ladder (new colors for Limited / Unique / Rebirth)
 - [x] **📜 PATCH NOTES panel** (v7) — every build's changes, readable in game (left rail)
+- [ ] **EXPAND rail** (per `uploads/Screenshot 2026-09-27 173841.png`, the original-UI reference) — left rail shows BACKPACK / REWARDS / ROBUX SHOP / SETTINGS + EXPAND; EXPAND reveals the rest (REBIRTH, TROPHIES, RANKS, PATCHES…)
+- [ ] **Quest panels** (same screenshot) — right-side DAILY QUESTS / WEEKLY QUESTS rows + QUEST TOKENS counter (design our own quests; tokens = new currency?)
+- [ ] **Weather icon** (same screenshot) — sun/sandstorm indicator on the right edge (ties to a weather system)
+- [ ] **Cash "+" button** (same screenshot) — shortcut from the cash bar to the ROBUX SHOP
 
 ### Game (mechanics)
 - [x] **Damage modifiers (matchups)** (v4) — damage multiplied per TARGET class (e.g. Heavy Tank: armored ×1.2, light ×0.7, air ×0.5, stealth ✝; Anti-Air Vehicle: air ×1.5, ground ✝). Replaces/augments current flat armor.
@@ -51,7 +55,7 @@
 - [x] **Naval line** (v7) — **Gunboat, Frigate, Battleship, Carrier, Submarine, Zumwalt, Speedboat** (+ the UNIQUE **Centurion**). Ships sail the water lanes; Submarine + Zumwalt are STEALTH.
 
 ### Textures (sprites)
-- [~] **Model-match sprite pass** (v8.11 batch 1: Barracks, Solar Array, Oil Drill, Wind Turbine — redrawn from `uploads/Buildings_01_of_04.txt` parts/colors; review in `preview.html`; rest of the 100 to follow batch by batch)
+- [~] **Model-match sprite pass** (batch 1 v8.11: Barracks, Solar Array, Oil Drill, Wind Turbine; batch 2 v8.12: all 12 LIMITED — B-2 Hangar, Secret Weapons Facility, Airship Docks, ICBM Silo, Bomber Base, Pentagon, F-35 Hangar, Raptor Hangar, Monitoring Center, Sentinel Training Center, Swarm Hive, Fusion Reactor; review in `preview.html`; rest of the 100 to follow batch by batch)
 - [x] New 2.5D flat sprites for every new unit & building (v7: a **ship template** for the navy, **dock** + **silo** building styles, Centurion walker, ICBM truck)
 - [x] Map dressing from `ref-map-original.png`: trees, flowers, floating water crystals, city arena ring
 - [x] Rarity colors for the 3 new tiers
@@ -167,7 +171,7 @@
 - Admin drawer (F1): cash, buildings, units, boss, waves, points, speed/pause, god mode, bot presets, **EMPTY ALL SAFES / MUSTER GARRISON / STAND DOWN / RAID ALERT**
 - HUD: wave (+ 🛡 garrison alert) + boss timers, minimap (with shipping lanes), toasts, tutorial, **🏦 stored cash / capacity row**
 - 📜 PATCH NOTES panel (left rail) — what changed in every build
-- Gaps vs original: no DECORATION tab label (we call it DECOR)
+- Gaps vs original (see `uploads/Screenshot 2026-09-27 173841.png`, ignore the top-left Roblox system icons): no DECORATION tab label (we call it DECOR); rail shows all 8 buttons instead of 4 + EXPAND; no DAILY/WEEKLY QUESTS panel + tokens; no weather icon; no cash "+" shortcut
 
 ## 🎮 Game (mechanics — what the original does that we don't)
 1. **Damage modifiers** — each unit has per-target-class multipliers (`DamageModifiers` in the data). `0` = cannot damage that class (e.g. most heavies can't hurt Stealth; Anti-Air can't hurt ground). This is the real counter system — far richer than flat armor.

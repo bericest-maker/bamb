@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-28 | **v8.12: MODEL-MATCH SPRITES (batch 2: ALL 12 LIMITED).** B-2 Stealth Hangar (← Stealth Hangar angular dark bay), Secret Weapons Facility (giant pulsing cyan window), Airship Docks (mooring mast + yellow neon rigging), ICBM Silo (← Nuclear Silo: olive base, grey tube, red-tipped missile + blinking beacon), Bomber Base (← Strategic Command Center: rose walls, window strip, spinning radar), Pentagon (sand 5-sided block, pillars, dark blue roof), F-35 Hangar (← Joint Strike Facility: dark bay, glass front, yellow trim), Raptor Hangar (← Wing Command: light grey, glass band, beacon mast), Monitoring Center (dark tower, pulsing blue core, dish), Sentinel Training Center (long blue-grey block), Swarm Hive (← Mechanical Hive: hazard base, neon strip, hex cells, radar nub) and Fusion Reactor (olive stack + floating blue orb with orbiting cubes). Same canvas sizes → footprints untouched; flags + signboards kept. Also: the UI screenshot is now the documented original-UI reference (EXPAND rail, quest panels, weather icon, cash + button → new UI goals). Smoke passes. |
 | 2026-09-28 | **v8.11: MODEL-MATCH SPRITES (batch 1).** Barracks, Solar Array, Oil Drill and Wind Turbine redrawn from the original part dumps (`uploads/Buildings_01_of_04.txt`): real proportions (olive #2e3321 body, grey #4f4f4f metal, window blue #6e99c9, navy #264261 panels, dark #1c2936 slabs). Solar gains a sheen sweep + blinking status light, Oil becomes a pumpjack rocking on its top joint, Barracks gets a faction-tinted flag instead of the fixed blue one. Same canvas sizes → footprints, saves and balance untouched. New `preview.html` sprite-sheet gallery (every BUILD sprite, animated, tab filter) for reviewing redraws. Smoke passes. |
 | 2026-09-28 | **DOCS: TRAIT GOALS + BUILDING MODELS.** No gameplay change. Saved the user's 80-trait paste + decompiled `TraitsConfig` as `ref/traits-original.txt` and added a roadmap spec: NOTES.md → new GOALS subsection `Traits & reroll` (pools per building model, rarity weights, 10% double trait, stat mapping, collector gap, reroll design, UI, save) + a `🧬 Traits` index (Production/Unit/Logistics/MissileTurret pools, field→model mapping table, family ladders). Pulled the user's `uploads/Buildings_01..04_of_04.txt` (172 original buildings as 3D-model dumps, 1884 parts) and indexed them in NOTES.md → `🏗️ Models`: bounds = canonical footprint (median 5.5×5.5 studs), 38/100 exact name matches with our roster, Logistics 3-tier + Missile Turret footprints for the trait pools, Tiny/Titanic scale the bounds. Missing from the trait paste: MissileTurret trait defs, reroll costs/rules, collector stats. |
 | 2026-09-27 | **v8.10: BOSS SPAWN CENTER.** Bosses now spawn at the exact world/map centre (`MAP_C`, the CITY center) instead of a random offset within the city. This applies to the automatic timer and ADMIN summon; the worm still attacks after surfacing. Smoke verifies the default and custom-HP spawns are exact. |
@@ -67,10 +68,10 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 169.9 KB | 2096 | THIS file — what the game IS (generated, do not hand-edit) |
-| `military-base-25d/NOTES.md` | 50.4 KB | 566 | goals/roadmap (what to do NEXT) + original-game index |
+| `military-base-25d/INFO.md` | 170.7 KB | 2098 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/NOTES.md` | 51.4 KB | 570 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 75.0 KB | 707 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 76.2 KB | 708 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/preview.html` | 22.2 KB | 452 | sprite-sheet gallery: every BUILD sprite live from SPR, animated, tab filter (no game boot) — used to review model-match redraws |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
@@ -126,7 +127,7 @@ Workspace root = `vibe/`.
 | `military-base-25d/js/textures/02-sprites-units.js` | 17.2 KB | 234 | sprites for the new units (built from 4 templates) |
 | `military-base-25d/js/textures/03-sprites-naval.js` | 6.5 KB | 115 | the NAVAL line: ship sprite template + the 7 ships |
 | `military-base-25d/js/textures/04-sprites-new-units.js` | 4.6 KB | 64 | sprites for the expansion units (heavies, specialists, Centurion) |
-| `military-base-25d/js/textures/05-sprites-buildings.js` | 25.9 KB | 362 | sprites for new production/special/decor buildings + generated unit buildings |
+| `military-base-25d/js/textures/05-sprites-buildings.js` | 36.3 KB | 516 | sprites for new production/special/decor buildings + generated unit buildings |
 | `military-base-25d/js/ui/01-ui-core.js` | 2.3 KB | 54 | toasts + panel show/hide + the top-bar / rail / HUD buttons |
 | `military-base-25d/js/ui/02-shop.js` | 5.0 KB | 102 | the SHOP: tabs (production / units / special / decor) + class sub-tabs + the CRATE (robux) shop |
 | `military-base-25d/js/ui/03-tooltips.js` | 4.7 KB | 73 | hover stat tooltips (cost, size, damage modifiers, turrets…) |
@@ -150,7 +151,7 @@ Workspace root = `vibe/`.
 | `uploads/Buildings_02_of_04.txt` | 70.1 KB | 822 | original game building 3D-model dump, part 2/4 (50 buildings) |
 | `uploads/Buildings_03_of_04.txt` | 37.3 KB | 521 | original game building 3D-model dump, part 3/4 (50 buildings) |
 | `uploads/Buildings_04_of_04.txt` | 18.6 KB | 263 | original game building 3D-model dump, part 4/4 (22 buildings) |
-| `uploads/Screenshot 2026-09-27 173841.png` | 151.9 KB |  | user upload — reference screenshot of the ORIGINAL game UI (mostly blank capture: shop/home pills, left rail, ATTACK button, quests panel) |
+| `uploads/Screenshot 2026-09-27 173841.png` | 151.9 KB |  | user upload — ORIGINAL game UI reference: SHOP/HOME pills, left rail (BACKPACK/REWARDS/ROBUX SHOP/SETTINGS + EXPAND reveals more buttons), DAILY/WEEKLY QUESTS panel + tokens, weather sun, ATTACK + power/cash bars (ignore top-left Roblox system icons) |
 | `uploads/Vehicle Depot Rarity=Legendary,Buil.txt` | 21.4 KB | 117 | user upload — copy of ref/units-original.txt |
 | `uploads/Vehicle Depot Rarity=Legendary,Buil2.txt` | 29.2 KB | 155 | user upload — copy of ref/buildings-original.txt |
 | `uploads/image-1.png` | 183.9 KB |  | user upload — screenshot of an EARLIER build of this remake |
@@ -194,7 +195,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | 22 | `js/textures/02-sprites-units.js` | 233 | sprites for the new units (built from 4 templates) | 4 |
 | 23 | `js/textures/03-sprites-naval.js` | 114 | the NAVAL line: ship sprite template + the 7 ships | 1 |
 | 24 | `js/textures/04-sprites-new-units.js` | 63 | sprites for the expansion units (heavies, specialists, Centurion) | 0 |
-| 25 | `js/textures/05-sprites-buildings.js` | 361 | sprites for new production/special/decor buildings + generated unit buildings | 3 |
+| 25 | `js/textures/05-sprites-buildings.js` | 515 | sprites for new production/special/decor buildings + generated unit buildings | 3 |
 | 26 | `js/core/03-save.js` | 28 | save / load (localStorage) | 2 |
 | 27 | `js/core/04-audio.js` | 75 | audio: WebAudio sfx + music | 5 |
 | 28 | `js/core/05-camera.js` | 73 | canvas, camera, mouse, ground texture | 5 |
@@ -247,7 +248,7 @@ All files share ONE global scope (classic scripts): a `const` in `02-data-world.
 | `js/rewards/` | 5 | 199 | crate tables, redeem codes, the REWARDS list + its panel |
 | `js/achievements/` | 3 | 54 | the achievement list, the unlock loop and the 🏆 panel |
 | `js/maps/` | 2 | 271 | the island map (shapes, walk grid, A*, city flow field) and the SEA: water lanes, sea grid, ship navigation |
-| `js/textures/` | 5 | 1205 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
+| `js/textures/` | 5 | 1359 | the whole sprite library — base sprites, unit templates, ships, new units, buildings (+ footprint computation) |
 | `js/systems/` | 4 | 197 | cross-cutting game systems: power, economy, waves/boss, capture points |
 | `js/buildings/` | 5 | 331 | everything a building DOES: placement, production (money capacity + training + garrison), bots, turrets, support |
 | `js/units/` | 5 | 554 | units: factory + garrisons, movement (land + sea), spatial hash, AI/detection, combat & bounties |
@@ -1370,7 +1371,7 @@ Open with **F1**, **`** or 🛠 ADMIN.
 | js/textures/01-sprites.js:15 | const | `SPR_CACHE` | `new Map(), SPR_FPS=8, SPR_FRAMES=8;` |
 | js/textures/05-sprites-buildings.js:20 | const | `BSTYLE` | `{` |
 | js/textures/05-sprites-buildings.js:103 | const | `STYLE_W` | `{tent:[46,58],tower:[40,40],garage:[58,64],barracks:[58,66],bunker:[52,58],la…` |
-| js/textures/05-sprites-buildings.js:349 | const | `BLD_K` | `1.3/3;   // v8.3: buildings are drawn 3× smaller (their footprint follows the…` |
+| js/textures/05-sprites-buildings.js:503 | const | `BLD_K` | `1.3/3;   // v8.3: buildings are drawn 3× smaller (their footprint follows the…` |
 | js/core/04-audio.js:4 | let | `AC` | `null, noiseBuf=null;` |
 | js/core/04-audio.js:32 | const | `sfxLast` | `{};` |
 | js/core/04-audio.js:55 | let | `mStep` | `0, mNext=0;` |
@@ -1480,7 +1481,7 @@ function defaultSettings(){
 | `afbase` | 76×42 | building | js/textures/01-sprites.js:190 |
 | `mechi` | 84×52 | building | js/textures/01-sprites.js:203 |
 | `stealthlab` | 64×60 | building | js/textures/01-sprites.js:211 |
-| `zeppeldock` | 70×64 | building | js/textures/01-sprites.js:225 |
+| `zeppeldock` | 70×64 | building | js/textures/05-sprites-buildings.js:147 |
 | `goldenTurbine` | 50×56 | building | js/textures/01-sprites.js:232 |
 | `tree` | 38×48 | building | js/textures/01-sprites.js:241 |
 | `rock` | 34×22 | building | js/textures/01-sprites.js:246 |
@@ -1592,35 +1593,35 @@ function defaultSettings(){
 | `su47hangar` | 84×76 | building | generated: `hangar` template (08c) |
 | `officeracademy` | 58×52 | building | generated: `barracks` template (08c) |
 | `centurionsite` | 66×59 | building | generated: `lab` template (08c) |
-| `wind` | 40×64 | building | js/textures/05-sprites-buildings.js:124 |
-| `ironmine` | 46×36 | building | js/textures/05-sprites-buildings.js:133 |
-| `steel` | 64×48 | building | js/textures/05-sprites-buildings.js:140 |
-| `refinery` | 66×54 | building | js/textures/05-sprites-buildings.js:147 |
-| `powerplant` | 66×60 | building | js/textures/05-sprites-buildings.js:154 |
-| `skyscraper` | 50×96 | building | js/textures/05-sprites-buildings.js:160 |
-| `fusion` | 68×62 | building | js/textures/05-sprites-buildings.js:167 |
-| `pillbox` | 44×30 | building | js/textures/05-sprites-buildings.js:176 |
-| `radar` | 44×58 | building | js/textures/05-sprites-buildings.js:182 |
-| `aaturret` | 44×42 | building | js/textures/05-sprites-buildings.js:190 |
-| `hospital` | 64×44 | building | js/textures/05-sprites-buildings.js:198 |
-| `cannon` | 68×48 | building | js/textures/05-sprites-buildings.js:205 |
-| `bank` | 66×50 | building | js/textures/05-sprites-buildings.js:211 |
-| `monument` | 60×80 | building | js/textures/05-sprites-buildings.js:218 |
-| `flowers` | 36×18 | building | js/textures/05-sprites-buildings.js:225 |
-| `sandbags` | 44×18 | building | js/textures/05-sprites-buildings.js:230 |
-| `barrels` | 34×26 | building | js/textures/05-sprites-buildings.js:233 |
-| `lamp` | 20×52 | building | js/textures/05-sprites-buildings.js:238 |
-| `fountain` | 46×30 | building | js/textures/05-sprites-buildings.js:244 |
-| `statue` | 36×56 | building | js/textures/05-sprites-buildings.js:250 |
-| `advsolar` | 60×40 | building | js/textures/05-sprites-buildings.js:258 |
-| `hydro` | 60×46 | building | js/textures/05-sprites-buildings.js:266 |
-| `gastank` | 56×56 | building | js/textures/05-sprites-buildings.js:274 |
-| `alloy` | 64×52 | building | js/textures/05-sprites-buildings.js:283 |
-| `offshore` | 66×70 | building | js/textures/05-sprites-buildings.js:292 |
-| `navalbeacon` | 50×84 | building | js/textures/05-sprites-buildings.js:302 |
-| `particle` | 70×50 | building | js/textures/05-sprites-buildings.js:314 |
-| `campus` | 70×80 | building | js/textures/05-sprites-buildings.js:323 |
-| `automated` | 76×60 | building | js/textures/05-sprites-buildings.js:333 |
+| `fusion` | 68×62 | building | js/textures/05-sprites-buildings.js:268 |
+| `wind` | 40×64 | building | js/textures/05-sprites-buildings.js:285 |
+| `ironmine` | 46×36 | building | js/textures/05-sprites-buildings.js:294 |
+| `steel` | 64×48 | building | js/textures/05-sprites-buildings.js:301 |
+| `refinery` | 66×54 | building | js/textures/05-sprites-buildings.js:308 |
+| `powerplant` | 66×60 | building | js/textures/05-sprites-buildings.js:315 |
+| `skyscraper` | 50×96 | building | js/textures/05-sprites-buildings.js:321 |
+| `pillbox` | 44×30 | building | js/textures/05-sprites-buildings.js:330 |
+| `radar` | 44×58 | building | js/textures/05-sprites-buildings.js:336 |
+| `aaturret` | 44×42 | building | js/textures/05-sprites-buildings.js:344 |
+| `hospital` | 64×44 | building | js/textures/05-sprites-buildings.js:352 |
+| `cannon` | 68×48 | building | js/textures/05-sprites-buildings.js:359 |
+| `bank` | 66×50 | building | js/textures/05-sprites-buildings.js:365 |
+| `monument` | 60×80 | building | js/textures/05-sprites-buildings.js:372 |
+| `flowers` | 36×18 | building | js/textures/05-sprites-buildings.js:379 |
+| `sandbags` | 44×18 | building | js/textures/05-sprites-buildings.js:384 |
+| `barrels` | 34×26 | building | js/textures/05-sprites-buildings.js:387 |
+| `lamp` | 20×52 | building | js/textures/05-sprites-buildings.js:392 |
+| `fountain` | 46×30 | building | js/textures/05-sprites-buildings.js:398 |
+| `statue` | 36×56 | building | js/textures/05-sprites-buildings.js:404 |
+| `advsolar` | 60×40 | building | js/textures/05-sprites-buildings.js:412 |
+| `hydro` | 60×46 | building | js/textures/05-sprites-buildings.js:420 |
+| `gastank` | 56×56 | building | js/textures/05-sprites-buildings.js:428 |
+| `alloy` | 64×52 | building | js/textures/05-sprites-buildings.js:437 |
+| `offshore` | 66×70 | building | js/textures/05-sprites-buildings.js:446 |
+| `navalbeacon` | 50×84 | building | js/textures/05-sprites-buildings.js:456 |
+| `particle` | 70×50 | building | js/textures/05-sprites-buildings.js:468 |
+| `campus` | 70×80 | building | js/textures/05-sprites-buildings.js:477 |
+| `automated` | 76×60 | building | js/textures/05-sprites-buildings.js:487 |
 
 ## 🔊 Sound effects (12)
 

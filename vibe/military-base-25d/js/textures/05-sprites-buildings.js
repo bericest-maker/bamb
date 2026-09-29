@@ -118,6 +118,167 @@ for(const id of ['barracks','tankfac','heliport','afbase','mechi','zeppeldock','
   reg(id,base.w,base.h,(g,t,o)=>{ base.draw(g,t,o); signboard(g,-base.w*.42,0,unit,t,o); });
 }
 
+// ================= v8.12 MODEL MATCH — LIMITED buildings (top 12 by power) =================
+// Redrawn from uploads/Buildings_01..04_of_04.txt part dumps. Same W,H as the generated/hand
+// sprites they replace → footprints, saves and balance untouched. Flag/signboard kept.
+reg('b2hangar',84,76,(g,t,o)=>{   // ← Stealth Hangar 6.4×6.3: angular dark-blue hangar, black door
+  g.fillStyle='#1c2936'; g.fillRect(-40,-3,80,3);
+  g.fillStyle='#3a3a40'; g.beginPath(); g.moveTo(-38,0); g.lineTo(-30,-34); g.lineTo(30,-34); g.lineTo(38,0); g.closePath(); g.fill(); O(g); g.stroke();
+  g.fillStyle='#565662'; g.beginPath(); g.moveTo(-30,-34); g.lineTo(-24,-40); g.lineTo(24,-40); g.lineTo(30,-34); g.closePath(); g.fill(); O(g,1.2); g.stroke();
+  g.fillStyle='#10151c'; g.beginPath(); g.moveTo(-16,0); g.lineTo(-12,-24); g.lineTo(12,-24); g.lineTo(16,0); g.closePath(); g.fill();
+  g.strokeStyle='rgba(255,255,255,.14)'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(-24,-2); g.lineTo(-19,-30); g.moveTo(24,-2); g.lineTo(19,-30); g.stroke();
+  g.fillStyle='#6e99c9'; g.fillRect(-14,-26,3,3); g.fillRect(11,-26,3,3);
+  flagOn(g,-6.7,-35,o); signboard(g,33.6,-17.6,'b2',t,o);
+});
+reg('railgunlab',66,59,(g,t,o)=>{   // ← Secret Weapons Facility 12.7×7.1: dark lab, giant cyan window
+  g.fillStyle='#2e2e2e'; g.fillRect(-30,-4,60,4);
+  g.fillStyle='#404040'; g.fillRect(-29,-34,58,30); O(g); g.strokeRect(-29,-34,58,30);
+  g.fillStyle='#2e2e2e'; g.fillRect(-26,-31,52,25);
+  const gl=.7+.3*Math.sin(t*3);
+  g.fillStyle='#141a24'; g.fillRect(-25,-29,50,14);
+  g.fillStyle=`rgba(128,191,214,${gl})`; g.fillRect(-24,-28,48,12);
+  g.fillStyle='#141a24'; g.fillRect(-1,-28,2,12);
+  g.fillStyle='#1c2936'; g.fillRect(-10,-15,20,11); O(g,1); g.strokeRect(-10,-15,20,11);
+  g.fillStyle=`rgba(128,191,214,${gl})`; g.fillRect(-8,-11,16,2);
+  g.fillStyle='#2e2e2e'; g.fillRect(-20,-38,8,4); g.fillRect(-4,-38,8,4); g.fillRect(12,-38,8,4);
+  flagOn(g,-31,-38,o); signboard(g,19.8,0,'railgun',t,o);
+});
+reg('zeppeldock',70,64,(g,t,o)=>{   // ← Airship Docks: mooring mast + yellow neon rigging
+  g.fillStyle='#4a4f54'; g.fillRect(-30,-8,60,8); O(g,1.2); g.strokeRect(-30,-8,60,8);
+  g.fillStyle='#2b2f36'; g.fillRect(-30,-3,60,3);
+  g.fillStyle='#666b75'; g.fillRect(-26,-20,12,12); O(g,1.2); g.strokeRect(-26,-20,12,12);
+  g.fillStyle='#3b3d45'; g.beginPath(); g.moveTo(-4,-8); g.lineTo(4,-8); g.lineTo(2,-52); g.lineTo(-2,-52); g.closePath(); g.fill(); O(g,1.2); g.stroke();
+  const gl=.65+.35*Math.sin(t*2.5);
+  g.fillStyle=`rgba(255,232,158,${gl})`;
+  g.fillRect(-3.4,-22,6.8,2.4); g.fillRect(-3,-34,6,2.4); g.fillRect(-2.6,-46,5.2,2.4);
+  g.fillStyle='#4a4f54'; g.fillRect(2,-53,20,3); O(g,1); g.strokeRect(2,-53,20,3);
+  g.strokeStyle='#9aa4b1'; g.lineWidth=1.2; g.beginPath(); g.moveTo(22,-50); g.lineTo(22,-38); g.stroke();
+  g.fillStyle='#ffe89e'; g.beginPath(); g.arc(22,-36,2,0,pi2); g.fill();
+  flagOn(g,-33,-28,o); signboard(g,-29.4,0,'zeppelin',t,o);
+});
+reg('icbmsilo',54,49,(g,t,o)=>{   // ← Nuclear Silo 6.3×6.5: olive base, grey tube, red-tipped missile
+  g.fillStyle='#2e3321'; g.fillRect(-20,-8,40,8); O(g,1.2); g.strokeRect(-20,-8,40,8);
+  g.fillStyle='#4f4f4f'; g.fillRect(-12,-30,24,22); O(g,1.2); g.strokeRect(-12,-30,24,22);
+  g.fillStyle='#1c2936'; g.fillRect(-12,-12,24,4);
+  g.fillStyle='#d9c778'; g.fillRect(-12,-32,24,2);
+  g.fillStyle='#c9ccd1'; g.fillRect(4,-26,4,8);
+  g.fillStyle='#383838'; g.fillRect(-9,-34,4,2); g.fillRect(5,-34,4,2);
+  g.fillStyle='#636363'; g.fillRect(15,-32,7,24); O(g,1); g.strokeRect(15,-32,7,24);
+  g.fillStyle='#823d3d'; g.beginPath(); g.moveTo(15,-32); g.lineTo(22,-32); g.lineTo(18.5,-38); g.closePath(); g.fill();
+  g.fillStyle='#4a4a4a'; g.fillRect(13,-10,3,5); g.fillRect(21,-10,3,5);
+  if(Math.floor(t*2)%2){ g.fillStyle='#ff5a4e'; g.beginPath(); g.arc(18.5,-39,1.8,0,pi2); g.fill(); }
+  flagOn(g,-27,-44,o); signboard(g,-17,-30,'icbm',t,o);
+});
+reg('bomberbase',84,76,(g,t,o)=>{   // ← Strategic Command Center 13.1×14.8: rose walls, window strip, radar
+  g.fillStyle='#8f5c5c'; g.fillRect(-38,-20,76,20); O(g); g.strokeRect(-38,-20,76,20);
+  g.fillStyle='#1c2936'; g.fillRect(-8,-12,16,12);
+  g.fillStyle='#3d3d3d'; g.fillRect(-38,-26,76,7);
+  g.fillStyle='#141a24'; g.fillRect(-37,-34,74,8);
+  g.fillStyle='#6e99c9'; g.fillRect(-36,-33,72,6);
+  g.fillStyle='#141a24'; for(let i=0;i<6;i++) g.fillRect(-26+i*12,-33,1.5,6);
+  g.fillStyle='#7d7d7d'; g.fillRect(-38,-38,76,5); O(g,1.2); g.strokeRect(-38,-38,76,5);
+  g.fillStyle='#8a8a8a'; g.fillRect(-30,-41,60,3);
+  g.fillStyle='#4a4a4a'; g.fillRect(-30,-47,4,7);
+  g.save(); g.translate(-28,-47); g.rotate(t*1.5);
+  g.fillStyle='#9aa4b1'; g.fillRect(-1,-1,14,2); g.beginPath(); g.arc(0,0,3,0,pi2); g.fill();
+  g.restore();
+  flagOn(g,-6.7,-35,o); signboard(g,33.6,-17.6,'b52',t,o);
+});
+reg('pentagon',90,81,(g,t,o)=>{   // ← Pentagon: sand 5-sided block, pillars, dark blue roof
+  g.fillStyle='#b3a37f';
+  g.beginPath(); g.moveTo(-30,-30); g.lineTo(-40,-24); g.lineTo(-40,0); g.lineTo(-30,0); g.closePath(); g.fill();
+  g.beginPath(); g.moveTo(30,-30); g.lineTo(40,-24); g.lineTo(40,0); g.lineTo(30,0); g.closePath(); g.fill(); O(g,1.2); g.stroke();
+  g.fillStyle='#c9ba91'; g.fillRect(-30,-30,60,30); O(g); g.strokeRect(-30,-30,60,30);
+  g.fillStyle='#e6d1a3'; g.fillRect(-30,-27,60,5);
+  g.fillStyle='#b3a37f'; for(let i=0;i<10;i++) g.fillRect(-29+i*6,-27,1.5,5);
+  g.fillStyle='#141a24'; g.fillRect(-30,-20,60,7);
+  g.fillStyle='#6e99c9'; g.fillRect(-29,-19,58,5);
+  g.fillStyle='#594d42'; g.fillRect(-30,-6,60,6);
+  g.fillStyle='#3d332a'; g.fillRect(-24,-6,8,6); g.fillRect(-4,-6,8,6); g.fillRect(16,-6,8,6);
+  g.fillStyle='#212e3d'; g.fillRect(-32,-36,64,6); O(g,1.2); g.strokeRect(-32,-36,64,6);
+  g.fillStyle='#3d3d3d'; g.fillRect(-32,-37,64,1.5);
+  g.fillStyle='#10151c'; g.fillRect(-6,-35,12,3);
+  g.fillStyle='#6e99c9'; g.fillRect(-2,-35,4,3);
+  flagOn(g,-7.5,-34,o); signboard(g,34,0,'ac130',t,o);
+});
+reg('f35hangar',84,76,(g,t,o)=>{   // ← Joint Strike Facility 7.8³: dark bay, glass front, yellow trim
+  g.fillStyle='#404040'; g.fillRect(-36,-36,72,36); O(g); g.strokeRect(-36,-36,72,36);
+  g.fillStyle='#7d7d7d'; g.fillRect(-36,-36,6,36); g.fillRect(30,-36,6,36);
+  g.fillStyle='#54574d'; g.fillRect(-28,-31,56,31);
+  g.fillStyle='#141a24'; g.fillRect(-25,-29,50,22);
+  g.fillStyle='#6e99c9'; g.fillRect(-24,-28,48,20);
+  g.fillStyle='rgba(255,255,255,.16)'; g.beginPath(); g.moveTo(-24,-8); g.lineTo(-4,-28); g.lineTo(6,-28); g.lineTo(-14,-8); g.closePath(); g.fill();
+  g.fillStyle='#141a24'; g.fillRect(-1,-28,2,20);
+  g.fillStyle='#b38729'; g.fillRect(-30,-35,60,3); g.fillRect(-28,-3,56,3);
+  g.fillStyle='#c9ccd1'; g.fillRect(-8,-42,16,6); O(g,1); g.strokeRect(-8,-42,16,6);
+  g.fillStyle=`rgba(223,230,238,${.5+.3*Math.sin(t*3)})`; g.fillRect(-24,-32,48,1.5);
+  flagOn(g,-6.7,-35,o); signboard(g,33.6,-17.6,'f35',t,o);
+});
+reg('raptorhangar',84,76,(g,t,o)=>{   // ← Wing Command 8.7×7: light grey hangar, glass band, beacon mast
+  g.fillStyle='#b0b0b0'; g.fillRect(-36,-30,72,30); O(g); g.strokeRect(-36,-30,72,30);
+  g.fillStyle='#969696'; g.fillRect(-36,-25,72,5);
+  g.fillStyle='#141a24'; g.fillRect(-33,-19,66,9);
+  g.fillStyle='#6e99c9'; g.fillRect(-32,-18,64,7);
+  g.fillStyle='#141a24'; for(let i=0;i<5;i++) g.fillRect(-22+i*13,-18,1.5,7);
+  g.fillStyle='#2b2f36'; g.fillRect(-36,-4,72,4);
+  g.fillStyle='#705c54'; g.fillRect(-31,-12,8,8); O(g,1); g.strokeRect(-31,-12,8,8);
+  g.fillStyle='#4a4a4a'; g.fillRect(-1.5,-44,3,14);
+  g.fillStyle=(Math.floor(t*2)%2)?'#ff5a4e':'#5a2323'; g.beginPath(); g.arc(0,-45,2.4,0,pi2); g.fill();
+  flagOn(g,-6.7,-35,o); signboard(g,33.6,-17.6,'f22',t,o);
+});
+reg('monitoring',60,54,(g,t,o)=>{   // ← Monitoring Center 3×7.75: dark tower, pulsing blue core, dish
+  g.fillStyle='#4f5245'; g.fillRect(-20,-8,40,8); O(g,1.2); g.strokeRect(-20,-8,40,8);
+  g.fillStyle='#3b3b3b'; g.fillRect(-13,-44,26,36); O(g,1.2); g.strokeRect(-13,-44,26,36);
+  const gl=.6+.4*Math.sin(t*2.5);
+  g.fillStyle=`rgba(59,69,115,${gl})`; g.fillRect(-8,-41,16,26);
+  g.fillStyle='#3b4573'; g.fillRect(-8,-41,16,3);
+  g.fillStyle='#000'; g.fillRect(-13,-22,26,4);
+  g.fillStyle='#e8e8e8'; g.beginPath(); g.arc(16,-32,5,0,pi2); g.fill(); O(g,1); g.stroke();
+  g.fillStyle='#3b3b3b'; g.beginPath(); g.arc(16,-32,1.8,0,pi2); g.fill();
+  g.fillStyle='#7d8794'; g.fillRect(-1,-50,2,6);
+  g.fillStyle='#ff5a4e'; g.fillRect(-1.5,-52,3,3);
+  flagOn(g,18,-34,o); signboard(g,21.6,-34,'stealthheli',t,o);
+});
+reg('saboteurcamp',56,50,(g,t,o)=>{   // ← Sentinel Training Center 5.2×10.4: long blue-grey block, dark roof
+  g.fillStyle='#404a54'; g.fillRect(-26,-18,52,18); O(g); g.strokeRect(-26,-18,52,18);
+  g.fillStyle='#2b2f36'; g.fillRect(-28,-22,56,4); O(g,1); g.strokeRect(-28,-22,56,4);
+  g.fillStyle='#1c2936'; g.fillRect(-20,-10,6,10); g.fillRect(-3,-10,6,10); g.fillRect(14,-10,6,10);
+  g.fillStyle='#59636e'; g.fillRect(-24,-16,48,2);
+  g.fillStyle='#141a24'; g.fillRect(-26,-2,52,2);
+  flagOn(g,-26,-33,o); signboard(g,16.8,0,'saboteur',t,o);
+});
+reg('swarmhive',56,50,(g,t,o)=>{   // ← Mechanical Hive 9.3²: dark hive, hazard base, neon strip, hex cells
+  g.fillStyle='#a16e00'; g.fillRect(-26,-6,52,6); O(g,1.2); g.strokeRect(-26,-6,52,6);
+  g.fillStyle='#1c2936';
+  for(let i=0;i<4;i++){ g.beginPath(); g.moveTo(-24+i*13,-1); g.lineTo(-19+i*13,-6); g.lineTo(-14+i*13,-1); g.closePath(); g.fill(); }
+  g.fillStyle='#3d3d3d'; g.fillRect(-24,-32,48,26); O(g); g.strokeRect(-24,-32,48,26);
+  g.fillStyle='#595959'; g.fillRect(-24,-36,48,4);
+  g.fillStyle=`rgba(201,204,209,${.55+.35*Math.sin(t*3)})`; g.fillRect(-24,-28,48,3);
+  g.fillStyle='#6e99c9'; g.fillRect(-14,-24,5,12); g.fillRect(9,-24,5,12);
+  g.strokeStyle='rgba(255,255,255,.22)'; g.lineWidth=1;
+  for(const [hx,hy] of [[-4,-18],[4,-14],[-4,-10]]){
+    g.beginPath(); for(let i=0;i<6;i++){ const a=i*pi2/6+pi2/12; const px=hx+Math.cos(a)*4, py=hy+Math.sin(a)*4; i?g.lineTo(px,py):g.moveTo(px,py); } g.closePath(); g.stroke();
+  }
+  g.fillStyle='#1c2936'; g.fillRect(-22,-12,8,6);
+  g.fillStyle='#7d8794'; g.fillRect(17,-39,2,3);
+  g.fillStyle='#9ea1ab'; g.beginPath(); g.arc(18,-40,2.4,0,pi2); g.fill();
+  flagOn(g,-26,-33,o); signboard(g,16.8,0,'swarmdrone',t,o);
+});
+reg('fusion',68,62,(g,t)=>{   // ← Fusion Reactor 9.1×9.8: olive base, metal stack, floating blue orb
+  g.fillStyle='#1c2936'; g.fillRect(-30,-4,60,4); O(g,1.2); g.strokeRect(-30,-4,60,4);
+  g.fillStyle='#2e3321'; g.fillRect(-28,-16,56,12); O(g); g.strokeRect(-28,-16,56,12);
+  g.fillStyle='#3d3d3d'; g.fillRect(-24,-28,48,12); O(g,1.2); g.strokeRect(-24,-28,48,12);
+  g.fillStyle='#7d7d7d'; g.fillRect(-16,-36,32,8); O(g,1); g.strokeRect(-16,-36,32,8);
+  g.fillStyle='#6e99c9'; g.fillRect(-1,-30,2,14);
+  const oy=-46+Math.sin(t*2)*1.5, gl=.6+.4*Math.sin(t*4);
+  g.fillStyle=`rgba(110,153,201,${.25*gl})`; g.beginPath(); g.arc(0,oy,11,0,pi2); g.fill();
+  g.fillStyle='#6e99c9'; g.beginPath(); g.arc(0,oy,7,0,pi2); g.fill(); O(g,1.2); g.stroke();
+  g.fillStyle='#f7f7f7'; g.beginPath(); g.arc(0,oy,2.6,0,pi2); g.fill();
+  g.fillStyle='#f7f7f7';
+  for(let i=0;i<2;i++){ const a=t*2+i*Math.PI; g.fillRect(Math.cos(a)*11-1.5,oy+Math.sin(a)*4-1.5,3,3); }
+});
+
 // ----- PRODUCTION -----
 // v8.11 MODEL MATCH: palette/shapes from uploads/Buildings_01_of_04.txt (Wind Turbine: dark base
 // disc, tapered white tower #c9ccd1, grey nacelle, 3 light-grey blades #a6a6ab on the rotationJoint)
@@ -164,14 +325,7 @@ reg('skyscraper',50,96,(g,t)=>{
   g.fillStyle='#8792a6'; g.fillRect(-1,-98,2,12);
   g.fillStyle=(Math.sin(t*4)>0)?'#ef5350':'#6b2a28'; g.beginPath(); g.arc(0,-98,2,0,pi2); g.fill();
 });
-reg('fusion',68,62,(g,t)=>{
-  g.fillStyle='#5a646d'; g.fillRect(-30,-16,60,16); O(g); g.strokeRect(-30,-16,60,16);
-  g.fillStyle='#c7ccd4'; g.beginPath(); g.arc(0,-16,24,Math.PI,0); g.fill(); O(g); g.stroke();
-  const p=.5+.5*Math.sin(t*3);
-  g.fillStyle=`rgba(255,${180+p*60},80,${.6+p*.4})`; g.beginPath(); g.arc(0,-26,8+p*2,0,pi2); g.fill();
-  g.strokeStyle=`rgba(120,220,255,.8)`; g.lineWidth=1.5; g.beginPath(); g.ellipse(0,-26,16,5,t,0,pi2); g.stroke();
-  g.beginPath(); g.ellipse(0,-26,16,5,-t,0,pi2); g.stroke();
-});
+// (fusion lives in the v8.12 LIMITED overrides above — deleted here so it isn't registered twice)
 // ----- SPECIAL -----
 reg('pillbox',44,30,(g,t,o)=>{
   g.fillStyle='#8a8474'; g.beginPath(); g.ellipse(0,-8,19,10,0,Math.PI,0); g.lineTo(19,0); g.lineTo(-19,0); g.closePath(); g.fill(); O(g); g.stroke();
