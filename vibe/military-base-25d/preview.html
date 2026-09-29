@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Military Base — 2.5D Remake</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<!-- top bar -->
+<div id="topbar">
+  <button class="pill" id="btnShop">💰 SHOP</button>
+  <button class="pill" id="btnHome">🏠 HOME</button>
+</div>
+
+<!-- left rail -->
+<div id="rail">
+  <button class="rail-btn" data-panel="backpack"><span class="r-ico">🎒</span><span class="r-lbl">BACKPACK</span></button>
+  <button class="rail-btn" data-panel="rewards"><span class="r-ico">🎁</span><span class="r-lbl">REWARDS</span></button>
+  <button class="rail-btn" data-panel="achieve"><span class="r-ico">🏆</span><span class="r-lbl">TROPHIES</span><span class="badge" id="achBadge" hidden>0</span></button>
+  <button class="rail-btn" data-panel="leader"><span class="r-ico">📊</span><span class="r-lbl">RANKS</span></button>
+  <button class="rail-btn" data-panel="robux"><span class="r-ico">💎</span><span class="r-lbl">ROBUX SHOP</span></button>
+  <button class="rail-btn" data-panel="rebirth" id="railRebirth"><span class="r-ico">🔥</span><span class="r-lbl">REBIRTH</span><span class="badge" id="rbBadge" hidden>!</span></button>
+  <button class="rail-btn" data-panel="patch"><span class="r-ico">📜</span><span class="r-lbl">PATCHES</span></button>
+  <button class="rail-btn" data-panel="settings"><span class="r-ico">⚙️</span><span class="r-lbl">SETTINGS</span></button>
+</div>
+
+<!-- event timer (top right) -->
+<div id="timerbox">
+  <div class="t-line" id="tWave">⏱ WAVE 1:30</div>
+  <div class="t-line" id="tBoss">🐍 BOSS 3:00</div>
+</div>
+
+<!-- boss hp bar -->
+<div id="bossbar" hidden>
+  <div class="bb-label">🐍 MECHA WORM</div>
+  <div class="bb-track"><div class="bb-fill" id="bbFill"></div></div>
+</div>
+
+<!-- bottom-left HUD -->
+<div id="hud">
+  <button id="btnAttack">ATTACK</button>
+  <div class="statbar"><span class="s-ico">⭐</span><span id="stPower">0</span><span class="s-cap">PWR</span></div>
+  <div class="statbar"><span class="s-ico">🪖</span><span id="stUnits">0/10</span></div>
+  <div class="statbar cash"><span class="s-ico">💵</span><span id="stCash">$500</span><span class="s-cap" id="stIncome">$0/s</span></div>
+  <div class="statbar bank" id="stStoredRow" hidden><span class="s-ico">🏦</span><span id="stStored">$0</span><span class="s-cap" id="stCap">/ $0 cap</span></div>
+</div>
+
+<!-- control hint -->
+<div id="hint">WASD move • wheel zoom • drag = select • Ctrl+click = move units • RMB = cancel • F1 = ADMIN</div>
+
+<!-- minimap -->
+<div id="minibox"><canvas id="mini" width="150" height="150"></canvas></div>
+<button id="btnAdmin" title="Admin panel (F1 or `)">🛠 ADMIN</button>
+
+<!-- ============ ADMIN DRAWER ============ -->
+<div id="p-admin">
+  <div class="a-head"><span>🛠 ADMIN PANEL</span><button class="x" id="aClose">✕</button></div>
+  <div class="a-body">
+    <div class="a-sec">💵 CASH</div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.cash(10000)">+10K</button>
+      <button class="abtn" onclick="Admin.cash(100000)">+100K</button>
+      <button class="abtn" onclick="Admin.cash(1000000)">+1M</button>
+      <button class="abtn" onclick="Admin.cash(100000000)">+100M</button>
+    </div>
+    <div class="a-row">
+      <input id="aCash" class="ain" placeholder="custom (e.g. 2.5M)">
+      <button class="abtn" onclick="Admin.cashCustom()">GIVE</button>
+    </div>
+
+    <div class="a-sec">🔎 SPAWN SETTINGS</div>
+    <div class="a-row a-spawn">
+      <input id="aFind" class="ainput" type="search" placeholder="Search buildings & units…" autocomplete="off">
+    </div>
+    <div class="a-row a-spawn">
+      <label class="a-lbl">QTY</label>
+      <input id="aQty" class="ainput a-qty" type="number" min="1" max="1000" step="1" value="1">
+      <button class="abtn a-q" data-q="1">1</button><button class="abtn a-q" data-q="10">10</button><button class="abtn a-q" data-q="100">100</button><button class="abtn a-q" data-q="1000">1K</button>
+    </div>
+    <div class="a-row a-spawn">
+      <label class="a-lbl">FOR</label>
+      <select id="aOwner" class="aselect a-owner"></select>
+    </div>
+
+    <div class="a-sec">🏭 BUILDINGS <span class="a-note" id="aBuildsN"></span> <span class="a-note">BP = backpack ×QTY • PL = place on plot</span></div>
+    <div id="aBuilds" class="a-list"></div>
+
+    <div class="a-sec">🪖 SUMMON UNITS <span class="a-note" id="aUnitsN"></span> <span class="a-note">×QTY, ignores cap</span></div>
+    <div id="aUnits" class="a-list"></div>
+
+    <div class="a-sec">📦 CRATES (to backpack) <span class="a-note">stacks · open 1/5/10/ALL in the backpack</span></div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.crate('standard')">STANDARD</button>
+      <button class="abtn" onclick="Admin.crate('elite')">ELITE</button>
+      <button class="abtn" onclick="Admin.crate('premium')">PREMIUM</button>
+      <button class="abtn gold" onclick="Admin.crate('golden')">GOLDEN</button>
+    </div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.crate('premium',10)">PREMIUM ×10</button>
+      <button class="abtn" onclick="Admin.crate('golden',10)">GOLDEN ×10</button>
+    </div>
+
+    <div class="a-sec">🧱 STACKING (v8.4) <span class="a-note">unlimited height</span></div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.pile('solar',7)">PILE 7 SOLAR</button>
+      <button class="abtn" onclick="Admin.pile('barracks',5)">PILE 5 BARRACKS</button>
+      <button class="abtn" onclick="Admin.pile('industrial',4)">PILE 4 DRILLS</button>
+    </div>
+    <div class="a-row"><span class="a-note">Or hold any building in your backpack and click one you already own — it stacks on top. PILE stacks ×QTY of whatever you searched for at the top of the list.</span></div>
+
+    <div class="a-sec">🤖 BOT BASES (pick a preset — yours stays yours)</div>
+    <div id="aBots" class="a-bots"></div>
+
+    <div class="a-sec">🐍 BOSS <span class="a-note">surfaces in the CITY (the middle) and SLAMS everything nearby</span></div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.boss('summon')">SUMMON</button>
+      <button class="abtn" onclick="Admin.boss('kill')">KILL + REWARD</button>
+      <button class="abtn" onclick="Admin.boss('hp1')">SET 1 HP</button>
+      <button class="abtn" onclick="Admin.boss('more')">+10K HP</button>
+    </div>
+    <div class="a-row">
+      <input id="aBossHp" class="code-input a-hp" placeholder="CUSTOM HP (5000 / 250K / 2M)" autocomplete="off">
+      <button class="abtn" onclick="Admin.bossHp()">SET HP</button>
+    </div>
+    <div class="a-row"><span class="a-note">CUSTOM HP also applies to every worm that spawns later. Leave it empty and press SET HP to go back to the default.</span></div>
+
+    <div class="a-sec">⚠️ WAVES</div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.wave('now')">SPAWN NOW</button>
+      <button class="abtn" onclick="Admin.wave('horde')">HORDE x3</button>
+      <button class="abtn" onclick="Admin.wave('reset')">RESET TIMERS</button>
+    </div>
+
+    <div class="a-sec">🚩 POINTS</div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.points('take')">CAPTURE ALL</button>
+      <button class="abtn" onclick="Admin.points('lose')">RELEASE TO NEUTRAL</button>
+    </div>
+
+    <div class="a-sec">🔥 REBIRTH</div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.rebirth(1)">+1</button>
+      <button class="abtn" onclick="Admin.rebirth(10)">+10</button>
+      <button class="abtn" onclick="Admin.rebirth('force')">FORCE RESET NOW</button>
+    </div>
+
+    <div class="a-sec">⏱ TIME SCALE</div>
+    <div class="a-row" id="aSpeed">
+      <button class="abtn" data-sp="0">⏸</button>
+      <button class="abtn on" data-sp="1">1x</button>
+      <button class="abtn" data-sp="2">2x</button>
+      <button class="abtn" data-sp="5">5x</button>
+      <button class="abtn" data-sp="10">10x</button>
+    </div>
+
+    <div class="a-sec">⚙️ CHEATS</div>
+    <div class="a-row">
+      <button class="abtn tog" id="aGod">GOD MODE</button>
+      <button class="abtn tog" id="aFreeze">FREEZE WAVES/BOSS</button>
+      <button class="abtn tog" id="aNoResp">NO GARRISON RESPAWN</button>
+    </div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.claimRewards()">CLAIM ALL REWARDS</button>
+      <button class="abtn" onclick="Admin.giveAllBuildings()">GIVE ALL BUILDINGS</button>
+    </div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.collectAll()">EMPTY ALL SAFES</button>
+      <button class="abtn" onclick="Admin.garrison('train')">MUSTER GARRISON</button>
+      <button class="abtn" onclick="Admin.garrison('standdown')">STAND DOWN</button>
+      <button class="abtn" onclick="Admin.raid()">RAID ALERT</button>
+    </div>
+
+    <div class="a-sec">📍 TELEPORT CAMERA</div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.go('base')">BASE</button>
+      <button class="abtn" onclick="Admin.go('city')">CITY</button>
+      <button class="abtn" onclick="Admin.go('north')">N</button>
+      <button class="abtn" onclick="Admin.go('east')">E</button>
+      <button class="abtn" onclick="Admin.go('south')">S</button>
+      <button class="abtn" onclick="Admin.go('west')">W</button>
+      <button class="abtn" onclick="Admin.go('nw')">NW</button>
+      <button class="abtn" onclick="Admin.go('ne')">NE</button>
+      <button class="abtn" onclick="Admin.go('se')">SE</button>
+      <button class="abtn" onclick="Admin.go('sw')">SW</button>
+      <button class="abtn" onclick="Admin.go('boss')">BOSS</button>
+    </div>
+
+    <div class="a-sec">📊 DEBUG</div>
+    <div class="a-stats" id="aStats">—</div>
+
+    <div class="a-sec">💾 SAVE DATA</div>
+    <div class="a-row">
+      <button class="abtn" onclick="Admin.exportSave()">EXPORT</button>
+      <button class="abtn" onclick="Admin.importSave()">IMPORT &amp; RELOAD</button>
+      <button class="abtn danger" onclick="Admin.wipe()">WIPE ALL</button>
+    </div>
+    <textarea id="aSave" class="asave" placeholder="save JSON appears here (export) or paste here (import)"></textarea>
+  </div>
+</div>
+
+<!-- hover stat tooltip (shop cards) -->
+<div id="tip" hidden></div>
+
+<!-- toasts -->
+<div id="toasts"></div>
+
+<!-- ============ PANELS ============ -->
+<div class="panel" id="p-shop">
+  <div class="p-head"><span class="p-title">SHOP</span><button class="x" data-close>✕</button></div>
+  <div class="p-body">
+    <div class="tabs" id="shopTabs">
+      <button data-tab="production" class="on">PRODUCTION</button>
+      <button data-tab="units">UNITS</button>
+      <button data-tab="special">SPECIAL</button>
+      <button data-tab="decor">DECOR</button>
+    </div>
+    <div class="tabs sub" id="shopSubs" hidden></div>
+    <div class="grid" id="shopGrid"></div>
+  </div>
+</div>
+
+<div class="panel" id="p-backpack">
+  <div class="p-head"><span class="p-title">BACKPACK</span><button class="x" data-close>✕</button></div>
+  <div class="p-body">
+    <p class="p-note">Identical items STACK (the badge = how many you hold) and the best rarity sits at the top. Click a building to place one — the backpack STAYS OPEN so you can keep placing; <b>SHIFT + drag</b> lays down a whole row/block. Click a crate to open 1 / 5 / 10 / ALL.</p>
+    <div class="grid" id="bpGrid"></div>
+  </div>
+</div>
+
+<div class="panel" id="p-rewards">
+  <div class="p-head"><span class="p-title">REWARDS</span><button class="x" data-close>✕</button></div>
+  <div class="p-body"><div class="rw-list" id="rwList"></div></div>
+</div>
+
+<div class="panel" id="p-achieve">
+  <div class="p-head"><span class="p-title">🏆 ACHIEVEMENTS</span><button class="x" data-close>✕</button></div>
+  <div class="p-body"><p class="p-note" id="achSummary"></p><div class="rw-list" id="achList"></div></div>
+</div>
+
+<div class="panel" id="p-leader">
+  <div class="p-head"><span class="p-title">📊 LEADERBOARD</span><button class="x" data-close>✕</button></div>
+  <div class="p-body"><p class="p-note">All 8 factions ranked by military power (buildings + army). Points held shown as flags.</p><div class="lb-list" id="lbList"></div></div>
+</div>
+
+<div class="panel" id="p-robux">
+  <div class="p-head"><span class="p-title">ROBUX SHOP</span><button class="x" data-close>✕</button></div>
+  <div class="p-body">
+    <p class="p-note">This is a fan-made 2.5D remake — no real Robux. Crates cost in-game cash instead. Premium crates only contain LEGENDARY / MYTHIC buildings. Weekly featured item + pity after 80. Crates stack in your backpack — open them 1, 5, 10 or ALL at a time.</p>
+    <div class="grid" id="rxGrid"></div>
+  </div>
+</div>
+
+<div class="panel" id="p-settings">
+  <div class="p-head"><span class="p-title">SETTINGS</span><button class="x" data-close>✕</button></div>
+  <div class="p-body">
+    <div class="set-row"><span>MUSIC</span><button class="toggle on" id="setMusic">On</button></div>
+    <div class="set-row"><span>BUILDING SFX</span><button class="toggle on" id="setSfx">On</button></div>
+    <div class="set-row"><span>DAMAGE NUMBERS</span><button class="toggle on" id="setDmg">On</button></div>
+    <div class="set-row"><span>EFFECTS (FX)</span><button class="toggle blue on" id="setGfx">High</button></div>
+    <div class="set-row"><span>UNIT GRAPHICS</span><button class="toggle blue on" id="setUnits">Normal</button></div>
+    <div class="set-row"><span>BUILDING GRAPHICS</span><button class="toggle blue on" id="setBlds">Normal</button></div>
+    <div class="set-row"><span>TREES &amp; DECOR</span><button class="toggle on" id="setTrees">On</button></div>
+    <div class="set-row"><span>ENEMY BASE GRIDS</span><button class="toggle" id="setBotGrid">Off</button></div>
+    <div class="set-row"><span>INDESTRUCTIBLE BUILDINGS</span><button class="toggle on" id="setIndestruct">On</button></div>
+    <div class="set-row small"><span class="dim">LAGGING? Set EFFECTS → Low, both GRAPHICS rows → Blocks and TREES &amp; DECOR → Off.</span></div>
+    <div class="set-row"><span>CODE</span><input id="codeBox" class="code-input" placeholder="Insert Codes Here" autocomplete="off"></div>
+    <div class="set-row small"><span class="dim">Try: LOGI • WOWPREMIUM • SORRY • DUELS • 200K</span></div>
+    <div class="set-row"><span></span><button class="danger" id="btnWipe">HARD RESET</button></div>
+  </div>
+</div>
+
+<div class="panel" id="p-patch">
+  <div class="p-head"><span class="p-title">📜 PATCH NOTES</span><button class="x" data-close>✕</button></div>
+  <div class="p-body"><p class="p-note">Latest build first. Every change below is live in this version.</p><div class="rw-list" id="patchList"></div></div>
+</div>
+
+<div class="panel modal" id="p-rebirth">
+  <div class="p-head"><span class="p-title">🔥 REBIRTH</span><button class="x" data-close>✕</button></div>
+  <div class="p-body center">
+    <div id="rbInfo"></div>
+    <div class="btn-row">
+      <button class="pill big" id="btnRebirthYes">REBIRTH</button>
+      <button class="pill big ghost" data-close>NOT YET</button>
+    </div>
+  </div>
+</div>
+
+<div class="panel modal" id="p-openq">
+  <div class="p-head"><span class="p-title">OPEN CRATES</span><button class="x" data-close>&#10005;</button></div>
+  <div class="p-body center">
+    <div class="oq-name" id="oqName">CRATE</div>
+    <div class="oq-sub" id="oqSub">You have 1. Open how many?</div>
+    <div class="btn-row" id="oqBtns"></div>
+  </div>
+</div>
+
+<div class="panel modal crate" id="p-crate">
+  <div class="p-body center">
+    <div class="crate-stage" id="crateStage">
+      <canvas id="crateIcon" width="150" height="110"></canvas>
+    </div>
+    <div class="crate-name" id="crateName">OPENING...</div>
+    <div class="crate-rar" id="crateRar"></div>
+    <div class="crate-list" id="crateList"></div>
+    <button class="pill big" id="btnCrateDone">NICE</button>
+  </div>
+</div>
+
+<!-- tutorial -->
+<div id="tut">
+  <div class="tut-card">
+    <div class="tut-step" id="tutStep">1 / 4</div>
+    <div class="tut-text" id="tutText"></div>
+    <div class="btn-row">
+      <button class="pill big" id="tutNext">GOT IT</button>
+    </div>
+  </div>
+</div>
+
+<!-- game code: loaded in order; smoke.js + gen_info.py read this list -->
+<!-- ============ core: helpers + state ============ -->
+<script src="js/core/01-helpers.js"></script>
+<!-- ============ data ============ -->
+<script src="js/data/01-world.js"></script>
+<script src="js/data/02-factions.js"></script>
+<script src="js/core/02-state.js"></script>
+<script src="js/data/03-classes.js"></script>
+<script src="js/data/04-units.js"></script>
+<script src="js/data/05-unit-helpers.js"></script>
+<script src="js/data/06-buildings.js"></script>
+<script src="js/data/07-unit-buildings.js"></script>
+<script src="js/data/08-rarities.js"></script>
+<script src="js/data/09-units-naval.js"></script>
+<script src="js/data/10-units-expansion.js"></script>
+<script src="js/data/11-buildings-production.js"></script>
+<script src="js/data/12-buildings-expansion.js"></script>
+<!-- ============ rewards + achievements (data) ============ -->
+<script src="js/rewards/01-crates-data.js"></script>
+<script src="js/rewards/02-codes.js"></script>
+<script src="js/rewards/03-rewards-data.js"></script>
+<script src="js/achievements/01-achievements-data.js"></script>
+<!-- ============ maps ============ -->
+<script src="js/maps/01-map.js"></script>
+<script src="js/maps/02-sea.js"></script>
+<!-- ============ textures (sprites) ============ -->
+<script src="js/textures/01-sprites.js"></script>
+<script src="js/textures/02-sprites-units.js"></script>
+<script src="js/textures/03-sprites-naval.js"></script>
+<script src="js/textures/04-sprites-new-units.js"></script>
+<script src="js/textures/05-sprites-buildings.js"></script>
+<!-- ============ core: audio, camera (ground texture), fx ============ -->
+<script src="js/core/03-save.js"></script>
+<script src="js/core/04-audio.js"></script>
+<script src="js/core/05-camera.js"></script>
+<script src="js/core/06-fx.js"></script>
+<!-- ============ systems ============ -->
+<script src="js/systems/01-power.js"></script>
+<script src="js/systems/02-economy.js"></script>
+<script src="js/systems/03-waves.js"></script>
+<script src="js/systems/04-captures.js"></script>
+<!-- ============ buildings ============ -->
+<script src="js/buildings/01-placement.js"></script>
+<script src="js/buildings/02-production.js"></script>
+<script src="js/buildings/03-bots.js"></script>
+<script src="js/buildings/04-turrets.js"></script>
+<script src="js/buildings/05-support.js"></script>
+<!-- ============ units ============ -->
+<script src="js/units/01-spawn.js"></script>
+<script src="js/units/02-movement.js"></script>
+<script src="js/units/03-spatial-grid.js"></script>
+<script src="js/units/04-ai.js"></script>
+<script src="js/units/05-combat.js"></script>
+<!-- ============ rewards + achievements (logic + UI) ============ -->
+<script src="js/rewards/04-crates.js"></script>
+<script src="js/rewards/05-rewards-ui.js"></script>
+<script src="js/achievements/02-achievements.js"></script>
+<script src="js/achievements/03-achievements-ui.js"></script>
+<!-- ============ render ============ -->
+<script src="js/render/01-render.js"></script>
+<script src="js/render/02-render-units.js"></script>
+<script src="js/render/03-render-ground.js"></script>
+<script src="js/render/04-minimap.js"></script>
+<script src="js/render/05-blocks.js"></script>
+<!-- ============ ui ============ -->
+<script src="js/ui/01-ui-core.js"></script>
+<script src="js/ui/02-shop.js"></script>
+<script src="js/ui/03-tooltips.js"></script>
+<script src="js/ui/04-backpack.js"></script>
+<script src="js/ui/05-leaderboard.js"></script>
+<script src="js/ui/06-settings.js"></script>
+<script src="js/ui/07-rebirth.js"></script>
+<script src="js/ui/08-tutorial.js"></script>
+<script src="js/ui/09-input.js"></script>
+<script src="js/ui/10-patch-notes.js"></script>
+<!-- ============ admin + boot ============ -->
+<script src="js/admin/01-admin.js"></script>
+<style>
+#topbar,#rail,#timerbox,#bossbar,#hud,#hint,#minibox,#btnAdmin,#p-admin,#tip,#toasts,
+.panel,#tut{display:none!important}
+#cv{position:absolute;top:0;left:0}
+body{margin:0;background:#141a24;min-height:100vh}
+#galbar{position:fixed;top:10px;left:10px;z-index:5;display:flex;gap:8px;align-items:center;
+font:700 15px sans-serif;color:#eef2f8;background:#232b3b;border:1px solid #3d4763;
+border-radius:10px;padding:8px 12px}
+#galbar button{font:700 13px sans-serif;background:#1b2230;color:#eef2f8;border:1px solid #4a5578;
+border-radius:8px;padding:6px 10px;cursor:pointer}
+#galbar button.on{background:#4a90e2;border-color:#4a90e2}
+</style>
+<div id="galbar"><span id="galTitle"></span>
+<button data-f="all" class="on">ALL</button><button data-f="production">PRODUCTION</button><button data-f="units">UNITS</button><button data-f="special">SPECIAL</button><button data-f="decor">DECOR</button>
+</div>
+
+
+<script>
+/* sprite-sheet gallery: every BUILD sprite, live from SPR (animated). click tabs to filter. */
+let galFilter='all';
+document.querySelectorAll('#galbar button').forEach(b=>b.onclick=()=>{galFilter=b.dataset.f;
+document.querySelectorAll('#galbar button').forEach(x=>x.classList.toggle('on',x===b));});
+function gallery(t){
+  const ids=Object.keys(BUILD).filter(id=>galFilter==='all'||BUILD[id].tab===galFilter);
+  const tsec=t/1000;
+  const vw=cv.width/DPR, cols=Math.max(1,Math.floor(vw/170)), cw=vw/cols, ch=150;
+  const rows=Math.ceil(ids.length/cols), needH=rows*ch+70;
+  if(cv.height<needH*DPR){cv.height=Math.ceil(needH*DPR);}
+  cv.style.height=needH+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.fillStyle='#141a24'; ctx.fillRect(0,0,vw,needH);
+  document.getElementById('galTitle').textContent='SPRITES '+ids.length+'  ·  v8.11 model match: barracks/solar/oil/wind';
+  ids.forEach((id,i)=>{
+    const sp=SPR[id]; if(!sp) return;
+    const cx=(i%cols)*cw+cw/2, gy=Math.floor(i/cols)*ch+70, sc=Math.min(2.6,(cw-70)/sp.w,(ch-60)/sp.h);
+    ctx.strokeStyle='#3d4763'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(cx-cw/2+14,gy+(ch-60)); ctx.lineTo(cx+cw/2-14,gy+(ch-60)); ctx.stroke();
+    ctx.save(); ctx.translate(cx,gy+(ch-60)); ctx.scale(sc,sc);
+    try{sp.draw(ctx,tsec,{side:'p',faction:0});}catch(e){}
+    ctx.restore();
+    ctx.fillStyle='#eef2f8'; ctx.font='700 13px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(BUILD[id].name,cx,gy+(ch-60)+20);
+    ctx.fillStyle='#9aa7bd'; ctx.font='11px sans-serif';
+    ctx.fillText(id+'  '+sp.w+'x'+sp.h+(sp.anim?'  ~':'') ,cx,gy+(ch-60)+36);
+  });
+  requestAnimationFrame(gallery);
+}
+requestAnimationFrame(gallery);
+</script>
+
+</body>
+</html>

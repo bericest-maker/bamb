@@ -119,11 +119,16 @@ for(const id of ['barracks','tankfac','heliport','afbase','mechi','zeppeldock','
 }
 
 // ----- PRODUCTION -----
+// v8.11 MODEL MATCH: palette/shapes from uploads/Buildings_01_of_04.txt (Wind Turbine: dark base
+// disc, tapered white tower #c9ccd1, grey nacelle, 3 light-grey blades #a6a6ab on the rotationJoint)
 reg('wind',40,64,(g,t)=>{
-  g.fillStyle='#e6e9ee'; g.beginPath(); g.moveTo(-3,0); g.lineTo(-1.5,-50); g.lineTo(1.5,-50); g.lineTo(3,0); g.closePath(); g.fill(); O(g,1.2); g.stroke();
-  g.save(); g.translate(0,-50); g.rotate(t*2.4);
-  g.fillStyle='#f4f6f8'; for(let i=0;i<3;i++){ g.rotate(pi2/3); g.beginPath(); g.moveTo(0,-1.5); g.lineTo(18,-2.5); g.lineTo(18,0); g.lineTo(0,1.5); g.closePath(); g.fill(); O(g,1); g.stroke(); }
-  g.restore(); g.fillStyle='#9aa4b1'; g.beginPath(); g.arc(0,-50,2.6,0,pi2); g.fill();
+  g.fillStyle='#2b2f36'; g.fillRect(-7,-3,14,3); O(g,1); g.strokeRect(-7,-3,14,3);
+  g.fillStyle='#c9ccd1'; g.beginPath(); g.moveTo(-3.5,-3); g.lineTo(-1.5,-48); g.lineTo(1.5,-48); g.lineTo(3.5,-3); g.closePath(); g.fill(); O(g,1.2); g.stroke();
+  g.fillStyle='#141a24'; g.fillRect(-1.5,-8,3,5);
+  g.fillStyle='#4f4f4f'; g.beginPath(); g.arc(0,-48,3.4,0,pi2); g.fill(); O(g,1); g.stroke();
+  g.save(); g.translate(0,-48); g.rotate(t*2.4);
+  g.fillStyle='#a6a6ab'; for(let i=0;i<3;i++){ g.rotate(pi2/3); g.beginPath(); g.moveTo(0,-1.5); g.lineTo(18,-2.5); g.lineTo(18,0); g.lineTo(0,1.5); g.closePath(); g.fill(); O(g,1); g.stroke(); }
+  g.restore(); g.fillStyle='#e8ecf1'; g.beginPath(); g.arc(0,-48,2.2,0,pi2); g.fill();
 });
 reg('ironmine',46,36,(g,t)=>{
   g.fillStyle='#6b5a44'; g.beginPath(); g.moveTo(-22,0); g.lineTo(-12,-18); g.lineTo(12,-18); g.lineTo(22,0); g.closePath(); g.fill(); O(g); g.stroke();

@@ -51,6 +51,7 @@
 - [x] **Naval line** (v7) — **Gunboat, Frigate, Battleship, Carrier, Submarine, Zumwalt, Speedboat** (+ the UNIQUE **Centurion**). Ships sail the water lanes; Submarine + Zumwalt are STEALTH.
 
 ### Textures (sprites)
+- [~] **Model-match sprite pass** (v8.11 batch 1: Barracks, Solar Array, Oil Drill, Wind Turbine — redrawn from `uploads/Buildings_01_of_04.txt` parts/colors; review in `preview.html`; rest of the 100 to follow batch by batch)
 - [x] New 2.5D flat sprites for every new unit & building (v7: a **ship template** for the navy, **dock** + **silo** building styles, Centurion walker, ICBM truck)
 - [x] Map dressing from `ref-map-original.png`: trees, flowers, floating water crystals, city arena ring
 - [x] Rarity colors for the 3 new tiers

@@ -59,22 +59,46 @@ function unitPolish(g,w,h){
 function O(g,w=2){ g.lineWidth=w; g.strokeStyle='rgba(18,24,32,.5)'; }
 
 // ----- buildings -----
+// v8.11 MODEL MATCH: redrawn from uploads/Buildings_01_of_04.txt (Solar Array: dark slab,
+// olive legs, grey equipment box with status light, tilted navy panel with sheen sweep)
 reg('solar',44,38,(g,t)=>{
-  g.fillStyle='#5a6b52'; g.fillRect(-15,-22,3,22); g.fillRect(12,-22,3,22);
-  g.save(); g.translate(0,-28); g.rotate(-.2);
-  g.fillStyle='#2f6fb8'; g.fillRect(-19,-9,38,18); O(g); g.strokeRect(-19,-9,38,18);
-  g.strokeStyle='rgba(255,255,255,.45)'; g.lineWidth=1;
-  g.beginPath(); g.moveTo(-6,-9); g.lineTo(-6,9); g.moveTo(7,-9); g.lineTo(7,9); g.moveTo(-19,0); g.lineTo(19,0); g.stroke();
+  // ground slab (Flooring 3.79 dark #1c2936)
+  g.fillStyle='#1c2936'; g.fillRect(-20,-3,40,3); O(g,1.2); g.strokeRect(-20,-3,40,3);
+  // support frame: olive legs (MainBaseColor) + grey equipment box (MetalColor)
+  g.fillStyle='#2e3321'; g.fillRect(-15,-15,4,12); g.fillRect(11,-15,4,12);
+  g.fillStyle='#4f4f4f'; g.fillRect(-10,-11,20,8); O(g,1.2); g.strokeRect(-10,-11,20,8);
+  // status light (Lights box inside the frame)
+  g.fillStyle=(Math.floor(t*2)%2)?'#e8f2ff':'#5a6a7a'; g.fillRect(-2,-9,4,3);
+  // tilted navy panel (Solar Panels 5.66 #264261) with cell grid + slow sheen sweep
+  g.save(); g.translate(0,-24); g.rotate(-.2);
+  g.fillStyle='#264261'; g.fillRect(-19,-8,38,16); O(g,1.5); g.strokeRect(-19,-8,38,16);
+  g.strokeStyle='#3d5a7a'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(-6,-8); g.lineTo(-6,8); g.moveTo(7,-8); g.lineTo(7,8); g.moveTo(-19,0); g.lineTo(19,0); g.stroke();
+  const sx=-19+((t*9)%44)-3;
+  g.fillStyle='rgba(255,255,255,.18)'; g.fillRect(sx,-8,5,16);
   g.restore();
 });
+// v8.11 MODEL MATCH: redrawn from uploads/Buildings_01_of_04.txt (Oil Drill: grey platform,
+// brown well box, tapered olive tower with grey cladding + ladder, animated pump beam on the top joint)
 reg('oil',44,46,(g,t)=>{
-  g.fillStyle='#6b5a44'; g.fillRect(-18,-8,36,8); O(g); g.strokeRect(-18,-8,36,8);
-  g.fillStyle='#8a6f4d'; g.fillRect(-14,-14,28,6); g.fillRect(-10,-20,20,6); g.fillRect(-6,-26,12,6);
-  g.fillStyle='#a3865c'; g.fillRect(-5,-40,10,14); O(g); g.strokeRect(-5,-40,10,14);
-  g.save(); g.translate(0,-26); g.rotate(Math.sin(t*2.2)*.5);
-  g.fillStyle='#b8452e'; g.fillRect(-2,-3,20,6); g.fillRect(-12,-3,6,6);
-  g.fillStyle='#8a3322'; g.beginPath(); g.arc(-9,0,4,0,pi2); g.fill();
+  // base platform (MetalColor 1.54 grey plate)
+  g.fillStyle='#4f4f4f'; g.fillRect(-20,-5,40,5); O(g,1.2); g.strokeRect(-20,-5,40,5);
+  g.fillStyle='#3a3a3a'; g.fillRect(-20,-2,40,2);
+  // well box (Oil Well brown #594d42)
+  g.fillStyle='#594d42'; g.fillRect(-16,-12,12,7); O(g,1.2); g.strokeRect(-16,-12,12,7);
+  // tapered olive tower (MainBaseColor 1.17w) with grey cladding stripe + ladder rungs
+  g.fillStyle='#2e3321'; g.beginPath(); g.moveTo(-6,-5); g.lineTo(6,-5); g.lineTo(3,-33); g.lineTo(-3,-33); g.closePath(); g.fill(); O(g,1.5); g.stroke();
+  g.fillStyle='#5c5c69'; g.beginPath(); g.moveTo(1,-5); g.lineTo(6,-5); g.lineTo(3,-33); g.lineTo(1.5,-33); g.closePath(); g.fill();
+  g.strokeStyle='rgba(255,255,255,.25)'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(-3.5,-10); g.lineTo(-1,-10); g.moveTo(-3.2,-16); g.lineTo(-1.2,-16); g.moveTo(-3,-22); g.lineTo(-1.4,-22); g.moveTo(-2.8,-28); g.lineTo(-1.6,-28); g.stroke();
+  // pump beam on the rotationJoint, rocking like the original
+  g.save(); g.translate(0,-33); g.rotate(Math.sin(t*2.2)*.42);
+  g.fillStyle='#5c5c69'; g.fillRect(-14,-2,30,4); O(g,1); g.strokeRect(-14,-2,30,4);
+  g.fillStyle='#2e3321'; g.fillRect(-17,-4,5,8); O(g,1); g.strokeRect(-17,-4,5,8);
+  g.strokeStyle='#9aa4b1'; g.lineWidth=1.2;
+  g.beginPath(); g.moveTo(14,2); g.lineTo(14,14); g.stroke();
   g.restore();
+  g.fillStyle='#1c2936'; g.beginPath(); g.arc(0,-33,2.2,0,pi2); g.fill();
 });
 reg('data',48,48,(g,t)=>{
   g.fillStyle='#77839a'; g.fillRect(-22,-40,44,40); O(g); g.strokeRect(-22,-40,44,40);
@@ -127,13 +151,26 @@ reg('depot',44,32,(g,t)=>{
   g.fillStyle='#7d8794'; g.fillRect(14,-34,2.5,34);
   g.fillStyle='#d6493f'; g.fillRect(16,-34,12,7);
 });
-reg('barracks',56,40,(g,t)=>{
-  g.fillStyle='#5d7a4a'; g.fillRect(-26,-30,52,30); O(g); g.strokeRect(-26,-30,52,30);
-  g.fillStyle='#48603a'; g.fillRect(-26,-35,52,6);
-  g.fillStyle='#3c4f31'; g.fillRect(-6,-16,12,16);
-  g.fillStyle='#cfe3a8'; g.fillRect(-21,-25,9,6); g.fillRect(12,-25,9,6);
-  g.fillStyle='#7d8794'; g.fillRect(20,-46,2.5,16);
-  g.fillStyle='#4a90e2'; g.fillRect(22,-46,13,8);
+// v8.11 MODEL MATCH: redrawn from uploads/Buildings_01_of_04.txt (Barracks: dark slab, olive
+// 3.12w body, offset grey metal inset, blue window band, roof light strip, faction flag)
+reg('barracks',56,40,(g,t,o)=>{
+  // ground slab (Flooring dark #1c2936)
+  g.fillStyle='#1c2936'; g.fillRect(-25,-4,50,4); O(g,1.2); g.strokeRect(-25,-4,50,4);
+  // main olive body (MainBaseColor 3.12×1.66 #2e3321)
+  g.fillStyle='#2e3321'; g.fillRect(-23,-26,46,22); O(g); g.strokeRect(-23,-26,46,22);
+  g.fillStyle='#3a4028'; g.fillRect(-23,-26,46,2);
+  // grey metal inset, offset right like the original (MetalColor #4f4f4f)
+  g.fillStyle='#4f4f4f'; g.fillRect(3,-23,18,17); O(g,1.2); g.strokeRect(3,-23,18,17);
+  g.strokeStyle='rgba(255,255,255,.18)'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(5,-12); g.lineTo(19,-12); g.moveTo(5,-9); g.lineTo(19,-9); g.stroke();
+  // blue window band (Window #6e99c9) with dark frame + dividers
+  g.fillStyle='#141a24'; g.fillRect(-21,-24,20,8);
+  g.fillStyle='#6e99c9'; g.fillRect(-20,-23,18,6);
+  g.fillStyle='rgba(255,255,255,.35)'; g.fillRect(-20,-23,18,1.5);
+  g.fillStyle='#141a24'; g.fillRect(-12,-23,1.5,6); g.fillRect(-4,-23,1.5,6);
+  // roof light strip (Lights part) + faction flag on the roof
+  g.fillStyle='#dfe6ee'; g.fillRect(-20,-28,40,2);
+  flagOn(g,17,-26,o);
 });
 reg('tankfac',60,42,(g,t)=>{
   g.fillStyle='#66725f'; g.fillRect(-28,-32,56,32); O(g); g.strokeRect(-28,-32,56,32);
