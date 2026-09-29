@@ -27,6 +27,7 @@ Coverage report · Changelog · Known issues · Files · Run / test · JS file m
 
 | Date | Change |
 |---|---|
+| 2026-09-28 | **v8.13: RIGHT-DOCK PANELS.** Shop/backpack/rewards/trophies/ranks/robux/settings/patches panels dock to the right edge (top 64px → above the minimap) instead of covering the middle of the screen, so the base stays visible while browsing. Small confirm dialogs (rebirth, open-quantity, crate reveal) stay centered. Toasts move to bottom-center above the hint bar. No gameplay change. Smoke passes. |
 | 2026-09-28 | **v8.12: MODEL-MATCH SPRITES (batch 2: ALL 12 LIMITED).** B-2 Stealth Hangar (← Stealth Hangar angular dark bay), Secret Weapons Facility (giant pulsing cyan window), Airship Docks (mooring mast + yellow neon rigging), ICBM Silo (← Nuclear Silo: olive base, grey tube, red-tipped missile + blinking beacon), Bomber Base (← Strategic Command Center: rose walls, window strip, spinning radar), Pentagon (sand 5-sided block, pillars, dark blue roof), F-35 Hangar (← Joint Strike Facility: dark bay, glass front, yellow trim), Raptor Hangar (← Wing Command: light grey, glass band, beacon mast), Monitoring Center (dark tower, pulsing blue core, dish), Sentinel Training Center (long blue-grey block), Swarm Hive (← Mechanical Hive: hazard base, neon strip, hex cells, radar nub) and Fusion Reactor (olive stack + floating blue orb with orbiting cubes). Same canvas sizes → footprints untouched; flags + signboards kept. Also: the UI screenshot is now the documented original-UI reference (EXPAND rail, quest panels, weather icon, cash + button → new UI goals). Smoke passes. |
 | 2026-09-28 | **v8.11: MODEL-MATCH SPRITES (batch 1).** Barracks, Solar Array, Oil Drill and Wind Turbine redrawn from the original part dumps (`uploads/Buildings_01_of_04.txt`): real proportions (olive #2e3321 body, grey #4f4f4f metal, window blue #6e99c9, navy #264261 panels, dark #1c2936 slabs). Solar gains a sheen sweep + blinking status light, Oil becomes a pumpjack rocking on its top joint, Barracks gets a faction-tinted flag instead of the fixed blue one. Same canvas sizes → footprints, saves and balance untouched. New `preview.html` sprite-sheet gallery (every BUILD sprite, animated, tab filter) for reviewing redraws. Smoke passes. |
 | 2026-09-28 | **DOCS: TRAIT GOALS + BUILDING MODELS.** No gameplay change. Saved the user's 80-trait paste + decompiled `TraitsConfig` as `ref/traits-original.txt` and added a roadmap spec: NOTES.md → new GOALS subsection `Traits & reroll` (pools per building model, rarity weights, 10% double trait, stat mapping, collector gap, reroll design, UI, save) + a `🧬 Traits` index (Production/Unit/Logistics/MissileTurret pools, field→model mapping table, family ladders). Pulled the user's `uploads/Buildings_01..04_of_04.txt` (172 original buildings as 3D-model dumps, 1884 parts) and indexed them in NOTES.md → `🏗️ Models`: bounds = canonical footprint (median 5.5×5.5 studs), 38/100 exact name matches with our roster, Logistics 3-tier + Missile Turret footprints for the trait pools, Tiny/Titanic scale the bounds. Missing from the trait paste: MissileTurret trait defs, reroll costs/rules, collector stats. |
@@ -68,15 +69,15 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 170.7 KB | 2098 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/INFO.md` | 171.9 KB | 2099 | THIS file — what the game IS (generated, do not hand-edit) |
 | `military-base-25d/NOTES.md` | 51.4 KB | 570 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
-| `military-base-25d/gen_info.py` | 76.2 KB | 708 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
+| `military-base-25d/gen_info.py` | 76.6 KB | 709 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
 | `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/preview.html` | 22.2 KB | 452 | sprite-sheet gallery: every BUILD sprite live from SPR, animated, tab filter (no game boot) — used to review model-match redraws |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
 | `military-base-25d/smoke.js` | 55.5 KB | 852 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
-| `military-base-25d/style.css` | 19.1 KB | 293 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
+| `military-base-25d/style.css` | 19.3 KB | 297 | dark-slate theme (+ v4: sub-tabs, tooltip, achievements, leaderboard) |
 | `military-base-25d/test-stubs.js` | 3.3 KB | 78 | shared headless loader: DOM/canvas/localStorage stubs + loads every script of index.html (used by smoke.js + dump_data.js) |
 | `military-base-25d/js/achievements/01-achievements-data.js` | 2.5 KB | 20 | the achievement list: ico, desc, progress fn, payout |
 | `military-base-25d/js/achievements/02-achievements.js` | 710 B | 17 | achievement check loop: unlock once → pay out + toast |
@@ -1772,7 +1773,7 @@ Panels: `admin`, `shop`, `backpack`, `rewards`, `achieve`, `leader`, `robux`, `s
 | `--c-myth` | `#ef5350` |
 | `--c-gold` | `#ffd54f` |
 
-Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
+Keyframes: `pulse`, `tin`, `popR`, `pop`, `shake`, `glow`
 
 | Line | Section | Selectors |
 |---|---|---|
@@ -1786,22 +1787,22 @@ Keyframes: `pulse`, `tin`, `pop`, `shake`, `glow`
 | 60 | hint | `#hint` |
 | 64 | minimap | `#minibox` · `#mini` |
 | 69 | toasts | `#toasts` · `.toast` · `.toast.out` |
-| 77 | panels | `.panel` · `.panel.show` · `.panel.modal` · `.panel.crate` · `.p-head` · `.p-title` · `.x` · `.x:hover` · `.p-body` · `.p-body.center` · `.p-note` · `.btn-row` |
-| 95 | tabs | `.tabs` · `.tabs button` · `.tabs button.on` · `.tabs button:hover` · `.tabs button.on:hover` |
-| 103 | item grid | `.grid` · `.card` · `.card:hover` · `.card canvas` · `.card .c-name` · `.card .c-cost` · `.card .c-info` · `.card.locked` · `.card.locked .c-cost` · `.card.r-common` · `.card.r-rare` · `.card.r-epic` · `.card.r-legend` · `.card.r-myth` · `.card.r-gold` · `.c-rar` · `.c-rar.common` · `.c-rar.rare` · `.c-rar.epic` · `.c-rar.legendary` · `.c-rar.mythic` · `.c-rar.golden` |
-| 128 | rewards | `.rw-list` · `.rw-item` · `.rw-item .rw-ico` · `.rw-item .rw-mid` · `.rw-item .rw-name` · `.rw-item .rw-sub` · `.rw-item .rw-reward` · `.rw-claim` · `.rw-claim:disabled` · `.rw-claim:hover:not(:disabled)` |
-| 142 | settings rows | `.set-row` · `.set-row.small` · `.dim` · `.toggle` · `.toggle.on` · `.toggle.blue.on` · `.code-input` · `.code-input:focus` · `.danger` · `.danger:hover` |
-| 156 | crate modal | `.crate-stage` · `.crate-stage.opening canvas` · `#crateIcon` · `.crate-name` · `.crate-rar` · `.crate .pill.big` |
-| 164 | v8.4: bulk-open results + the "open how many?" chooser | `.crate-list` · `.cl-row` · `.cl-dot` · `.cl-name` · `.cl-n` · `.oq-name` |
-| 171 | v8.5: admin custom boss HP box | `.a-hp` · `.oq-sub` · `.oq-btns` |
-| 175 | v8.4: backpack stack badge (how many of this item you hold) | `.card` · `.c-stack` · `#p-crate.show .p-body` |
-| 183 | rebirth info | `#rbInfo` · `#rbInfo b` · `.rb-prog` · `.rb-prog i` |
-| 190 | admin drawer | `#btnAdmin` · `#btnAdmin:hover` · `#p-admin` · `#p-admin.open` · `.a-head` · `.a-body` · `.a-body::-webkit-scrollbar` · `.a-body::-webkit-scrollbar-thumb` · `.a-sec` · `.a-sec:first-child` · `.a-note` · `.a-row` · `.abtn` · `.abtn:hover` · `.abtn.on` · `.abtn.tog` · `.abtn.tog.on` · `.abtn.gold` · `.abtn.danger` · `.abtn.danger:hover` |
-| 218 | bot base presets | `.a-bots` · `.bot-row` · `.bot-row .bn` · `.aselect` · `.aselect:focus` · `.aselect option` · `.ain` · `.ain:focus` · `.bld-row` · `.bld-row .bn` · `.bld-row .abtn` · `.unit-row` · `.unit-row .un` · `.unit-row .abtn` · `.a-stats` · `.asave` |
-| 242 | tutorial | `#tut` · `#tut.show` · `.tut-card` · `.tut-step` · `.tut-text` · `.tut-text b` |
-| 251 | scrollbar | `.p-body::-webkit-scrollbar` · `.p-body::-webkit-scrollbar-thumb` · `.p-body::-webkit-scrollbar-track` |
-| 256 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
-| 279 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
+| 78 | panels | `.panel` · `.panel.show` · `.panel.modal` · `.panel.modal.show` · `.panel.crate` · `.p-head` · `.p-title` · `.x` · `.x:hover` · `.p-body` · `.p-body.center` · `.p-note` · `.btn-row` |
+| 99 | tabs | `.tabs` · `.tabs button` · `.tabs button.on` · `.tabs button:hover` · `.tabs button.on:hover` |
+| 107 | item grid | `.grid` · `.card` · `.card:hover` · `.card canvas` · `.card .c-name` · `.card .c-cost` · `.card .c-info` · `.card.locked` · `.card.locked .c-cost` · `.card.r-common` · `.card.r-rare` · `.card.r-epic` · `.card.r-legend` · `.card.r-myth` · `.card.r-gold` · `.c-rar` · `.c-rar.common` · `.c-rar.rare` · `.c-rar.epic` · `.c-rar.legendary` · `.c-rar.mythic` · `.c-rar.golden` |
+| 132 | rewards | `.rw-list` · `.rw-item` · `.rw-item .rw-ico` · `.rw-item .rw-mid` · `.rw-item .rw-name` · `.rw-item .rw-sub` · `.rw-item .rw-reward` · `.rw-claim` · `.rw-claim:disabled` · `.rw-claim:hover:not(:disabled)` |
+| 146 | settings rows | `.set-row` · `.set-row.small` · `.dim` · `.toggle` · `.toggle.on` · `.toggle.blue.on` · `.code-input` · `.code-input:focus` · `.danger` · `.danger:hover` |
+| 160 | crate modal | `.crate-stage` · `.crate-stage.opening canvas` · `#crateIcon` · `.crate-name` · `.crate-rar` · `.crate .pill.big` |
+| 168 | v8.4: bulk-open results + the "open how many?" chooser | `.crate-list` · `.cl-row` · `.cl-dot` · `.cl-name` · `.cl-n` · `.oq-name` |
+| 175 | v8.5: admin custom boss HP box | `.a-hp` · `.oq-sub` · `.oq-btns` |
+| 179 | v8.4: backpack stack badge (how many of this item you hold) | `.card` · `.c-stack` · `#p-crate.show .p-body` |
+| 187 | rebirth info | `#rbInfo` · `#rbInfo b` · `.rb-prog` · `.rb-prog i` |
+| 194 | admin drawer | `#btnAdmin` · `#btnAdmin:hover` · `#p-admin` · `#p-admin.open` · `.a-head` · `.a-body` · `.a-body::-webkit-scrollbar` · `.a-body::-webkit-scrollbar-thumb` · `.a-sec` · `.a-sec:first-child` · `.a-note` · `.a-row` · `.abtn` · `.abtn:hover` · `.abtn.on` · `.abtn.tog` · `.abtn.tog.on` · `.abtn.gold` · `.abtn.danger` · `.abtn.danger:hover` |
+| 222 | bot base presets | `.a-bots` · `.bot-row` · `.bot-row .bn` · `.aselect` · `.aselect:focus` · `.aselect option` · `.ain` · `.ain:focus` · `.bld-row` · `.bld-row .bn` · `.bld-row .abtn` · `.unit-row` · `.unit-row .un` · `.unit-row .abtn` · `.a-stats` · `.asave` |
+| 246 | tutorial | `#tut` · `#tut.show` · `.tut-card` · `.tut-step` · `.tut-text` · `.tut-text b` |
+| 255 | scrollbar | `.p-body::-webkit-scrollbar` · `.p-body::-webkit-scrollbar-thumb` · `.p-body::-webkit-scrollbar-track` |
+| 260 | v4: shop sub-tabs, tooltip, rarity, achievements, leaderboard | `.tabs.sub` · `.tabs.sub button` · `.card .c-cls` · `#tip` · `#tip .t-h` · `#tip .t-g` · `#tip .t-g span:nth-child(odd)` · `#tip .t-m` · `#tip .t-m b.up` · `.rw-item.done` · `.ach-prog` · `.ach-prog i` · `.lb-list` · `.lb-row` · `.lb-row.me` · `.lb-row .lb-rank` · `.lb-row .lb-dot` · `.lb-row .lb-pwr` · `.lb-row .lb-pts` |
+| 283 | v5 admin: scrollable, searchable spawn lists + quantity box | `.a-list` · `.a-list::-webkit-scrollbar` · `.a-spawn` · `.ainput` · `.ainput:focus` · `.a-qty` · `.a-lbl` · `.a-q` · `.a-owner` · `.unit-row .un` · `.unit-row .abtn` · `.unit-row .uc,.bld-row .uc` · `.a-empty` |
 
 ## ✔️ Smoke test assertions (238)
 
