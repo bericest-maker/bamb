@@ -69,11 +69,11 @@ Workspace root = `vibe/`.
 | `image-search/roblox-build-a-military-base-game-ui-scr-3.jpg` | 70.9 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-4.png` | 42.0 KB |  | reference screenshot of the original game UI |
 | `image-search/roblox-build-a-military-base-game-ui-scr-5.jpg` | 66.6 KB |  | reference screenshot of the original game UI |
-| `military-base-25d/INFO.md` | 171.9 KB | 2099 | THIS file — what the game IS (generated, do not hand-edit) |
+| `military-base-25d/INFO.md` | 172.4 KB | 2100 | THIS file — what the game IS (generated, do not hand-edit) |
 | `military-base-25d/NOTES.md` | 51.4 KB | 570 | goals/roadmap (what to do NEXT) + original-game index |
 | `military-base-25d/dump_data.js` | 2.2 KB | 31 | prints the LIVE data tables as JSON for gen_info.py |
 | `military-base-25d/gen_info.py` | 76.6 KB | 709 | regenerates INFO.md (hand-written descriptions, CHANGELOG, KNOWN_ISSUES live here) |
-| `military-base-25d/index.html` | 20.1 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
+| `military-base-25d/index.html` | 20.2 KB | 404 | page shell: canvas + HUD, rail (🏆 📊 added), admin drawer, panels, #tip tooltip, and the ordered <script> list of js/*.js |
 | `military-base-25d/preview.html` | 22.2 KB | 452 | sprite-sheet gallery: every BUILD sprite live from SPR, animated, tab filter (no game boot) — used to review model-match redraws |
 | `military-base-25d/ref-map-original.png` | 1.6 MB |  | screenshot of the original map — the v4 map copies this layout |
 | `military-base-25d/smoke.js` | 55.5 KB | 852 | headless Node test (~115 checks): map, combat classes, turrets, bank, achievements, save migration… |
