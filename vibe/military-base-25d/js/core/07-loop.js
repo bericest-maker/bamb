@@ -51,6 +51,8 @@ function update(dt,t){
   // fx
   fxTick(gdt);
   for(const b of S.buildings) if(b.flash>0) b.flash-=gdt;
+  questTick(gdt);
+  wxTick(gdt);
   } // end if(gdt>0)
   // power + achievements (throttled)
   powT-=dt;
@@ -80,10 +82,14 @@ function update(dt,t){
     if(boss) $('#bbFill').style.width=clamp01(boss.hp/boss.maxHp)*100+'%';
     const T=5000*Math.pow(2.2,S.rebirth);
     $('#rbBadge').hidden=!(S._power>=T);
+    const qc=claimableCount();
+    const qb=$('#qBadge'); if(qb){ qb.hidden=qc<=0; qb.textContent=qc; }
+    const eb=$('#expBadge'); if(eb) eb.hidden=!(qc>0||S._power>=T);
     if(document.querySelector('#p-rebirth.show')) renderRebirth();
     if(document.querySelector('#p-rewards.show')) renderRewards();
     if(document.querySelector('#p-achieve.show')) renderAchievements();
     if(document.querySelector('#p-leader.show')) renderLeaderboard();
+    if(document.querySelector('#p-quests.show')) renderQuests();
     if(window.Admin && $('#p-admin').classList.contains('open')) Admin.tickStats();
   }
   saveT-=dt;

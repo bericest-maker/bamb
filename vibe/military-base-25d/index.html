@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Military Base — 2.5D Remake</title>
-<link rel="stylesheet" href="style.css?v=8.13">
+<link rel="stylesheet" href="style.css?v=8.14">
 </head>
 <body>
 <canvas id="cv"></canvas>
@@ -15,22 +15,25 @@
   <button class="pill" id="btnHome">🏠 HOME</button>
 </div>
 
-<!-- left rail -->
+<!-- left rail (v8.14: 4 core buttons + EXPAND reveals the rest, like the original) -->
 <div id="rail">
   <button class="rail-btn" data-panel="backpack"><span class="r-ico">🎒</span><span class="r-lbl">BACKPACK</span></button>
   <button class="rail-btn" data-panel="rewards"><span class="r-ico">🎁</span><span class="r-lbl">REWARDS</span></button>
-  <button class="rail-btn" data-panel="achieve"><span class="r-ico">🏆</span><span class="r-lbl">TROPHIES</span><span class="badge" id="achBadge" hidden>0</span></button>
-  <button class="rail-btn" data-panel="leader"><span class="r-ico">📊</span><span class="r-lbl">RANKS</span></button>
   <button class="rail-btn" data-panel="robux"><span class="r-ico">💎</span><span class="r-lbl">ROBUX SHOP</span></button>
-  <button class="rail-btn" data-panel="rebirth" id="railRebirth"><span class="r-ico">🔥</span><span class="r-lbl">REBIRTH</span><span class="badge" id="rbBadge" hidden>!</span></button>
-  <button class="rail-btn" data-panel="patch"><span class="r-ico">📜</span><span class="r-lbl">PATCHES</span></button>
   <button class="rail-btn" data-panel="settings"><span class="r-ico">⚙️</span><span class="r-lbl">SETTINGS</span></button>
+  <button class="rail-btn rail-extra" data-panel="achieve"><span class="r-ico">🏆</span><span class="r-lbl">TROPHIES</span><span class="badge" id="achBadge" hidden>0</span></button>
+  <button class="rail-btn rail-extra" data-panel="leader"><span class="r-ico">📊</span><span class="r-lbl">RANKS</span></button>
+  <button class="rail-btn rail-extra" data-panel="rebirth" id="railRebirth"><span class="r-ico">🔥</span><span class="r-lbl">REBIRTH</span><span class="badge" id="rbBadge" hidden>!</span></button>
+  <button class="rail-btn rail-extra" data-panel="patch"><span class="r-ico">📜</span><span class="r-lbl">PATCHES</span></button>
+  <button class="rail-btn rail-extra" data-panel="quests"><span class="r-ico">📋</span><span class="r-lbl">QUESTS</span><span class="badge" id="qBadge" hidden>0</span></button>
+  <button class="rail-btn" id="btnExpand"><span class="r-ico" id="expIco">➕</span><span class="r-lbl" id="expLbl">EXPAND</span><span class="badge" id="expBadge" hidden>!</span></button>
 </div>
 
 <!-- event timer (top right) -->
 <div id="timerbox">
   <div class="t-line" id="tWave">⏱ WAVE 1:30</div>
   <div class="t-line" id="tBoss">🐍 BOSS 3:00</div>
+  <div class="t-line" id="tWx">☀️ CLEAR</div>
 </div>
 
 <!-- boss hp bar -->
@@ -44,7 +47,7 @@
   <button id="btnAttack">ATTACK</button>
   <div class="statbar"><span class="s-ico">⭐</span><span id="stPower">0</span><span class="s-cap">PWR</span></div>
   <div class="statbar"><span class="s-ico">🪖</span><span id="stUnits">0/10</span></div>
-  <div class="statbar cash"><span class="s-ico">💵</span><span id="stCash">$500</span><span class="s-cap" id="stIncome">$0/s</span></div>
+  <div class="statbar cash"><span class="s-ico">💵</span><span id="stCash">$500</span><span class="s-cap" id="stIncome">$0/s</span><button id="btnCashPlus" title="Open the ROBUX SHOP">+</button></div>
   <div class="statbar bank" id="stStoredRow" hidden><span class="s-ico">🏦</span><span id="stStored">$0</span><span class="s-cap" id="stCap">/ $0 cap</span></div>
 </div>
 
@@ -272,6 +275,19 @@
   </div>
 </div>
 
+<div class="panel" id="p-quests">
+  <div class="p-head"><span class="p-title">📋 QUESTS</span><button class="x" data-close>✕</button></div>
+  <div class="p-body">
+    <div class="q-tokens">🎫 Quest tokens: <b id="qTokens">0</b> — spend them on crates below!</div>
+    <div class="a-sec">DAILY QUESTS (reset in <span id="qDailyIn">--</span>)</div>
+    <div id="qDaily"></div>
+    <div class="a-sec">WEEKLY QUESTS (reset in <span id="qWeeklyIn">--</span>)</div>
+    <div id="qWeekly"></div>
+    <div class="a-sec">🎫 TOKEN SHOP</div>
+    <div id="qShop"></div>
+  </div>
+</div>
+
 <div class="panel" id="p-patch">
   <div class="p-head"><span class="p-title">📜 PATCH NOTES</span><button class="x" data-close>✕</button></div>
   <div class="p-body"><p class="p-note">Latest build first. Every change below is live in this version.</p><div class="rw-list" id="patchList"></div></div>
@@ -395,6 +411,7 @@
 <script src="js/ui/08-tutorial.js"></script>
 <script src="js/ui/09-input.js"></script>
 <script src="js/ui/10-patch-notes.js"></script>
+<script src="js/ui/11-quests.js"></script>
 <!-- ============ admin + boot ============ -->
 <script src="js/admin/01-admin.js"></script>
 <script src="js/core/07-loop.js"></script>

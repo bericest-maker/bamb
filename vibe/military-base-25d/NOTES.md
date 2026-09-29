@@ -18,10 +18,10 @@
 - [x] Leaderboard stub — v4 📊 (8 factions by power + flags held + v7 structure/army split)
 - [x] Crate UI for the full rarity ladder (new colors for Limited / Unique / Rebirth)
 - [x] **📜 PATCH NOTES panel** (v7) — every build's changes, readable in game (left rail)
-- [ ] **EXPAND rail** (per `uploads/Screenshot 2026-09-27 173841.png`, the original-UI reference) — left rail shows BACKPACK / REWARDS / ROBUX SHOP / SETTINGS + EXPAND; EXPAND reveals the rest (REBIRTH, TROPHIES, RANKS, PATCHES…)
-- [ ] **Quest panels** (same screenshot) — right-side DAILY QUESTS / WEEKLY QUESTS rows + QUEST TOKENS counter (design our own quests; tokens = new currency?)
-- [ ] **Weather icon** (same screenshot) — sun/sandstorm indicator on the right edge (ties to a weather system)
-- [ ] **Cash "+" button** (same screenshot) — shortcut from the cash bar to the ROBUX SHOP
+- [x] **EXPAND rail** (per `uploads/Screenshot 2026-09-27 173841.png`, the original-UI reference) — left rail shows BACKPACK / REWARDS / ROBUX SHOP / SETTINGS + EXPAND; EXPAND reveals the rest (REBIRTH, TROPHIES, RANKS, PATCHES…) ✔ v8.14 (badge dot when quest claimable / rebirth ready)
+- [x] **Quest panels** (same screenshot) — right-side DAILY QUESTS / WEEKLY QUESTS rows + QUEST TOKENS counter (design our own quests; tokens = new currency?) ✔ v8.14 (3 daily + 2 weekly, CLAIM, token→crate shop 5/15/30)
+- [x] **Weather icon** (same screenshot) — sun/sandstorm indicator on the right edge (ties to a weather system) ✔ v8.14 (timer-box line, ~150–240s cycle, toast + dust, no gameplay effect)
+- [x] **Cash "+" button** (same screenshot) — shortcut from the cash bar to the ROBUX SHOP ✔ v8.14
 
 ### Game (mechanics)
 - [x] **Damage modifiers (matchups)** (v4) — damage multiplied per TARGET class (e.g. Heavy Tank: armored ×1.2, light ×0.7, air ×0.5, stealth ✝; Anti-Air Vehicle: air ×1.5, ground ✝). Replaces/augments current flat armor.
@@ -171,7 +171,7 @@
 - Admin drawer (F1): cash, buildings, units, boss, waves, points, speed/pause, god mode, bot presets, **EMPTY ALL SAFES / MUSTER GARRISON / STAND DOWN / RAID ALERT**
 - HUD: wave (+ 🛡 garrison alert) + boss timers, minimap (with shipping lanes), toasts, tutorial, **🏦 stored cash / capacity row**
 - 📜 PATCH NOTES panel (left rail) — what changed in every build
-- Gaps vs original (see `uploads/Screenshot 2026-09-27 173841.png`, ignore the top-left Roblox system icons): no DECORATION tab label (we call it DECOR); rail shows all 8 buttons instead of 4 + EXPAND; no DAILY/WEEKLY QUESTS panel + tokens; no weather icon; no cash "+" shortcut
+- Gaps vs original (see `uploads/Screenshot 2026-09-27 173841.png`, ignore the top-left Roblox system icons): no DECORATION tab label (we call it DECOR). Closed in v8.14: 4 + EXPAND rail, DAILY/WEEKLY QUESTS panel + tokens, weather line, cash "+" shortcut
 
 ## 🎮 Game (mechanics — what the original does that we don't)
 1. **Damage modifiers** — each unit has per-target-class multipliers (`DamageModifiers` in the data). `0` = cannot damage that class (e.g. most heavies can't hurt Stealth; Anti-Air can't hurt ground). This is the real counter system — far richer than flat armor.

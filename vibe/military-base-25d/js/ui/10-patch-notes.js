@@ -2,6 +2,12 @@
 'use strict';
 // ================= UI: patch notes =================
 const PATCH_NOTES = [
+  { v:'v8.14 \u2014 ORIGINAL-UI PARITY', date:'2026-09-28', items:[
+    '\u2795 THE RAIL MATCHES THE ORIGINAL: BACKPACK / REWARDS / ROBUX SHOP / SETTINGS plus EXPAND. TROPHIES, RANKS, REBIRTH, PATCHES and QUESTS hide until you expand; EXPAND shows a badge dot when a quest is claimable or rebirth is ready.',
+    '\uD83D\uDCCB NEW QUESTS PANEL: 3 daily quests (reset every day) + 2 weekly quests with progress bars and CLAIM buttons, a quest-token counter, and a token shop that trades 5 / 15 / 30 tokens for standard / elite / premium crates.',
+    '\u2600\uFE0F WEATHER LINE IN THE TIMER BOX: CLEAR and SANDSTORM cycle every few minutes with a toast and blowing dust on High graphics. No gameplay effect.',
+    '\uD83D\uDCB5 THE CASH BAR HAS A + BUTTON: one click opens the ROBUX SHOP.',
+  ]},
   { v:'v8.10 \u2014 BOSS SPAWN CENTER', date:'2026-09-27', items:[
     '\uD83D\uDC0D BOSSES NOW SURFACE AT THE EXACT CENTER OF THE CITY: automatic spawns and ADMIN → SUMMON both use MAP_C with no random offset. They still attack after surfacing.',
     'Smoke verifies the normal, custom-HP and default-HP bosses all start at the exact center.',

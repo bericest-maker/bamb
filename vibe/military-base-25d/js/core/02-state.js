@@ -25,6 +25,7 @@ function defaultState(){
     points: POINTS_DEFS.map(p=>({...p, owner:'neutral', faction:-1, respawnT:8, cool:0})),
     inventory:[], stats:defaultStats(),
     rewards:{}, codes:{}, achievements:{}, premiumPity:0,
+    quests:null, weather:{cur:'clear',t:180},
     settings:defaultSettings(),
     attackCity:false, placing:null,
     bankT:60,

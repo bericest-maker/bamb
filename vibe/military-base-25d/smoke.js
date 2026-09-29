@@ -843,6 +843,38 @@ B.placeBuilding('solar',1,1); B.placeBuilding('solar',3,1);
     assert(stranded.length===0,`no ship is stranded on land either (${stranded.length})`); }
   S().units=[]; S().nextWave=9999; S().inventory=[];
 }
+// v8.14: quests + token shop + weather
+G('ensureQuests')();
+assert(S().quests.daily.length===3 && S().quests.weekly.length===2,'quests rolled: 3 daily + 2 weekly');
+assert(new Set(S().quests.daily.map(q=>q.qid)).size===3,'daily quests are distinct');
+assert(new Set(S().quests.weekly.map(q=>q.qid)).size===2,'weekly quests are distinct');
+S().stats.kills+=100000; S().stats.placed+=100000; S().stats.captures+=100000;
+S().stats.cratesOpened+=100000; S().stats.bosses+=100000; S().time+=100000;
+assert(G('claimableCount')()>=3,`stat boost makes quests claimable (${G('claimableCount')()})`);
+{ let ok=true; try{ G('renderQuests')(); }catch(e){ ok=false; console.error(e.message); }
+  assert(ok,'renderQuests runs headless'); }
+{ const i=S().quests.daily.findIndex(q=>{ const P=G('questProg')(q); return P[0]>=P[1]; });
+  assert(i>=0,'a complete daily quest was found (pow/time quests may legitimately lag)');
+  const cashBefore=S().cash, tokBefore=S().quests.tokens;
+  G('claimQuest')('daily',i);
+  assert(S().quests.daily[i].done && S().cash>cashBefore && S().quests.tokens>tokBefore,'claiming pays cash+tokens and marks done'); }
+S().quests.tokens=30;
+{ const nb=B.invCount('c','premium');
+  G('buyTokenCrate')('premium');
+  assert(S().quests.tokens===0 && B.invCount('c','premium')===nb+1,'30 tokens buy a premium crate'); }
+{ const ns=B.invCount('c','standard'); let ok=true;
+  try{ G('buyTokenCrate')('standard'); }catch(e){ ok=false; }
+  assert(ok && S().quests.tokens===0 && B.invCount('c','standard')===ns,'broke token purchase is refused, not fatal'); }
+S().quests.day='2000-1-1';
+G('ensureQuests')();
+assert(S().quests.day===G('dayStr')() && S().quests.daily.length===3,'daily quests re-roll on a new day');
+S().weather={cur:'clear',t:0.01};
+G('wxTick')(0.02);
+assert(S().weather.cur==='sandstorm' && S().weather.t>100,'weather flips clear→sandstorm with a fresh timer');
+G('wxTick')(0.01);
+assert(S().weather.cur==='sandstorm','sandstorm persists while its timer runs');
+S().weather.t=0.01; G('wxTick')(0.02);
+assert(S().weather.cur==='clear','weather flips back to clear');
 function fmtN(n){ return Math.round(n).toLocaleString('en-US'); }
 
 S().admin.noRespawn=false;

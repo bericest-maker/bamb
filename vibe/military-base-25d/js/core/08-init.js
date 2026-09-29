@@ -11,6 +11,7 @@ function init(){
   if(S.settings.units==='Potato') S.settings.units='Blocks';     // v8.2: potato blobs are plain rectangles now
   if(S.settings.blds==='Potato') S.settings.blds='Blocks';
   S.achievements=S.achievements||{};
+  S.quests=S.quests||null; S.weather=S.weather||{cur:'clear',t:180};
   S.rewards=S.rewards||{}; S.codes=S.codes||{}; S.inventory=S.inventory||[];
   S.shopSub=S.shopSub||'light'; S.bankT=S.bankT??60;
   // drop anything the current data no longer knows about
